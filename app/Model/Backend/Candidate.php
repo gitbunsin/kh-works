@@ -9,12 +9,20 @@ class Candidate extends Model
     protected $connection = 'mysql2';
     protected $table = 'tbl_job_candidate';
     protected $fillable = [
-        'id','first_name', 'middle_name','email','contact_number',
+        'id',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'email',
+        'contact_number',
+        'status',
+        'comment',
+        'mode_of_application',
+        'date_of_application',
+        'cv_file_id',
+        'cv_text_version',
+        'keywords',
+        'added_person',
     ];
-    protected $dates = ['date_of_application'];
-    public function setDateOfBirthAttribute()
-    {
-        $this->attributes['date_of_application'] = Carbon::createFromFormat('Y-m-d ','');
-    }
     public $timestamps = false;
 }

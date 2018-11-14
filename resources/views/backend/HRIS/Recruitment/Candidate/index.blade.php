@@ -8,10 +8,14 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="pull-right">
-                    <a href="{{url('administration/candidate/create')}}"><h4 class="alert-heading"><i style="font-size:30px;" class="fa fa-plus-square"></i></h4></a>
+                <div class="row">
+                    <div class="col-lg-12 margin-tb">
+                        <div class="pull-right">
+                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;">Add New Candidate</span></button>
+                        </div>
+                    </div>
                 </div>
-                <br/><br/>
+                <br/>
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <!-- widget options:
@@ -49,42 +53,23 @@
                                 <thead>
                                 <tr>
                                     <th data-hide="phone">Vacany</th>
-                                    <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Candidate</th>
-                                    <th data-hide="phone">commnet</th>
+                                    <th data-class="expand">Candidate</th>
                                     <th data-hide="date">Date-of-Application</th>
-                                    <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i>status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="products-list" name="products-list">
                                 @foreach($candidate as $candidates)
-                                    <tr>
+                                    <tr id="candidate_id{{$candidates->id}}">
                                         <td>{{$candidates->first_name}}</td>
                                         <td>{{$candidates->last_name}}</td>
-                                        <td>{{$candidates->comment}}</td>
                                         <td>{{$candidates->date_of_application}}</td>
                                         <td>
-                                            {{--<button class="btn btn-primary" type="submit" name="SubmitButton" value="Accept">Accept</button>--}}
-                                            {{--<button class="btn btn-danger" type="submit" name="SubmitButton" value="Decline">Decline</button>--}}
-                                        </td>
-                                        <td style="display: flex;" class="flex">
-                                           {{--<a href="{{ url('administration/candidate/' .$candidates->id. '/edit') }}"><button class="btn btn-primary btn-xs" ><span class="glyphicon glyphicon-pencil"></span></button></a>--}}
-                                            {{--<form action="{{url('administration/candidate/' .$candidates->id)}}" method="post">--}}
-                                                {{--{{csrf_field()}}--}}
-                                                {{--<input name="_method" type="hidden" value="DELETE">--}}
-                                                {{--<a href="{{ url('administration/candidate/' .$candidates->id) }}"><button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash"></span></button></a>--}}
-
-                                            <a href="#" style="text-decoration:none;">
-                                                <i class="fa fa-eye help-tip" oldtitle="Login as this User" title="Login as this User" style="color:black;"></i>
-                                            </a> &nbsp;&nbsp;
-                                            <a href="#" style="text-decoration:none;">
-                                                <i class="fa fa-slack" oldtitle="Manage Permission" title="Manage Permission" style="color:green;"></i>
-                                            </a> &nbsp;&nbsp;
-                                            <a href="#" style="text-decoration:none;">
-                                                <i class="fa fa-edit" title="Edit Subusers Detail" aria-hidden="true" style="color:green;"></i>
-                                            </a> &nbsp;&nbsp;
-                                            <a href="" style="text-decoration:none;">
-                                                <i class="fa fa-trash" oldtitle="Delete User" title="Delete User" aria-hidden="true" style="color:red;"></i>
+                                            <a data-id="{{$candidates->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$candidates->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -96,203 +81,118 @@
                 </div>
             </article>
         </div>
+        <input id="url" type="hidden" value="{{ \Request::url() }}">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                {{--<div class="modal-content">--}}
+                <div class="modal-body">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2> Candidate</h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                </div>
+                                <!-- widget content -->
+                                <div class="widget-body no-padding">
+                                    <form id="frmProducts"  class="smart-form">
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label class="label">First Name</label>
+                                                    <label class="input">
+                                                        <input type="text" maxlength="20" name="first_name" id="first_name">
+                                                    </label>
+                                                </section >
+                                                <section class="col col-4">
+                                                    <label class="label">Middle Name</label>
+                                                    <label class="input">
+                                                        <input type="text" maxlength="20" name="middle_name" id="middle_name">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">last Name</label>
+                                                    <label class="input">
+                                                        <input type="text" maxlength="20" id="last_name" name="last_name">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label class="label">Email</label>
+                                                    <label class="input">
+                                                        <input type="text" id="email" name="email">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Job Vacancy</label>
+                                                    <label class="input">
+                                                        <input type="text" list="list">
+                                                        <datalist id="list">
+                                                            <option value="Alexandra">Alexandra</option>
+                                                            <option value="Alice">Alice</option>
+                                                        </datalist>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Key Words</label>
+                                                    <label class="input">
+                                                        <input  name="keywords" id="keywords" placeholder="Enter comma separated words..." type="text" maxlength="10">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label">Resume</label>
+                                                    <div class="input input-file">
+                                                        <span class="button"><input id="file2" type="file" name="cv_file_id" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text"  placeholder="Include some files" readonly="">
+                                                    </div>
+                                                    <div class="note">
+                                                        <strong>Note:</strong> Accepts .docx, .doc, .odt, .pdf, .rtf, .txt up to 1MB
+                                                    </div>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label class="label"> Date </label>
+                                                    <label class="input">
+                                                        <i class="icon-append fa fa-calendar"></i>
+                                                        <input type="text" id="date-of-application" name="date-of-application" placeholder="Request activation on" class="datepicker">
+                                                    </label>
+                                                </section>
+                                            </div>
+
+                                            <section>
+                                                <label class="label">Comment</label>
+                                                <label class="textarea">
+                                                    <textarea name="comment" id="comment" rows="6" class="custom-scroll"></textarea>
+                                                </label>
+                                                <div class="note">
+                                                    <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                                </div>
+                                            </section>
+                                        </fieldset>
+                                        <footer>
+                                            <input type="button" class="btn btn-primary" id="btn-save" value="add">
+                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                        </footer>
+                                    </form>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
     </section>
-    <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
-
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-    <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-        $(document).ready(function() {
-
-            pageSetUp();
-
-            /* // DOM Position key index //
-
-            l - Length changing (dropdown)
-            f - Filtering input (search)
-            t - The Table! (datatable)
-            i - Information (records)
-            p - Pagination (paging)
-            r - pRocessing
-            < and > - div elements
-            <"#id" and > - div with an id
-            <"class" and > - div with a class
-            <"#id.class" and > - div with an id and class
-
-            Also see: http://legacy.datatables.net/usage/features
-            */
-
-            /* BASIC ;*/
-            var responsiveHelper_dt_basic = undefined;
-            var responsiveHelper_datatable_fixed_column = undefined;
-            var responsiveHelper_datatable_col_reorder = undefined;
-            var responsiveHelper_datatable_tabletools = undefined;
-
-            var breakpointDefinition = {
-                tablet : 1024,
-                phone : 480
-            };
-
-            $('#dt_basic').dataTable({
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_dt_basic) {
-                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_dt_basic.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_dt_basic.respond();
-                }
-            });
-
-            /* END BASIC */
-
-            /* COLUMN FILTER  */
-            var otable = $('#datatable_fixed_column').DataTable({
-                //"bFilter": false,
-                //"bInfo": false,
-                //"bLengthChange": false
-                //"bAutoWidth": false,
-                //"bPaginate": false,
-                //"bStateSave": true // saves sort state using localStorage
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_fixed_column) {
-                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_fixed_column.respond();
-                }
-
-            });
-
-            // custom toolbar
-            $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-
-            // Apply the filter
-            $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
-
-                otable
-                    .column( $(this).parent().index()+':visible' )
-                    .search( this.value )
-                    .draw();
-
-            } );
-            /* END COLUMN FILTER */
-
-            /* COLUMN SHOW - HIDE */
-            $('#datatable_col_reorder').dataTable({
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_col_reorder) {
-                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_col_reorder.respond();
-                }
-            });
-
-            /* END COLUMN SHOW - HIDE */
-
-            /* TABLETOOLS */
-            $('#datatable_tabletools').dataTable({
-
-                // Tabletools options:
-                //   https://datatables.net/extensions/tabletools/button_options
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                "oTableTools": {
-                    "aButtons": [
-                        "copy",
-                        "csv",
-                        "xls",
-                        {
-                            "sExtends": "pdf",
-                            "sTitle": "SmartAdmin_PDF",
-                            "sPdfMessage": "SmartAdmin PDF Export",
-                            "sPdfSize": "letter"
-                        },
-                        {
-                            "sExtends": "print",
-                            "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
-                        }
-                    ],
-                    "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-                },
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_tabletools) {
-                        responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_tabletools.respond();
-                }
-            });
-
-            /* END TABLETOOLS */
-
-        })
-
-    </script>
-
-    <!-- Your GOOGLE ANALYTICS CODE Below -->
-    <!-- Your GOOGLE ANALYTICS CODE Below -->
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
+    <script src="https://cdn.rawgit.com/JDMcKinstry/JavaScriptDateFormat/master/Date.format.min.js"></script>
+    <script src="{{ asset('/js/hr/candidate.js') }}"></script>
 @endsection

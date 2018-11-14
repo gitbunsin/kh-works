@@ -35,19 +35,19 @@
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input">
-                                                <input type="text" name="first_name" id="first_name">
+                                                <input type="text" name="emp_firstname" id="emp_firstname">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Middle Name</label>
                                             <label class="input">
-                                                <input type="text" name="middle_name" id="middle_name" maxlength="10">
+                                                <input type="text" name="emp_middle_name" id="emp_middle_name" maxlength="10">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Last Name</label>
                                             <label class="input">
-                                                <input type="text" name="last_name" id="last_name" maxlength="10">
+                                                <input type="text" name="emp_lastname" id="emp_lastname" maxlength="10">
                                             </label>
                                         </section>
                                     </div>
@@ -55,21 +55,20 @@
                                         <section class="col col-4">
                                             <label class="label"> Employee Id</label>
                                             <label class="input">
-                                                <input type="text" name="emp_id" id="emp_id" maxlength="10">
+                                                <input type="text" name="employee_id" id="employee_id" maxlength="10">
                                             </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                            </div>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">Location </label>
-                                            <label class="input">
-                                                <input type="text" list="list" id="hiring_manager" name="hiring_manager">
-                                                <datalist id="list">
-                                                    <option value="Alexandra">Alexandra1</option>
-                                                    <option value="Alice">Alice</option>
-                                                    <option value="Anastasia">Anastasia</option>
-                                                </datalist> </label>
+                                            <label class="label">Job Title</label>
+                                            <label class="select">
+                                                @php $job_title = \App\JobTitle::all(); @endphp
+                                                <select name="job_title" id="Job_title">
+                                                    @foreach($job_title as $job_titles)
+                                                        <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
                                         </section>
                                     <section class="col col-4">
                                         <label class="label"> Employee Photo</label>
@@ -104,14 +103,10 @@
                                                     <input type="text" name="user_name" id="user_name" maxlength="10">
                                                 </label>
                                             </section>
-                                            <section class="col col-6">
-                                                <label class="label"> status </label>
+                                            <section  class="col col-6">
+                                                <label class="label"> email *</label>
                                                 <label class="input">
-                                                    <input type="text" list="list" id="emp_status" name="emp_status">
-                                                    <datalist id="list">
-                                                        <option value="Alexandra">Enable</option>
-                                                        <option value="Alice">Disabled</option>
-                                                    </datalist>
+                                                    <input type="email" name="user_email" id="user_email" >
                                                 </label>
                                             </section>
                                         </div>
@@ -119,7 +114,7 @@
                                             <section  class="col col-6">
                                                 <label class="label"> Password *</label>
                                                 <label class="input">
-                                                    <input type="text" name="password" id="password" maxlength="10">
+                                                    <input type="password" name="user_password" id="user_password" maxlength="10">
                                                 </label>
                                                 <div class="note">
                                                     <strong>Note:</strong> For a strong password, please use a hard to guess combination of text with upper and lower
@@ -129,7 +124,7 @@
                                             <section class="col col-6">
                                                 <label class="label"> Confirm Password ** </label>
                                                 <label class="input">
-                                                    <input type="text" id="emp_confimpassword" name="emp_confimpassword">
+                                                    <input type="password" id="emp_confimpassword" name="emp_confimpassword">
                                                 </label>
                                             </section>
                                         </div>

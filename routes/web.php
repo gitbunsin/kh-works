@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
     Route::resource('post-jobs','JobController');
     Route::resource('employee','EmployeeController');
     Route::resource('interview','InterviewController');
+    Route::resource('Cv','CvController');
     Route::delete('ajax-remove-image/{filename}', 'EmployeeController@deleteImage');
     Route::match(['get', 'post'], 'ajax-image-upload', 'EmployeeController@ajaxImage');
 

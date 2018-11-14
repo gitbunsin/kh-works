@@ -24,27 +24,19 @@
                         <!-- widget content -->
                         <div class="widget-body no-padding">
 
-                            <form id="validate_job" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-categories ')}}" class="smart-form">
+                            <form id="validate_job" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" name="job_title" id="job_title" list="list">
-                                            <datalist id="list">
-                                                <option value="Alexandra">Alexandra</option>
-                                                <option value="Alice">Alice</option>
-                                                <option value="Anastasia">Anastasia</option>
-                                                <option value="Avelina">Avelina</option>
-                                                <option value="Basilia">Basilia</option>
-                                                <option value="Beatrice">Beatrice</option>
-                                                <option value="Cassandra">Cassandra</option>
-                                            </datalist> </label>
+                                            <input type="text" name="job_title" id="job_title">
+                                        </label>
                                     </section>
                                     <section>
                                         <label class="label"> Job description</label>
                                         <label class="textarea">
-                                            <textarea rows="3" id="job_description" name="job_description" class="custom-scroll"></textarea>
+                                            <textarea cols="8" rows="5" id="job_description" name="job_description" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -53,7 +45,7 @@
                                     <section>
                                         <label class="label"> Noted</label>
                                         <label class="textarea">
-                                            <textarea rows="3" id="note" name="note" class="custom-scroll"></textarea>
+                                            <textarea cols="8" rows="5" id="note" name="note" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -75,9 +67,7 @@
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="button" class="btn btn-default" onclick="window.history.back();">
-                                        Back
-                                    </button>
+                                    <button type="button" class="btn btn-default" onclick="window.history.back();">Back</button>
                                 </footer>
                             </form>
 

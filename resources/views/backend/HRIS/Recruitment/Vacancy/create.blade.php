@@ -32,36 +32,45 @@
                             <form id="validate_vacancy" method="POST" enctype="multipart/form-data" action="{{url('administration/vacancy ')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    <section>
-                                        <label class="label">Job Title</label>
-                                        <label class="input">
-                                            <input type="text" name="job_title" id="job_title" list="list">
-                                            <datalist id="list">
-                                                @foreach($items as $jobs)
-                                                <option value="{{$jobs->job_title}}"></option>
-                                                @endforeach
-                                            </datalist> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Vacancy Name</label>
-                                        <label class="input">
-                                            <input type="text" name="name" id="name" maxlength="10">
-                                        </label>
-                                    </section>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label">Job Title</label>
+                                            <label class="select">
+                                                @php $job_title = \App\JobTitle::all(); @endphp
+                                                <select name="Job_title" id="Job_title">
+                                                    <option value="0">Choose JobTitle</option>
+                                                    @foreach ($job_title as $job_titles)
+                                                        <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                            {{--<div class="note note-success">Thanks for your selection.</div>--}}
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label">Vacancy Name</label>
+                                            <label class="input">
+                                                <input type="text" name="name" id="name" maxlength="10">
+                                            </label>
+                                        </section>
+                                    </div>
                                     <section>
                                         <label class="label">Hiring Manager</label>
-                                        <label class="input">
-                                            <input type="text" list="list" id="hiring_manager" name="hiring_manager">
-                                            <datalist id="list">
-                                                <option value="Alexandra">Alexandra1</option>
-                                                <option value="Alice">Alice</option>
-                                                <option value="Anastasia">Anastasia</option>
-                                            </datalist> </label>
+                                        <label class="select">
+                                            @php use App\Employee;$employee= Employee::all(); @endphp
+                                            <select name="" id="">
+                                                <option value="0">Choose Manager</option>
+                                                @foreach($employee as $employees)
+                                                    <option value="{{$employees->id}}">{{$employees->emp_lastname}}</option>
+                                                @endforeach
+                                            </select>
+                                            <i></i>
+                                        </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
-                                            <textarea rows="3" id="description" name="description" class="custom-scroll"></textarea>
+                                            <textarea rows="8" id="description" name="description" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.

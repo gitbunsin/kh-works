@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Schema; //Import Schema
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -23,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191); //Solved by increasing StringLength
+        Passport::routes();
         $this->registerPolicies();
 
         //

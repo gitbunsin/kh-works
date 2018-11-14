@@ -19,7 +19,7 @@ class JobTitleController extends Controller
 
     public function index()
     {
-        $JobTitle = JobTitle::all();
+        $JobTitle = JobTitle::orderBy('id', 'DESC')->get();
         return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
 
@@ -42,16 +42,10 @@ class JobTitleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $job = new Job();
-        $job->job_title=Input::get('job_title');
-        $job->job_description=Input::get('job_description');
-        $job->note=Input::get('note');
-        $job->is_deleted = 1;
-        //dd($job);
-        $job->save();
-        return redirect("/administration/job");
+        $JobTitle = JobTitle::create($request->all());
+        return response()->json($JobTitle);
     }
+
 
     /**
      * Display the specified resource.
@@ -68,61 +62,17 @@ class JobTitleController extends Controller
     public function update(Request $request, $Job_id)
     {
         $JobTitle = JobTitle::findOrFail($Job_id);
-        $JobTitle->job_title = $request->name;
-        $JobTitle->job_description = $request->description;
+        $JobTitle->job_title = $request->job_title;
+        $JobTitle->job_description = $request->job_description;
         $JobTitle->note = $request->note;
         $JobTitle->save();
         return response()->json($JobTitle);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-//    public function edit($id)
-//    {
-//        $jobs = Job::where('id',$id)->first();
-//        //dd($jobs);
-//        return view('backend.HRIS.admin.JobTitle.edit', compact('jobs', 'id'));
-//    }
+      public function destroy($id)
+        {
+            $job_title = JobTitle::destroy($id);
+            return response()->json($job_title);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Job  $job
-     * @return \Illuminate\Http\Response
-     */
-//    public function update( Request $request , $id)
-//    {
-//        $job = Job::findOrFail($id);
-//        //dd($job);
-//        $input = $request->all();
-//        $job->fill($input)->save();
-//        $request->session()->flash('alert-success', 'New JobCategory has been updated!!!');
-//        return redirect('/administration/job');
-////        $hello ="i'm so ok";
-////        dd($hello);
-//    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Job $job
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
-    public function destroy($id)
-    {
-//        $hello ="I will deleted you from my heart";
-//        dd($hello);
-        $job = Job::findOrFail($id);
-        $job->delete();
-        Session::flash('alert-danger', 'JobCategory successfully deleted!');
-        return redirect('/administration/job');
-        //
-    }
 }

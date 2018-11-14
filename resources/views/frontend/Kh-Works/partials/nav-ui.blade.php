@@ -24,14 +24,8 @@
                         <li class="{{ Request::segment(2) == "lists" ? "active" : " " }}">
                             <a href="{{url('/kh-works/lists')}}">Job list</a>
                         </li>
-                        <li class="{{ Request::segment(2) == "resume" ? "active" : " " }}">
-                            <a href="{{url('/kh-works/resume')}}">Resume</a>
-                        </li>
                         <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Pages<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">Profile</a></li>
-                                <li><a href="">Submit Resume</a></li>
-                                <li><a href="">Job Post</a></li>
                                 <li><a href="">About Us</a></li>
                                 <li><a href="">Contact Us</a></li>
                                 <li><a href="{{url('kh-works/policy')}}">Privacy Policy</a></li>

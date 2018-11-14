@@ -7,19 +7,23 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{--<div class="pull-right">--}}
-            {{--<a href="{{url('administration/jobs/create')}}"><h4 class="alert-heading"><i style="font-size:30px;" class="fa fa-plus-square"></i></h4></a>--}}
-            {{--</div>--}}
-            {{--<br/><br/>--}}
-            <!-- Widget ID (each widget will need unique ID)-->
+                <div class="row">
+                    <div class="col-lg-12 margin-tb">
+                        <div class="pull-right">
+                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right">
+                                <span style="color:white;">Add new Employee</span></button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List all Jobs</h2>
+                        <h2> List all Employee</h2>
                     </header>
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -31,18 +35,18 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone">Employee id</th>
-                                    <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Name</th>
-                                    <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i>Job Title</th>
-                                    <th data-hide="phone"><i class=""></i>Employee Status</th>
-                                    <th data-hide="posting-date">Location</th>
-                                    <th data-hide="closing-date">Supervisor</th>
-                                    <th>Action</th>
+                                    <th data-hide="phone"> Employee id </th>
+                                    <th data-class="expand"> Name</th>
+                                    <th data-hide="phone"> Job Title</th>
+                                    <th data-hide="phone"> Employee Status</th>
+                                    <th data-hide="posting-date"> Location</th>
+                                    <th data-hide="closing-date"> Supervisor</th>
+                                    <th> Action </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="products-list" name="products-list">
                                 @foreach($employee as $employees)
-                                    <tr>
+                                    <tr id="employee_id{{$employees->emp_id}}">
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_firstname}}{{$employees->emp_lastname}}</td>
                                         <td>{{$employees->job_title}}</td>
@@ -50,11 +54,11 @@
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->employee_id}}</td>
                                         <td>
-                                            <a href="#" style="text-decoration:none;" class="btn-detail">
-                                                <i class="glyphicon glyphicon-edit " oldtitle="History" title="History" ></i>
-                                            </a> &nbsp;&nbsp;
-                                            <a href="#" style="text-decoration:none;">
-                                                <i class="glyphicon glyphicon-trash" title="Delete Sender Id" style="color:red;"></i>
+                                            <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -66,204 +70,160 @@
                 </div>
             </article>
         </div>
+        <input id="url" type="hidden" value="{{ \Request::url() }}">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                {{--<div class="modal-content">--}}
+                <div class="modal-body">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2> Employee </h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                </div>
+                                <!-- widget content -->
+                                <div class="widget-body no-padding">
+                                    <form id="frmProducts"  class="smart-form">
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label class="label">First Name</label>
+                                                    <label class="input">
+                                                        <input type="text" name="emp_firstname" id="emp_firstname">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Middle Name</label>
+                                                    <label class="input">
+                                                        <input  type="text" name="emp_middle_name" id="emp_middle_name" maxlength="10">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Last Name</label>
+                                                    <label class="input">
+                                                        <input  type="text" name="emp_lastname" id="emp_lastname" maxlength="10">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-4">
+                                                    <label class="label"> Employee Id</label>
+                                                    <label class="input">
+                                                        <input type="text" name="employee_id" id="employee_id" maxlength="10">
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                                    </div>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Job Title</label>
+                                                    <label class="select">
+                                                        @php $job_title = \App\JobTitle::all(); @endphp
+                                                        <select name="job_title" id="Job_title">
+                                                            @foreach($job_title as $job_titles)
+                                                                <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-4">
+                                                    <label class="label"> Employee Photo</label>
+                                                    <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">
+                                                        <img width="100%" height="100%" id="preview_image" src="{{asset('images/default.png')}}"/>
+                                                        <i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>
+                                                    </div>
+                                                    <p>
+                                                        <a href="javascript:changeProfile()" style="text-decoration: none;">
+                                                            <i class="glyphicon glyphicon-edit"></i> Change
+                                                        </a>&nbsp;&nbsp;
+                                                        <a href="javascript:removeFile()" style="color: red;text-decoration: none;">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                            Remove
+                                                        </a>
+                                                    </p>
+                                                    <input type="file" id="file" style="display: none"/>
+                                                    <input type="hidden" id="file_name"/>
+                                                </section>
+                                            </div>
+                                            <section>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" value="checkbox-login" id="checkbox-login">
+                                                    <i></i><strong> Create Login Details</strong>
+                                                </label>
+                                            </section>
+                                            <div id="div_login">
+                                                <div  class="row">
+                                                    <section  class="col col-6">
+                                                        <label class="label"> Username *</label>
+                                                        <label class="input">
+                                                            <input type="text" name="user_name" id="user_name" maxlength="10">
+                                                        </label>
+                                                    </section>
+                                                    <section  class="col col-6">
+                                                        <label class="label"> email *</label>
+                                                        <label class="input">
+                                                            <input type="email" name="user_email" id="user_email" >
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div id="" class="row">
+                                                    <section  class="col col-6">
+                                                        <label class="label"> Password *</label>
+                                                        <label class="input">
+                                                            <input type="password" name="user_password" id="user_password" maxlength="10">
+                                                        </label>
+                                                        <div class="note">
+                                                            <strong>Note:</strong> For a strong password, please use a hard to guess combination of text with upper and lower
+                                                            case characters, symbols and numbers
+                                                        </div>
+                                                    </section>
+                                                    <section class="col col-6">
+                                                        <label class="label"> Confirm Password ** </label>
+                                                        <label class="input">
+                                                            <input type="password" id="emp_confimpassword" name="emp_confimpassword">
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <section>
+                                                <label class="label">Active</label>
+                                                <div class="inline-group">
+                                                    <label class="checkbox">
+                                                        <input  type="checkbox"  name="checkbox-inline" checked>
+                                                        <i></i>
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="checkbox-inline" checked>
+                                                        <i></i>Publish in RSS feed(1) and web page(2)
+                                                    </label>
+                                                </div>
+                                            </section>
+                                        </fieldset>
+                                        <footer>
+                                            <input type="button" class="btn btn-primary" id="btn-save" value="add">
+                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                        </footer>
+                                    </form>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
     </section>
-
-    <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
-
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-    <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-        $(document).ready(function() {
-
-            pageSetUp();
-
-            /* // DOM Position key index //
-
-             l - Length changing (dropdown)
-             f - Filtering input (search)
-             t - The Table! (datatable)
-             i - Information (records)
-             p - Pagination (paging)
-             r - pRocessing
-             < and > - div elements
-             <"#id" and > - div with an id
-             <"class" and > - div with a class
-             <"#id.class" and > - div with an id and class
-
-             Also see: http://legacy.datatables.net/usage/features
-             */
-
-            /* BASIC ;*/
-            var responsiveHelper_dt_basic = undefined;
-            var responsiveHelper_datatable_fixed_column = undefined;
-            var responsiveHelper_datatable_col_reorder = undefined;
-            var responsiveHelper_datatable_tabletools = undefined;
-
-            var breakpointDefinition = {
-                tablet : 1024,
-                phone : 480
-            };
-
-            $('#dt_basic').dataTable({
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_dt_basic) {
-                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_dt_basic.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_dt_basic.respond();
-                }
-            });
-
-            /* END BASIC */
-
-            /* COLUMN FILTER  */
-            var otable = $('#datatable_fixed_column').DataTable({
-                //"bFilter": false,
-                //"bInfo": false,
-                //"bLengthChange": false
-                //"bAutoWidth": false,
-                //"bPaginate": false,
-                //"bStateSave": true // saves sort state using localStorage
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_fixed_column) {
-                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_fixed_column.respond();
-                }
-
-            });
-
-            // custom toolbar
-            $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-
-            // Apply the filter
-            $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
-
-                otable
-                    .column( $(this).parent().index()+':visible' )
-                    .search( this.value )
-                    .draw();
-
-            } );
-            /* END COLUMN FILTER */
-
-            /* COLUMN SHOW - HIDE */
-            $('#datatable_col_reorder').dataTable({
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_col_reorder) {
-                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_col_reorder.respond();
-                }
-            });
-
-            /* END COLUMN SHOW - HIDE */
-
-            /* TABLETOOLS */
-            $('#datatable_tabletools').dataTable({
-
-                // Tabletools options:
-                //   https://datatables.net/extensions/tabletools/button_options
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>"+
-                "t"+
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                "oTableTools": {
-                    "aButtons": [
-                        "copy",
-                        "csv",
-                        "xls",
-                        {
-                            "sExtends": "pdf",
-                            "sTitle": "SmartAdmin_PDF",
-                            "sPdfMessage": "SmartAdmin PDF Export",
-                            "sPdfSize": "letter"
-                        },
-                        {
-                            "sExtends": "print",
-                            "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
-                        }
-                    ],
-                    "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-                },
-                "autoWidth" : true,
-                "preDrawCallback" : function() {
-                    // Initialize the responsive datatables helper once.
-                    if (!responsiveHelper_datatable_tabletools) {
-                        responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
-                    }
-                },
-                "rowCallback" : function(nRow) {
-                    responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
-                },
-                "drawCallback" : function(oSettings) {
-                    responsiveHelper_datatable_tabletools.respond();
-                }
-            });
-
-            /* END TABLETOOLS */
-
-        })
-
-    </script>
-
-    <!-- Your GOOGLE ANALYTICS CODE Below -->
-    <!-- Your GOOGLE ANALYTICS CODE Below -->
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
+    <script src="{{ asset('/js/hr/employee.js') }}"></script>
 @endsection

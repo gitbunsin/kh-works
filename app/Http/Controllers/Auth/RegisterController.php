@@ -91,7 +91,6 @@ class RegisterController extends Controller
         $Hr->password = Hash::make(input::get('com_password'));
         $Hr->save();
         Session::put('user_register', $Hr);
-
         return redirect('administration/companyProfile');
     }
 }

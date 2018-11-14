@@ -72,7 +72,7 @@
                         <div role="tabpanel" class="tab-pane" id="post-job">
                             <form method="POST" action="{{url('hr-register')}}">
                                 {{ csrf_field() }}
-                                <div class="form-group">
+                                <div class="form-group ">
                                    <input placeholder="company name" id="com_name" type="text" class="form-control{{ $errors->has('com_name') ? ' is-invalid' : '' }}" name="com_name" value="{{ old('com_name') }}" required autofocus>
                                     @if ($errors->has('com_name'))
                                         <span class="invalid-feedback" role="alert">
