@@ -86,10 +86,11 @@ $("#btn-save").click(function (e) {
             alert(JSON.stringify(data));
             var table =
                 '<tr id="candidate_id'+ data.id +'">' +
-                '<td class="sorting_1">' + data.first_name + '</td>'+
-                '<td class="sorting_1">' + data.last_name + '</td>'+
-                '<td class="sorting_1">' + data.date_of_application	+ '</td>';
-            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                '<td style="text-align: center;" class="sorting_1">' + data.first_name + '</td>'+
+                '<td style="text-align: center;" class="sorting_1">' + data.last_name + '</td>'+
+                '<td style="text-align: center;" class="sorting_1">' + data.date_of_application	+ '</td>';
+            table += '<td style="text-align: center;"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-adjust "></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-remove-sign" style="color:red;"></i></a></td>'
+            table += '<td style="text-align: center;"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
             if (state == "add"){ //if user added a new record
                 $('#products-list').append(table);
             }else{ //if user updated an existing record
@@ -110,6 +111,7 @@ $(document).on('click','.delete-item',function(){
     var confirmation = confirm("are you sure you want to remove the item?");
     if(confirmation) {
         var candidate_id = $(this).attr('data-id');
+        var resposne = $(this).attr('id');
 //            alert(job_title_id);
         $.ajaxSetup({
             headers: {
@@ -131,5 +133,41 @@ $(document).on('click','.delete-item',function(){
         });
     }
 });
+
+
+$('.response').click(function(){
+
+    // alert(response);
+    var confirmation = confirm("are you sure you want to remove the item?");
+    if(confirmation) {
+        var accept_id = $(this).attr('data-id');
+        var response = $(this).attr('id');
+//            alert(job_title_id);
+        if(response == "approved") {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: 'accepts',
+                dataType: "Json",
+                success: function (data) {
+                    //alert(JSON.stringify(data));
+                    $("#candidate_id" + accept_id).remove();
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data));
+                }
+            });
+        }else{
+            alert('decline');
+        }
+    }
+});
+
+
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!

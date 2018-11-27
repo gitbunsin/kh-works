@@ -49,12 +49,6 @@
 
                     <!-- forgot-password -->
                     <div class="user-option">
-                        {{--<div class="checkbox form-check pull-left">--}}
-                                {{--<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
-                            {{--<label class="form-check-label" for="remember">--}}
-                                {{--{{ __('Remember Me') }}--}}
-                            {{--</label>--}}
-                        {{--</div>--}}
                                 <div class="checkbox pull-left form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="remember">

@@ -38,8 +38,9 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/demo.min.css')}}">
 
 		<!-- FAVICONS -->
-		<link href="{{ asset('img/favicon/favicon.ico') }}" rel="stylesheet">
-		<link href="{{ asset('img/favicon/favicon.ico') }}" rel="stylesheet">
+		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
+		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
+		{{--<link rel="icon" href="{{ asset('img/ico/favicon.ico')}}">--}}
 		<!-- GOOGLE FONT -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
 

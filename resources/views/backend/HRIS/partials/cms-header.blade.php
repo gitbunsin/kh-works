@@ -29,9 +29,9 @@
 				<!-- Top menu profile link : this shows only when top menu is active -->
 				<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
 					<li class="">
-						<a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
-							<img src="{{ asset('img/avatars/sunny.png')}}" alt="John Doe" class="online" />
-						</a>
+						{{--<a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> --}}
+							{{--<img src="{{asset('img/avatars/sunny.png')}}" alt="John Doe" class="online" />--}}
+						{{--</a>--}}
 						<ul class="dropdown-menu pull-right">
 							<li>
 								<a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
@@ -58,7 +58,7 @@
 
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+					<span> <a href="{{url('logout')}}" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
 				</div>
 				<!-- end logout button -->
 
@@ -87,3 +87,6 @@
 			<!-- end pulled right: nav area -->
 
 		</header>
+<div>
+	<span style="position:absolute !important;z-index:1 !important;margin-bottom:30px;">@include('flash::message')</span>
+</div>

@@ -48,7 +48,7 @@ class CompanyController extends Controller
      * @param  \App\organization  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(organization $company)
+    public function show(company $company)
     {
         //
     }
@@ -72,13 +72,29 @@ class CompanyController extends Controller
      * @param  \App\organization  $company
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request , $id)
     {
-
-//        dd('hello');
-//        $company_id = input::get('company_id');
+       // dd($request->name);
         $company = Organization::findOrFail($id);
+        $company->name = $request->name;
+        $company->tax_id = $request->tax_id;
+        $company->registration_number = $request->registration_number;
+        $company->phone = $request->phone;
+        $company->fax = $request->fax;
+        $company->email = $request->email;
+        $company->country= $request->country;
+        $company->province = $request->province;
+        $company->city = $request->city;
+        $company->zip_code = $request->zip_code;
+        $company->street1 = $request->street1;
+        $company->street2 = $request->street2;
+        $company->note = $request->note;
+        $company->postal_address = $request->postal_address;
+        $company->website = $request->website;
+        $company->mobile = $request->mobile;
+        $company->status = $request->status;
         $company->save();
+        flash('Create Successfully')->success();
         return redirect('/administration');
 
     }
@@ -89,7 +105,7 @@ class CompanyController extends Controller
      * @param  \App\organization  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(organization $company)
+    public function destroy(company $company)
     {
         //
     }

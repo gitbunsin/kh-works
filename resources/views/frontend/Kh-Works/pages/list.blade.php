@@ -37,16 +37,16 @@
 			</div>
 
 			<div class="banner-form banner-form-full job-list-form">
-				<form action="https://demo.themeregion.com/jobs-updated/job-list.html#">
+				<form action="#">
 					<!-- category-change -->
 					<div class="dropdown category-dropdown">
-						<a data-toggle="dropdown" href="https://demo.themeregion.com/jobs-updated/job-list.html#"><span class="change-text">Job Category</span> <i class="fa fa-angle-down"></i></a>
+						<a data-toggle="dropdown" href="#"><span class="change-text">Job Category</span> <i class="fa fa-angle-down"></i></a>
 						<ul class="dropdown-menu category-change">
-							<li><a href="https://demo.themeregion.com/jobs-updated/job-list.html#">Customer Service</a></li>
-							<li><a href="https://demo.themeregion.com/jobs-updated/job-list.html#">Software Engineer</a></li>
-							<li><a href="https://demo.themeregion.com/jobs-updated/job-list.html#">Program Development</a></li>
-							<li><a href="https://demo.themeregion.com/jobs-updated/job-list.html#">Project Manager</a></li>
-							<li><a href="https://demo.themeregion.com/jobs-updated/job-list.html#">Graphics Designer</a></li>
+							<li><a href="#">Customer Service</a></li>
+							<li><a href="#">Software Engineer</a></li>
+							<li><a href="#">Program Development</a></li>
+							<li><a href="#">Project Manager</a></li>
+							<li><a href="#">Graphics Designer</a></li>
 						</ul>
 					</div><!-- category-change -->
 

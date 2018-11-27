@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
+use App\Interview;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -21,10 +22,12 @@ class CandidateController extends Controller
     public function index()
     {
         $db_ext = DB::connection('mysql2');
-        $candidate = (new \App\Candidate)
-            ->orderBy('id','DESC')
+        $candidate = $db_ext->table('tbl_job_candidate_vacancy as cv')
+            ->join('tbl_job_candidate as c','cv.candidate_id','=','c.id')
+            ->join('tbl_job_vacancy as v','cv.vacancy_id','=','v.id')
+            ->select('cv.*','c.*','v.*')
             ->get();
-        //dd($Candidate);
+        // dd($candidate);
         return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate'));
     }
 
@@ -32,6 +35,13 @@ class CandidateController extends Controller
     {
         //dd($request->all());
         $Candidate = Candidate::create($request->all());
+        return response()->json($Candidate);
+    }
+
+    public function accepts(Request $request)
+    {
+        //dd($request->all());
+        $Candidate = Interview::create($request->all());
         return response()->json($Candidate);
     }
 

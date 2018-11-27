@@ -15,7 +15,12 @@ class BackendController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
-     */ 
+     */
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     public function index()
     {
         return view('Backend.HRIS.layouts.cms-layouts');

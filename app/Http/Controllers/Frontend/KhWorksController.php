@@ -20,25 +20,28 @@ class KhWorksController extends Controller
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function index()
-    {
-        $Job= DB::table('tbl_jobs as j')
-            ->select('j.*')
-            ->get();
-        return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
-    }
+//    public function index( Request $request)
+//    {
+//        $Job= DB::table('tbl_jobs as j')
+//            ->select('j.*')
+//            ->paginate(1);
+//        return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
+//    }
 
-    public function scopeSearch(Request $request)
+    public function index(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
 //         dd($searchTerm);
-        $JobTitle = DB::table('tbl_job_title')
+        $Job = DB::table('tbl_jobs as j')
+            ->select('j.*')
             ->where('job_title', 'like', '%' .$searchTerm. '%')
-            ->orWhere('job_description', 'like', '%' .$searchTerm. '%')
-            ->get();
+            ->orWhere('jobdesc', 'like', '%' .$searchTerm. '%')
+            ->paginate(3);
         $JobCategory = JobCategory::all();
 //        return redirect('/ui',compact('JobTitle','JobCategory'));
-        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));
+        return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
+
+//        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));
     }
     /**
      * Display a listing of the resource.

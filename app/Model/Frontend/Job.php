@@ -7,6 +7,13 @@ class Job extends Model
 {
     //
     protected $table = 'tbl_jobs';
-    protected $fillable = ['Companyname', 'Contactname','alt_email','postingDate','Jobresponsible'];
+    protected $fillable = [
+        'Companyname',
+        'Contactname',
+        'alt_email',
+        'postingDate',
+        'Jobresponsible'
+
+    ];
     public $timestamps = false;
 }

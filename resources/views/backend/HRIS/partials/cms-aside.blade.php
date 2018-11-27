@@ -6,14 +6,16 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 {{--{{Session::get('user_data')->status}}--}}
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-						<img src="img/avatars/sunny.png" alt="me" class="online" />
-                        @if(Session::get('company_log'))
+						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
+                       {{--{{ Auth::tbl_organization_gen_info()->name }}--}}
+                    @if(Session::get('user_register'))
                             <span>
-                                {{ Session::get('company_log')->name }}
+                                {{ Session::get('user_register')->name }}
                             </span>
-                        @else <span>
-                            {{'No Register'}}
-                        </span>
+                        @elseif(Session::get('company_log'))
+                            <span>
+                                  {{ Session::get('company_log')->name }}
+                             </span>
                         @endif
                         <i class="fa fa-angle-down"></i>
 					</a>
@@ -47,6 +49,10 @@
 
                             <li class="{{ Request::segment(2) == "jobs-title" ? "active" : " " }}">
                                 <a href="{{url ('administration/jobs-title')}}">Job Title</a>
+                            </li>
+
+                            <li class="{{ Request::segment(2) == "jobs-category" ? "active" : " " }}">
+                                <a href="{{url ('administration/jobs-category')}}">Job Cateogry</a>
                             </li>
                             <li>
                                 <a href="">Pay Grades</a>
@@ -185,8 +191,8 @@
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Recruitment</span></a>
                 <ul>
-                    <li class="{{ Request::segment(2) == "cv" ? "active" : " " }}">
-                        <a href="{{ url('administration/cv') }}">Query CV</a>
+                    <li class="{{ Request::segment(2) == "Cv" ? "active" : " " }}">
+                        <a href="{{ url('administration/Cv') }}">Query CV</a>
                     </li>
                     <li class="{{ Request::segment(2) == "post-jobs" ? "active" : " " }}">
                         <a href="{{ url('administration/post-jobs') }}">Jobs</a>

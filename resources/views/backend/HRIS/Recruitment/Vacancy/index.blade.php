@@ -95,7 +95,7 @@
                                         <fieldset>
                                             <div class="row">
                                                 <section class="col col-6">
-                                                    <label class="label"> Job Title </label>
+                                                    <label class="label">Job Title</label>
                                                     <label class="select">
                                                         @php $job_title = \App\JobTitle::all(); @endphp
                                                         <select name="job_title_code" id="job_title_code">
@@ -169,5 +169,5 @@
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/JDMcKinstry/JavaScriptDateFormat/master/Date.format.min.js"></script>
-    <script src="{{ asset('/js/hr/candidate.js') }}"></script>
+    <script src="{{ asset('/js/hr/vacancy.js') }}"></script>
 @endsection

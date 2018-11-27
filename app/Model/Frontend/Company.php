@@ -1,9 +1,16 @@
 <?php
-namespace App;
+
+namespace App\Model\Frontend;
+
+use App;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class User extends Authenticatable
+
+/**
+ * @property  attributes
+ */
+class Company extends Authenticatable
 {
     use HasApiTokens, Notifiable;
     /**
@@ -11,10 +18,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $table = 'users';
+    protected $table = 'tbl_organization_gen_info';
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    public $timestamps = false;
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -23,6 +31,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
     /**
      * Add a mutator to ensure hashed passwords
      */

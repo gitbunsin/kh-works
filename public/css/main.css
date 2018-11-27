@@ -2067,7 +2067,7 @@ input:-moz-placeholder {
 ========================================================================== */
 
 .banner-job {
-	background-image: url(/img/job-bg.jpg);
+	background-image: url(/img/Cover.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	color: #fff;
@@ -2331,7 +2331,7 @@ input:-moz-placeholder {
 /* JobCategory List Page */
 
 .job-bg {
-	background-image: url(/img/job-bg.jpg);
+	background-image: url(/img/Cover.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 }

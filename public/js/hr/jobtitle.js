@@ -64,6 +64,7 @@ $("#btn-save").click(function (e) {
         dataType: 'json',
         success: function (data) {
             alert(JSON.stringify(data));
+            $("tbody>tr>td.dataTables_empty").hide();
             var table =
                 '<tr id="job_id'+data.id+'">' +
                 '<td class="sorting_1">' + data.job_title + '</td>'+
@@ -90,7 +91,7 @@ $(document).on('click','.delete-item',function(){
     var confirmation = confirm("are you sure you want to remove the item?");
     if(confirmation) {
         var id = $(this).attr('data-id');
-//            alert(job_title_id);
+          alert(id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -102,8 +103,10 @@ $(document).on('click','.delete-item',function(){
             url: url + '/' + id,
             dataType: "Json",
             success: function (data) {
-                //alert(JSON.stringify(data));
-                $("#job_id" + id).remove();
+                var concatId = 'job_id'+id;
+                concatId = concatId.replace(/\s/g, '');
+                document.getElementById(concatId).remove();
+                $("tbody>tr>td.dataTables_empty").show();
             },
             error: function (data) {
                 alert(JSON.stringify(data));

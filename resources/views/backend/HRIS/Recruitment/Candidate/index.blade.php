@@ -52,18 +52,27 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone">Vacany</th>
-                                    <th data-class="expand">Candidate</th>
-                                    <th data-hide="date">Date-of-Application</th>
-                                    <th>Action</th>
+                                    <th style="text-align: center;" data-hide="phone">Vacany</th>
+                                    <th style="text-align: center;" data-class="expand">Candidate</th>
+                                    <th style="text-align: center;" data-hide="date">Date-of-Application</th>
+                                    <th style="text-align: center;" >Interview</th>
+                                    <th style="text-align: center;">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                 @foreach($candidate as $candidates)
-                                    <tr id="candidate_id{{$candidates->id}}">
-                                        <td>{{$candidates->first_name}}</td>
-                                        <td>{{$candidates->last_name}}</td>
+                                    <tr style="text-align: center;" id="candidate_id{{$candidates->id}}">
+                                        <td>{{$candidates->last_name}} {{$candidates->first_name}} </td>
+                                        <td>{{$candidates->name}}</td>
                                         <td>{{$candidates->date_of_application}}</td>
+                                        <td>
+                                            <a data-id="{{$candidates->id}}" id="approved" href="#" style="text-decoration:none;" class="btn-detail response">
+                                                <i class="glyphicon glyphicon-adjust "></i>
+                                            </a>
+                                            <a data-id="{{$candidates->id}}" id="declined" href="#" style="text-decoration:none;" class="btn-detail response">
+                                                <i class="glyphicon glyphicon-remove-sign"  style="color:red;"></i>
+                                            </a>
+                                        </td>
                                         <td>
                                             <a data-id="{{$candidates->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>

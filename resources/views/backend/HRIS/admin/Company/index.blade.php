@@ -11,6 +11,7 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2> Edit Company Profiles</h2>
+                        {{--{{ Session::get('company_log')->name}}--}}
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,24 +21,41 @@
                         </div>
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            @if(Session::get('user_register'))
-                            @php  $id = Session::get('user_register')->id @endphp
-                            <form id="validate_job" method="POST" action="{{url('administration/companyProfile',$id)}}" class="smart-form">
+                            {{--{{ Session::get('user_register')->name ? Session::get('company_log')->name : '' }}--}}
+                            @if(Session::has('user_register'))
+                            @php
+                                $id = Session::get('user_register')->id;
+                            @endphp
+                                @else
+                                @php
+                                    $id = Session::get('company_log')->id;
+                                @endphp
+                            @endif
+                            {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
+                            {{Form::open(array("url"=>"administration/companyProfile/".$id, "class"=>"smart-form"))}}
                             <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="company_id" value="{{Session::get('user_register')->id}}">
+                                <input type="hidden" name="company_id" value="">
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">Campany Profiles 1</label>
+                                            <label class="label">Company Profiles </label>
                                             <label class="input">
-                                                <input  value="{{ Session::get('user_register')->name }}" type="text" name="company_name" id="company_name">
+                                                @if(Session::has('user_register'))
+                                                       <input  value="{{ Session::get('user_register')->name}}" type="text" name="name" id="name">
+                                                    @else
+                                                       <input  value="{{  Session::get('company_log')->name }}" type="text" name="name" id="name">
+                                                    @endif
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                                 <label class="label">Company Email</label>
                                                 <label class="input">
-                                                    <input  value="{{ Session::get('user_register')->email }}" type="text" name="company_email" id="company_email">
+                                                    @if(Session::has('user_register'))
+                                                         <input  value="{{ Session::get('user_register')->email}}" type="text" name="email" id="email">
+                                                    @else
+                                                         <input  value="{{ Session::get('company_log')->email}}" type="text" name="email" id="email">
+                                                    @endif
                                                 </label>
                                         </section>
                                     </div>
@@ -50,12 +68,67 @@
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                         </div>
                                     </section>
-                                    <section>
-                                        <label class="label">Websites</label>
-                                        <label class="input">
-                                            <input disabled value="" type="text" name="company_profiles" id="company_profiles">
-                                        </label>
-                                    </section>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label class="label">City</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="city" id="city">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Zip Code</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="zip_code" id="zip_code">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Street</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="street1" id="street1">
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label class="label">Country</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="country" id="country">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Province</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="province" id="province">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Tax Id</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="tax_id" id="tax_id">
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
+                                            <label class="label">Websites</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="website" id="website">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">registration number</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="registration_number" id="registration_number">
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Noted</label>
+                                            <label class="input">
+                                                <input  value="" type="text" name="note" id="note">
+                                            </label>
+                                        </section>
+                                    </div>
+
                                     <section>
 
                                          <header>
@@ -76,7 +149,7 @@
                                                 <!-- widget content -->
                                                 <div class="widget-body no-padding">
 
-											<textarea name="ckeditor"></textarea>
+											<textarea id="note" name="ckeditor"></textarea>
 
                                                 </div>
                                                 <!-- end widget content -->
@@ -85,21 +158,11 @@
                                             <!-- end widget div -->
 
                                     </section>
-                                    {{--<section>--}}
-                                        {{--<label class="label">Company Profiles *</label>--}}
-                                        {{--<label class="input">--}}
-                                                {{--<textarea name="com_note" rows="10" cols="150"></textarea>--}}
-                                        {{--</label>--}}
-                                        {{--<div class="note">--}}
-                                            {{--<strong>Note:</strong> height of the textarea depends on the rows attribute.--}}
-                                        {{--</div>--}}
-                                    {{--</section>--}}
-
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Phone *</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="com_phone" id="com_phone">
+                                                <input  value="" type="text" name="phone" id="phone">
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -108,7 +171,7 @@
                                         <section class="col col-4">
                                             <label class="label">fax *</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="com_phone" id="com_phone">
+                                                <input  value="" type="text" name="fax" id="fax">
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -117,7 +180,7 @@
                                         <section class="col col-4">
                                             <label class="label">mobile *</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="com_phone" id="com_phone">
+                                                <input  value="" type="text" name="mobile" id="mobile">
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -127,7 +190,7 @@
                                     <section>
                                         <label class="label">Company Logos *</label>
                                         <label class="input">
-                                            <input  value="" type="file" name="com_phone" id="com_phone">
+                                            <input  value="" type="file" name="phone" id="phone">
                                         </label>
                                     </section>
                                 </fieldset>
@@ -138,14 +201,13 @@
                                         Back
                                     </button>
                                 </footer>
-                            </form>
-
+                            {{ Form::close() }}
                         </div>
 
                         <!-- end widget content -->
 
                     </div>
-                    @endif
+
                 </div>
             </article>
         </div>

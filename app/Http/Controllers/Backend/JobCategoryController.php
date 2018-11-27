@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
+use App\Http\Controllers\Controller;
 
+use App\JobCategory;
 use Illuminate\Http\Request;
 
 class JobCategoryController extends Controller
@@ -13,7 +15,8 @@ class JobCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $JobCategory = JobCategory::all();
+        return view('backend.HRIS.admin.JobCategory.index',compact('JobCategory'));
     }
 
     /**
@@ -21,64 +24,35 @@ class JobCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $JobCategory = JobCategory::create($request->all());
+        return response()->json($JobCategory);
     }
-
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($Job_id)
     {
-        //
+        $JobCategory = JobCategory::findOrFail($Job_id);
+        return response()->json($JobCategory);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request, $Job_id)
     {
-        //
+        $JobCategory = JobCategory::findOrFail($Job_id);
+        $JobCategory->name = $request->name;
+        $JobCategory->description = $request->description;
+        $JobCategory->save();
+        return response()->json($JobCategory);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $JobCategory = JobCategory::destroy($id);
+        return response()->json($JobCategory);
     }
 }

@@ -53,6 +53,7 @@ class LoginController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 );
+
                 $validate_admin_login = Validator::make(Input::all(), $rules);
                 if ($validate_admin_login->fails()) {
                     $messages = $validate_admin_login->messages();
@@ -60,7 +61,6 @@ class LoginController extends Controller
                         ->withErrors($messages)
                         ->withInput(Input::except('password'));
                 } else {
-
                     $d = array(
                         Input::get('email'), Hash::make(Input::get('password'))
                     );
@@ -68,11 +68,13 @@ class LoginController extends Controller
                         ->select('id','name','email', 'password')
                         ->where('email', Input::get('email'))
                         ->first();
+                    //dd($user_log);
                     $db_kh_works = DB::connection('mysql2');
                     $company_log = $db_kh_works->table('tbl_organization_gen_info')
-                        ->select('id','name', 'email', 'password')
+                        ->select('id','name', 'email', 'password','phone')
                         ->where('email', Input::get('email'))
                         ->first();
+                      //dd($company_log);
 
                     $CVs = DB::table('users')
                         ->join('tbl_cvs', 'users.id', '=', 'tbl_cvs.user_id')
@@ -83,23 +85,26 @@ class LoginController extends Controller
                 }
                 Session::put('user_log', $user_log);
                 Session::put('company_log',$company_log);
-                if ($company_log && Hash::check(Input::get('password'), $company_log->password)) {
+                //dd($company_log);
+                if ($company_log && Hash::make(Input::get('password') == $company_log->password))
+                    {
+                      //dd($company_log->name);
                     return redirect('/administration/companyProfile');
                 }
-                else if ($user_log && Hash::check(Input::get('password'), $user_log->password)) {
+                else if ($user_log && Hash::make(Input::get('password') == $user_log->password))
+                {
                     if ($CVs) {
-                        return Redirect('kh-works');
+                        return Redirect('/kh-works');
                     } else {
-                        return Redirect('kh-works/lists');
+                        return Redirect('/kh-works/lists');
                     }
-
-                } else {
-        //                $request->Session()->flash('message', "User doesn't not exit Please Register !");
+                }
+                else
+                {
+                    //$request->Session()->flash('message', "User doesn't not exit Please Register !");
                     return Redirect('/login');
                 }
-        //dd($user_log);
     }
-
     protected function logout(Request $request) {
         //Auth::logout();
         Session::flush();

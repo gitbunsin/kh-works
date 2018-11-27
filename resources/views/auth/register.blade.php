@@ -8,7 +8,7 @@
     <meta name="author" content="Theme Region">
     <meta name="description" content="">
 
-    <title>Jobs | Job Portal / Job Board HTML Template</title>
+    <title>kh-Works | The Easiest Way to Get Your New Job</title>
 
     <!-- CSS -->
     @include('frontend.Kh-Works.partials.ui-styles')

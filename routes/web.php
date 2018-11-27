@@ -13,9 +13,8 @@
 
 use Illuminate\Support\Facades\Auth;
 
-
 //Route::get('/home', 'FrontendController@index')->name('home');
-Route::get('/administration' ,'Backend\BackendController@index');
+
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -31,6 +30,15 @@ Route::post('hr-register','\App\Http\Controllers\Auth\RegisterController@HrRegis
 /************************************************************************************
  *                                  Backend routes
  ************************************************************************************/
+//Route::group(['middleware' => ['auth', 'web']], function() {
+//    // uses 'auth' middleware plus all middleware from $middlewareGroups['web']
+//    Route::resource('blog','BlogController'); //Make a CRUD controller
+//
+//});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/administration' ,'Backend\BackendController@index');
+});
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
 
@@ -38,9 +46,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
     Route::resource('companyProfile', 'CompanyController');
     Route::resource('vacancy', 'VacanciesController');
     Route::resource('jobs-title','JobTitleController');
+    Route::resource('jobs-category','JobCategoryController');
     Route::resource('post-jobs','JobController');
     Route::resource('employee','EmployeeController');
     Route::resource('interview','InterviewController');
+    Route::post('accepts','CandidateController@accepts');
     Route::resource('Cv','CvController');
     Route::delete('ajax-remove-image/{filename}', 'EmployeeController@deleteImage');
     Route::match(['get', 'post'], 'ajax-image-upload', 'EmployeeController@ajaxImage');

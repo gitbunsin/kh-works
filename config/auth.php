@@ -45,6 +45,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'tbl_organization_gen_infos'  => [
+            'driver'  => 'session',
+            'provider' => 'tbl_organization_gen_info',
+        ],
     ],
 
     /*
@@ -68,6 +72,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'tbl_organization_gen_info' => [
+            'driver' => 'eloquent',
+            'model'  => App\Model\Frontend\Company::class,
         ],
 
         // 'users' => [

@@ -10,7 +10,7 @@ class JobCategory extends Model
 
 //    protected $connection = 'mysql2';
     protected $table = 'tbl_job_category';
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['id', 'name','description','status'];
     public $timestamps = false;
 //    public static function getAll()
 //    {
