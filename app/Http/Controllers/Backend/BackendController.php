@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-// use Illuminate\Support\Facades\Input;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 
 class BackendController extends Controller
@@ -18,11 +15,10 @@ class BackendController extends Controller
      */
 //    protected  $redirectTo ="/login";
 
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
-
+   public function __construct()
+   {
+       $this->middleware('isAdmin');
+   }
     public function index()
     {
         return view('Backend.HRIS.layouts.cms-layouts');

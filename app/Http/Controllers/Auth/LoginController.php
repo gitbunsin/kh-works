@@ -33,7 +33,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/kh-works';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -42,8 +42,8 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
         $this->middleware('guest:admins')->except('logout');
+        $this->middleware('guest:web')->except('logout');
 
     }
     public function showLoginForm()
@@ -52,29 +52,18 @@ class LoginController extends Controller
     }
 
 
-    protected  function login()
+    protected  function login(Request $request)
     {
-        //dd('hello');
         $email = Input::get('email');
         $password = Input::get('password');
-        $input = Input::get('_token');
-       // dd($input);
-        //dd($password);
+
         $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
-        $auth = Auth::guard('web')->attempt(['email' => $email, 'password' => $password]);
-
-        //dd($authAdmin);
-        if ($auth)
-        {
-            return redirect('/kh-works');
-        }else if ($authAdmin){
-
-            return redirect('/administration');
-
-        }else{
+        $auth = Auth::guard()->attempt(['email' => $email, 'password' => $password]);
+        if (!$auth && !$authAdmin) {
             return redirect()->route('login');
         }
-        //if unsuccessfull redirect back to the login for with form data
+
+        return redirect($this->redirectTo);
 
      }
 
@@ -139,8 +128,10 @@ class LoginController extends Controller
 //                }
 //    }
     protected function logout(Request $request) {
-        //Auth::logout();
-        Session::flush();
+        // dd(Auth::guard('admins')->logout());
+        //Session::flush();
+        Auth::guard('admins')->logout();
+        Auth::logout();
         return redirect('/login');
     }
 }

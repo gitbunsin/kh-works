@@ -14,35 +14,26 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-//    public function handle($request, Closure $next, $guard = null)
-//    {
-//        if (Auth::guard($guard)->check()) {
-//            return redirect('/home');
-//        }
-//
-//        return $next($request);
-//    }
 
     public function handle($request, Closure $next, $guard = null)
     {
-        //dd($request);
+        // dd(Auth::guard($guard));
         switch ($guard) {
             case 'admins' :
+        //    dd(Auth::guard($guard));
                 if (Auth::guard($guard)->check()) {
-
+                    // dd(Auth::guard($guard));
                     return redirect()->route('admin');
                 }
-//                dd($request);
-//                dd('hello admin two');
                 break;
             default:
                 if (Auth::guard($guard)->check()) {
-//                    dd('hello');
                     return redirect()->route('home');
                 }
-//                dd('hello admin one');
+
                 break;
         }
+        // dd($request);
         return $next($request);
     }
 }

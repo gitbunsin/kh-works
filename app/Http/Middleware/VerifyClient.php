@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Closure;
 
-class VerifyAdmin
+class VerifyClient
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,8 @@ class VerifyAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('admins')->user() == null) {
-            return redirect()->route('login');
+        if(Auth::guard('admins')->user() != null) {
+            return redirect()->route('admin');
         }
         return $next($request);
     }

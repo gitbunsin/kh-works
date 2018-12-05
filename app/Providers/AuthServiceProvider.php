@@ -6,6 +6,7 @@ use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Schema; //Import Schema
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,4 +32,11 @@ class AuthServiceProvider extends ServiceProvider
 
         //
     }
+
+    // public function register()
+    // {
+    //     Auth::resolveUsersUsing(function($guard = null) {
+    //         return Auth::user() ? Auth::user() : Auth::guard('admins')->tbl_organization_gen_info();
+    // });
+    // }
 }

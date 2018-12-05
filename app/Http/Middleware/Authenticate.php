@@ -18,23 +18,10 @@ class Authenticate extends Middleware
      * @param null $guard
      * @return string
      */
-//    protected function redirectTo($request)
-//    {
-//        if (! $request->expectsJson()) {
-//            return route('login');
-//        }
-//    }
-
-    public function handle($request, Closure $next, $guard = null)
+    protected function redirectTo($request)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
-            }
+        if (! $request->expectsJson()) {
+            return route('login');
         }
-
-        return $next($request);
     }
 }

@@ -23,6 +23,12 @@ use Psy\Util\Json;
 
 class KhWorksController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('isClient');
+    }
     /**
      * Display a listing of the resource.
      *
