@@ -25,41 +25,44 @@
                 <div class="user-account">
                     <h2>User Login</h2>
                 <!-- form -->
+                    {{--route('admin.login.submit'--}}
                     <form method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
-                        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                            <input placeholder="email" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                        <div class="form-group">
+                            <input placeholder="email" id="email" type="email" class="form-control" name="email"
+                                   value="{{ old('email') }}"  autofocus>
                             @if ($errors->has('email'))
-                                <span class="invalid-feedback" role="alert">
+                                <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <input placeholder="password" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <input placeholder="password" id="password" type="password" class="form-control"
+                                   name="password">
                             @if ($errors->has('password'))
-                                <span class="invalid-feedback" role="alert">
+                                <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                             @endif
                         </div>
                         <button style="cursor: pointer" type="submit" href="#" class="btn">Login</button>
-                    </form><!-- form -->
 
-                    <!-- forgot-password -->
-                    <div class="user-option">
-                                <div class="checkbox pull-left form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                        <div class="pull-right forgot-password">
-                            <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }}</a>
-                        </div>
-                    </div><!-- forgot-password -->
+                        <div class="user-option">
+                            <div class="checkbox pull-left form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="remember">
+                                    {{ __('Remember Me') }}
+                                </label>
+                            </div>
+                            <div class="pull-right forgot-password">
+                                <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }}</a>
+                            </div>
+                        </div><!-- forgot-password -->
+                    </form><!-- form -->
                 </div>
+                    <!-- forgot-password -->
+
                 <a href="#" class="btn-primary">Create a New Account</a>
             </div><!-- user-login -->
         </div><!-- row -->

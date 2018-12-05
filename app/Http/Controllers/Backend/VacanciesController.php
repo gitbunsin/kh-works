@@ -38,23 +38,42 @@ class VacanciesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    public function create()
-//    {
-//        $items = Job::all();
-//        return view('backend.HRIS.Recruitment.Vacancy.create',compact('items'));
-//    }
-    public function store(Request $request)
+    public function create()
     {
-       //dd($request->all());
-        $JobTitle = Vacancy::create($request->all());
-        return response()->json($JobTitle);
+        $items = Job::all();
+        return view('backend.HRIS.Recruitment.Vacancy.create',compact('items'));
     }
 
-    public function show($vacancy_id)
+    public function store(Request $request)
     {
-        $JobTitle = Vacancy::findOrFail($vacancy_id);
-        return response()->json($JobTitle);
+            //dd($request->all());
+            $vacancy = new Vacancy();
+            $vacancy->job_title_code = $request->Job_title;
+            $vacancy->name = $request->name;
+            $vacancy->hiring_manager_id = $request->hiring_manager_id;
+            $vacancy->description = $request->description;
+            $vacancy->save();
+            return redirect('/administration/vacancy');
+
     }
+    public function edit(Request $request , $id)
+    {
+        $vacancy = Vacancy::where('id',$id)->first();
+        return view('backend.HRIS.Recruitment.Vacancy.edit',compact('vacancy'));
+    }
+
+//    public function store(Request $request)
+//    {
+//       //dd($request->all());
+//        $JobTitle = Vacancy::create($request->all());
+//        return response()->json($JobTitle);
+//    }
+
+//    public function show($vacancy_id)
+//    {
+//        $JobTitle = Vacancy::findOrFail($vacancy_id);
+//        return response()->json($JobTitle);
+//    }
 
     public function update(Request $request, $vacancy_id)
     {

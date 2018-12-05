@@ -12,7 +12,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add New Employee</h2>
+                        <h2>Edit Employee</h2>
 
                     </header>
 
@@ -71,24 +71,24 @@
                                                 <i></i>
                                             </label>
                                         </section>
-                                    <section class="col col-4">
-                                        <label class="label"> Employee Photo</label>
-                                        <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">
-                                            <img width="100%" height="100%" id="preview_image" src="{{asset('images/default.png')}}"/>
-                                            <i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>
-                                        </div>
-                                        <p>
-                                            <a href="javascript:changeProfile()" style="text-decoration: none;">
-                                                <i class="glyphicon glyphicon-edit"></i> Change
-                                            </a>&nbsp;&nbsp;
-                                            <a href="javascript:removeFile()" style="color: red;text-decoration: none;">
-                                                <i class="glyphicon glyphicon-trash"></i>
-                                                Remove
-                                            </a>
-                                        </p>
-                                        <input type="file" id="file" style="display: none"/>
-                                        <input type="hidden" id="file_name"/>
-                                    </section>
+                                        <section class="col col-4">
+                                            <label class="label"> Employee Photo</label>
+                                            <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">
+                                                <img width="100%" height="100%" id="preview_image" src="{{asset('images/default.png')}}"/>
+                                                <i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>
+                                            </div>
+                                            <p>
+                                                <a href="javascript:changeProfile()" style="text-decoration: none;">
+                                                    <i class="glyphicon glyphicon-edit"></i> Change
+                                                </a>&nbsp;&nbsp;
+                                                <a href="javascript:removeFile()" style="color: red;text-decoration: none;">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                    Remove
+                                                </a>
+                                            </p>
+                                            <input type="file" id="file" style="display: none"/>
+                                            <input type="hidden" id="file_name"/>
+                                        </section>
                                     </div>
                                     <section>
                                         <label class="checkbox">
@@ -182,52 +182,52 @@
 
             });
         });
-            // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-            $(document).ready(function() {
+        $(document).ready(function() {
 
-                pageSetUp();
-                $('#startdate').datepicker({
-                    // format: 'DD - dd MM yyyy'
-                });
-                var $loginForm = $("#validate_employee").validate({
-                    // Rules for form validation
-                    rules : {
-                        first_name : {
-                            required : true
-                        },
-                        last_name : {
-                            required : true
-                        },
-                        middle_name:{
-                            required:true
-                        },
-                        emp_id :{
-                            required:true
-                        }
-                    },
-
-                    // Messages for form validation
-                    messages : {
-                        first_name : {
-                            required : 'Please enter first name'
-                        },
-                        last_name : {
-                            required: 'Please enter your last_name'
-                        },
-                        middle_name:{
-                            required:'please enter middle name'
-                        },
-                        emp_id : {
-                            required:'please enter employee id'
-                        }
-                    },
-                    // Do not change code below
-                    errorPlacement : function(error, element) {
-                        error.insertAfter(element.parent());
-                    }
-                });
+            pageSetUp();
+            $('#startdate').datepicker({
+                // format: 'DD - dd MM yyyy'
             });
+            var $loginForm = $("#validate_employee").validate({
+                // Rules for form validation
+                rules : {
+                    first_name : {
+                        required : true
+                    },
+                    last_name : {
+                        required : true
+                    },
+                    middle_name:{
+                        required:true
+                    },
+                    emp_id :{
+                        required:true
+                    }
+                },
+
+                // Messages for form validation
+                messages : {
+                    first_name : {
+                        required : 'Please enter first name'
+                    },
+                    last_name : {
+                        required: 'Please enter your last_name'
+                    },
+                    middle_name:{
+                        required:'please enter middle name'
+                    },
+                    emp_id : {
+                        required:'please enter employee id'
+                    }
+                },
+                // Do not change code below
+                errorPlacement : function(error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        });
 
     </script>
     <script>
@@ -237,7 +237,6 @@
         $('#file').change(function () {
             if ($(this).val() != '') {
                 upload(this);
-
             }
         });
         function upload(img) {

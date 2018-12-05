@@ -16,11 +16,13 @@ class BackendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    protected  $redirectTo ="/login";
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
     public function index()
     {
         return view('Backend.HRIS.layouts.cms-layouts');

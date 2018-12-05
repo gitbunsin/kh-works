@@ -13,9 +13,22 @@ return [
     |
     */
 
+//    'defaults' => [
+//        'guard' => 'web',
+//        'passwords' => 'users',
+//    ],
+//    'admins' => [
+//        'driver' => 'eloquent',
+//        'model' => App\Organization::class,
+//    ],
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
+    ],
+    'admins' => [
+        'driver' => 'eloquent',
+        'model' => App\Organization::class,
     ],
 
     /*
@@ -45,9 +58,9 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
-        'tbl_organization_gen_infos'  => [
+        'admins'  => [
             'driver'  => 'session',
-            'provider' => 'tbl_organization_gen_info',
+            'provider' => 'admins',
         ],
     ],
 
@@ -73,9 +86,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'tbl_organization_gen_info' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model'  => App\Model\Frontend\Company::class,
+            'model'  => App\Organization::class,
         ],
 
         // 'users' => [

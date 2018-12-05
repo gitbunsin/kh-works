@@ -1,10 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
+use App\Employee;
+use App\Exports\UsersExport;
+use App\Job;
+use App\User;
+use Maatwebsite\Excel\Facades\Excel;
 // use Illuminate\Support\Facades\Input;
 // use Illuminate\Support\Facades\DB;
+use App\Candidate;
+use App\CandidateAttachment;
+use App\CandidateVacancy;
 use App\JobCategory;
+use App\Vacancy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +26,7 @@ class KhWorksController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
 //    public function index( Request $request)
 //    {
@@ -26,6 +34,10 @@ class KhWorksController extends Controller
 //            ->select('j.*')
 //            ->paginate(1);
 //        return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
+//    }
+//    public function export()
+//    {
+//
 //    }
 
     public function index(Request $request)
@@ -39,6 +51,7 @@ class KhWorksController extends Controller
             ->paginate(3);
         $JobCategory = JobCategory::all();
 //        return redirect('/ui',compact('JobTitle','JobCategory'));
+        //return Excel::download(new UsersExport, 'users.xlsx');
         return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
 
 //        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));
@@ -76,80 +89,95 @@ class KhWorksController extends Controller
      * function Candidate apply JobCategory.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public  function applyJobs($id , $user_id){
-
-//           $data = $id->json()->all();
-//           return json_encode($id);
-//        dd($data);
-          // dd()
-//        $data = $id->json->all();
-//        $name = $data->name; // this one is ok
-
-//        dd($request);
+    public  function apply(Request  $request , $id , $user_id)
+    {
+        //dd($request->all());
         //Add to table JobCategory Candidate
-//        $job_candidate = new Candidate();
-//        $user_candidate = DB::table('users as u')
-//            ->select('c.*','c.id as cv_id','u.*')
-//            ->join('tbl_cvs as c', 'c.user_id', '=','u.id')
-//            ->where('c.user_id','=',$user_id)
+        $candidate = new Candidate();
+        $user_candidate = DB::table('users as u')
+            ->select('c.*', 'c.id as cv_id', 'u.*')
+            ->join('tbl_cvs as c', 'c.user_id', '=', 'u.id')
+            ->where('c.user_id', '=', $user_id)
+            ->get()
+            ->first();
+        //$candidate = new Candidate()
+        //dd($user_candidate);
+        //add CV
+        $candidate->cv_file_id = $user_candidate->id;
+        $candidate->first_name = $user_candidate->name;
+        $candidate->last_name = $user_candidate->name;
+        $candidate->middle_name = $user_candidate->name;
+        $candidate->email = $user_candidate->email;
+        $candidate->mode_of_application = 1;
+        $candidate->status = 0;
+
+        $candidate->save();
+        //$candidate_id = $candidate->id;
+
+        //add new table for Candidate Attachment
+        $Candidate_Attachment = new CandidateAttachment();
+        $Candidate_Attachment->candidate_id = $candidate->id;
+        $Candidate_Attachment->file_name = $user_candidate->image;
+        $Candidate_Attachment->file_type = $user_candidate->type;
+        $Candidate_Attachment->file_size = $user_candidate->size;
+        $Candidate_Attachment->save();
+//        $vacancy = DB::table('tbl_job_vacancy as v')
+//            ->select('v.*', 'v.id as vacancy_id', 't.*')
+//            ->join('tbl_job_title as t', 'v.job_title_code', '=', 't.id')
+//            ->where('v.job_title_code', '=', $id)
 //            ->get()
 //            ->first();
-//        http://localhost/01.php?id=$user_id
+        $vacancy = new Vacancy();
+        $vacancy->job_title_code = $user_candidate->id;
+        $vacancy->hiring_manager_id = $user_candidate->user_id;
+        $vacancy->name = $user_candidate->name;
+        $vacancy->status = 1;
 
+        $vacancy->save();
+        $vacancy_id = $vacancy->id;
 
-//         $cv_name = $user_candidate->name;
-//         $cv_image = $user_candidate->image;
-//         $cv_type = $user_candidate->type;
-//         $cv_size = $user_candidate->size;
-//         $cv_id = $user_candidate->cv_id;
-//
-//         $first_name = $user_candidate->full_name;
-//         $last_name = $user_candidate->full_name;
-//         $user_email = $user_candidate->user_email;
-//         $user_website = $user_candidate->website;
-//         $user_status = $user_candidate->status;
-//         $user_mobile = $user_candidate->mobile;
-//         $cv_name = $user_candidate->name;
-//         $cv_date = $user_candidate->date;
-//         $job_candidate->first_name = $first_name;
-//         $job_candidate->last_name = $last_name;
-//         $job_candidate->email = $user_email;
-//         $job_candidate->mode_of_application = 1;
-//         $job_candidate->status = $user_status;
-//         $job_candidate->contact_number = $user_mobile;
-//         $job_candidate->date_of_application = $cv_date;
-//         $job_candidate->cv_file_id = $cv_id;
-//         $job_candidate->save();
-//         $candidate_vacancy_id = $job_candidate->id;
-//
-//         //add new table for Candidate Attachment
-//         $Candidate_Attachment = new CandidateAttachment();
-//         $Candidate_Attachment->candidate_id = $candidate_vacancy_id;
-//         $Candidate_Attachment->file_name = $cv_image;
-//         $Candidate_Attachment->file_type = $cv_type;
-//         $Candidate_Attachment->file_size = $cv_size;
-//         $Candidate_Attachment->save();
-//         $vacancy = DB::table('tbl_job_vacancy as v')
-//            ->select('v.*','v.id as vacancy_id','t.*')
-//            ->join('tbl_job_title as t', 'v.job_title_code', '=','t.id')
-//            ->where('v.job_title_code','=',$id)
-//            ->get()
-//            ->first();
-//         $vacancy_id = $vacancy->vacancy_id;
-//         //Add one table Job_Candidate_Vacancy
-//         $job_apply = new JobApply();
-//         $job_apply->candidate_id = $candidate_vacancy_id;
-//         $job_apply->vacancy_id = $vacancy_id;
-//         $job_apply->status = 1;
-//         $job_apply->applied_date = '2018-10-19 00:00:00';
-//         $job_apply->save();
-//         return redirect('/ui');
-//        return Response::json(array(
-//            'success' => true,
-//            'data'   => $data
-//        ));
+        //add new Candidate
+        $vacancy_candidate = new CandidateVacancy();
+        $vacancy_candidate->candidate_id = $candidate->id;
+        $vacancy_candidate->vacancy_id = $vacancy->id;
+        $vacancy_candidate->status = 1;
+        $date_applied = \Carbon\Carbon::now();
+        $vacancy_candidate->applied_date = $date_applied;
+        $vacancy_candidate->save();
+
+        $user = User::where('id', $user_id)->select('name', 'email')->get();
+        $job = Job::where('id', $id)->select('CompanyName', 'email', 'job_title')->get();
+        Excel::create('User', function ($excel) use ($user, $job) {
+            $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
+//                $sheet->cell('A1', function ($cell) {
+//                    $cell->setValue('First Name');
+//                });
+//                $sheet->cell('B1', function ($cell) {
+//                    $cell->setValue('email');
+//                });
+//                $sheet->cell('C1', function ($cell) {
+//                    $cell->setValue('Company Name');
+//                });
+//                $sheet->cell('D1', function ($cell) {
+//                    $cell->setValue('job_title');
+//                });
+//               if (!empty($data)) {
+                foreach ($user as $key => $value) {
+                    $i = $key + 2;
+                    $sheet->cell('A' . $i, $value['name']);
+                    $sheet->cell('B' . $i, $value['email']);
+                }
+                foreach ($job as $key => $values) {
+                    $is = $key + 2;
+                    $sheet->cell('C' . $is, $values['CompanyName']);
+                    $sheet->cell('D' . $is, $values['job_title']);
+                }
+            });
+        })->download();
+
+        //return redirect('/kh-works/jobs/1');
     }
 
     /**

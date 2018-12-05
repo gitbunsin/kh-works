@@ -53,8 +53,18 @@
                 </div><!-- item-info -->
                 <div class="social-media">
                     <div class="button">
-                        <a href="#" class="btn btn-primary"><i class="fa fa-briefcase" aria-hidden="true"></i>Apply For This Job</a>
-                        <a href="#" class="btn btn-primary bookmark"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Bookmark</a>
+                           @if (Route::has('login'))
+                                 @php
+                                    $user_id = Auth::user()->id;
+                                 @endphp
+                             @endif
+                            {{Form::open(array("url"=>"kh-works/apply/".$JobDetail->id.'/'.$user_id, "class"=>"smart-form"))}}
+                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                <input id="url" type="hidden" value="{{ \Request::url() }}">
+                                <button class="btn btn-primary" type="submit" value="apply" >Apply Now</button>
+                                {{--<a id="btn{{$JobDetail->id}}"  href="{{$id}}"  data-id="{{$JobDetail->id}}" class="btn btn-primary">Apply Now</a>--}}
+                            {{ Form::close() }}
+                        {{--<a href="#" class="btn btn-primary bookmark"><i class="fa fa-bookmark-o" aria-hidden="true"></i>Bookmark</a>--}}
                     </div>
                     <ul class="share-social">
                         <li>Share this ad</li>
@@ -137,76 +147,7 @@
 </section><!-- something-sell -->
 
 <!-- footer -->
-<footer id="footer" class="clearfix">
-    <!-- footer-top -->
-    <section class="footer-top clearfix">
-        <div class="container">
-            <div class="row">
-                <!-- footer-widget -->
-                <div class="col-sm-3">
-                    <div class="footer-widget">
-                        <h3>Quik Links</h3>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">All Cities</a></li>
-                            <li><a href="#">Help &amp; Support</a></li>
-                            <li><a href="#">Advertise With Us</a></li>
-                        </ul>
-                    </div>
-                </div><!-- footer-widget -->
-
-                <!-- footer-widget -->
-                <div class="col-sm-3">
-                    <div class="footer-widget">
-                        <h3>How to sell fast</h3>
-                        <ul>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">How to sell fast</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">Membership</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">Banner Advertising</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">Promote your ad</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">Jobs Delivers</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#">FAQ</a></li>
-                        </ul>
-                    </div>
-                </div><!-- footer-widget -->
-
-                <!-- footer-widget -->
-                <div class="col-sm-3">
-                    <div class="footer-widget social-widget">
-                        <h3>Follow us on</h3>
-                        <ul>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-facebook-official"></i>Facebook</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-twitter-square"></i>Twitter</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-google-plus-square"></i>Google+</a></li>
-                            <li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-youtube-play"></i>youtube</a></li>
-                        </ul>
-                    </div>
-                </div><!-- footer-widget -->
-
-                <!-- footer-widget -->
-                <div class="col-sm-3">
-                    <div class="footer-widget news-letter">
-                        <h3>Newsletter</h3>
-                        <p>Jobs is Worldest leading Portal platform that brings!</p>
-                        <!-- form -->
-                        <form action="https://demo.themeregion.com/jobs-updated/job-details.html#">
-                            <input type="email" class="form-control" placeholder="Your email id">
-                            <button type="submit" class="btn btn-primary">Sign Up</button>
-                        </form><!-- form -->
-                    </div>
-                </div><!-- footer-widget -->
-            </div><!-- row -->
-        </div><!-- container -->
-    </section><!-- footer-top -->
-
-    <div class="footer-bottom clearfix text-center">
-        <div class="container">
-            <p>Copyright © <a href="https://demo.themeregion.com/jobs-updated/job-details.html#">Jobs</a> 2017. Developed by <a href="http://themeregion.com/">ThemeRegion</a></p>
-        </div>
-    </div><!-- footer-bottom -->
-</footer><!-- footer -->
+@include('frontend.Kh-Works.partials.ui-footer')
 
 <!--/Preset Style Chooser-->
 <div class="style-chooser">
@@ -227,3 +168,80 @@
 @include('frontend.Kh-Works.partials.ui-script')
 
 </body></html>
+<script>
+//    jQuery(document).ready(function(){
+//        jQuery('.apply_id').click(function(e){
+//
+//
+//
+//            var id = $(this).data("id");
+//            var user_id = $(this).attr('href');
+//
+//             alert(user_id + id);
+//            var url = $('#url').val();
+//           //alert(url);
+//            var rl = url.substring(0,30);
+//            e.preventDefault();
+//            $.ajaxSetup({
+//                headers: {
+//                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                }
+//            });
+//            $.ajax({
+//                type: "POST",
+//                contentType: "application/json",
+//                url: rl+ '/apply/'+id+'/'+user_id,
+//                data:JSON.stringify({"id":id,"user_id" : user_id}),
+//                dataType: 'JSON',
+//                cache: false,
+//                success: function(data) {
+//                    alert(JSON.stringify(data));
+//                    $('#btn'+id).text('applied');
+//                    $('#btn'+id).attr('disabled', 'disabled');
+//                },
+//                error:function(){
+//                    alert('falsess');
+//                }
+//            });
+//                    }
+//            $.ajax({
+//                type: "POST",
+//                contentType: "application/json",
+//                url: rl+ '/getExistingCandidate/'+id+'/'+user_id,
+//                data:JSON.stringify({"id":id,"user_id" : user_id}),
+//                dataType: 'JSON',
+//                cache: false,
+//                success: function(data) {
+//                    console.log(data);
+//                    if(data){//if existing do something
+//                        alert('This job you already applied!');
+//                    }else{
+//                        $.ajax({
+//                            type: "POST",
+//                            contentType: "application/json",
+//                            url: rl+ '/apply/'+id+'/'+user_id,
+//                            data:JSON.stringify({"id":id,"user_id" : user_id}),
+//                            dataType: 'JSON',
+//                            cache: false,
+//                            success: function(data) {
+//                                alert(JSON.stringify(data));
+//                                $('#btn'+id).text('applied');
+//                                $('#btn'+id).attr('disabled', 'disabled');
+//                            },
+//                            error:function(){
+//                                alert('falsess');
+//                            }
+//                        });
+//                    }
+//                },
+//                error:function(){
+//                    alert('failure');
+//                }
+//            });
+//            // alert('ok');
+                //alert(rl);
+//
+//        });
+//    });
+
+</script>

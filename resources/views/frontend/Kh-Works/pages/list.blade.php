@@ -142,8 +142,14 @@
 								<div class="item-info">
 										<form method="POST" enctype="multipart/form-data" id="register" action="{{url('kh-works/user_cv')}}">
 											{{ csrf_field() }}
-											@if (auth()->check())
-												<input type="hidden" value="{{ Auth::user()->id }}" name="user_id" />
+											{{--@if (auth()->check())--}}
+												{{--<input type="hidden" value="{{ Auth::user()->id }}" name="user_id" />--}}
+											{{--@endif--}}
+											@if (Route::has('register'))
+												<input type="hidden" value="{{ Auth::user()->id}}" name="user_id" />
+
+											@elseif(Route::has('login'))
+												<input type="hidden" value="{{Auth::user()->id}}" name="user_id" />
 											@endif
 											<div class="form-group  {{ $errors->has('cv_name') ? 'has-error' : '' }}" >
 												<input id="cv_name" name="cv_name" type="text" class="form-control" placeholder="CVs Title">

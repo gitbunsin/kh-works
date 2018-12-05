@@ -31,26 +31,27 @@
                             <form id="validate_vacancy" method="POST" enctype="multipart/form-data" action="{{url('administration/vacancy ')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    <section>
-                                        <label class="label">Job Title</label>
-                                        <label class="input">
-                                            <input value="{{$vacancy->job_title_code}}" type="text" name="job_title" id="job_title" list="list">
-                                            <datalist id="list">
-                                                <option value="Alexandra">Alexandra</option>
-                                                <option value="Alice">Alice</option>
-                                                <option value="Anastasia">Anastasia</option>
-                                                <option value="Avelina">Avelina</option>
-                                                <option value="Basilia">Basilia</option>
-                                                <option value="Beatrice">Beatrice</option>
-                                                <option value="Cassandra">Cassandra</option>
-                                            </datalist> </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Vacancy Name</label>
-                                        <label class="input">
-                                            <input value="{{$vacancy->name}}" type="text" name="name" id="name" maxlength="10">
-                                        </label>
-                                    </section>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label">Job Title</label>
+                                            <label class="select">
+                                                @php $job_title = \App\JobTitle::all(); @endphp
+                                                <select required name="Job_title" id="Job_title">
+                                                    <option value="0">Choose JobTitle</option>
+                                                    @foreach ($job_title as $job_titles)
+                                                        <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label">Vacancy Name</label>
+                                            <label class="input">
+                                                <input value="{{$vacancy->name}}" type="text" name="name" id="name" maxlength="10">
+                                            </label>
+                                        </section>
+                                    </div>
                                     <section>
                                         <label class="label">Hiring Manager</label>
                                         <label class="input">
@@ -64,7 +65,7 @@
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
-                                            <textarea rows="3" id="description" name="description" class="custom-scroll">{{$vacancy->description}}</textarea>
+                                            <textarea rows="8" id="description" name="description" class="custom-scroll">{{$vacancy->description}}</textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.

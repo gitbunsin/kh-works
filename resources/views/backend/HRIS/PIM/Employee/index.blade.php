@@ -10,8 +10,8 @@
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right">
-                                <span style="color:white;">Add new Employee</span></button>
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee/create')}}" role="button">
+                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
                 </div>
@@ -38,9 +38,9 @@
                                     <th data-hide="phone"> Employee id </th>
                                     <th data-class="expand"> Name</th>
                                     <th data-hide="phone"> Job Title</th>
-                                    <th data-hide="phone"> Employee Status</th>
-                                    <th data-hide="posting-date"> Location</th>
-                                    <th data-hide="closing-date"> Supervisor</th>
+                                    {{--<th data-hide="phone"> Employee Status</th>--}}
+                                    {{--<th data-hide="posting-date"> Location</th>--}}
+                                    {{--<th data-hide="closing-date"> Supervisor</th>--}}
                                     <th> Action </th>
                                 </tr>
                                 </thead>
@@ -50,11 +50,11 @@
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_firstname}}{{$employees->emp_lastname}}</td>
                                         <td>{{$employees->job_title}}</td>
-                                        <td>{{$employees->employee_id}}</td>
-                                        <td>{{$employees->employee_id}}</td>
-                                        <td>{{$employees->employee_id}}</td>
+                                        {{--<td>{{$employees->employee_id}}</td>--}}
+                                        {{--<td>{{$employees->employee_id}}</td>--}}
+                                        {{--<td>{{$employees->employee_id}}</td>--}}
                                         <td>
-                                            <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">

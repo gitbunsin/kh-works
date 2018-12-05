@@ -22,29 +22,37 @@
         <div class="breadcrumb-section">
             <!-- breadcrumb -->
             <ol class="breadcrumb">
-                <li><a href="https://demo.themeregion.com/jobs-updated/index.html">Home</a></li>
+                <li><a href="">Home</a></li>
                 <li>Post Resume</li>
             </ol><!-- breadcrumb -->
             <h2 class="title">Post My Resume</h2>
         </div><!-- banner -->
-
         <div class="job-postdetails post-resume">
             <div class="row">
                 <div class="col-md-8 clearfix">
-                    <form action="https://demo.themeregion.com/jobs-updated/post-resume.html#">
+                    @if(Auth::check())
+                        @php
+                            $id = Auth::user()->id;
+                        @endphp
+                        @endif
+                    {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
+                    {{Form::open(array("url"=>"kh-works/post-resume/".$id, "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
+                    <input name="_method" type="hidden" value="PATCH">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="name" value="{{Auth::user()->name}}"/>
                         <fieldset>
                             <div class="section express-yourself">
                                 <h4>Express Yourself</h4>
                                 <div class="row form-group">
                                     <label class="col-sm-4 label-title">Full Name</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="name" class="form-control" placeholder="ex Jhon Doe">
+                                        <input required type="text" name="full_name" class="form-control" placeholder="ex Jhon Doe">
                                     </div>
                                 </div>
                                 <div class="row form-group additional-information">
                                     <label class="col-sm-4 label-title">Additional Information</label>
                                     <div class="col-sm-8">
-											<textarea class="form-control" placeholder="Address: 123 West 12th Street, Suite 456 New York, NY 123456
+											<textarea name="address_info" class="form-control" placeholder="Address: 123 West 12th Street, Suite 456 New York, NY 123456
  Phone: +012 345 678 910
  Email: itsme@surzilegeek.com*"></textarea>
                                     </div>
@@ -52,14 +60,15 @@
                                 <div class="row form-group photos-resume">
                                     <label class="col-sm-4 label-title">Photos for your Resume</label>
                                     <div class="col-sm-8 ">
-                                        <label class="upload-image left" for="upload-image-one">
-                                            <input type="file" id="upload-image-one">
-                                            Type: JPG, PNG  Size: 3.5 x 4.5 cm
-                                        </label>
-                                        <label class="upload-image" for="upload-image-two">
-                                            <input type="file" id="upload-image-two">
-                                            Upload Photo
-                                        </label>
+                                        <input class="form-control" type="file" name="photo" id="photo">
+                                        {{--<label class="upload-image left" >--}}
+                                            {{--<input name="photo" type="file" >--}}
+                                            {{--Type: JPG, PNG  Size: 3.5 x 4.5 cm--}}
+                                        {{--</label>--}}
+                                        {{--<label class="upload-image" for="upload-image-two">--}}
+                                            {{--<input type="file" id="upload-image-two">--}}
+                                            {{--Upload Photo--}}
+                                        {{--</label>--}}
                                     </div>
                                 </div>
                             </div><!-- postdetails -->
@@ -67,7 +76,7 @@
                             <div class="section career-objective">
                                 <h4>Career Objective</h4>
                                 <div class="form-group">
-                                    <textarea class="form-control" placeholder="Write few lines about your career objective" rows="8"></textarea>
+                                    <textarea name="experiences" class="form-control" placeholder="Write few lines about your career objective" rows="8"></textarea>
                                 </div>
                                 <span>5000 characters left</span>
                             </div><!-- career-objective -->
@@ -77,20 +86,20 @@
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Compnay Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Name">
+                                        <input type="text" name="" class="form-control" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Designation</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Human Resource Manager">
+                                        <input type="text" name="" class="form-control" placeholder="Human Resource Manager">
                                     </div>
                                 </div>
                                 <div class="row form-group time-period">
                                     <label class="col-sm-3 label-title">Time Period</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="dd/mm/yy"><span>-</span>
-                                        <input type="text" name="name" class="form-control pull-right" placeholder="dd/mm/yy">
+                                        <input type="text" name="" class="form-control" placeholder="dd/mm/yy"><span>-</span>
+                                        <input type="text" name="" class="form-control pull-right" placeholder="dd/mm/yy">
                                     </div>
                                 </div>
                                 <div class="row form-group job-description">
@@ -100,8 +109,8 @@
                                     </div>
                                 </div>
                                 <div class="buttons pull-right">
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn">Add New Exprience</a>
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn delete">Delete</a>
+                                    <a href="" class="btn">Add New Exprience</a>
+                                    <a href="" class="btn delete">Delete</a>
                                 </div>
                             </div><!-- work-history -->
 
@@ -110,20 +119,20 @@
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Institute Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="ropbox">
+                                        <input type="text" name="" class="form-control" placeholder="ropbox">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Degree</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Human Resource Manager">
+                                        <input type="text" name="" class="form-control" placeholder="Human Resource Manager">
                                     </div>
                                 </div>
                                 <div class="row form-group time-period">
                                     <label class="col-sm-3 label-title">Time Period</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="dd/mm/yy"><span>-</span>
-                                        <input type="text" name="name" class="form-control pull-right" placeholder="dd/mm/yy">
+                                        <input type="text" name="" class="form-control" placeholder="dd/mm/yy"><span>-</span>
+                                        <input type="text" name="" class="form-control pull-right" placeholder="dd/mm/yy">
                                     </div>
                                 </div>
                                 <div class="row form-group job-description">
@@ -133,8 +142,8 @@
                                     </div>
                                 </div>
                                 <div class="buttons pull-right">
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn">Add New Education</a>
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn delete">Delete</a>
+                                    <a href="" class="btn">Add New Education</a>
+                                    <a href="" class="btn delete">Delete</a>
                                 </div>
                             </div><!-- work-history -->
 
@@ -150,7 +159,7 @@
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Language Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="English">
+                                        <input type="text" name="" class="form-control" placeholder="English">
                                     </div>
                                 </div>
                                 <div class="row form-group rating">
@@ -182,8 +191,8 @@
                                     </div>
                                 </div>
                                 <div class="buttons pull-right">
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn">Add New Language</a>
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn delete">Delete</a>
+                                    <a href="" class="btn">Add New Language</a>
+                                    <a href="" class="btn delete">Delete</a>
                                 </div>
                             </div><!-- language-proficiency -->
 
@@ -192,53 +201,47 @@
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Full Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Jhon Doe">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Father's Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Robert Doe">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Mother's Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Ismatic Roderos Doe">
+                                        <input type="text" name="" class="form-control" placeholder="Jhon Doe">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Date of Birth</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="26/01/1982">
+                                        <input type="text" name="dob" class="form-control" placeholder="26/01/1982">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Birth Place</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="United State of America">
+                                        <input type="text" name="" class="form-control" placeholder="United State of America">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Nationality</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Canadian">
+                                        <input type="text" name="country" class="form-control" placeholder="Canadian">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Sex</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Male">
+                                        <input type="text" name="sex" class="form-control" placeholder="Male">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-3 label-title">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" name="mobile" class="form-control" placeholder="Phone number">
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <label class="col-sm-3 label-title">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="name" class="form-control" placeholder="121 King Street, Melbourne Victoria, 1200 USA">
+                                        <input type="text" name="address" class="form-control" placeholder="121 King Street, Melbourne Victoria, 1200 USA">
                                     </div>
                                 </div>
                                 <div class="buttons pull-right">
-                                    <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn">Add New Feild</a>
+                                    <a href="" class="btn">Add New Feild</a>
                                 </div>
                             </div><!-- section -->
 
@@ -249,18 +252,17 @@
                                 </div>
                             </div><!-- special-qualification -->
                         </fieldset>
-                    </form><!-- form -->
-                    <div class="buttons">
-                        <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn">Update Profile</a>
-                        <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#" class="btn cancle">Cancle</a>
-                    </div>
+                        <div class="buttons">
+                            <input type="submit" name="btn_submit" value="Update Profiles" class="btn">
+                            <a href="" class="btn cancle">Cancle</a>
+                        </div>
+                    {{ Form::close() }}
                 </div>
-
                 <!-- quick-rules -->
                 <div class="col-md-4">
                     <div class="section quick-rules">
                         <h4>Quick rules</h4>
-                        <p class="lead">Posting an ad on <a href="https://demo.themeregion.com/jobs-updated/post-resume.html#">Jobs.com</a> is free! However, all ads must follow our rules:</p>
+                        <p class="lead">Posting an ad on <a href="">kh-works.com</a> is free! However, all ads must follow our rules:</p>
 
                         <ul>
                             <li>Make sure you post in the correct category.</li>
@@ -281,7 +283,7 @@
 </section><!-- main -->
 
 <!-- footer -->
-@include('frontend.Kh-Works.partials.ui-footer')
+
 <!--/End:Preset Style Chooser-->
 
 <!-- JS -->

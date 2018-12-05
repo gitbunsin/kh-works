@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;">Add Job Category</span></button>
+                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;"><i class="glyphicon glyphicon-plus-sign "></i> Add new</span></button>
                         </div>
                     </div>
                 </div>

@@ -111,7 +111,8 @@ class JobController extends Controller
             $job->contactName = $request->ContactName;
             $job->email = $request->email;
             $job->alt_email = $request->mobile;
-            $job->job_title = $request->name;
+            $job->job_title = $request->job_title;
+            //dd($request->job_title_code);
             $date_posting = Carbon::parse(Input::get('postingDate'))->format('Y-m-d');
             $date_closing = Carbon::parse(Input::get('closing_date'))->format('Y-m-d');
             //dd($date_closing);

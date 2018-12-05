@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use  App\Model\Backend\Organization;
 use App\Model\Frontend\Company;
+use App\Organization;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use Zend\Diactoros\Request;
+//se Zend\Diactoros\Request;
 
 class RegisterController extends Controller
 {
@@ -52,7 +52,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
 
-    public function showLoginForm(Request $request)
+    public function showLoginForm()
     {
         return view('auth.register');
     }
@@ -74,7 +74,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-//        dd($data);
+        //dd($data);
         return User::create([
             'name' => $data['emp_name'],
             'email' => $data['email'],
@@ -83,24 +83,4 @@ class RegisterController extends Controller
     }
 
 
-    public function  HrRegister(){
-        $this->validate(request(), [
-            'com_name' => 'required',
-            'com_email' => 'required|email',
-            'com_password' => 'required|min:3|max:20',
-            'password_confirmation' => 'required|min:3|max:20|same:com_password',
-        ]);
-        $Hr = new Organization();
-        $company = new Company();
-        $Hr->name = input::get('com_name');
-        $Hr->email = input::get('com_email');
-        $Hr->password = Hash::make(input::get('com_password'));
-        $company->name = input::get('com_name');
-        $company->email = input::get('com_email');
-        $company->password = Hash::make(input::get('com_password'));
-        $company->save();
-        $Hr->save();
-        Session::put('user_register', $Hr);
-        return redirect('administration/companyProfile');
-    }
 }

@@ -1,23 +1,27 @@
 <?php
 
-namespace App\Model\Backend;
-
-use App;
-use Laravel\Passport\HasApiTokens;
+/**
+ * Remove 'use Illuminate\Database\Eloquent\Model;'
+ */
+namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
 /**
  * @property  attributes
  */
 class Organization extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable;
+    use EntityTrait;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    //The authentication guard for admin
+    protected $guard = 'admins';
     protected $connection = 'mysql2';
     protected $table = 'tbl_organization_gen_info';
     protected $fillable = [
@@ -53,8 +57,8 @@ class Organization extends Authenticatable
     /**
      * Add a mutator to ensure hashed passwords
      */
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = bcrypt($password);
-    }
+//    public function setPasswordAttribute($password)
+//    {
+//        $this->attributes['password'] = bcrypt($password);
+//    }
 }

@@ -66,7 +66,7 @@
                                 <section class="col col-6">
                                     <label class="label">Title for your job*</label>
                                     <label class="input">
-                                        <input type="text" id="name" name="name" class="custom-scroll">
+                                        <input type="text" id="job_title" name="job_title" class="custom-scroll">
                                     </label>
                                     <div class="note">
                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -142,33 +142,35 @@
                                 </section>
                             </div>
                             <section>
-                                <label class="label"> Job Description *</label>
-                                <label class="textarea">
-                                    <textarea placeholder="" id="job_description" name="job_description" cols="40" rows="6"></textarea>
-                                </label>
+
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
+                                    <h2> Job Description </h2>
+                                </header>
+
+                                <!-- widget div-->
+                                <div>
+
+                                    <!-- widget edit box -->
+                                    <div class="jarviswidget-editbox">
+                                        <!-- This area used as dropdown edit box -->
+
+                                    </div>
+                                    <!-- end widget edit box -->
+
+                                    <!-- widget content -->
+                                    <div class="widget-body no-padding">
+
+                                        <textarea id="note" name="job_description"></textarea>
+
+                                    </div>
+                                    <!-- end widget content -->
+
+                                </div>
+                                <!-- end widget div -->
+
                             </section>
-                            {{--<section>--}}
-                                {{--<header>--}}
-                                    {{--<span class="widget-icon"> <i class="fa fa-pencil"></i> </span>--}}
-                                    {{--<h2>Job Description </h2>--}}
-                                {{--</header>--}}
-                                {{--<!-- widget div-->--}}
-                                {{--<div>--}}
-                                    {{--<!-- widget edit box -->--}}
-                                    {{--<div class="jarviswidget-editbox">--}}
-                                        {{--<!-- This area used as dropdown edit box -->--}}
-                                    {{--</div>--}}
-                                    {{--<!-- end widget edit box -->--}}
-                                    {{--<!-- widget content -->--}}
-                                    {{--<div class="widget-body no-padding">--}}
 
-                                        {{--<textarea id="note" name="ckeditor"></textarea>--}}
-
-                                    {{--</div>--}}
-                                    {{--<!-- end widget content -->--}}
-                                {{--</div>--}}
-                                {{--<!-- end widget div -->--}}
-                            {{--</section>--}}
                             <section>
                                 <label class="label"> Job Required *</label>
                                 <label class="textarea">
@@ -215,9 +217,9 @@
                                     <label class="label">Company Name*</label>
                                     <label class="input">
                                         @if(Session::has('user_register'))
-                                            <input  value="{{ Session::get('user_register')->name}}" type="text" name="name" id="name">
+                                            <input  value="{{ Session::get('user_register')->name}}" type="text" name="CompanyName" id="name">
                                         @else
-                                            <input  value="{{  Session::get('company_log')->name }}" type="text" name="name" id="name">
+                                            <input  value="{{  Session::get('company_log')->name }}" type="text" name="CompanyName" id="name">
                                         @endif
                                     </label>
                                 </section>
@@ -245,7 +247,7 @@
                                     <label class="input">
                                         {{--<input id="mobile" type="text" name="mobile">--}}
                                         @if(Session::has('company_log'))
-                                            <input  value="{{ Session::get('company_log')->phone}}" type="text" name="email" id="email">
+                                            <input  value="{{ Session::get('company_log')->phone}}" type="text" name="mobile" id="mobile">
                                         @endif
                                     </label>
                                 </section>
@@ -300,6 +302,17 @@
         if (!window.jQuery.ui) {
             document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
         }
+    </script>
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function() {
+
+            CKEDITOR.replace( 'job_description', { height: '380px', startupFocus : true} );
+
+        })
+
     </script>
     <script>
         $(document).ready(function() {

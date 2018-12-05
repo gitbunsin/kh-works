@@ -59,19 +59,15 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">Job Vacancy</label>
+                                            <label class="label">Contact Number</label>
                                             <label class="input">
-                                                <input type="text" list="list">
-                                                <datalist id="list">
-                                                    <option value="Alexandra">Alexandra</option>
-                                                    <option value="Alice">Alice</option>
-                                                </datalist>
+                                                <input name="contact_number" id="contact_number" type="text" list="list">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">KeyWord</label>
                                             <label class="input">
-                                                <input placeholder="Enter comma separated words..." type="text" maxlength="10">
+                                                <input name="keyword" id="keyword" placeholder="Enter comma separated words..." type="text" maxlength="10">
                                             </label>
                                         </section>
                                     </div>
@@ -79,7 +75,8 @@
                                         <section class="col col-6">
                                             <label class="label">Resume</label>
                                             <div class="input input-file">
-                                                <span class="button"><input id="file2" type="file" name="cv_file_id" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text"  placeholder="Include some files" readonly="">
+                                                <span class="button">
+                                                    <input id="file2" type="file" name="cv_file_id" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text"  placeholder="Include some files" readonly="">
                                             </div>
                                             <div class="note">
                                                 <strong>Note:</strong> Accepts .docx, .doc, .odt, .pdf, .rtf, .txt up to 1MB

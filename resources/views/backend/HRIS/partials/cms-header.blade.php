@@ -88,5 +88,6 @@
 
 		</header>
 <div>
-	<span style="position:absolute !important;z-index:1 !important;margin-bottom:30px;">@include('flash::message')</span>
+
 </div>
+@include('flash::message')

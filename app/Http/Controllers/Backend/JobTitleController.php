@@ -43,7 +43,9 @@ class JobTitleController extends Controller
     public function store(Request $request)
     {
         $JobTitle = JobTitle::create($request->all());
-        return response()->json($JobTitle);
+        flash('Create Successfully')->success();
+        return redirect('/administration/jobs-title');
+//        return response()->json($JobTitle);
     }
 
 
@@ -53,26 +55,26 @@ class JobTitleController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show($Job_id)
-    {
-        $JobTitle = JobTitle::findOrFail($Job_id);
-        return response()->json($JobTitle);
-    }
+//    public function show($Job_id)
+//    {
+//        $JobTitle = JobTitle::findOrFail($Job_id);
+//        return response()->json($JobTitle);
+//    }
 
-    public function update(Request $request, $Job_id)
-    {
-        $JobTitle = JobTitle::findOrFail($Job_id);
-        $JobTitle->job_title = $request->job_title;
-        $JobTitle->job_description = $request->job_description;
-        $JobTitle->note = $request->note;
-        $JobTitle->save();
-        return response()->json($JobTitle);
-    }
+//    public function update(Request $request, $Job_id)
+//    {
+//        $JobTitle = JobTitle::findOrFail($Job_id);
+//        $JobTitle->job_title = $request->job_title;
+//        $JobTitle->job_description = $request->job_description;
+//        $JobTitle->note = $request->note;
+//        $JobTitle->save();
+//        return response()->json($JobTitle);
+//    }
 
-      public function destroy($id)
-        {
-            $job_title = JobTitle::destroy($id);
-            return response()->json($job_title);
-        }
+//      public function destroy($id)
+//        {
+//            $job_title = JobTitle::destroy($id);
+//            return response()->json($job_title);
+//        }
 
 }

@@ -24,8 +24,16 @@
             <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="user-account job-user-account">
                     <h2>Create An Account</h2>
+                    @php
+                        $active = '';
+                    @endphp
+                    @if ($errors->any())
+                       @php
+                        $active = 'active';
+                       @endphp
+                    @endif
                     <ul class="nav nav-tabs text-center" role="tablist">
-                        <li role="presentation" class="active" ><a href="#find-job" aria-controls="find-job" role="tab" data-toggle="tab">Find A Job</a></li>
+                        <li role="presentation" class="{{$active}}" ><a href="#find-job" aria-controls="find-job" role="tab" data-toggle="tab">Find A Job</a></li>
                         <li role="presentation" ><a href="#post-job" aria-controls="post-job" role="tab" data-toggle="tab">Post A Job</a></li>
                     </ul>
                     <div class="tab-content">
@@ -70,7 +78,7 @@
                     </form>
                     </div>
                         <div role="tabpanel" class="tab-pane" id="post-job">
-                            <form method="POST" action="{{url('hr-register')}}">
+                            <form method="POST" action="{{route('register.admin')}}">
                                 {{ csrf_field() }}
                                 <div class="form-group ">
                                    <input placeholder="company name" id="com_name" type="text" class="form-control{{ $errors->has('com_name') ? ' is-invalid' : '' }}" name="com_name" value="{{ old('com_name') }}" required autofocus>

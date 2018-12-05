@@ -25,7 +25,6 @@
             <form method="GET" action="{{url('kh-works')}}">
                 {{--<input name="_token" type="hidden" value="{{ csrf_token() }}"/>--}}
                 <input name="searchTerm" id="search" type="text" class="form-control" placeholder="Type your key word">
-
                     {{--<a data-toggle="dropdown" href="#" aria-expanded="false">--}}
                         {{--<span id="job_filter" class="change-text job_filter">Job Category</span>--}}
                         {{--<i class="fa fa-angle-down"></i>--}}
@@ -103,10 +102,12 @@
                                     </ul>
                                 </div><!-- ad-meta -->
                             </div><!-- ad-info -->
-                            {{--{{Session::get('user_data_login')->id }}--}}
-                            <div class="apply_dev">
-                                <a id="btn{{$Jobs->id}}"  href=""  data-id="{{$Jobs->id}}" class="btn btn-primary apply_id">Apply Now</a>
-                            </div>
+
+                            {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
+                            {{--<meta name="csrf-token" content="{{ csrf_token() }}">--}}
+                            {{--<div class="apply_dev">--}}
+                                {{--<a id="btn{{$Jobs->id}}"  href="{{$id}}"  data-id="{{$Jobs->id}}" class="btn btn-primary apply_id">Apply Now</a>--}}
+                            {{--</div>--}}
                         </div><!-- item-info -->
                     </div><!-- ad-item -->
                 </div><!-- tab-pane -->
@@ -173,53 +174,35 @@
 @include('frontend.Kh-Works.partials.ui-script')
 
 </body></html>
-<script>
+{{--<script>--}}
+    {{--jQuery(document).ready(function(){--}}
+        {{--jQuery('.apply_id').click(function(e){--}}
+            {{--// alert('ok');--}}
+            {{--var id = $(this).data("id");--}}
+            {{--var user_id = $(this).attr('href');--}}
+            {{--e.preventDefault();--}}
+            {{--$.ajaxSetup({--}}
+                {{--headers: {--}}
+                    {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+                {{--}--}}
+            {{--});--}}
+            {{--$.ajax({--}}
+                {{--type: "POST",--}}
+                {{--contentType: "application/json",--}}
+                {{--url: 'kh-works/apply/'+id+'/user_id/'+user_id,--}}
+                {{--data:JSON.stringify({"id":id,"user_id" : user_id}),--}}
+                {{--dataType: 'JSON',--}}
+                {{--cache: false,--}}
+                {{--success: function(data) {--}}
+                    {{--alert(JSON.stringify(data));--}}
+                    {{--$('#btn'+id).text('applied');--}}
+                    {{--$('#btn'+id).attr('disabled', 'disabled');--}}
+                {{--},--}}
+                {{--error:function(){--}}
+                    {{--alert('failure');--}}
+                {{--}--}}
+            {{--});--}}
+        {{--});--}}
+    {{--});--}}
 
-    $( "#job_filter" ).change(function() {
-
-        alert( "Handler for .change() called." );
-
-    });
-//     function myFunction(){
-//
-//         alert('ok');
-//     }
-
-//    $('li').click(function(){
-//        var JobSelect = document.getElementById("job_filter").innerHTML;
-//        alert(JobSelect);
-//    });
-
-    jQuery(document).ready(function(){
-        jQuery('.apply_id').click(function(e){
-            // alert('ok');
-            var id = $(this).data("id");
-            var user_id = $(this).attr('href');
-            e.preventDefault();
-            $.ajaxSetup(
-                {
-                    headers:
-                        {
-                            'X-CSRF-Token': $('input[name="_token"]').val()
-                        }
-                });
-            $.ajax({
-                type: "GET",
-                contentType: "application/json",
-                url: '/ui/apply-job/'+id+'/user_id/'+user_id,
-                data:JSON.stringify({"id":id,"user_id" : user_id}),
-                dataType: 'JSON',
-                cache: false,
-                success: function(data) {
-                    alert(JSON.stringify(data));
-                    $('#btn'+id).text('applied');
-                    $('#btn'+id).attr('disabled', 'disabled');
-                },
-                error:function(){
-                    alert('failure');
-                }
-            });
-        });
-    });
-
-</script>
+{{--</script>--}}

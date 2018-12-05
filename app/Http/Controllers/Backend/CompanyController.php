@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\Model\Backend\Organization;
+use App\Organization;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -74,7 +74,7 @@ class CompanyController extends Controller
      */
     public function update(Request $request , $id)
     {
-       // dd($request->name);
+//        dd($request->name);
         $company = Organization::findOrFail($id);
         $company->name = $request->name;
         $company->tax_id = $request->tax_id;
@@ -94,7 +94,7 @@ class CompanyController extends Controller
         $company->mobile = $request->mobile;
         $company->status = $request->status;
         $company->save();
-        flash('Create Successfully')->success();
+//        flash('Create Successfully')->success();
         return redirect('/administration');
 
     }

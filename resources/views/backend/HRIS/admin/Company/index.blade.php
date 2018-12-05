@@ -21,16 +21,9 @@
                         </div>
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            {{--{{ Session::get('user_register')->name ? Session::get('company_log')->name : '' }}--}}
-                            @if(Session::has('user_register'))
-                            @php
-                                $id = Session::get('user_register')->id;
-                            @endphp
-                                @else
                                 @php
-                                    $id = Session::get('company_log')->id;
+                                    $id = Auth::guard('admins')->user()->id;
                                 @endphp
-                            @endif
                             {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
                             {{Form::open(array("url"=>"administration/companyProfile/".$id, "class"=>"smart-form"))}}
                             <input name="_method" type="hidden" value="PATCH">
@@ -41,21 +34,13 @@
                                         <section class="col col-6">
                                             <label class="label">Company Profiles </label>
                                             <label class="input">
-                                                @if(Session::has('user_register'))
-                                                       <input  value="{{ Session::get('user_register')->name}}" type="text" name="name" id="name">
-                                                    @else
-                                                       <input  value="{{  Session::get('company_log')->name }}" type="text" name="name" id="name">
-                                                    @endif
+                                                <input  value="{{Auth::guard('admins')->user()->name}}" type="text" name="name" id="name">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                                 <label class="label">Company Email</label>
                                                 <label class="input">
-                                                    @if(Session::has('user_register'))
-                                                         <input  value="{{ Session::get('user_register')->email}}" type="text" name="email" id="email">
-                                                    @else
-                                                         <input  value="{{ Session::get('company_log')->email}}" type="text" name="email" id="email">
-                                                    @endif
+                                                    <input  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
                                                 </label>
                                         </section>
                                     </div>
