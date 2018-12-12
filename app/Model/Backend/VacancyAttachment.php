@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VacancyAttachment extends Model
 {
-    //
-    protected  $connection  = 'mysql2';
     protected $table = 'tbl_job_vacancy_attachment';
     protected $fillable = [
         'id',

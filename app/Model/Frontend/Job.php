@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     //
-    protected $table = 'tbl_jobs';
+    protected $table = 'kh_job_vacancy';
     protected $fillable = [
-        'Companyname',
-        'Contactname',
-        'alt_email',
-        'postingDate',
-        'Jobresponsible'
-
+        'job_title',
+        'company_id',
+        'description',
+        'requirement',
+        'no_of_position',
+        'defined_time',
+        'update_time',
+        'closing_date',
     ];
     public $timestamps = false;
 }

@@ -1,7 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
     <section id="widget-grid" class="">
-
         <!-- row -->
         <div class="row">
 

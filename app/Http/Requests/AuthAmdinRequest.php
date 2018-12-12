@@ -25,7 +25,7 @@ class AuthAmdinRequest extends FormRequest
     {
         return [
             'com_name' => ['required', 'string', 'max:255'],
-            'com_email' => ['required', 'string', 'email', 'max:255','unique:mysql2.tbl_organization_gen_info,email'],
+            'com_email' => ['required', 'string', 'email', 'max:255','unique:tbl_organization_gen_info,email'],
             'com_password' => 'required',
             'password_confirmation' => 'required|same:com_password'
 

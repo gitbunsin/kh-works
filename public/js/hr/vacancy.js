@@ -21,14 +21,14 @@ $('#btn_add').click(function(){
 //alert(url);
 $(document).on('click','.open_modal',function(){
     var vacancy_id = $(this).attr('data-id');
-    alert(vacancy_id);
+    //alert(vacancy_id);
     // Populate Data in Edit Modal Form
     //('administration/job/' . $jobs->id . '/edit')
     $.ajax({
         type: "GET",
         url: url + '/' + vacancy_id,
         success: function (data) {
-             alert(JSON.stringify(data));
+             //alert(JSON.stringify(data));
             $('#product_id').val(data.id);
             $('#name').val(data.name),
             $('#description').val(data.description),

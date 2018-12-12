@@ -22,7 +22,6 @@ class Organization extends Authenticatable
      */
     //The authentication guard for admin
     protected $guard = 'admins';
-    protected $connection = 'mysql2';
     protected $table = 'tbl_organization_gen_info';
     protected $fillable = [
         'name',

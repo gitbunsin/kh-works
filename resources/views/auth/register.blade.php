@@ -24,16 +24,16 @@
             <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="user-account job-user-account">
                     <h2>Create An Account</h2>
-                    @php
-                        $active = '';
-                    @endphp
-                    @if ($errors->any())
-                       @php
-                        $active = 'active';
-                       @endphp
-                    @endif
+                    {{--@php--}}
+                        {{--$active = '';--}}
+                    {{--@endphp--}}
+                    {{--@if ($errors->any())--}}
+                       {{--@php--}}
+                        {{--$active = 'active';--}}
+                       {{--@endphp--}}
+                    {{--@endif--}}
                     <ul class="nav nav-tabs text-center" role="tablist">
-                        <li role="presentation" class="{{$active}}" ><a href="#find-job" aria-controls="find-job" role="tab" data-toggle="tab">Find A Job</a></li>
+                        <li role="presentation" class="active" ><a href="#find-job" aria-controls="find-job" role="tab" data-toggle="tab">Find A Job</a></li>
                         <li role="presentation" ><a href="#post-job" aria-controls="post-job" role="tab" data-toggle="tab">Post A Job</a></li>
                     </ul>
                     <div class="tab-content">
@@ -41,7 +41,7 @@
                             <form method="POST" action="{{ route('register') }}">
                                 {{ csrf_field() }}
                                     <div class="form-group">
-                                    <input placeholder="employee name" id="name" type="text" class="form-control{{ $errors->has('emp_name') ? ' is-invalid' : '' }}" name="emp_name" value="{{ old('emp_name') }}" required autofocus>
+                                    <input placeholder="employee name" id="name" type="text" class="form-control{{ $errors->has('emp_name') ? ' is-invalid' : '' }}" name="emp_name" value="{{ old('emp_name') }}" autofocus>
                                     @if ($errors->has('emp_name'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('emp_name') }}</strong>
@@ -49,7 +49,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input placeholder="Email Address" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                    <input placeholder="Email Address" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -57,7 +57,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input placeholder="password" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                    <input placeholder="password" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
 
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                    <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation">
                                 </div>
                                 <div class="checkbox">
                                     <label class="pull-left" for="signing-2">
@@ -81,7 +81,7 @@
                             <form method="POST" action="{{route('register.admin')}}">
                                 {{ csrf_field() }}
                                 <div class="form-group ">
-                                   <input placeholder="company name" id="com_name" type="text" class="form-control{{ $errors->has('com_name') ? ' is-invalid' : '' }}" name="com_name" value="{{ old('com_name') }}" required autofocus>
+                                   <input placeholder="company name" id="com_name" type="text" class="form-control{{ $errors->has('com_name') ? ' is-invalid' : '' }}" name="com_name" value="{{ old('com_name') }}" autofocus>
                                     @if ($errors->has('com_name'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('com_name') }}</strong>
@@ -89,7 +89,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input placeholder="Email Address" id="com_email" type="email" class="form-control{{ $errors->has('com_email') ? ' is-invalid' : '' }}" name="com_email" value="{{ old('com_email') }}" required>
+                                    <input placeholder="Email Address" id="com_email" type="email" class="form-control{{ $errors->has('com_email') ? ' is-invalid' : '' }}" name="com_email" value="{{ old('com_email') }}" >
                                     @if ($errors->has('com_email'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('com_email') }}</strong>
@@ -97,7 +97,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <input placeholder="password" id="com_password" type="password" class="form-control{{ $errors->has('com_password') ? ' is-invalid' : '' }}" name="com_password" required>
+                                    <input placeholder="password" id="com_password" type="password" class="form-control{{ $errors->has('com_password') ? ' is-invalid' : '' }}" name="com_password">
                                     @if ($errors->has('com_password'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('com_password') }}</strong>
@@ -105,7 +105,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                        <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                        <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                                 </div>
                                 <div class="checkbox">
                                     <label class="pull-left" for="signing-2">
@@ -122,23 +122,10 @@
     </div>
     </div>
 </section>
-
 <!-- footer -->
 @include('frontend.Kh-Works.partials.ui-footer')
 
 <!--/Preset Style Chooser-->
-<div class="style-chooser">
-    <div class="style-chooser-inner">
-        <a href="https://demo.themeregion.com/jobs-updated/signup.html#" class="toggler"><i class="fa fa-cog fa-spin"></i></a>
-        <h4>Presets</h4>
-        <ul class="preset-list clearfix">
-            <li class="preset1 active" data-preset="1"><a href="https://demo.themeregion.com/jobs-updated/signup.html#" data-color="preset1"></a></li>
-            <li class="preset2" data-preset="2"><a href="https://demo.themeregion.com/jobs-updated/signup.html#" data-color="preset2"></a></li>
-            <li class="preset3" data-preset="3"><a href="https://demo.themeregion.com/jobs-updated/signup.html#" data-color="preset3"></a></li>
-            <li class="preset4" data-preset="4"><a href="https://demo.themeregion.com/jobs-updated/signup.html#" data-color="preset4"></a></li>
-        </ul>
-    </div>
-</div>
 <!--/End:Preset Style Chooser-->
 
 <!-- JS -->

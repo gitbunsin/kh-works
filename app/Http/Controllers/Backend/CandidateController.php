@@ -21,8 +21,7 @@ class CandidateController extends Controller
      */
     public function index()
     {
-         $db_ext = DB::connection('mysql2');
-        $candidate = $db_ext->table('tbl_job_candidate_vacancy as cv')
+        $candidate = DB::table('tbl_job_candidate_vacancy as cv')
             ->join('tbl_job_candidate as c','cv.candidate_id','=','c.id')
             ->join('tbl_job_vacancy as v','cv.vacancy_id','=','v.id')
             ->select('cv.*','c.*','v.*')
@@ -144,7 +143,7 @@ class CandidateController extends Controller
     public function edit($id)
     {
         $candidate = Candidate::where('id',$id)->first();
-        //dd($candidate);
+        dd($candidate);
         return view('backend.HRIS.Recruitment.Candidate.edit',compact('candidate','id'));
     }
 

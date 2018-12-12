@@ -28,7 +28,7 @@
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_employee" method="POST" enctype="multipart/form-data" action="{{url('administration/employee')}}" class="smart-form">
+                            <form id="validate_employee" method="POST"  action="{{url('administration/employee')}}" class="smart-form" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
@@ -73,21 +73,29 @@
                                         </section>
                                     <section class="col col-4">
                                         <label class="label"> Employee Photo</label>
-                                        <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">
-                                            <img width="100%" height="100%" id="preview_image" src="{{asset('images/default.png')}}"/>
-                                            <i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>
-                                        </div>
+                                        {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
+                                            {{--<img width="100%" height="100%" id="preview_image" src="{{asset('img/noimage.png')}}"/>--}}
+                                            {{--<i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>--}}
+                                        {{--</div>--}}
+                                        <img id="preview" src="{{asset('img/noimage.jpg')}}" width="200px" height="200px"/><br/>
+                                        <input name="photo" type="file" id="image" style="display: none;"/>
+                                        <!--<input type="hidden" style="display: none" value="0" name="remove" id="remove">-->
                                         <p>
-                                            <a href="javascript:changeProfile()" style="text-decoration: none;">
-                                                <i class="glyphicon glyphicon-edit"></i> Change
-                                            </a>&nbsp;&nbsp;
-                                            <a href="javascript:removeFile()" style="color: red;text-decoration: none;">
-                                                <i class="glyphicon glyphicon-trash"></i>
-                                                Remove
-                                            </a>
+                                            <a href="javascript:changeProfile()"><i class="glyphicon glyphicon-edit"></i> Change</a> |
+                                            <a style="color: red" href="javascript:removeImage()"><i class="glyphicon glyphicon-trash"></i> Remove</a>
                                         </p>
-                                        <input type="file" id="file" style="display: none"/>
-                                        <input type="hidden" id="file_name"/>
+
+                                        {{--<p>--}}
+                                            {{--<a href="javascript:changeProfile()" style="text-decoration: none;">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i> Change--}}
+                                            {{--</a>&nbsp;&nbsp;--}}
+                                            {{--<a href="javascript:removeFile()" style="color: red;text-decoration: none;">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"></i>--}}
+                                                {{--Remove--}}
+                                            {{--</a>--}}
+                                        {{--</p>--}}
+                                        {{--<input type="file" name="file" id="file" style="display: none"/>--}}
+                                        {{--<input type="hidden" name="file" id="file_name"/>--}}
                                     </section>
                                     </div>
                                     <section>
@@ -193,33 +201,33 @@
                 var $loginForm = $("#validate_employee").validate({
                     // Rules for form validation
                     rules : {
-                        first_name : {
+                        emp_firstname : {
                             required : true
                         },
-                        last_name : {
+                        emp_lastname : {
                             required : true
                         },
-                        middle_name:{
+                        emp_middle_name:{
                             required:true
                         },
-                        emp_id :{
+                        employee_id :{
                             required:true
                         }
                     },
 
                     // Messages for form validation
                     messages : {
-                        first_name : {
-                            required : 'Please enter first name'
+                        emp_firstname : {
+                            required : 'filed is requried !'
                         },
-                        last_name : {
-                            required: 'Please enter your last_name'
+                        emp_middle_name : {
+                            required: 'field is required !'
                         },
-                        middle_name:{
-                            required:'please enter middle name'
+                        emp_lastname:{
+                            required:'field is required !'
                         },
-                        emp_id : {
-                            required:'please enter employee id'
+                        employee_id : {
+                            required:'field is required !'
                         }
                     },
                     // Do not change code below
@@ -232,69 +240,102 @@
     </script>
     <script>
         function changeProfile() {
-            $('#file').click();
+            $('#image').click();
         }
-        $('#file').change(function () {
-            if ($(this).val() != '') {
-                upload(this);
-
-            }
+        $('#image').change(function () {
+            var imgPath = this.value;
+            var ext = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+            if (ext == "gif" || ext == "png" || ext == "jpg" || ext == "jpeg")
+                readURL(this);
+            else
+                alert("Please select image file (jpg, jpeg, png).")
         });
-        function upload(img) {
-            var form_data = new FormData();
-            form_data.append('file', img.files[0]);
-            form_data.append('_token', '{{csrf_token()}}');
-            $('#loading').css('display', 'block');
-            $.ajax({
-                url: "{{url('administration/ajax-image-upload')}}",
-                data: form_data,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    if (data.fail) {
-                        $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
-                        alert(data.errors['file']);
-                    }
-                    else {
-                        $('#file_name').val(data);
-                        $('#preview_image').attr('src', '{{asset('uploads')}}/' + data);
-                    }
-                    $('#loading').css('display', 'none');
-                },
-                error: function (xhr, status, error) {
-                    alert(xhr.responseText);
-                    $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
-                }
-            });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.readAsDataURL(input.files[0]);
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+//              $("#remove").val(0);
+                };
+            }
         }
-        function removeFile() {
-            if ($('#file_name').val() != '')
-                if (confirm('Are you sure want to remove profile picture?')) {
-                    $('#loading').css('display', 'block');
-                    var form_data = new FormData();
-                    form_data.append('_method', 'DELETE');
-                    form_data.append('_token', '{{csrf_token()}}');
-                    var filename = $('#file_name').val();
-                    alert(filename);
-                    $.ajax({
-                        url: "ajax-remove-image/"+ filename ,
-                        data: form_data,
-                        type: 'POST',
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
-                            $('#file_name').val('');
-                            $('#loading').css('display', 'none');
-                        },
-                        error: function (xhr, status, error) {
-                            alert(xhr.responseText);
-                            //alert(JSON.stringify(error));
-                        }
-                    });
-                }
+        function removeImage() {
+            $('#preview').attr('src', '{{asset('img/noimage.jpg')}}');
+//      $("#remove").val(1);
         }
+
+        {{--function changeProfile() {--}}
+            {{--$('#file').click();--}}
+        {{--}--}}
+        {{--$('#file').change(function () {--}}
+            {{--if ($(this).val() != '') {--}}
+                {{--upload(this);--}}
+
+            {{--}--}}
+        {{--});--}}
+        {{--function upload(img) {--}}
+            {{--var form_data = new FormData();--}}
+            {{--form_data.append('file', img.files[0]);--}}
+            {{--form_data.append('_token', '{{csrf_token()}}');--}}
+{{--//            form_data = {--}}
+{{--//                employee_id : $('#employee_id').val(),--}}
+{{--//                emp_lastname: $('#emp_lastname').val(),--}}
+{{--//                emp_firstname : $('#emp_firstname').val(),--}}
+{{--//                emp_middle_name:$('#emp_middle_name').val(),--}}
+{{--//            }--}}
+            {{--$('#loading').css('display', 'block');--}}
+            {{--$.ajax({--}}
+                {{--url: "{{url('administration/ajax-image-upload')}}",--}}
+                {{--data: form_data,--}}
+                {{--type: 'POST',--}}
+                {{--contentType: false,--}}
+                {{--processData: false,--}}
+                {{--success: function (data) {--}}
+                    {{--if (data.fail) {--}}
+                        {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
+                        {{--alert(data.errors['file']);--}}
+                    {{--}--}}
+                    {{--else {--}}
+{{--//                        alert(JSON.stringify(data));--}}
+                        {{--$('#file_name').val(data);--}}
+                        {{--$('#preview_image').attr('src', '{{asset('uploads')}}/' + data);--}}
+                    {{--}--}}
+                    {{--$('#loading').css('display', 'none');--}}
+                {{--},--}}
+                {{--error: function (xhr, status, error) {--}}
+                    {{--alert(xhr.responseText);--}}
+                    {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
+        {{--function removeFile() {--}}
+            {{--if ($('#file_name').val() != '')--}}
+                {{--if (confirm('Are you sure want to remove profile picture?')) {--}}
+                    {{--$('#loading').css('display', 'block');--}}
+                    {{--var form_data = new FormData();--}}
+                    {{--form_data.append('_method', 'DELETE');--}}
+                    {{--form_data.append('_token', '{{csrf_token()}}');--}}
+                    {{--var filename = $('#file_name').val();--}}
+                    {{--alert(filename);--}}
+                    {{--$.ajax({--}}
+                        {{--url: "ajax-remove-image/"+ filename ,--}}
+                        {{--data: form_data,--}}
+                        {{--type: 'POST',--}}
+                        {{--contentType: false,--}}
+                        {{--processData: false,--}}
+                        {{--success: function (data) {--}}
+                            {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
+                            {{--$('#file_name').val('');--}}
+                            {{--$('#loading').css('display', 'none');--}}
+                        {{--},--}}
+                        {{--error: function (xhr, status, error) {--}}
+                            {{--alert(xhr.responseText);--}}
+                            {{--//alert(JSON.stringify(error));--}}
+                        {{--}--}}
+                    {{--});--}}
+                {{--}--}}
+        {{--}--}}
     </script>
 
 @endsection

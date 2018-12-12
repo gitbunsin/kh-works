@@ -24,10 +24,22 @@ class JobCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function create(Request $request)
+    {
+        return view('backend.HRIS.admin.JobCategory.create');
+//        $JobCategory = JobCategory::create($request->all());
+//        return response()->json($JobCategory);
+    }
+
     public function store(Request $request)
     {
-        $JobCategory = JobCategory::create($request->all());
-        return response()->json($JobCategory);
+        //dd($request->all());
+        $job_category = new JobCategory();
+        $job_category->name = $request->name;
+        $job_category->description = $request->description;
+        $job_category->save();
+
+        return redirect('/administration/jobs-category');
     }
     /**
      * Display the specified resource.
@@ -35,20 +47,30 @@ class JobCategoryController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function show($Job_id)
+//    public function show($Job_id)
+//    {
+//        $JobCategory = JobCategory::findOrFail($Job_id);
+//        return response()->json($JobCategory);
+//    }
+    public function edit($id)
     {
-        $JobCategory = JobCategory::findOrFail($Job_id);
-        return response()->json($JobCategory);
+//        dd('hello');
+        $job_category = JobCategory::findorFail($id);
+        return view('backend.HRIS.admin.JobCategory.edit',compact('job_category'));
+//        $JobCategory = JobCategory::create($request->all());
+//        return response()->json($JobCategory);
     }
 
-    public function update(Request $request, $Job_id)
+    public function update(Request $request, $id)
     {
-        $JobCategory = JobCategory::findOrFail($Job_id);
+        $JobCategory = JobCategory::findOrFail($id);
         $JobCategory->name = $request->name;
         $JobCategory->description = $request->description;
         $JobCategory->save();
-        return response()->json($JobCategory);
+        return redirect('/administration/jobs-category');
     }
+
+
 
     public function destroy($id)
     {

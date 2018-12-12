@@ -20,10 +20,7 @@ class VacanciesController extends Controller
      */
     public function index()
     {
-//        $vacancy = Vacancy::all();
-        $db_kh_works = DB::connection('mysql2');
-
-        $vacancy = $db_kh_works->table('tbl_job_vacancy')
+        $vacancy = DB::table('tbl_job_vacancy')
             ->join('kh-works.tbl_job_title', 'hris.tbl_job_vacancy.job_title_code', '=', 'kh-works.tbl_job_title.id')
             ->join('hris.tbl1_hr_employee','hris.tbl_job_vacancy.hiring_manager_id','=','hris.tbl1_hr_employee.emp_id')
             ->select('hris.tbl_job_vacancy.*', 'kh-works.tbl_job_title.job_title','hris.tbl1_hr_employee.*')

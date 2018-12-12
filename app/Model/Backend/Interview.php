@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Interview extends Model
 {
-    protected $connection = 'mysql2';
     protected $table = 'tbl_job_interview';
     protected $fillable = ['candidate_vacancy_id','candidate_id','interview_name', 'interview_date','interview_time','note'];
     public $timestamps = false;

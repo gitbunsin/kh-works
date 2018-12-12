@@ -23,11 +23,10 @@
 
                             <form id="job_validate" method="POST" enctype="multipart/form-data" action="{{url('administration/post-jobs/'.$job->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
-                                @if(Session::get('user_register'))
-                                    <input type="hidden" value="{{Session::get('user_register')->id}}" name="hiring_manager" id="hiring_manager" />
-                                @elseif(Session::get('company_log'))
-                                    <input type="hidden" value=" {{Session::get('company_log')->id }}" name="hiring_manager" id="hiring_manager" />
+                                @if(Auth::guard('admins')->check())
+                                    <input type="hidden" value="{{ Auth::guard('admins')->user()->id}}" name="hiring_manager" id="hiring_manager" />
                                 @endif
+
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <section>
@@ -197,21 +196,13 @@
                                         <section class="col col-6">
                                             <label class="label">Email ID *</label>
                                             <label class="input">
-                                                {{--<input value="{{$job->email}}" id="email" placeholder="" type="text" name="email">--}}
-                                                @if(Session::has('user_register'))
-                                                    <input  value="{{ Session::get('user_register')->email}}" type="text" name="email" id="email">
-                                                @else
-                                                    <input  value="{{ Session::get('company_log')->email}}" type="text" name="email" id="email">
-                                                @endif
+                                                    <input type="text" value="{{ Auth::guard('admins')->user()->email}}" name="email" id="email" />
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">Mobile Number *</label>
                                             <label class="input">
-                                                {{--<input value="{{$job->mobile}}" placeholder="ex, 962711117" type="text" name="mobile">--}}
-                                                @if(Session::has('company_log'))
-                                                    <input  value="{{ Session::get('company_log')->phone}}" type="text" name="mobile" id="mobile">
-                                                @endif
+                                                    <input type="text" value="{{ Auth::guard('admins')->user()->phone}}" name="mobile" id="mobile" />
                                             </label>
                                         </section>
                                     </div>

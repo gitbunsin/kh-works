@@ -4,34 +4,31 @@
 
         <!-- row -->
         <div class="row">
-
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Add Job title</h2>
-
                     </header>
                     <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_vacancy" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
+                            <form id="validate_job_title" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" name="job_title" id="job_title" maxlength="10">
+                                            <input type="text" name="job_title" id="job_title">
                                         </label>
                                     </section>
                                     <section>
@@ -92,25 +89,18 @@
             $('#startdate').datepicker({
                 // format: 'DD - dd MM yyyy'
             });
-            var $loginForm = $("#validate_vacancy").validate({
+            var $loginForm = $("#validate_job_title").validate({
                 // Rules for form validation
                 rules : {
-                    name : {
+                    job_title : {
                         required : true
                     },
-                    description : {
-                        required : true,
-                    }
                 },
-
                 // Messages for form validation
                 messages : {
-                    name : {
-                        required : 'Please enter first name'
+                    job_title : {
+                        required : 'field is required !'
                     },
-                    description : {
-                        required: 'Please enter your last name'
-                    }
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {

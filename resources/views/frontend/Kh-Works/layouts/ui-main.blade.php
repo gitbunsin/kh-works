@@ -174,35 +174,3 @@
 @include('frontend.Kh-Works.partials.ui-script')
 
 </body></html>
-{{--<script>--}}
-    {{--jQuery(document).ready(function(){--}}
-        {{--jQuery('.apply_id').click(function(e){--}}
-            {{--// alert('ok');--}}
-            {{--var id = $(this).data("id");--}}
-            {{--var user_id = $(this).attr('href');--}}
-            {{--e.preventDefault();--}}
-            {{--$.ajaxSetup({--}}
-                {{--headers: {--}}
-                    {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-                {{--}--}}
-            {{--});--}}
-            {{--$.ajax({--}}
-                {{--type: "POST",--}}
-                {{--contentType: "application/json",--}}
-                {{--url: 'kh-works/apply/'+id+'/user_id/'+user_id,--}}
-                {{--data:JSON.stringify({"id":id,"user_id" : user_id}),--}}
-                {{--dataType: 'JSON',--}}
-                {{--cache: false,--}}
-                {{--success: function(data) {--}}
-                    {{--alert(JSON.stringify(data));--}}
-                    {{--$('#btn'+id).text('applied');--}}
-                    {{--$('#btn'+id).attr('disabled', 'disabled');--}}
-                {{--},--}}
-                {{--error:function(){--}}
-                    {{--alert('failure');--}}
-                {{--}--}}
-            {{--});--}}
-        {{--});--}}
-    {{--});--}}
-
-{{--</script>--}}

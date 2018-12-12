@@ -11,15 +11,12 @@
 |
 */
 
-use Illuminate\Support\Facades\Auth;
-
 //Route::get('/home', 'FrontendController@index')->name('home');
 
-Route::prefix('admin')->group(function() {
-    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+
 //    Route::post('/login-admin', 'Auth\AdminLoginController@loginAdmin')->name('admin.login');
 
-});
+
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -31,6 +28,8 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::post('/login-admin', '\App\Http\Controllers\Auth\AdminLoginController@login')->name('admin.login.submit');
+Route::post('login', 'Auth\LoginController@login')->name('login');
 //Route::post('hr-register','Auth\AdminLoginController@HrRegister');
 /************************************************************************************
  *                                  Backend routes
@@ -45,8 +44,11 @@ Route::post('/register/admin', 'Auth\AdminRegister@create')->name('register.admi
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
 
-
         Route::resource('candidate', 'CandidateController');
+        Route::resource('pay-grade', 'PayGradeController');
+        Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
+        Route::resource('work-shift', 'WorkShiftController');
+        Route::resource('employment-status', 'EmploymentStatusController');
         Route::resource('companyProfile', 'CompanyController');
         Route::resource('vacancy', 'VacanciesController');
         Route::resource('jobs-title','JobTitleController');
@@ -54,11 +56,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('post-jobs','JobController');
         Route::resource('employee','EmployeeController');
         Route::resource('interview','InterviewController');
-        Route::post('accepts','CandidateController@accepts');
         Route::resource('Cv','CvController');
-        Route::delete('ajax-remove-image/{filename}', 'EmployeeController@deleteImage');
-        Route::match(['get', 'post'], 'ajax-image-upload', 'EmployeeController@ajaxImage');
-
 });
 
 
@@ -68,18 +66,28 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
  ************************************************************************************/
 
 Route::group(['namespace' => 'Frontend','prefix'=>'kh-works'], function () {
+
     Route::resource('post-resume','ResumeController');
     Route::get('/user/resume-pdf','ResumeController@export_pdf');
     Route::get('/posts', 'KhWorksController@posts');
-    Route::post('/apply/{id}/{user_id}', 'KhWorksController@apply');
+
     Route::post('/getExistingCandidate/{job_id}/{user_id}', 'KhWorksController@getExistingCandidate');
     Route::resource('jobs', 'JobController');
     Route::resource('user_cv','UsersCvController');
     Route::get('/search','KhWorksController@scopeSearch');
-    Route::get('/lists', 'KhWorksController@lists');
+
     Route::get('/policy', 'KhWorksController@policy');
-    Route::get('/resume','KhWorksController@resume');
+    Route::get('/resume','ResumeController@resume')->middleware('isClient');
+    Route::post('/apply/{id}/{user_id}', 'KhWorksController@apply')->middleware('auth');
+    Route::get('/lists', 'KhWorksController@lists')->middleware('auth');
+    Route::post('/apply-job/{id}', 'JobApply@apply')->middleware('auth');
+
+
+
 });
+
+
+
 /************************************************************************************
  *                                  Frontend routes
  ************************************************************************************/

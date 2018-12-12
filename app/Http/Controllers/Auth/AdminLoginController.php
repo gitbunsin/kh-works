@@ -1,9 +1,13 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
-use App\Organization;
 use App\Http\Controllers\Controller;
+use App\Organization;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
@@ -13,7 +17,7 @@ class AdminLoginController extends Controller
      *
      * @var string
      */
-//    protected $redirectTo = '/administration';
+     protected $redirectTo = '/administration';
     /**
      * Create a new controller instance.
      *
@@ -21,25 +25,41 @@ class AdminLoginController extends Controller
      */
     public function __construct()
     {
-
+        //dd('hello');
         $this->middleware('guest:admins')->except('logout');
     }
+    protected  function login(Request $request)
+    {
 
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $email = Input::get('email');
+        $password = Input::get('password');
+
+        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
+//        $auth = Auth::guard()->attempt(['email' => $email, 'password' => $password]);
+        if (!$authAdmin) {
+            return Redirect::route('login')->with('global', 'These credentials do not match our records.');
+        }
+        return redirect($this->redirectTo);
+    }
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-//        dd($data);
-        return Organization::create([
-            'name' => $data['emp_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+//    protected function create(array $data)
+//    {
+////        dd($data);
+//        return Organization::create([
+//            'name' => $data['emp_name'],
+//            'email' => $data['email'],
+//            'password' => Hash::make($data['password']),
+//        ]);
+//    }
 
 
 //    public function  HrRegister()

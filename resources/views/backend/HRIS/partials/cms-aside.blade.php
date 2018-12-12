@@ -61,14 +61,14 @@
                             <li class="{{ Request::segment(2) == "jobs-category" ? "active" : " " }}">
                                 <a href="{{url ('administration/jobs-category')}}">Job Cateogry</a>
                             </li>
-                            <li>
-                                <a href="">Pay Grades</a>
+                            <li class="{{ Request::segment(2) == "pay-grade" ? "active" : " " }}">
+                               <a href="{{url ('administration/pay-grade')}}">Pay Grades</a>
                             </li>
-                            <li>
-                                <a href="">Employee Status</a>
+                            <li class="{{ Request::segment(2) == "employment-status" ? "active" : " " }}">
+                                <a href="{{url ('administration/employment-status')}}">Employee Status</a>
                             </li>
-                            <li>
-                                <a href="">Work Shifts</a>
+                            <li class=" {{ Request::segment(2) == "work-shift" ? "active" : " " }}">
+                                <a href="{{url ('administration/work-shift')}}">Works Shifts</a>
                             </li>
                         </ul>
                     </li>

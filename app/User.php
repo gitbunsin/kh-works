@@ -15,8 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected  $connection ='mysql';
-    protected $table = 'users';
+    protected $table = 'kh_seeker';
     protected $fillable = [
         'name',
         'email',

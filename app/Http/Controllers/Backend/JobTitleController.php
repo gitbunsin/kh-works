@@ -5,9 +5,9 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobCategory;
 use App\JobTitle;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class JobTitleController extends Controller
 {
@@ -19,7 +19,7 @@ class JobTitleController extends Controller
 
     public function index()
     {
-        $JobTitle = JobTitle::orderBy('id', 'DESC')->get();
+        $JobTitle = JobTitle::orderBy('id', 'DESC')->where('is_deleted',0)->get();
         return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
 
@@ -42,8 +42,18 @@ class JobTitleController extends Controller
      */
     public function store(Request $request)
     {
-        $JobTitle = JobTitle::create($request->all());
-        flash('Create Successfully')->success();
+        //$JobTitle = JobTitle::create($request->all());
+        $job_title = new JobTitle();
+        $user_id = input::get('user_id');
+        $job_title->job_title = input::get('job_title');
+        $job_title->job_description = input::get('job_description');
+        $job_title->note = input::get('note');
+        $job_title->is_deleted = 0;
+        $job_title->created_by = $user_id;
+        $job_title->fd = \Carbon\Carbon::now();
+        $job_title->td = \Carbon\Carbon::now();
+        $job_title->save();
+        session()->flash('success', 'Task was successful!');
         return redirect('/administration/jobs-title');
 //        return response()->json($JobTitle);
     }

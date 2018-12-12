@@ -51,21 +51,26 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-
-    protected  function login(Request $request)
-    {
-        $email = Input::get('email');
-        $password = Input::get('password');
-
-        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
-        $auth = Auth::guard()->attempt(['email' => $email, 'password' => $password]);
-        if (!$auth && !$authAdmin) {
-            return redirect()->route('login');
-        }
-
-        return redirect($this->redirectTo);
-
-     }
+//    protected  function login(Request $request)
+//    {
+//
+//        $request->validate([
+//            'email' => 'required',
+//            'password' => 'required',
+//        ]);
+//        $email = Input::get('email');
+//        $password = Input::get('password');
+//
+//        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
+//        $auth = Auth::guard()->attempt(['email' => $email, 'password' => $password]);
+//        if (!$auth && !$authAdmin) {
+//           return Redirect::route('login')
+//               ->with('global', 'These credentials do not match our records.');
+//        }
+//
+//        return redirect($this->redirectTo);
+//
+//     }
 
 
 //        $organize = new Organization();

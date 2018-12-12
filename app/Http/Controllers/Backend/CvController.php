@@ -15,9 +15,7 @@ class CvController extends Controller
      */
     public function index()
     {
-//        $Cv = Cv::all();
-        $db_kh_works = DB::connection('mysql2');
-        $Cv = $db_kh_works->table('tbl_job_candidate_attachment')
+        $Cv = DB::table('tbl_job_candidate_attachment')
             ->join('tbl_job_candidate', 'tbl_job_candidate_attachment.candidate_id', '=', 'tbl_job_candidate.id')
             ->select('tbl_job_candidate_attachment.*', 'tbl_job_candidate.*')
             ->get();

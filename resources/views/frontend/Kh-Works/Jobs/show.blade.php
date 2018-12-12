@@ -53,12 +53,18 @@
                 </div><!-- item-info -->
                 <div class="social-media">
                     <div class="button">
-                           @if (Route::has('login'))
-                                 @php
-                                    $user_id = Auth::user()->id;
-                                 @endphp
-                             @endif
-                            {{Form::open(array("url"=>"kh-works/apply/".$JobDetail->id.'/'.$user_id, "class"=>"smart-form"))}}
+                        {{--@if (Auth::check())--}}
+                            {{--@php--}}
+                                {{--$user_id = Auth::user()->id;--}}
+                            {{--@endphp--}}
+                        {{--@else--}}
+                            {{--@php--}}
+                                {{--$user_id = "";--}}
+                            {{--@endphp--}}
+
+                        {{--@endif--}}
+                            {{Form::open(array("url"=>"kh-works/apply-job/".$JobDetail->id, "class"=>"smart-form"))}}
+                             {{--{{Form::open(array("url"=>"kh-works/apply-job", "class"=>"smart-form"))}}--}}
                                 <meta name="csrf-token" content="{{ csrf_token() }}">
                                 <input id="url" type="hidden" value="{{ \Request::url() }}">
                                 <button class="btn btn-primary" type="submit" value="apply" >Apply Now</button>

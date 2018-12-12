@@ -41,7 +41,6 @@ class JobController extends Controller
     {
         //
     }
-
     /**
      * Display the specified resource.
      *
@@ -50,14 +49,12 @@ class JobController extends Controller
      */
     public function show($id)
     {
-//        $db_ext = DB::connection('mysql2');
-        $JobDetail= DB::table('tbl_jobs as j')
+        $JobDetail= DB::table('kh_job_vacancy as j')
             ->select('j.*')
             ->where('j.id','=',$id)
             ->get()
             ->first();
-//        dd($JobDetail);
-        return view('frontend.kh-works.Jobs.show',compact('JobDetail'));
+        dd($JobDetail);
     }
 
     /**
