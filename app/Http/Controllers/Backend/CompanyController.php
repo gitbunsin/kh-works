@@ -93,6 +93,19 @@ class CompanyController extends Controller
         $company->website = $request->website;
         $company->mobile = $request->mobile;
         $company->status = $request->status;
+        $file = Input::file('company_logo');
+//        dd($request->hasFile('company_logo'));
+        //dd($request->all());
+        if ($request->hasFile('company_logo')) {
+            $image = $request->file('company_logo');
+            $mytime = \Carbon\Carbon::now()->toDateTimeString();
+            $name = $image->getClientOriginalName();
+            $size = $image->getClientSize();
+            $type = $image->getMimeType();
+            $destinationPath = public_path('/uploaded/companyLogo/');
+            $image->move($destinationPath,$name);
+            $company->company_logo = $name;
+        }
         $company->save();
 //        flash('Create Successfully')->success();
         return redirect('/administration');

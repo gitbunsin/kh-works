@@ -1,14 +1,18 @@
 <?php
 
 namespace  App\Http\Controllers\Frontend;
+use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\UserCv;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rules\In;
+use function Sodium\compare;
 
 class ResumeController extends Controller
 {
@@ -23,9 +27,11 @@ class ResumeController extends Controller
     }
     public function index()
     {
-        $user_resume = DB::table('users')->first();
-       // dd($user_resume);
-        return view('frontend.Kh-Works.pages.user_resume',compact('user_resume'));
+
+        $user_cv_id = Auth::user()->cv_file_id;
+        $user_cv = UserCv::where('id',$user_cv_id)->first();
+        return view('frontend.Kh-Works.pages.user_resume',compact('user_cv'));
+
     }
 
     public function resume()
@@ -96,35 +102,49 @@ class ResumeController extends Controller
     public function update(Request $request, $id)
     {
 
-       // dd($request->all());
+//        dd($request->all());
         $resume = User::findOrFail($id);
         $resume->name = $request->name;
         $resume->full_name = $request->full_name;
         $resume->address = $request->address;
         $resume->mobile = $request->mobile;
-        $resume->sex = $request->sex;
-        $resume->country = $request->country;
-        $resume->name = $request->name;
-        $resume->city = $request->country;
-//        $resume->dob = $request->dob;
-//        $resume->date = $request->date;
-        $resume->experiences = $request->experiences;
-        $file = Input::file('photo');
-       // dd($request->hasFile('photo'));
-        if ($request->hasFile('photo')) {
-            $image = $request->file('photo');
+        if ($request->hasFile('photo_file_id')) {
+            $image = $request->file('photo_file_id');
             //dd($image);
             $mytime = \Carbon\Carbon::now()->toDateTimeString();
             $name = $image->getClientOriginalName();
-            //dd($name);
             $size = $image->getClientSize();
+//
             $type = $image->getMimeType();
-            $destinationPath = public_path('/uploaded');
+            $destinationPath = public_path('/uploaded/UserPhoto/');
             $image->move($destinationPath,$name);
-            $resume->photo = $name;
+            $resume->photo= $name;
+        }
+//        dd($resume);
+        $file = $request->file('cv_file_id');
+//        dd($file);
+//        dd($request->hasFile('cv_file_id'));
+        if ($request->hasFile('cv_file_id')) {
+            $image = $request->file('cv_file_id');
+            //dd($image);
+            $mytime = \Carbon\Carbon::now()->toDateTimeString();
+            $name = $image->getClientOriginalName();
+            $size = $image->getClientSize();
+//
+            $type = $image->getMimeType();
+            $destinationPath = public_path('/uploaded/UserCV/');
+            $image->move($destinationPath,$name);
+            $Resume_upload = new UserCv();
+            $Resume_upload->user_id = input::get('user_id');
+            $Resume_upload->name = $name;
+            $Resume_upload->size = $size;
+//            $Resume_upload->image = $image;
+//            $Resume_upload->type = $type;
+            $Resume_upload->save();
+            $cv_id = $Resume_upload->id;
+            $resume->cv_file_id = $cv_id;
         }
         $resume->save();
-//        flash('Create Successfully')->success();
         return redirect('/kh-works/post-resume');
         //
     }

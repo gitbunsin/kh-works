@@ -25,7 +25,7 @@
                                     $id = Auth::guard('admins')->user()->id;
                                 @endphp
                             {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
-                            {{Form::open(array("url"=>"administration/companyProfile/".$id, "class"=>"smart-form"))}}
+                            {{Form::open(array("url"=>"administration/companyProfile/".$id, "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
                             <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="company_id" value="">
@@ -175,7 +175,7 @@
                                     <section>
                                         <label class="label">Company Logos *</label>
                                         <label class="input">
-                                            <input  value="" type="file" name="phone" id="phone">
+                                            <input  value="" type="file" name="company_logo" id="company_logo">
                                         </label>
                                     </section>
                                 </fieldset>

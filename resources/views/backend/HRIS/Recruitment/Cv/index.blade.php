@@ -34,21 +34,21 @@
                                 <thead>
                                 <tr>
                                     <th data-hide="phone">CVs ID</th>
-                                    <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Seekers Name</th>
-                                    <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i>Photo</th>
-                                    <th data-hide="phone">Experiences</th>
-                                    <th>Download</th>
+                                    <th> Seekers Name</th>
+                                    <th> Photo</th>
+                                    <th> Candidate CV</th>
+                                    <th> Download </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($Cv as $cvs)
+                                @foreach($user_cv as $user_cvs)
                                     <tr>
-                                        <td>{{$cvs->id}}</td>
-                                        <td>{{$cvs->first_name}}{{$cvs->last_name}}</td>
-                                        <td><img width="100px;" height="70px;" src="/uploaded/{{ $cvs->file_name }}"></td>
-                                        <td>{{$cvs->file_type}}</td>
+                                        <td>{{$user_cvs->id}}</td>
+                                        <td>{{$user_cvs->full_name}}</td>
+                                        <td><img class="img-circle" width="90px;" height="70px;" src="{{asset('uploaded/UserPhoto/'.$user_cvs->photo)}}"></td>
+                                        <td><a href="{{url('administration/download/'.$user_cvs->user_id)}}">{{$user_cvs->name}}</a> </td>
                                         <td style="text-align: center;">
-                                            <a data-id="{{$cvs->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$user_cvs->id}}" href="{{url('administration/download/'.$user_cvs->user_id)}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-download"></i>
                                             </a>
                                         </td>

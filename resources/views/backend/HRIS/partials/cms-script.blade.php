@@ -54,7 +54,7 @@
 
 		<!-- FastClick: For mobile devices -->
 		<script src="{{ asset('js/plugin/fastclick/fastclick.min.js')}}"></script>
-          <script src="{{asset('js/plugin/ckeditor/ckeditor.js')}}"></script>
+
 
 		<!--[if IE 8]>
 
@@ -84,9 +84,14 @@
 		<script src="{{ asset('js/plugin/flot/jquery.flot.time.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/flot/jquery.flot.tooltip.min.js')}}"></script>
 
+
 		<!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
 		<script src="{{ asset('js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/vectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+
+		<!--ck editor-->
+		<script src="{{ asset('js/plugin/ckeditor/ckeditor.js')}}"></script>
+
 
 		<!-- Full Calendar -->
 		<script src="{{ asset('js/plugin/moment/moment.min.js')}}"></script>
@@ -98,6 +103,7 @@
 		<script src="{{ asset('js/plugin/datatables/dataTables.tableTools.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}"></script>
+
 <script type="text/javascript">
     // DO NOT REMOVE : GLOBAL FUNCTIONS!
     $(document).ready(function() {

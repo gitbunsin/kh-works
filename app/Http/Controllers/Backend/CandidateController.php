@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\CandidateVacancy;
 use App\Http\Controllers\Controller;
 use App\Interview;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -21,13 +23,46 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $candidate = DB::table('tbl_job_candidate_vacancy as cv')
-            ->join('tbl_job_candidate as c','cv.candidate_id','=','c.id')
-            ->join('tbl_job_vacancy as v','cv.vacancy_id','=','v.id')
-            ->select('cv.*','c.*','v.*')
-            ->get();
-         // dd($candidate);
-        return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate'));
+//        $candidate = DB::table('tbl_job_candidate_vacancy as cv')
+//            ->join('tbl_job_candidate as c','cv.candidate_id','=','c.id')
+//            ->join('tbl_job_vacancy as v','cv.vacancy_id','=','v.id')
+//            ->select('cv.*','c.*','v.*')
+//            ->get();
+//        $candidate = Candidate::all();
+        $company_id = Auth::guard('admins')->user()->id;
+
+//        $name = Auth::guard('admins')->user()->name();
+//        dd($name);
+//        dd($company_id);
+        $candidate = DB::table('tbl_job_candidate as c')
+                 ->select('c.*','cv.*','v.*','c.id as candidate_id')
+                 ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+                 ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
+                 ->Where('v.company_id',$company_id)
+                 ->where('cv.status',2)
+                 ->get();
+//          dd($candidate);
+        return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate','name'));
+    }
+
+    public function approved(Request $request, $candidate_id)
+  {
+
+    $candidate = CandidateVacancy::findOrFail($candidate_id);
+    $candidate->status = 1;
+    $candidate->save();
+    return response()->json(['success'=>'Data is successfully added']);
+
+  }
+
+    public function reject(Request $request, $candidate_id)
+    {
+
+        $candidate = CandidateVacancy::findOrFail($candidate_id);
+        $candidate->status = 0;
+        $candidate->save();
+        return response()->json(['success'=>'Data is successfully added']);
+
     }
 
 //    public function store(Request $request)
@@ -94,7 +129,7 @@ class CandidateController extends Controller
         $candidate->middle_name = Input::get('middle_name');
         $candidate->email = Input::get('email');
         $candidate->keywords = Input::get('keyword');
-        $candidate->status = 1;
+        $candidate->status = 2;
         $candidate->mode_of_application = 1;
         $candidate->cv_file_id = 1;
         $input  = Input::get('date-of-application');

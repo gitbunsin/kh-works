@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -22,10 +23,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employee = DB::table('tbl1_hr_employee')
-            ->join('tbl_job_title', 'tbl1_hr_employee.job_title_code', '=', 'tbl_job_title.id')
-            ->select('tbl1_hr_employee.*','tbl_job_title.*')
-            ->orderBy('tbl1_hr_employee.emp_id','DESC')
+        $company_id = Auth::guard('admins')->user()->id;
+        $employee = DB::table('tbl1_hr_employee as e')
+            ->select('e.*','t.*')
+            ->join('tbl_job_title as t', 'e.job_title_code', '=', 't.id')
+            ->where('e.company_id',$company_id)
+            ->orderBy('e.emp_id','DESC')
             ->get();
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
@@ -56,24 +59,39 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $employee = new Employee();
         $employee->emp_lastname = $request->emp_firstname;
         $employee->emp_lastname = $request->emp_middle_name;
         $employee->emp_middle_name = $request->emp_lastname;
         $employee->job_title_code = $request->job_title;
         $employee->employee_id = $request->employee_id;
-        dd($request->file('files'));
-//        dd($request->file('file'));
-//        if ($request->hasFile('file')) {
-//            $image = $request->file('file');
-//            $mytime = \Carbon\Carbon::now()->toDateTimeString();
-//            $name = $image->getClientOriginalName();
-//            $size = $image->getClientSize();
-//            $type = $image->getMimeType();
-//            $destinationPath = public_path('/uploads');
-//            $image->move($destinationPath,$name);
-//        }
+        $employee->company_id = $request->company_id;
+
+
+        if ($request->hasFile('photo'))
+        {
+
+            $image = $request->file('photo');
+            $mytime = \Carbon\Carbon::now()->toDateTimeString();
+            $name = $image->getClientOriginalName();
+            $size = $image->getClientSize();
+            $type = $image->getMimeType();
+            $destinationPath = public_path('/uploaded/EmpPhoto/');
+            $image->move($destinationPath,$name);
+            $employee->photo = $name;
+
+        }
         $employee->save();
+        $check = $request->user_check;
+        if ($check == 1) {
+            $user = new User();
+            $user->name = $request->user_name;
+            $user->email = $request->user_email;
+            $user->password = Hash::make($request->user_password);
+            $user->save();
+        }
+
         return redirect('administration/employee');
     }
 //    public function ajaxImage(Request $request)

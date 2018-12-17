@@ -14,9 +14,6 @@
                             <a style="background: #333;" class="btn btn-primary" href="{{url('administration/jobs-category/create  ')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
-                        {{--<div class="pull-right">--}}
-                            {{--<button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;"><i class="glyphicon glyphicon-plus-sign "></i> Add new</span></button>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
                 <br/>
@@ -41,9 +38,9 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone"><i class="hidden-xs"></i>Job Category</th>
-                                    <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Description</th>
-                                    <th>Action</th>
+                                    <th> Job Category</th>
+                                    <th> Description</th>
+                                    <th> Action </th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
@@ -68,35 +65,6 @@
                 </div>
             </article>
         </div>
-        {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
-        {{--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--}}
-            {{--<div class="modal-dialog modal-lg">--}}
-                {{--<div class="modal-content">--}}
-                {{--<div class="modal-body">--}}
-                    {{--<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">--}}
-                        {{--<!-- Widget ID (each widget will need unique ID)-->--}}
-                        {{--<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">--}}
-                            {{--<header>--}}
-                                {{--<span class="widget-icon"> <i class="fa fa-table"></i> </span>--}}
-                                {{--<h2> Job Category</h2>--}}
-                            {{--</header>--}}
-                            {{--<!-- widget div-->--}}
-                            {{--<div>--}}
-                                {{--<!-- widget edit box -->--}}
-                                {{--<div class="jarviswidget-editbox">--}}
-                                    {{--<!-- This area used as dropdown edit box -->--}}
-                                {{--</div>--}}
-                                {{--<!-- widget content -->--}}
-                                {{--<div class="widget-body no-padding">--}}
-                                    {{----}}
-                                {{--</div>--}}
-                                {{--<!-- end widget content -->--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</article>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
     </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="{{ asset('/js/hr/jobcategory.js') }}"></script>

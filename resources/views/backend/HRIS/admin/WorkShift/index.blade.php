@@ -44,21 +44,20 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                {{--@foreach($JobTitle as $jobs)--}}
-                                    {{--<tr id="job_id{{$jobs->id}}">--}}
-                                        {{--<td>{{$jobs->job_title}}</td>--}}
-                                        {{--<td>{{$jobs->job_description}}</td>--}}
-                                        {{--<td>{{$jobs->note}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
+                                @foreach($WorkShift as $WorkShifts)
+                                    <tr id="job_id{{$WorkShifts->id}}">
+                                        <td>{{$WorkShifts->name}}</td>
+                                        <td>{{$WorkShifts->hours_per_day}}</td>
+                                        <td>
+                                            <a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$WorkShifts->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

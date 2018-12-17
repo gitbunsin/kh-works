@@ -38,10 +38,10 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone"><i class="hidden-xs"></i>Job Title</th>
-                                    <th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Job Description</th>
-                                    <th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i>Note</th>
-                                    <th>Action</th>
+                                    <th> Job Title</th>
+                                    <th> Job Description</th>
+                                    <th> Note</th>
+                                    <th> Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">

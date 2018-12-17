@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\EmployeeWorkShift;
 use App\Http\Controllers\Controller;
+use App\WorkShift;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class WorkShiftController extends Controller
 {
@@ -13,7 +17,8 @@ class WorkShiftController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.admin.WorkShift.index');
+        $WorkShift = WorkShift::all();
+        return view('backend.HRIS.admin.WorkShift.index',compact('WorkShift'));
     }
 
     /**
@@ -35,7 +40,26 @@ class WorkShiftController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+
+//        $input = $request->except('wishlist');
+//        dd($input);
+
+        $WorkShift  = new WorkShift();
+
+        $WorkShift->name = $request->name;
+        $WorkShift->hours_per_day = $request->hours_per_day;
+        $WorkShift->save();
+        $Work_shift_id = $WorkShift->id;
+        $emp = $request->input('wishlist');
+        foreach ($emp as $item){
+            $EmployeeWorkShift = new EmployeeWorkShift();
+            $EmployeeWorkShift->emp_id = $item;
+            $EmployeeWorkShift->work_shift_id = $Work_shift_id;
+            $EmployeeWorkShift->save();
+        }
+        return redirect('/administration/work-shift');
     }
 
     /**
@@ -58,6 +82,9 @@ class WorkShiftController extends Controller
     public function edit($id)
     {
         //
+        $work_shift = WorkShift::where("id",$id)->first();
+//        dd($work_shift);
+        return view('backend.HRIS.admin.WorkShift.edit',compact('work_shift'));
     }
 
     /**
@@ -70,6 +97,21 @@ class WorkShiftController extends Controller
     public function update(Request $request, $id)
     {
         //
+//        $subjects = Input::get('wishlist');
+//        dd(implode(',', Input::get('wishlist')));
+        //dd(input::get('wishlist'));
+//        dd($request->all());
+        $WorkShift  =  WorkShift::findorFail($id);
+
+        $EmployeeWorkShift = EmployeeWorkShift::findorFail($id);
+        $WorkShift->name = $request->name;
+        $WorkShift->hours_per_day = $request->hours_per_day;
+        $WorkShift->save();
+        $Work_shift_id = $WorkShift->id;
+        $EmployeeWorkShift->work_shift_id = $Work_shift_id;
+        $EmployeeWorkShift->emp_id = $request->wishlist_list;
+        $EmployeeWorkShift->save();
+        return redirect('/administration/work-shift');
     }
 
     /**

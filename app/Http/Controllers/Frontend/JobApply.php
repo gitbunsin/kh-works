@@ -12,6 +12,7 @@ use App\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 
 class JobApply extends Controller
@@ -21,87 +22,71 @@ class JobApply extends Controller
         //dd('hello');
         $this->middleware('auth');
     }
-    public  function apply(Request  $request , $id)
+
+    public function apply(Request $request, $id)
     {
-        if (Auth::user()){
+//        dd($id);
+        if (Auth::user()) {
             $user_id = Auth::user()->id;
+//            dd($user_id);
             $candidate = new Candidate();
-            $user_candidate = DB::table('users as u')
+            $user_candidate = DB::table('kh_seeker as u')
                 ->select('c.*', 'c.id as cv_id', 'u.*')
                 ->join('tbl_cvs as c', 'c.user_id', '=', 'u.id')
-                ->where('c.user_id', '=',$user_id)
+                ->where('c.user_id', '=', $user_id)
                 ->get()
                 ->first();
-            if($user_candidate){
+            if ($user_candidate) {
+
                 $candidate->cv_file_id = $user_candidate->id;
-                $candidate->first_name = $user_candidate->name;
-                $candidate->last_name = $user_candidate->name;
-                $candidate->middle_name = $user_candidate->name;
+                $candidate->name = $user_candidate->name;
                 $candidate->email = $user_candidate->email;
                 $candidate->mode_of_application = 1;
-                $candidate->status = 0;
-
+                $candidate->status = 1;
                 $candidate->save();
-                //$candidate_id = $candidate->id;
-
-                //add new table for Candidate Attachment
-                $Candidate_Attachment = new CandidateAttachment();
-                $Candidate_Attachment->candidate_id = $candidate->id;
-                $Candidate_Attachment->file_name = $user_candidate->image;
-                $Candidate_Attachment->file_type = $user_candidate->type;
-                $Candidate_Attachment->file_size = $user_candidate->size;
-                $Candidate_Attachment->save();
-//        $vacancy = DB::table('tbl_job_vacancy as v')
-//            ->select('v.*', 'v.id as vacancy_id', 't.*')
-//            ->join('tbl_job_title as t', 'v.job_title_code', '=', 't.id')
-//            ->where('v.job_title_code', '=', $id)
-//            ->get()
-//            ->first();
-                $vacancy = new Vacancy();
-                $vacancy->job_title_code = $user_candidate->id;
-                $vacancy->hiring_manager_id = $user_candidate->user_id;
-                $vacancy->name = $user_candidate->name;
-                $vacancy->status = 1;
-
-                $vacancy->save();
-                $vacancy_id = $vacancy->id;
-
                 //add new Candidate
+                $company_id = input::get('company_id');
+                $vacancy_id = input::get('job_id');
                 $vacancy_candidate = new CandidateVacancy();
-                $vacancy_candidate->candidate_id = $candidate->id;
-                $vacancy_candidate->vacancy_id = $vacancy->id;
-                $vacancy_candidate->status = 1;
+                $vacancy_candidate->candidate_id = $user_id;
+                $vacancy_candidate->vacancy_id = $vacancy_id;
+                $vacancy_candidate->status = 2;
                 $date_applied = \Carbon\Carbon::now();
                 $vacancy_candidate->applied_date = $date_applied;
                 $vacancy_candidate->save();
 
-                $user = User::where('id', $user_id)->select('name', 'email')->get();
-                $job = Job::where('id', $id)->select('CompanyName', 'email', 'job_title')->get();
-                Excel::create('User', function ($excel) use ($user, $job) {
-                    $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
-                        foreach ($user as $key => $value) {
-                            $i = $key + 2;
-                            $sheet->cell('A' . $i, $value['name']);
-                            $sheet->cell('B' . $i, $value['email']);
-                        }
-                        foreach ($job as $key => $values) {
-                            $is = $key + 2;
-                            $sheet->cell('C' . $is, $values['CompanyName']);
-                            $sheet->cell('D' . $is, $values['job_title']);
-                        }
-                    });
-                })->download();
-            }else{
-                return redirect('/kh-works/lists');
+//                $user = User::where('id', $user_id)->select('name', 'email')->get();
+//                $job = Job::where('id', $id)->select('company_id', 'job_title_code')->get();
+//                Excel::create('User', function ($excel) use ($user, $job) {
+//                    $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
+//                        foreach ($user as $key => $value) {
+//                            $i = $key + 2;
+//                            $sheet->cell('A' . $i, $value['name']);
+//                            $sheet->cell('B' . $i, $value['email']);
+//                        }
+//                        foreach ($job as $key => $values) {
+//                            $is = $key + 2;
+//                            $sheet->cell('C' . $is, $values['company_id']);
+//                            $sheet->cell('D' . $is, $values['job_title_code']);
+//                        }
+//                    });
+//                })->download();
+                return redirect('/administration/display-job-details/'.$company_id .'/'.$id);
+
+            }
+
+            else {
+                return redirect('/kh-works/resume');
             }
             //$candidate = new Candidate()
             //dd($user_candidate);
             //add CV
 
-        }else{
+        } else {
             return redirect()->route('login');
         }
     }
+}
+
 
     //
-}

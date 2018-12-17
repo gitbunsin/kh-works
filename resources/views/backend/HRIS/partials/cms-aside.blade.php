@@ -159,11 +159,11 @@
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Recruitment</span></a>
                 <ul>
-                    <li class="{{ Request::segment(2) == "Cv" ? "active" : " " }}">
-                        <a href="{{ url('administration/Cv') }}">Query CV</a>
+                    <li class="{{ Request::segment(2) == "user_cv" ? "active" : " " }}">
+                        <a href="{{ url('/administration/user_cv') }}">Query CV</a>
                     </li>
                     <li class="{{ Request::segment(2) == "post-jobs" ? "active" : " " }}">
-                        <a href="{{ url('administration/post-jobs') }}">Jobs</a>
+                        <a href="{{ url('administration/post-jobs') }}">Post Vacancy</a>
                     </li>
                     <li class="{{ Request::segment(2) == "interview" ? "active" : " " }}">
                         <a href="{{ url('administration/interview') }}">InterView</a>
@@ -171,9 +171,9 @@
                     <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                         <a href="{{url('administration/candidate')}}">Candidate</a>
                     </li>
-                    <li class="{{ Request::segment(2) == "vacancy" ? "active" : " " }}">
-                        <a href="{{url('administration/vacancy')}}">Vacancy</a>
-                    </li>
+                    {{--<li class="{{ Request::segment(2) == "vacancy" ? "active" : " " }}">--}}
+                        {{--<a href="{{url('administration/vacancy')}}">Vacancy</a>--}}
+                    {{--</li>--}}
 
                 </ul>
             </li>

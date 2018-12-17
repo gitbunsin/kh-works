@@ -20,7 +20,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'md5_id',
         'full_name',
         'status',
         'sex',

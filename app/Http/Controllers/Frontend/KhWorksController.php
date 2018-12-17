@@ -5,6 +5,7 @@ use App\Employee;
 use App\Exports\UsersExport;
 use App\Job;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 // use Illuminate\Support\Facades\Input;
 // use Illuminate\Support\Facades\DB;
@@ -34,13 +35,16 @@ class KhWorksController extends Controller
 
     public function index(Request $request)
     {
+
         $searchTerm = $request->input('searchTerm');
-        $Job = DB::table('kh_job_vacancy as j')
-            ->select('j.*')
-            ->where('job_title', 'like', '%' .$searchTerm. '%')
+        $Job = DB::table('kh_job_vacancy as v')
+            ->select('v.*','t.*','v.id as job_id','com.*')
+            ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+            ->join('tbl_organization_gen_info as com','v.company_id','=','com.id')
+//            ->where('job_title', 'like', '%' .$searchTerm. '%')
             ->orWhere('description', 'like', '%' .$searchTerm. '%')
             ->paginate(3);
-        $JobCategory = JobCategory::all();
+//        dd($Job);
         return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
 
 //        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));

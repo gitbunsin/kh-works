@@ -25,7 +25,7 @@
                 <li><a href="">Home</a></li>
                 <li>Post Resume</li>
             </ol><!-- breadcrumb -->
-            <h2 class="title">Post My Resume</h2>
+            <h2 class="title">Post Resume</h2>
         </div><!-- banner -->
         <div class="job-postdetails post-resume">
             <div class="row">
@@ -40,37 +40,47 @@
                     <input name="_method" type="hidden" value="PATCH">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="name" value="{{Auth::user()->name}}"/>
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
                         <fieldset>
                             <div class="section express-yourself">
                                 <h4>Express Yourself</h4>
                                 <div class="row form-group">
-                                    <label class="col-sm-4 label-title">Full Name</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-3 label-title">Full Name</label>
+                                    <div class="col-sm-9">
                                         <input required type="text" name="full_name" class="form-control" placeholder="ex Jhon Doe">
                                     </div>
                                 </div>
-                                <div class="row form-group additional-information">
-                                    <label class="col-sm-4 label-title">Additional Information</label>
-                                    <div class="col-sm-8">
-											<textarea name="address_info" class="form-control" placeholder="Address: 123 West 12th Street, Suite 456 New York, NY 123456
- Phone: +012 345 678 910
- Email: itsme@surzilegeek.com*"></textarea>
+                                    <div class="row form-group">
+                                        <label class="col-sm-3 label-title">Phone</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" name="mobile" class="form-control" placeholder="Phone number">
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="row form-group">
+                                        <label class="col-sm-3 label-title">Address</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="address" class="form-control" placeholder="121 King Street, Melbourne Victoria, 1200 USA">
+                                        </div>
+                                    </div>
                                 <div class="row form-group photos-resume">
-                                    <label class="col-sm-4 label-title">Photos for your Resume</label>
-                                    <div class="col-sm-8 ">
-                                        <input class="form-control" type="file" name="photo" id="photo">
-                                        {{--<label class="upload-image left" >--}}
-                                            {{--<input name="photo" type="file" >--}}
-                                            {{--Type: JPG, PNG  Size: 3.5 x 4.5 cm--}}
-                                        {{--</label>--}}
-                                        {{--<label class="upload-image" for="upload-image-two">--}}
-                                            {{--<input type="file" id="upload-image-two">--}}
-                                            {{--Upload Photo--}}
-                                        {{--</label>--}}
+                                    <label class="col-sm-3 label-title"> Resume</label>
+                                    <div class="col-sm-9 ">
+                                        <input name="cv_file_id" class="form-control" id="fileUpload" type="file" />
+                                    </div>
+                                        <span  id="lblError" style="color: red;"></span>
+                                </div>
+
+
+
+                                <br/>
+                                <div class="row form-group photos-resume">
+                                    <label class="col-sm-3 label-title"> Photo</label>
+                                    <div class="col-sm-9 ">
+                                        <input name="photo_file_id" class="form-control" id="fileUploadPhoto" type="file" />
                                     </div>
                                 </div>
+                                <span id="lblErrorPhoto" style="color: red;"></span>
+
                             </div><!-- postdetails -->
 
                             <div class="section career-objective">
@@ -80,180 +90,9 @@
                                 </div>
                                 <span>5000 characters left</span>
                             </div><!-- career-objective -->
-
-                            <div class="section">
-                                <h4>Work History</h4>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Compnay Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Designation</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="Human Resource Manager">
-                                    </div>
-                                </div>
-                                <div class="row form-group time-period">
-                                    <label class="col-sm-3 label-title">Time Period</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="dd/mm/yy"><span>-</span>
-                                        <input type="text" name="" class="form-control pull-right" placeholder="dd/mm/yy">
-                                    </div>
-                                </div>
-                                <div class="row form-group job-description">
-                                    <label class="col-sm-3 label-title">Job Description</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" placeholder="" rows="8"></textarea>
-                                    </div>
-                                </div>
-                                <div class="buttons pull-right">
-                                    <a href="" class="btn">Add New Exprience</a>
-                                    <a href="" class="btn delete">Delete</a>
-                                </div>
-                            </div><!-- work-history -->
-
-                            <div class="section education-background">
-                                <h4>Education Background</h4>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Institute Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="ropbox">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Degree</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="Human Resource Manager">
-                                    </div>
-                                </div>
-                                <div class="row form-group time-period">
-                                    <label class="col-sm-3 label-title">Time Period</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="dd/mm/yy"><span>-</span>
-                                        <input type="text" name="" class="form-control pull-right" placeholder="dd/mm/yy">
-                                    </div>
-                                </div>
-                                <div class="row form-group job-description">
-                                    <label class="col-sm-3 label-title">Description</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" placeholder="" rows="8"></textarea>
-                                    </div>
-                                </div>
-                                <div class="buttons pull-right">
-                                    <a href="" class="btn">Add New Education</a>
-                                    <a href="" class="btn delete">Delete</a>
-                                </div>
-                            </div><!-- work-history -->
-
-                            <div class="section special-qualification">
-                                <h4>Special Qualification</h4>
-                                <div class="form-group item-description">
-                                    <textarea class="form-control" placeholder="Write few lines about your special qualification" rows="8"></textarea>
-                                </div>
-                            </div><!-- special-qualification -->
-
-                            <div class="section language-proficiency">
-                                <h4>Language Proficiency:</h4>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Language Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="English">
-                                    </div>
-                                </div>
-                                <div class="row form-group rating">
-                                    <label class="col-sm-3 label-title">Rating</label>
-                                    <div class="col-sm-9">
-                                        <div class="rating-star">
-                                            <div class="rating">
-                                                <input type="radio" id="star1" name="rating"><label class="full" for="star1"></label>
-
-                                                <input type="radio" id="star2" name="rating"><label class="half" for="star2"></label>
-
-                                                <input type="radio" id="star3" name="rating"><label class="full" for="star3"></label>
-
-                                                <input type="radio" id="star4" name="rating"><label class="half" for="star4"></label>
-
-                                                <input type="radio" id="star5" name="rating"><label class="full" for="star5"></label>
-
-                                                <input type="radio" id="star6" name="rating"><label class="half" for="star6"></label>
-
-                                                <input type="radio" id="star7" name="rating"><label class="full" for="star7"></label>
-
-                                                <input type="radio" id="star8" name="rating"><label class="half" for="star8"></label>
-
-                                                <input type="radio" id="star9" name="rating"><label class="full" for="star9"></label>
-
-                                                <input type="radio" id="star10" name="rating"><label class="half" for="star10"></label>
-                                            </div>
-                                        </div><!-- rating-star -->
-                                    </div>
-                                </div>
-                                <div class="buttons pull-right">
-                                    <a href="" class="btn">Add New Language</a>
-                                    <a href="" class="btn delete">Delete</a>
-                                </div>
-                            </div><!-- language-proficiency -->
-
-                            <div class="section company-information">
-                                <h4>Personal Deatils</h4>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Full Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="Jhon Doe">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Date of Birth</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="dob" class="form-control" placeholder="26/01/1982">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Birth Place</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="" class="form-control" placeholder="United State of America">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Nationality</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="country" class="form-control" placeholder="Canadian">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Sex</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="sex" class="form-control" placeholder="Male">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" name="mobile" class="form-control" placeholder="Phone number">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label class="col-sm-3 label-title">Address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="address" class="form-control" placeholder="121 King Street, Melbourne Victoria, 1200 USA">
-                                    </div>
-                                </div>
-                                <div class="buttons pull-right">
-                                    <a href="" class="btn">Add New Feild</a>
-                                </div>
-                            </div><!-- section -->
-
-                            <div class="section special-qualification">
-                                <h4>Declaration</h4>
-                                <div class="form-group item-description">
-                                    <textarea class="form-control" placeholder="" rows="8"></textarea>
-                                </div>
-                            </div><!-- special-qualification -->
                         </fieldset>
                         <div class="buttons">
-                            <input type="submit" name="btn_submit" value="Update Profiles" class="btn">
+                            <input class="btn" type="submit" id="btnUpload" value="Update Profile" />
                             <a href="" class="btn cancle">Cancle</a>
                         </div>
                     {{ Form::close() }}
@@ -283,10 +122,38 @@
 </section><!-- main -->
 
 <!-- footer -->
-
+@include('frontend.Kh-Works.partials.ui-footer')
 <!--/End:Preset Style Chooser-->
 
 <!-- JS -->
 @include('frontend.Kh-Works.partials.ui-script')
+<script type="application/javascript">
+    $("body").on("click", "#btnUpload", function () {
+//        var allowedFiles = [".doc", ".docx", ".pdf"];
+        var allowedFiles = [".pdf"];
+        var fileUpload = $("#fileUpload");
+        var lblError = $("#lblError");
+        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+        if (!regex.test(fileUpload.val().toLowerCase())) {
+            lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+            return false;
+        }
+        lblError.html('');
+        return true;
+    });
+    $("body").on("click", "#btnUpload", function () {
+        var allowedFiles = [".jpg", ".png"];
+        var fileUpload = $("#fileUploadPhoto");
+        var lblError = $("#lblErrorPhoto");
+        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+        if (!regex.test(fileUpload.val().toLowerCase())) {
+            lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+            return false;
+        }
+        lblError.html('');
+        return true;
+    });
+</script>
 
-</body></html>
+</body>
+</html>

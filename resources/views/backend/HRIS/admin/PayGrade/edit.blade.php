@@ -57,7 +57,7 @@
                                             <tbody id="products-list" name="products-list">
                                             @foreach( $pay_grade_currency  as $pay_grade_currencies )
                                                 {{--{{dd($pay_grade_currencies)}}--}}
-                                                <tr id="currency_id{{$pay_grade_currencies->id}}">
+                                                <tr id="currency_id{{$pay_grade_currencies->currency_id}}">
                                                     <td>{{$pay_grade_currencies->currency_name}}</td>
                                                     <td>{{$pay_grade_currencies->min_salary}}</td>
                                                     <td>{{$pay_grade_currencies->max_salary}}</td>

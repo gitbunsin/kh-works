@@ -32,6 +32,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
+                                        <input type="hidden" value="{{Auth::guard('admins')->user()->id}}" name="company_id"/>
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input">
@@ -100,7 +101,7 @@
                                     </div>
                                     <section>
                                         <label class="checkbox">
-                                            <input type="checkbox" value="checkbox-login" id="checkbox-login">
+                                            <input name="user_check" type="checkbox" value="0" id="checkbox-login">
                                             <i></i><strong> Create Login Details</strong>
                                         </label>
                                     </section>
@@ -183,11 +184,15 @@
         $( document ).ready(function() {
             $("#div_login").hide();
             $('#checkbox-login').change(function () {
-                if (this.checked)
+                if (this.checked) {
+                    $('#checkbox-login').val("1");
                     $('#div_login').fadeIn('slow');
-                else
-                    $('#div_login').fadeOut('slow');
+                }
 
+                else {
+                    $('#div_login').fadeOut('slow')
+                    $('#checkbox-login').val("0");
+                }
             });
         });
             // DO NOT REMOVE : GLOBAL FUNCTIONS!

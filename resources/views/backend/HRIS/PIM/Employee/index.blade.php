@@ -48,7 +48,7 @@
                                 <tbody id="products-list" name="products-list">
                                 @foreach($employee as $employees)
                                     <tr id="employee_id{{$employees->emp_id}}">
-                                        <td><img style="width: 40px;" src="http://localhost:8000/img/avatars/sunny.png" alt="me" class="online img-responsive img-circle"></td>
+                                        <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_firstname}}{{$employees->emp_lastname}}</td>
                                         <td>{{$employees->job_title}}</td>

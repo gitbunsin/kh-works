@@ -81,33 +81,37 @@
             <div class="section-title tab-manu">
                 <h4>Latest Jobs</h4>
             </div>
-            @php $i=1; @endphp
+            {{--{{dd($Job)}}--}}
+
+            @php
+                $i=1;
+            @endphp
             @foreach($Job as $Jobs)
                 <div role="tabpanel" class="tab-pane fade in active" id="popular-jobs">
                     <div class="job-ad-item">
                         <div class="item-info">
                             <div class="item-image-box">
                                 <div class="item-image">
-                                    <a href="https:http://localhost:8000/uijob-details.html"><img src="/img/1(1).png" alt="Image" class="img-responsive"></a>
+                                    <a href="#">
+                                        @if($Jobs->company_logo)
+                                            <img src="{{asset('/uploaded/companyLogo/'.$Jobs->company_logo)}}" alt="Image" class="img-responsive">
+                                        @else
+                                            <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">
+                                        @endif
+                                    </a>
                                 </div><!-- item-image -->
                             </div>
                             <div class="ad-info">
-                                <span><a target="_blank" href="{{url('kh-works/jobs/'.$Jobs->id)}}" class="title">{{$Jobs->job_title}}</a></span>
+                                <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$Jobs->job_id.'/'.$Jobs->company_id)}}" class="title">{{$Jobs->job_title}}</a></span>
                                 <div class="ad-meta">
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>San Francisco, CA, US </a></li>
-                                        <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>Full Time</a></li>
-                                        <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>$25,000 - $35,000</a></li>
+                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$Jobs->location}}</a></li>
+                                        <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>{{$Jobs->job_type}}</a></li>
+                                        <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>${{$Jobs->min_salary}} - ${{$Jobs->max_salary}}</a></li>
                                         <li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>
                                     </ul>
                                 </div><!-- ad-meta -->
                             </div><!-- ad-info -->
-
-                            {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
-                            {{--<meta name="csrf-token" content="{{ csrf_token() }}">--}}
-                            {{--<div class="apply_dev">--}}
-                                {{--<a id="btn{{$Jobs->id}}"  href="{{$id}}"  data-id="{{$Jobs->id}}" class="btn btn-primary apply_id">Apply Now</a>--}}
-                            {{--</div>--}}
                         </div><!-- item-info -->
                     </div><!-- ad-item -->
                 </div><!-- tab-pane -->

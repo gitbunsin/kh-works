@@ -21,10 +21,10 @@ class VacanciesController extends Controller
     public function index()
     {
         $vacancy = DB::table('tbl_job_vacancy')
-            ->join('kh-works.tbl_job_title', 'hris.tbl_job_vacancy.job_title_code', '=', 'kh-works.tbl_job_title.id')
-            ->join('hris.tbl1_hr_employee','hris.tbl_job_vacancy.hiring_manager_id','=','hris.tbl1_hr_employee.emp_id')
-            ->select('hris.tbl_job_vacancy.*', 'kh-works.tbl_job_title.job_title','hris.tbl1_hr_employee.*')
-            ->OrderBy('hris.tbl_job_vacancy.id','DESC')
+            ->join('tbl_job_title', 'job_title_code', '=', 'tbl_job_title.id')
+            ->join('tbl1_hr_employee','tbl_job_vacancy.hiring_manager_id','=','tbl1_hr_employee.emp_id')
+            ->select('tbl_job_vacancy.*', 'tbl_job_title.job_title','tbl1_hr_employee.*')
+            ->OrderBy('tbl_job_vacancy.id','DESC')
             ->get();
         //dd($vacancy);
         return view('backend.HRIS.Recruitment.Vacancy.index',compact('vacancy'));

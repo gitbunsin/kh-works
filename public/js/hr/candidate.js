@@ -106,67 +106,69 @@ $("#btn-save").click(function (e) {
         }
     });
 });
+
+
 //delete product and remove it from TABLE list ***************************
-$(document).on('click','.delete-item',function(){
-    var confirmation = confirm("are you sure you want to remove the item?");
-    if(confirmation) {
-        var candidate_id = $(this).attr('data-id');
-        var resposne = $(this).attr('id');
-//            alert(job_title_id);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: "DELETE",
-            cache: false,
-            url: url + '/' + candidate_id,
-            dataType: "Json",
-            success: function (data) {
-                //alert(JSON.stringify(data));
-                $("#candidate_id" + candidate_id).remove();
-            },
-            error: function (data) {
-                alert(JSON.stringify(data));
-            }
-        });
-    }
-});
+// $(document).on('click','.delete-item',function(){
+//     var confirmation = confirm("are you sure you want to interview?");
+//     if(confirmation) {
+//         var candidate_id = $(this).attr('data-id');
+//         var resposne = $(this).attr('id');
+// //            alert(job_title_id);
+//         $.ajaxSetup({
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             }
+//         });
+//         $.ajax({
+//             type: "DELETE",
+//             cache: false,
+//             url: url + '/' + candidate_id,
+//             dataType: "Json",
+//             success: function (data) {
+//                 //alert(JSON.stringify(data));
+//                 $("#candidate_id" + candidate_id).remove();
+//             },
+//             error: function (data) {
+//                 alert(JSON.stringify(data));
+//             }
+//         });
+//     }
+// });
 
 
-$('.response').click(function(){
-
-    // alert(response);
-    var confirmation = confirm("are you sure you want to remove the item?");
-    if(confirmation) {
-        var accept_id = $(this).attr('data-id');
-        var response = $(this).attr('id');
-//            alert(job_title_id);
-        if(response == "approved") {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: 'accepts',
-                dataType: "Json",
-                success: function (data) {
-                    //alert(JSON.stringify(data));
-                    $("#candidate_id" + accept_id).remove();
-                },
-                error: function (data) {
-                    alert(JSON.stringify(data));
-                }
-            });
-        }else{
-            alert('decline');
-        }
-    }
-});
+// $('.response').click(function(){
+//
+//     // alert(response);
+//     var confirmation = confirm("are you sure you want to remove the item?");
+//     if(confirmation) {
+//         var accept_id = $(this).attr('data-id');
+//         var response = $(this).attr('id');
+// //            alert(job_title_id);
+//         if(response == "approved") {
+//             $.ajaxSetup({
+//                 headers: {
+//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                 }
+//             });
+//             $.ajax({
+//                 type: "POST",
+//                 cache: false,
+//                 url: 'accepts',
+//                 dataType: "Json",
+//                 success: function (data) {
+//                     //alert(JSON.stringify(data));
+//                     $("#candidate_id" + accept_id).remove();
+//                 },
+//                 error: function (data) {
+//                     alert(JSON.stringify(data));
+//                 }
+//             });
+//         }else{
+//             alert('decline');
+//         }
+//     }
+// });
 
 
 

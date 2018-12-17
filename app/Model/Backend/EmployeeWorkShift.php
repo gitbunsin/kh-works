@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeWorkShift extends Model
 {
     //
-    protected $table = 'tbl_employment_status';
+    protected $table = 'tbl_employee_work_shift';
     protected $fillable = [
         'id',
         'work_shift_id',

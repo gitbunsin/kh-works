@@ -118,7 +118,7 @@ class PayGradeController extends Controller
             //->join('tbl_pay_grade_currency as pc','p.id',"=",'pc.pay_grade_id')
             ->join('tbl_currency_type as ct','pc.currency_id',"=",'ct.currency_id')
             ->where('pc.pay_grade_id',$id)->get();
-       //dd($pay_grade_currency);
+//       dd($pay_grade_currency);
         return view('backend.HRIS.admin.PayGrade.edit',compact('pay_grade_currency','pay_grade'));
     }
 

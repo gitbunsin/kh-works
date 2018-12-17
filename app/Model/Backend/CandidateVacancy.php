@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CandidateVacancy extends Model
 {
@@ -13,5 +14,17 @@ class CandidateVacancy extends Model
         'status',
         'applied_date'
     ];
+
     public $timestamps = false;
+
+    public  function user_apply($job_id , $user_id)
+    {
+        $result = DB::table($this->table)
+            ->where("candidate_id", $user_id)
+            ->where("vacancy_id", $job_id)
+            ->get();
+        if($result->isEmpty())
+            return false;
+            return true;
+    }
 }

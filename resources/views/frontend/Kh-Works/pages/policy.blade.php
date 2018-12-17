@@ -21,9 +21,9 @@
 			<div class="breadcrumb-section">
 				<ol class="breadcrumb">
 					<li><a href="https://demo.themeregion.com/jobs-updated/index.html">Home</a></li>
-					<li>Candidate Profile</li>
+					<li>kh-works/about us</li>
 				</ol>						
-				<h2 class="title">Jhon Doe Resume</h2>
+				<h2 class="title">About Us</h2>
 			</div><!-- breadcrumb-section -->
 
 			<div class="resume-content">
@@ -239,20 +239,7 @@
 			</div><!-- resume-content -->						
 		</div><!-- container -->
 	</section><!-- ad-profile-page -->
-
-	<!--/Preset Style Chooser--> 
-	<div class="style-chooser">
-		<div class="style-chooser-inner">
-			<a href="https://demo.themeregion.com/jobs-updated/resume.html#" class="toggler"><i class="fa fa-cog fa-spin"></i></a>
-			<h4>Presets</h4>
-			<ul class="preset-list clearfix">
-				<li class="preset1 active" data-preset="1"><a href="https://demo.themeregion.com/jobs-updated/resume.html#" data-color="preset1"></a></li>
-				<li class="preset2" data-preset="2"><a href="https://demo.themeregion.com/jobs-updated/resume.html#" data-color="preset2"></a></li>
-				<li class="preset3" data-preset="3"><a href="https://demo.themeregion.com/jobs-updated/resume.html#" data-color="preset3"></a></li>
-				<li class="preset4" data-preset="4"><a href="https://demo.themeregion.com/jobs-updated/resume.html#" data-color="preset4"></a></li>
-			</ul>
-		</div>
-	</div>
+	<!--/Preset Style Chooser-->
 	<!--/End:Preset Style Chooser-->
 	
     <!-- JS -->

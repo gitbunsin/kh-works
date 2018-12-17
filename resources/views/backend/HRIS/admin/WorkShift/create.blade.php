@@ -28,14 +28,14 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_works_shifts" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
+                            <form id="validate_works_shifts" method="POST" enctype="multipart/form-data" action="{{url('administration/work-shift')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                     <section>
                                         <label class="label">Works Shifts</label>
                                         <label class="input">
-                                            <input class="col-6" type="text" name="name" id="job_title">
+                                            <input class="col-6" type="text" name="name" id="name">
                                         </label>
                                     </section>
                                     <section>
@@ -49,27 +49,26 @@
                                             <label class="label">Avaible Employee</label>
                                             <label class="input">
                                                 @php $emp = \App\Employee::all(); @endphp
-                                                <select style="width: 365px;height: 200px;" name="emp_select" multiple>
+                                                <select style="width: 365px;height: 200px;" name="possible[]" class="possible" multiple>
                                                     @foreach($emp as $emps)
                                                         <option value="{{$emps->emp_id}}">{{$emps->emp_lastname}}{{$emps->emp_firstname}}</option>
                                                     @endforeach
                                                 </select>
+                                                {{--{{Form::select('possible[]',$category_details,null,array('multiple'=>true,'class'=>'custom-scroll')); }}--}}
                                             </label>
                                         </section>
+                                        <p></p>
                                         <section class="col col-2">
                                             <div class="add" style="margin-top: 120px">
-                                                <a style="background: #333;" class="btn btn-primary" href="#" role="button">
-                                                    <i class="glyphicon glyphicon-plus-sign "></i> Add</a>
-
-                                                <a style="background: #333;" class="btn btn-primary" href="#" role="button">
-                                                    <i class="	glyphicon glyphicon-minus"></i> remove</a>
+                                                <input type="button" value="Add" onclick="MyMoveItem();">
+                                                <input type="button" value="Remove" onclick="RemoveItem();">
                                             </div>
 
                                         </section>
                                         <section class="col col-5">
                                             <label class="label">Assign Employer</label>
                                             <label class="input">
-                                                <select style="width: 365px;height: 200px;" name="emp_select" multiple>
+                                                <select id="assign" style="width: 365px;height: 200px;"  name="wishlist[]" class="wishlist" multiple>
                                                         <option value="volvo"></option>
                                                 </select>
                                             </label>
@@ -104,6 +103,35 @@
             document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
         }
     </script>
+   <script>
+       function MyMoveItem()
+       {
+           var selected = $('.possible option:selected');
+           selected.appendTo('.wishlist');
+       }
+
+
+       function RemoveItem()
+       {
+           var selected = $('.wishlist option:selected');
+           selected.appendTo('.possible');
+       }
+//       $(".add").click(function () {
+//           var multipleValues = $( "#multiple" ).val();
+////           var value = $(this).attr("value");
+////           console.log(multipleValues);
+////           alert(multipleValues);
+//           $( "p" ).html(multipleValues);
+//       });
+//          $(".add").(function () {
+//              var multipleValues = $( "#multiple" ).val() || [];
+//              // When using jQuery 3:
+//              // var multipleValues = $( "#multiple" ).val();
+//              $( "p" ).html(multipleValues.join( ", " ) );
+//          });
+//       $( "select" ).change( displayVals );
+//       displayVals();
+   </script>
 
     <script type="text/javascript">
 
@@ -118,13 +146,19 @@
             var $loginForm = $("#validate_works_shifts").validate({
                 // Rules for form validation
                 rules : {
-                    job_title : {
+                    name : {
+                        required : true
+                    },
+                    hours_per_day:{
                         required : true
                     },
                 },
                 // Messages for form validation
                 messages : {
-                    job_title : {
+                    name : {
+                        required : 'field is required !'
+                    },
+                    hours_per_day : {
                         required : 'field is required !'
                     },
                 },

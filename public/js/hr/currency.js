@@ -13,7 +13,7 @@ $('#btn_add').click(function(){
 $(document).on('click','.open_modal',function(){
     //alert('ok');
     var currency_id = $(this).attr('data-id');
-     //alert(currency_id);
+     // alert(currency_id);
     // Populate Data in Edit Modal Form
     //('administration/job/' . $jobs->id . '/edit')
     $.ajax({

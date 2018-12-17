@@ -45,18 +45,24 @@ Route::post('/register/admin', 'Auth\AdminRegister@create')->name('register.admi
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
 
         Route::resource('candidate', 'CandidateController');
+        Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
+        Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
         Route::resource('pay-grade', 'PayGradeController');
         Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
         Route::resource('work-shift', 'WorkShiftController');
         Route::resource('employment-status', 'EmploymentStatusController');
         Route::resource('companyProfile', 'CompanyController');
+        Route::resource('user_cv','UsersCvController');
         Route::resource('vacancy', 'VacanciesController');
         Route::resource('jobs-title','JobTitleController');
         Route::resource('jobs-category','JobCategoryController');
         Route::resource('post-jobs','JobController');
+        Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
         Route::resource('employee','EmployeeController');
         Route::resource('interview','InterviewController');
-        Route::resource('Cv','CvController');
+        Route::resource('CandidateAttachment','UsersCvController');
+    Route::get('/download/{user_id}', 'UsersCvController@getDownload');
+
 });
 
 
@@ -70,12 +76,7 @@ Route::group(['namespace' => 'Frontend','prefix'=>'kh-works'], function () {
     Route::resource('post-resume','ResumeController');
     Route::get('/user/resume-pdf','ResumeController@export_pdf');
     Route::get('/posts', 'KhWorksController@posts');
-
-    Route::post('/getExistingCandidate/{job_id}/{user_id}', 'KhWorksController@getExistingCandidate');
-    Route::resource('jobs', 'JobController');
-    Route::resource('user_cv','UsersCvController');
     Route::get('/search','KhWorksController@scopeSearch');
-
     Route::get('/policy', 'KhWorksController@policy');
     Route::get('/resume','ResumeController@resume')->middleware('isClient');
     Route::post('/apply/{id}/{user_id}', 'KhWorksController@apply')->middleware('auth');
