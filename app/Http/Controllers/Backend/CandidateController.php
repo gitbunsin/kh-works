@@ -29,28 +29,51 @@ class CandidateController extends Controller
 //            ->select('cv.*','c.*','v.*')
 //            ->get();
 //        $candidate = Candidate::all();
-        $company_id = Auth::guard('admins')->user()->id;
+            $company_id = Auth::guard('admins')->user()->id;
+//            dd($company_id);
+
+            $candidate = DB::table('tbl_job_candidate_vacancy as cv')
+                        ->select('cv.*','v.*','c.*','jt.*','cv.id as apply_id')
+                        ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
+                        ->join('tbl_job_candidate as c','c.id','=','cv.candidate_id')
+                        ->join('tbl_job_title as jt','v.job_title_code','=','jt.id')
+                        ->where('v.company_id',$company_id)
+                        ->where('cv.status',2)
+                        ->get();
+//            dd($candidate);
+//        dd($company_id);
 
 //        $name = Auth::guard('admins')->user()->name();
 //        dd($name);
 //        dd($company_id);
-        $candidate = DB::table('tbl_job_candidate as c')
-                 ->select('c.*','cv.*','v.*','c.id as candidate_id')
-                 ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
-                 ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
-                 ->Where('v.company_id',$company_id)
-                 ->where('cv.status',2)
-                 ->get();
+//        $candidate = DB::table('tbl_job_candidate as c')
+//                 ->select('c.*','cv.*','v.*','c.id as candidate_id','t.*')
+//                 ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+//                 ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
+//                 ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+//                 ->Where('v.company_id',$company_id)
+//                 ->get();
+//        $candidate = DB::table('kh_job_vacancy as v')
+//                    ->select('v.*')
+//                    ->join('tbl_job_candidate_vacancy as cv','cv.vacancy_id','v.id')
+//                    ->
+//                    ->where('v.company_id',$company_id)
+//                    ->get();
 //          dd($candidate);
-        return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate','name'));
+        return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate'));
     }
 
     public function approved(Request $request, $candidate_id)
-  {
+    {
 
-    $candidate = CandidateVacancy::findOrFail($candidate_id);
-    $candidate->status = 1;
-    $candidate->save();
+        $candidate = CandidateVacancy::findOrFail($candidate_id);
+        $candidate->status = 1;
+        $candidate->save();
+        $user_interview = new Interview();
+        $can_id = $candidate_id;
+        $user_interview->candidate_id = $can_id;
+        $user_interview->save();
+
     return response()->json(['success'=>'Data is successfully added']);
 
   }

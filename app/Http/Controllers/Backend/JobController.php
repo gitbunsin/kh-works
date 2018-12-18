@@ -66,13 +66,36 @@ class JobController extends Controller
 //        return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
 //    }
         public  function displayJob($job_id , $company_id){
-            $isApply = false;
-        if (auth::user()) {
-            $user_id = auth()->user()->id;
-            $canVaObj = new CandidateVacancy();
-            $isApply = $canVaObj->user_apply($job_id,$user_id);
-        }
+//            $isApply = false;
+            if(auth::user()){
+                $user_id  = auth::user()->id;
+//                dd($user_id);
+//                $result = DB::table('tbl_job_candidate as c')
+//                    ->select('c.id')
+//                    ->where('c.user_id',$user_id)->get()->groupBy('c.user_id');
+//
+//                $job = array();
+//                foreach ($result as $job_ids){
+//                    $job[]= $job_ids->id;
+//                }
+//                $candidate_id = implode(',',$job);
+//                dd($candidate_id);
+//                $canVaObj = new CandidateVacancy();
+//                $isApply = $canVaObj->user_apply($job_id,$candidate_id[0]);
+                $isApply = DB::table('tbl_job_candidate as c')
+                    ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+                    ->where('cv.vacancy_id',$job_id)
+                    ->where('c.user_id',$user_id)
+                    ->get();
+            }
 //          dd($isApply);
+//            $isApply = DB::table('tbl_job_candidate as c')
+//                        ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+//                        ->where('c.user_id',$user_id)
+//                        ->where('cv.vacancy_id',$job_id)
+//                        ->get();
+
+//            dd($isApply);
         $job_title = DB::table('kh_job_vacancy as v')
             ->select('v.*','t.*','v.id as job_id')
             ->join('tbl_job_title as t','v.job_title_code',"=",'t.id')

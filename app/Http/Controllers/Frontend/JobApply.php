@@ -43,12 +43,14 @@ class JobApply extends Controller
                 $candidate->email = $user_candidate->email;
                 $candidate->mode_of_application = 1;
                 $candidate->status = 1;
+                $candidate->user_id = $user_id;
                 $candidate->save();
+                $candidate_id = $candidate->id;
                 //add new Candidate
                 $company_id = input::get('company_id');
                 $vacancy_id = input::get('job_id');
                 $vacancy_candidate = new CandidateVacancy();
-                $vacancy_candidate->candidate_id = $user_id;
+                $vacancy_candidate->candidate_id = $candidate_id;
                 $vacancy_candidate->vacancy_id = $vacancy_id;
                 $vacancy_candidate->status = 2;
                 $date_applied = \Carbon\Carbon::now();

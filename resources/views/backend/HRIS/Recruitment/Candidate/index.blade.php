@@ -55,17 +55,18 @@
                                 <tr>
                                     <th> Vacany</th>
                                     <th> Candidate</th>
+                                    <th> email </th>
                                     <th> Date-of-Application</th>
                                     <th style="text-align: center;" >Interview</th>
-                                    <th style="text-align: center;">Action</th>
+
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                  @foreach($candidate as $candidates)
-                                     {{--{{$candidates}}--}}
                                     <tr id="candidate_id{{$candidates->candidate_id}}">
-                                        <td>{{$candidates->job_tittle}}</td>
+                                        <td>{{$candidates->job_title}}</td>
                                         <td>{{$candidates->name}}</td>
+                                        <td>{{$candidates->email}}</td>
                                         <td>{{$candidates->applied_date}}</td>
                                         <td style="text-align: center;">
                                             <a data-id="{{$candidates->candidate_id}}" id="approved" href="#" style="text-decoration:none;" class="btn-detail approved">
@@ -73,14 +74,6 @@
                                             </a>
                                             <a data-id="{{$candidates->candidate_id}}" id="declined" href="#" style="text-decoration:none;" class="btn-detail reject">
                                                 <i class="glyphicon glyphicon-remove-sign"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                        <td style="text-align: center;">
-                                            <a href="{{url('administration/candidate/'.$candidates->candidate_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="{{$candidates->candidate_id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -103,7 +96,6 @@
                 var confirmation = confirm("are you sure you want to approve ?");
                 if (confirmation) {
                     var candidate_id = $(this).attr('data-id');
-                    alert(candidate_id);
                     $.ajax({
                         type: "POST",
                         cache: false,

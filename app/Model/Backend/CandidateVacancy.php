@@ -23,6 +23,7 @@ class CandidateVacancy extends Model
             ->where("candidate_id", $user_id)
             ->where("vacancy_id", $job_id)
             ->get();
+        dd($result);
         if($result->isEmpty())
             return false;
             return true;

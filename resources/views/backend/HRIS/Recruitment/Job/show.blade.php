@@ -64,12 +64,10 @@
                                             <input type="hidden" value="{{$job_title->job_id}}" name="job_id"/>
                                     {{--{{dd($isApply)}}--}}
                                     @if(Auth::check())
-                                    @if($isApply == true)
-
-                                        <button disabled style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Applied</button>
+                                    @if($isApply->isEmpty())
+                                            <button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>
                                         @else
-
-                                        <button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>
+                                            <button disabled style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Applied</button>
                                     @endif
                                     {{ Form::close() }}
                                         @else

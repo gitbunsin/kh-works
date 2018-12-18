@@ -4,6 +4,7 @@ namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\CandidateAttachment;
 use App\UserCv;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,16 +18,39 @@ class UsersCvController extends Controller
      */
     public function index()
     {
-//        $Cv = DB::table('tbl_job_candidate_attachment')
-//            ->join('tbl_job_candidate', 'tbl_job_candidate_attachment.candidate_id', '=', 'tbl_job_candidate.id')
-//            ->select('tbl_job_candidate_attachment.*', 'tbl_job_candidate.*')
+
+//        $user_cv = DB::table('tbl_cvs as c')
+//            ->join('kh_seeker as s','c.user_id','=','s.id')
+//            ->select('s.*','c.*')
 //            ->get();
-//        dd($CandidateAttachment);
-        $user_cv = DB::table('tbl_cvs as c')
-            ->join('kh_seeker as s','c.user_id','=','s.id')
-            ->select('s.*','c.*')
-            ->get();
-//        dd($user_cv);
+        $company_id = Auth::guard('admins')->user()->id;
+//        dd($company_id);
+            $user_cv = DB::table('tbl_job_candidate as c')
+                        ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name','cv.user_id as user_cv_id','s.photo as user_photo')
+                        ->join('tbl_cvs as cv','c.user_id','=','cv.user_id')
+                        ->join('tbl_job_candidate_vacancy as jcv','c.id','=','jcv.candidate_id')
+                        ->join('kh_job_vacancy as v','jcv.vacancy_id','=','v.id')
+                        ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+                        ->join('kh_seeker as s','c.user_id','=','s.id')
+                        ->where('v.company_id',$company_id)
+                        ->get();
+//            dd($user_cv);
+//        $result = DB::table('kh_job_vacancy as v')
+//                     ->select('v.id as job_id')
+//                     ->where('v.company_id',$company_id)->get();
+//                        $job = array();
+//                    foreach ($result as $job_ids){
+//                        $job[]= $job_ids->job_id;
+//                    }
+//                    $job_id = implode(',',$job);
+////                    dd($job_id);
+//        $user_cv = DB::table('tbl_cvs as cv')
+//                    ->select('cv.*','s.*','cv.name as cv_name')
+//                    ->join('tbl_job_candidate_vacancy as jcv','cv.user_id','=','jcv.candidate_id')
+//                    ->join('kh_seeker as s','cv.user_id','=','s.id')
+//                    ->where('vacancy_id',$job_id)
+//                    ->get()->groupBy('cv.user_id');
+//            dd($user_cv);
         return view('backend.HRIS.Recruitment.Cv.index',compact('user_cv'));
     }
     public function getDownload($user_id)
