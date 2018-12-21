@@ -50,7 +50,7 @@
                                     <tr id="employee_id{{$employees->emp_id}}">
                                         <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
-                                        <td>{{$employees->emp_firstname}}{{$employees->emp_lastname}}</td>
+                                        <td>{{$employees->emp_lastname}} {{$employees->emp_firstname}} </td>
                                         <td>{{$employees->job_title}}</td>
                                         <td>
                                             <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">

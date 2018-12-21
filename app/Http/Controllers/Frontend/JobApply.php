@@ -80,10 +80,6 @@ class JobApply extends Controller
             else {
                 return redirect('/kh-works/resume');
             }
-            //$candidate = new Candidate()
-            //dd($user_candidate);
-            //add CV
-
         } else {
             return redirect()->route('login');
         }

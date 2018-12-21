@@ -9,8 +9,10 @@
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
+
                         <div class="pull-right">
-                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;">Add Interview</span></button>
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/work-shift/create')}}" role="button">
+                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
                 </div>
@@ -19,11 +21,11 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List all Jobs</h2>
+                        <h2> List User</h2>
                     </header>
+
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -33,31 +35,29 @@
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Interview Name</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>note</th>
-                                    <th style="text-align: center;">Action</th>
+                                    <th>User Role</th>
+                                    <th>User Role Type</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($interview as $interviews)
-                                    <tr>
-                                        <td>{{$interviews->name}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align: center;">
-                                            <a  href="{{url('administration/download/')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-trash "></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <tbody id="products-list" name="products-list">
+                                {{--@foreach($WorkShift as $WorkShifts)--}}
+                                {{--<tr id="job_id{{$WorkShifts->id}}">--}}
+                                {{--<td>{{$WorkShifts->name}}</td>--}}
+                                {{--<td>{{$WorkShifts->hours_per_day}}</td>--}}
+                                {{--<td>--}}
+                                {{--<a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
+                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                {{--</a>--}}
+                                {{--<a data-id="{{$WorkShifts->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                {{--</a>--}}
+                                {{--</td>--}}
+                                {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -66,6 +66,5 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 @endsection

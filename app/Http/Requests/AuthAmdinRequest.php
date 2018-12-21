@@ -27,8 +27,8 @@ class AuthAmdinRequest extends FormRequest
             'com_name' => ['required', 'string', 'max:255'],
             'com_email' => ['required', 'string', 'email', 'max:255','unique:tbl_organization_gen_info,email'],
             'com_password' => 'required',
-            'password_confirmation' => 'required|same:com_password'
-
+            'password_confirmation' => 'required|same:com_password',
+            'term-2' =>'required'
         ];
     }
 }

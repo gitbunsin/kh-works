@@ -117,9 +117,18 @@
                 </div><!-- tab-pane -->
                 @php $i++;@endphp
             @endforeach
-            {{ $Job->appends(request()->query())->links() }}
-        </div><!-- item-info -->
+
+        <div class="col-md-12">
+            {{--<div class="showing pull-left">--}}
+                {{--<br/><br/>--}}
+                {{--<a href="#">Showing <span>6-10</span> Of 24 Jobs</a>--}}
+            {{--</div>--}}
+            <ul class="pull-right">
+                 {{ $Job->appends(request()->query())->links() }}
+            </ul>
+        </div>
     </div><!-- job-ad-item -->
+    </div>
 </section><!-- main -->
 <!-- download -->
 <section id="download" class="clearfix parallax-section">

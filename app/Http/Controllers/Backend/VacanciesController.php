@@ -18,6 +18,10 @@ class VacanciesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('isAdmin');
+    }
     public function index()
     {
         $vacancy = DB::table('tbl_job_vacancy')

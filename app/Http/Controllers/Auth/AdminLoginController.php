@@ -27,6 +27,7 @@ class AdminLoginController extends Controller
     {
         //dd('hello');
         $this->middleware('guest:admins')->except('logout');
+        $this->middleware('guest:web')->except('logout');
     }
     protected  function login(Request $request)
     {
@@ -38,12 +39,19 @@ class AdminLoginController extends Controller
         $email = Input::get('email');
         $password = Input::get('password');
 
-        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
-//        $auth = Auth::guard()->attempt(['email' => $email, 'password' => $password]);
+        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password,'verified'=> 1]);
+
         if (!$authAdmin) {
-            return Redirect::route('login')->with('global', 'These credentials do not match our records.');
+            return Redirect::route('login')->with('global', 'You do not confirm your email yet.');
         }
         return redirect($this->redirectTo);
+
+//        if (Auth::guard('admins')->attempt(['email' => $email, 'password' => $password ,'verified'=> 1])) {
+//            // Authentication passed...
+//
+//        }else{
+//            return Redirect::route('login')->with('global', 'These credentials do not match our records.');
+//        }
     }
     /**
      * Create a new user instance after a valid registration.

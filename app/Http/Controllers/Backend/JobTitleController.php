@@ -16,12 +16,38 @@ class JobTitleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function __construct()
+    {
+        $this->middleware('isAdmin');
+    }
     public function index()
     {
         $JobTitle = JobTitle::orderBy('id', 'DESC')->where('is_deleted',0)->get();
         return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
+
+    public function edit($id)
+    {
+
+        $job_title = JobTitle::findOrFail($id);
+//        dd($job_title);
+        return view('backend.HRIS.admin.JobTitle.edit',compact('job_title'));
+    }
+
+    public function update(Request $request,$id)
+    {
+//        dd($request->all());
+
+        $job_title = JobTitle::findOrFail($id);
+        $job_title->job_title = $request->job_title;
+        $job_title->job_description = $request->job_description;
+        $job_title->note = $request->note;
+        $job_title->is_deleted = 0;
+        $job_title->save();
+//        dd($job_title);
+        return  redirect('/administration/jobs-title');
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -24,14 +24,6 @@
             <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="user-account job-user-account">
                     <h2>Create An Account</h2>
-                    {{--@php--}}
-                        {{--$active = '';--}}
-                    {{--@endphp--}}
-                    {{--@if ($errors->any())--}}
-                       {{--@php--}}
-                        {{--$active = 'active';--}}
-                       {{--@endphp--}}
-                    {{--@endif--}}
                     <ul class="nav nav-tabs text-center" role="tablist">
                         <li role="presentation" class="active" ><a href="#find-job" aria-controls="find-job" role="tab" data-toggle="tab">Find A Job</a></li>
                         <li role="presentation" ><a href="#post-job" aria-controls="post-job" role="tab" data-toggle="tab">Post A Job</a></li>
@@ -68,9 +60,14 @@
                                 <div class="form-group">
                                     <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation">
                                 </div>
+                                @if ($errors->has('terms-1'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('terms-1') }}</strong>
+                                    </span>
+                                @endif
                                 <div class="checkbox">
-                                    <label class="pull-left" for="signing-2">
-                                        <input type="checkbox" name="signing-2" id="signing-2">
+                                    <label class="pull-left" for="signing-1">
+                                        <input type="checkbox" name="terms-1" id="signing-1">
                                         By signing up for an account you agree to our Terms and Conditions
                                     </label>
                                 </div><!-- checkbox -->
@@ -107,9 +104,14 @@
                                 <div class="form-group">
                                         <input placeholder="confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                                 </div>
+                                @if ($errors->has('term-2'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('term-2') }}</strong>
+                                    </span>
+                                @endif
                                 <div class="checkbox">
                                     <label class="pull-left" for="signing-2">
-                                        <input type="checkbox" name="signing-2" id="signing-2">
+                                        <input type="checkbox" name="term-2" id="signing-2">
                                         By signing up for an account you agree to our Terms and Conditions
                                     </label>
                                 </div><!-- checkbox -->

@@ -1,30 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class InterviewController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('isAdmin');
-    }
     public function index()
     {
-        $interview = DB::table('tbl_job_interview as v')
-            ->join('tbl_job_candidate as c','c.id','=','v.candidate_id')
-            ->get();
-//        //
-//        dd($interview);
-        return view('backend.HRIS.Recruitment.Interview.index',compact('interview'));
+
+
+        return view('backend.HRIS.admin.UserManagement.User.index');
+        //
     }
 
     /**

@@ -59,14 +59,13 @@
                             @endif
                         </div>
                         <button style="cursor: pointer" type="submit" href="#" class="btn">Login</button>
-
-                        <div class="user-option">
-                            <div class="checkbox pull-left form-check">
-                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
+                        <div class="">
+                            <div class="checkbox">
+                                <label class="pull-left" for="signing-2">
+                                    <input type="checkbox" name="remember-2" id="signing-2">
+                                    Remember Me
                                 </label>
-                            </div>
+                            </div><!-- checkbox -->
                             <div class="pull-right forgot-password">
                                 <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }}</a>
                             </div>
@@ -97,13 +96,19 @@
                             </div>
                             <button style="cursor: pointer" type="submit" href="#" class="btn">Login</button>
 
-                            <div class="user-option">
-                                <div class="checkbox pull-left form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                            <div class="">
+                                {{--<div class="checkbox pull-left form-check">--}}
+                                    {{--<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
+                                    {{--<label class="form-check-label" for="remember">--}}
+                                        {{--{{ __('Remember Me') }}--}}
+                                    {{--</label>--}}
+                                {{--</div>--}}
+                                <div class="checkbox">
+                                    <label class="pull-left" for="signing-2">
+                                        <input type="checkbox" name="remember-2" id="signing-2">
+                                        Remember Me
                                     </label>
-                                </div>
+                                </div><!-- checkbox -->
                                 <div class="pull-right forgot-password">
                                     <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }}</a>
                                 </div>

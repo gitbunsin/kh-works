@@ -21,6 +21,10 @@ class CandidateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('isAdmin');
+    }
     public function index()
     {
 //        $candidate = DB::table('tbl_job_candidate_vacancy as cv')
@@ -66,12 +70,14 @@ class CandidateController extends Controller
     public function approved(Request $request, $candidate_id)
     {
 
-        $candidate = CandidateVacancy::findOrFail($candidate_id);
-        $candidate->status = 1;
-        $candidate->save();
+        $candidate_vacancy_id = CandidateVacancy::findOrFail($candidate_id);
+        $candidate_vacancy_id->status = 1;
+        $candidate_vacancy_id->save();
+        $id = $candidate_vacancy_id->id;
         $user_interview = new Interview();
         $can_id = $candidate_id;
         $user_interview->candidate_id = $can_id;
+        $user_interview->candidate_vacancy_id = $id;
         $user_interview->save();
 
     return response()->json(['success'=>'Data is successfully added']);

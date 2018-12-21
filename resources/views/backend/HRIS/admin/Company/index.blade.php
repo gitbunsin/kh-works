@@ -114,34 +114,44 @@
                                         </section>
                                     </div>
 
+                                    {{--<section>--}}
+
+                                         {{--<header>--}}
+                                                {{--<span class="widget-icon"> <i class="fa fa-pencil"></i> </span>--}}
+                                                {{--<h2>Company Profiles </h2>--}}
+                                            {{--</header>--}}
+
+                                            {{--<!-- widget div-->--}}
+                                            {{--<div>--}}
+
+                                                {{--<!-- widget edit box -->--}}
+                                                {{--<div class="jarviswidget-editbox">--}}
+                                                    {{--<!-- This area used as dropdown edit box -->--}}
+
+                                                {{--</div>--}}
+                                                {{--<!-- end widget edit box -->--}}
+
+                                                {{--<!-- widget content -->--}}
+                                                {{--<div class="widget-body no-padding">--}}
+
+											{{--<textarea id="note" name="ckeditor"></textarea>--}}
+
+                                                {{--</div>--}}
+                                                {{--<!-- end widget content -->--}}
+
+                                            {{--</div>--}}
+                                            {{--<!-- end widget div -->--}}
+
+                                    {{--</section>--}}
+
                                     <section>
-
-                                         <header>
-                                                <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
-                                                <h2>Company Profiles </h2>
-                                            </header>
-
-                                            <!-- widget div-->
-                                            <div>
-
-                                                <!-- widget edit box -->
-                                                <div class="jarviswidget-editbox">
-                                                    <!-- This area used as dropdown edit box -->
-
-                                                </div>
-                                                <!-- end widget edit box -->
-
-                                                <!-- widget content -->
-                                                <div class="widget-body no-padding">
-
-											<textarea id="note" name="ckeditor"></textarea>
-
-                                                </div>
-                                                <!-- end widget content -->
-
-                                            </div>
-                                            <!-- end widget div -->
-
+                                        <label class="label">Company Profiles *</label>
+                                        <label class="input">
+                                            <textarea name="ckeditor" rows="10" cols="150"></textarea>
+                                        </label>
+                                        <div class="note">
+                                            <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                        </div>
                                     </section>
                                     <div class="row">
                                         <section class="col col-4">
@@ -210,17 +220,17 @@
             document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
         }
     </script>
-    <script type="text/javascript">
+    {{--<script type="text/javascript">--}}
 
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        {{--// DO NOT REMOVE : GLOBAL FUNCTIONS!--}}
 
-        $(document).ready(function() {
+        {{--$(document).ready(function() {--}}
 
-            CKEDITOR.replace( 'ckeditor', { height: '380px', startupFocus : true} );
+            {{--CKEDITOR.replace( 'ckeditor', { height: '380px', startupFocus : true} );--}}
 
-        })
+        {{--})--}}
 
-    </script>
+    {{--</script>--}}
 
     <script type="text/javascript">
 

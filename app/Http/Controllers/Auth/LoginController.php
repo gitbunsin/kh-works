@@ -51,6 +51,21 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    protected  function login(){
+        $email = input::get('email');
+        $password = input::get('password');
+        if (Auth::attempt(['email' => $email, 'password' => $password ,'verified'=> 1])) {
+
+            return redirect($this->redirectTo);
+
+        }else{
+            return redirect()
+                ->route('login')
+                ->with('global', 'You do not confirm your email yet. ');
+        }
+
+    }
+
 //    protected  function login(Request $request)
 //    {
 //

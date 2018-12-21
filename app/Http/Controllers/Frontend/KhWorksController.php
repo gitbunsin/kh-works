@@ -43,7 +43,7 @@ class KhWorksController extends Controller
             ->join('tbl_organization_gen_info as com','v.company_id','=','com.id')
 //            ->where('job_title', 'like', '%' .$searchTerm. '%')
             ->orWhere('description', 'like', '%' .$searchTerm. '%')
-            ->paginate(3);
+            ->paginate(1);
 //        dd($Job);
         return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
 

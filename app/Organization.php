@@ -40,6 +40,8 @@ class Organization extends Authenticatable
         'note',
         'postal_address',
         'website',
+        'email_token',
+        'verified',
         'mobile',
         'status',
     ];

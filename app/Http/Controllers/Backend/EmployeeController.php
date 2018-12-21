@@ -61,9 +61,9 @@ class EmployeeController extends Controller
     {
 //        dd($request->all());
         $employee = new Employee();
-        $employee->emp_lastname = $request->emp_firstname;
-        $employee->emp_lastname = $request->emp_middle_name;
-        $employee->emp_middle_name = $request->emp_lastname;
+        $employee->emp_firstname = $request->emp_firstname;
+        $employee->emp_lastname = $request->emp_lastname;
+        $employee->emp_middle_name = $request->emp_middle_name;
         $employee->job_title_code = $request->job_title;
         $employee->employee_id = $request->employee_id;
         $employee->company_id = $request->company_id;

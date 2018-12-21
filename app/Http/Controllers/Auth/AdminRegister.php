@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
+use App\Jobs\SendVerificationAdminEmail;
+use App\Jobs\SendVerificationEmail;
 use App\Organization;
 use App\Http\Requests\AuthAmdinRequest;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +21,7 @@ class AdminRegister extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/administration/companyProfile';
+//    protected $redirectTo = '/administration/companyProfile';
 
     protected  $rule;
 
@@ -66,11 +69,42 @@ class AdminRegister extends Controller
         $organizeModel->email = $request['com_email'];
         $organizeModel->name = $request['com_name'];
         $organizeModel->password = Hash::make($request['com_password']);
+        $organizeModel->email_token =  base64_encode($request['com_email']);
+//        dd( base64_encode($request['com_email']));
         $organizeModel->save();
-        $this->guard()->login($organizeModel);
+        event(new Registered($organizeModel));
+        dispatch(new SendVerificationAdminEmail($organizeModel));
+//        $this->guard()->login($organizeModel);
+        return view('verificationAdmin');
+
 //        dd($this->guard()->name);
-        return redirect($this->redirectTo);
+//        return redirect($this->redirectTo);
     }
 
-    //
+//    public function register(Request $request)
+//    {
+////        dd($request);
+//        $this->validator($request->all())->validate();
+//        event(new Registered($user = $this->create($request->all())));
+//
+//        dispatch(new SendVerificationEmail($user));
+//
+//        return view('verification');
+//    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param $token
+     * @return \Illuminate\Http\Response
+     */
+    public function verify($token)
+    {
+        $organization = Organization::where('email_token', $token)->first();
+        $organization->verified = 1;
+
+        if($organization->save()){
+            return view('emailconfirm', ['organization' => $organization]);
+        }
+    }
 }

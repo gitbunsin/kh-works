@@ -45,8 +45,11 @@
                     <li>
                         <a href="#">User management</a>
                         <ul>
-                            <li>
-                                <a href=""><i class="fa fa-plane"></i>Users</a>
+                            <li class="{{ Request::segment(2) == "user" ? "active" : " " }}">
+                                <a href="{{url ('administration/user')}}">User</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "userRole" ? "active" : " " }}">
+                                <a href="{{url ('administration/userRole')}}">UserRole</a>
                             </li>
                         </ul>
                     </li>
@@ -94,19 +97,19 @@
                         <a href="#">Qualifications </a>
                         <ul>
                             <li>
-                                <a href="fa.html"><i class="fa fa-plane"></i>Skills</a>
+                                <a href="">Skills</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class="fa fa-plane"></i>Education</a>
+                                <a href="">Education</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class="fa fa-plane"></i>Licenses</a>
+                                <a href="">Licenses</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class="fa fa-plane"></i>Language</a>
+                                <a href="">Language</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class="fa fa-plane"></i>Memberships</a>
+                                <a href="">Memberships</a>
                             </li>
                         </ul>
 
@@ -118,22 +121,22 @@
                         <a href="#">Configuration<span class="badge pull-right inbox-badge bg-color-yellow"></span></a>
                         <ul>
                             <li>
-                                <a href="fa.html"><i class=""></i>Email Configuration</a>
+                                <a href=""> Email Configuration</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class=""></i>Email Subscription</a>
+                                <a href=""> Email Subscription</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class=""></i>Localization </a>
+                                <a href=""> Localization </a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class=""></i>Modules</a>
+                                <a href="">class Modules</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class=""></i>Socia Media Authentication</a>
+                                <a href=""><i class=""></i>Socia Media Authentication</a>
                             </li>
                             <li>
-                                <a href="fa.html"><i class=""></i>Register OAuth Client</a>
+                                <a href="">Register OAuth Client</a>
                             </li>
                         </ul>
                     </li>

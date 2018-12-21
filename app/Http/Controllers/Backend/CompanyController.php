@@ -15,6 +15,10 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('isAdmin');
+    }
     public function index()
     {
 //      $CompanyProfiles = DB::table('tbl_organization_gen_info')->get()->first();

@@ -25,6 +25,9 @@ Route::get('/', function () {
     return redirect('kh-works');
 });
 Auth::routes();
+Route::get('/verifyemail/{token}','\App\Http\Controllers\Auth\RegisterController@verify');
+
+Route::get('/organization/verify/{token}','\App\Http\Controllers\Auth\AdminRegister@verify');
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
@@ -44,6 +47,8 @@ Route::post('/register/admin', 'Auth\AdminRegister@create')->name('register.admi
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
 
+        Route::resource('user', 'UserController');
+        Route::resource('userRole', 'UserRoleController');
         Route::resource('candidate', 'CandidateController');
         Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
         Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
@@ -61,7 +66,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('employee','EmployeeController');
         Route::resource('interview','InterviewController');
         Route::resource('CandidateAttachment','UsersCvController');
-    Route::get('/download/{user_id}', 'UsersCvController@getDownload');
+        Route::get('/download/{user_id}', 'UsersCvController@getDownload');
 
 });
 

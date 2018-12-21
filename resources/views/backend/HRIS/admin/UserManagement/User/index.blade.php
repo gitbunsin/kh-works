@@ -11,7 +11,7 @@
                     <div class="col-lg-12 margin-tb">
 
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/jobs-title/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/work-shift/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List All Job Title</h2>
+                        <h2> List User</h2>
                     </header>
 
                     <!-- widget div-->
@@ -38,28 +38,28 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th> Job Title</th>
-                                    <th> Job Description</th>
-                                    <th> Note</th>
-                                    <th> Action</th>
+                                    <th data-hide="phone"><i class="hidden-xs"></i>Username</th>
+                                    <th data-hide="phone">User Role(s)</th>
+                                    <th data-hide="phone">Employee</th>
+                                    <th data-hide="phone">Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($JobTitle as $jobs)
-                                    <tr id="job_id{{$jobs->id}}">
-                                        <td>{{$jobs->job_title}}</td>
-                                        <td>{{$jobs->job_description}}</td>
-                                        <td>{{$jobs->note}}</td>
-                                        <td>
-                                            <a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                {{--@foreach($WorkShift as $WorkShifts)--}}
+                                    {{--<tr id="job_id{{$WorkShifts->id}}">--}}
+                                        {{--<td>{{$WorkShifts->name}}</td>--}}
+                                        {{--<td>{{$WorkShifts->hours_per_day}}</td>--}}
+                                        {{--<td>--}}
+                                            {{--<a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="{{$WorkShifts->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -69,5 +69,4 @@
         </div>
     </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    {{--<script src="{{ asset('currenccurrency.js</script>--}}
 @endsection

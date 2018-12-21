@@ -23,6 +23,10 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    public function __construct()
+//    {
+//        $this->middleware('isAdmin');
+//    }
     public function index()
     {
 //        $job = Job::orderBy('id','DESC')->get();
