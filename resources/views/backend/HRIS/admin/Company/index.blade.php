@@ -21,9 +21,36 @@
                         </div>
                         <!-- widget content -->
                         <div class="widget-body no-padding">
+
+                             @if($guard = Auth::guard('employee')->user())
+                                 @php
+                                     $id = Auth::guard('employee')->user()->company_id;
+                                 //dd($id)
+                                 @endphp
+
+                            @else
                                 @php
                                     $id = Auth::guard('admins')->user()->id;
+                                   // dd($id)
                                 @endphp
+                                 @endif
+
+                            {{--@php--}}
+
+
+                              {{--$company_id = \App\Employee::where('company_id',$company_id)->first();--}}
+                            {{--@endphp--}}
+                            {{--@switch($guard)--}}
+                                 {{--@case('admins'):--}}
+                                     {{--<span> `E-mail` input is empty!</span>--}}
+                                {{--@break--}}
+                                {{--@default--}}
+                                    {{--@php--}}
+                                        {{--$company_id = Auth::guard('admins')->user()->id;--}}
+                                    {{--@endphp--}}
+                                {{--@endswitch--}}
+
+
                             {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
                             {{Form::open(array("url"=>"administration/companyProfile/".$id, "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
                             <input name="_method" type="hidden" value="PATCH">
@@ -34,13 +61,13 @@
                                         <section class="col col-6">
                                             <label class="label">Company Profiles </label>
                                             <label class="input">
-                                                <input  value="{{Auth::guard('admins')->user()->name}}" type="text" name="name" id="name">
+                                                <input  value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->company_id}}" type="text" name="name" id="name">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                                 <label class="label">Company Email</label>
                                                 <label class="input">
-                                                    <input  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
+                                                    <input  value="" type="text" name="email" id="email">
                                                 </label>
                                         </section>
                                     </div>
@@ -200,9 +227,7 @@
                         </div>
 
                         <!-- end widget content -->
-
                     </div>
-
                 </div>
             </article>
         </div>

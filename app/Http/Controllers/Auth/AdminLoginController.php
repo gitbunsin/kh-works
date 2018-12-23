@@ -17,7 +17,7 @@ class AdminLoginController extends Controller
      *
      * @var string
      */
-     protected $redirectTo = '/administration';
+     protected $redirectTo = '/administration/companyProfile';
     /**
      * Create a new controller instance.
      *
@@ -36,6 +36,7 @@ class AdminLoginController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
+
         $email = Input::get('email');
         $password = Input::get('password');
 

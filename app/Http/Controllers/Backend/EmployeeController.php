@@ -4,20 +4,55 @@ namespace App\Http\Controllers\Backend;
 use App\Employee;
 use App\Http\Controllers\Controller;
 
+use App\Jobs\SendVerificationEmployeeEmail;
+use App\Mail\VerifyEmployeeMail;
+use App\Organization;
 use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Psy\Util\Json;
 
 class EmployeeController extends Controller
 {
+
+    protected $redirectTo = '/administration/companyProfile';
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+//    public function __construct()
+//    {
+//        $this->middleware('isAdmin');
+////       $this->middleware('isEmployee');
+//    }
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    public function index()
+    {
+        $company_id = Auth::guard('admins')->user()->id;
+        $employee = DB::table('tbl1_hr_employee as e')
+            ->select('e.*','t.*')
+            ->join('tbl_job_title as t', 'e.job_title_code', '=', 't.id')
+            ->where('e.company_id',$company_id)
+            ->orderBy('e.emp_id','DESC')
+            ->get();
+//        $employee = Employee::all();
+        return view('backend.HRIS.PIM.Employee.index',compact('employee'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,12 +68,7 @@ class EmployeeController extends Controller
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         return view('backend.HRIS.PIM.Employee.create');
@@ -67,11 +97,8 @@ class EmployeeController extends Controller
         $employee->job_title_code = $request->job_title;
         $employee->employee_id = $request->employee_id;
         $employee->company_id = $request->company_id;
-
-
         if ($request->hasFile('photo'))
         {
-
             $image = $request->file('photo');
             $mytime = \Carbon\Carbon::now()->toDateTimeString();
             $name = $image->getClientOriginalName();
@@ -83,17 +110,76 @@ class EmployeeController extends Controller
 
         }
         $employee->save();
+        $employee_id = $employee->emp_id;
+//        dd($employee_id);
         $check = $request->user_check;
         if ($check == 1) {
-            $user = new User();
-            $user->name = $request->user_name;
-            $user->email = $request->user_email;
-            $user->password = Hash::make($request->user_password);
-            $user->save();
+            $emp_log = Employee::findOrFail($employee_id);
+            $emp_log->username = $request->user_name;
+            $emp_log->email = $request->user_email;
+            $emp_log->email_token = base64_encode($request->user_email);
+            $emp_log->password = Hash::make($request->user_password);
+            $emp_log->save();
+        }
+        $company = Organization::findOrFail($request->company_id)->first();
+
+        event(new Registered($emp_log));
+
+        dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
+
+
+        return view('verification');
+    }
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param $token
+     * @return \Illuminate\Http\Response
+     */
+        public function loginEmployee(Request $request,$company_name,$token)
+        {
+            return view('backend.HRIS.PIM.Employee.login',compact('company_name','email'));
         }
 
-        return redirect('administration/employee');
-    }
+        public function EmployeeLogin(Request $request)
+        {
+
+            $email = Input::get('email');
+            $password = Input::get('password');
+
+            $authAdmin = Auth::guard('employee')->attempt(['email' => $email, 'password' => $password]);
+
+            if (!$authAdmin) {
+                return Redirect::route('login')->with('global', 'You do not confirm your email yet.');
+            }
+            return redirect($this->redirectTo);
+//            dd('hello');
+//            $email = input::get('email');
+//            $password = input::get('password');
+////            dd($password);
+//            $validate_admin = DB::table('tbl1_hr_employee')
+//                ->select('email','password')
+//                ->where('email', Input::get('email'))
+//                ->first();
+//
+//            if ($validate_admin && Hash::check(Input::get('password'), $validate_admin->password)) {
+//
+//                // here you know data is valid
+////                return redirect($this->redirectTo);
+//                dd('hello');
+//            }
+     }
+
+
+//    public function verify($token)
+//    {
+//        $employee = Employee::where('email_token', $token)->first();
+//        $employee->verified = 1;
+//
+//        if($employee->save()){
+//            return view('verifyEmployee', ['employee' => $employee]);
+//        }
+//    }
 //    public function ajaxImage(Request $request)
 //    {
 //        if ($request->isMethod('get'))

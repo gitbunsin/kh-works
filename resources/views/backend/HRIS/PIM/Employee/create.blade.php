@@ -110,7 +110,7 @@
                                             <section  class="col col-6">
                                                 <label class="label"> Username *</label>
                                                 <label class="input">
-                                                    <input type="text" name="user_name" id="user_name" maxlength="10">
+                                                    <input type="text" name="user_name" id="user_name" maxlength="30">
                                                 </label>
                                             </section>
                                             <section  class="col col-6">

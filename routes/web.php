@@ -40,13 +40,13 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 //'middleware' => ['guest:admins']]
 
 
-
 Route::get('/administration' ,'Backend\BackendController@index')->name('admin');
 
 Route::post('/register/admin', 'Auth\AdminRegister@create')->name('register.admin');
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
-
+        Route::get('/login/{company_name}/{token}','EmployeeController@loginEmployee')->middleware('isEmployee');
+        Route::post('/employee-login','EmployeeController@EmployeeLogin');
         Route::resource('user', 'UserController');
         Route::resource('userRole', 'UserRoleController');
         Route::resource('candidate', 'CandidateController');

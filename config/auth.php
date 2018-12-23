@@ -30,6 +30,10 @@ return [
         'driver' => 'eloquent',
         'model' => App\Organization::class,
     ],
+    'employee' => [
+        'driver' => 'eloquent',
+        'model' => App\Employee::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -62,6 +66,10 @@ return [
             'driver'  => 'session',
             'provider' => 'admins',
         ],
+        'employee'  => [
+            'driver'  => 'session',
+            'provider' => 'employee',
+        ],
     ],
 
     /*
@@ -89,6 +97,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model'  => App\Organization::class,
+        ],
+        'employee' => [
+            'driver' => 'eloquent',
+            'model'  => App\Employee::class,
         ],
 
         // 'users' => [

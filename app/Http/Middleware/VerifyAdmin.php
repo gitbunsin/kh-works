@@ -17,7 +17,9 @@ class VerifyAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::guard('admins')->user() == null) {
+//        dd(Auth::guard('employee')->user());
+        if(Auth::guard('admins')->user() == null && Auth::guard('employee')->user()== null)
+        {
             return redirect()->route('login');
         }
         return $next($request);

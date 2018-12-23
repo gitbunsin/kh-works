@@ -84,11 +84,7 @@ class LoginController extends Controller
 //        }
 //
 //        return redirect($this->redirectTo);
-//
-//     }
-
-
-//        $organize = new Organization();
+//$organize = new Organization();
 //        dd($organize);
 
 //                $rules = array(
@@ -96,7 +92,11 @@ class LoginController extends Controller
 //                    'password' => 'required'
 //                );
 //
-//                $validate_admin_login = Validator::make(Input::all(), $rules);
+//                $validate_admin_login = Va
+//     }
+
+
+//        lidator::make(Input::all(), $rules);
 //                if ($validate_admin_login->fails()) {
 //                    $messages = $validate_admin_login->messages();
 //                    return Redirect('/login')
@@ -151,6 +151,7 @@ class LoginController extends Controller
         // dd(Auth::guard('admins')->logout());
         //Session::flush();
         Auth::guard('admins')->logout();
+        Auth::guard('employee')->logout();
         Auth::logout();
         return redirect('/login');
     }

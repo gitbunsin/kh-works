@@ -1,9 +1,11 @@
 <?php
 
-namespace  App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
+use App\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class UserRoleController extends Controller
 {
@@ -15,7 +17,8 @@ class UserRoleController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.admin.UserManagement.UserRoles.index');
+        $user_role = UserRole::all();
+        return view('backend.HRIS.admin.UserManagement.UserRoles.index',compact('user_role'));
     }
 
     /**
@@ -26,6 +29,7 @@ class UserRoleController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.admin.UserManagement.UserRoles.Create');
     }
 
     /**
@@ -36,7 +40,12 @@ class UserRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+//        dd($request->all());
+        $user_role = new UserRoles();
+        $user_role->name = $request->name;
+        $user_role->save();
+
     }
 
     /**

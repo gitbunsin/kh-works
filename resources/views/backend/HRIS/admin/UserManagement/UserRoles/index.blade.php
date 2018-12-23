@@ -11,7 +11,7 @@
                     <div class="col-lg-12 margin-tb">
 
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/work-shift/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/userRole/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
@@ -44,20 +44,20 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                {{--@foreach($WorkShift as $WorkShifts)--}}
-                                {{--<tr id="job_id{{$WorkShifts->id}}">--}}
-                                {{--<td>{{$WorkShifts->name}}</td>--}}
-                                {{--<td>{{$WorkShifts->hours_per_day}}</td>--}}
-                                {{--<td>--}}
-                                {{--<a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
-                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                {{--</a>--}}
-                                {{--<a data-id="{{$WorkShifts->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                {{--</a>--}}
-                                {{--</td>--}}
-                                {{--</tr>--}}
-                                {{--@endforeach--}}
+                                @foreach($user_role as $user_roles)
+                                    <tr id="">
+                                        <td>{{$user_roles->name}}</td>
+                                        <td></td>
+                                        <td>
+                                            <a data-id="" href="{{url('administration/userRole/'.$user_roles->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$user_roles->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
