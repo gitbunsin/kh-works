@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Employee;
+use App\UserEmployee;
 use Illuminate\Support\Facades\Auth;
 
 use Closure;
@@ -20,7 +21,7 @@ class VerifyEmployee
     {
 
         $token = $request->route('token');
-        $employee = Employee::where('email_token',$token)->first();
+        $employee = UserEmployee::where('email_token',$token)->first();
 //        if(Auth::guard('employee')->user() != null) {
 //
 //            return redirect()->route('admin');

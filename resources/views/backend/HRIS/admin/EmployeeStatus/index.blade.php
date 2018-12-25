@@ -45,7 +45,7 @@
                                     <tr id="job_id{{$status->id}}">
                                         <td>{{$status->name}}</td>
                                         <td>
-                                            <a data-id="{{$status->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a href="{{url('administration/employment-status/'.$status->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a data-id="{{$status->id}}" href="#" style="text-decoration:none;" class="delete-item">

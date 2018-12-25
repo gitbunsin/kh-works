@@ -59,19 +59,6 @@
                                                 <input type="text" name="employee_id" id="employee_id" >
                                             </label>
                                         </section>
-                                        <section class="col col-4">
-                                            <label class="label">Job Title</label>
-                                            <label class="select">
-                                                @php $job_title = \App\JobTitle::all(); @endphp
-                                                <select name="job_title" id="Job_title">
-                                                    <option value="0">-- job title --</option>
-                                                    @foreach($job_title as $job_titles)
-                                                        <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <i></i>
-                                            </label>
-                                        </section>
                                     <section class="col col-4">
                                         <label class="label"> Employee Photo</label>
                                         {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
@@ -86,17 +73,6 @@
                                             <a style="color: red" href="javascript:removeImage()"><i class="glyphicon glyphicon-trash"></i> Remove</a>
                                         </p>
 
-                                        {{--<p>--}}
-                                            {{--<a href="javascript:changeProfile()" style="text-decoration: none;">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i> Change--}}
-                                            {{--</a>&nbsp;&nbsp;--}}
-                                            {{--<a href="javascript:removeFile()" style="color: red;text-decoration: none;">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"></i>--}}
-                                                {{--Remove--}}
-                                            {{--</a>--}}
-                                        {{--</p>--}}
-                                        {{--<input type="file" name="file" id="file" style="display: none"/>--}}
-                                        {{--<input type="hidden" name="file" id="file_name"/>--}}
                                     </section>
                                     </div>
                                     <section>
@@ -154,7 +130,7 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                         Back
                                     </button>

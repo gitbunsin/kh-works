@@ -8,6 +8,7 @@ use App\Jobs\SendVerificationEmployeeEmail;
 use App\Mail\VerifyEmployeeMail;
 use App\Organization;
 use App\User;
+use App\UserEmployee;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,11 +115,14 @@ class EmployeeController extends Controller
 //        dd($employee_id);
         $check = $request->user_check;
         if ($check == 1) {
-            $emp_log = Employee::findOrFail($employee_id);
-            $emp_log->username = $request->user_name;
+//            $emp_log = Employee::findOrFail($employee_id);
+            $emp_log  = new UserEmployee();
             $emp_log->email = $request->user_email;
+            $emp_log->company_id = $request->company_id;
+            $emp_log->emp_id = $employee_id;
             $emp_log->email_token = base64_encode($request->user_email);
             $emp_log->password = Hash::make($request->user_password);
+
             $emp_log->save();
         }
         $company = Organization::findOrFail($request->company_id)->first();

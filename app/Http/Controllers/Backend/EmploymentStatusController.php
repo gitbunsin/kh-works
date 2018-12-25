@@ -64,6 +64,8 @@ class EmploymentStatusController extends Controller
     public function edit($id)
     {
         //
+        $employeeStatus = EmployeeStatus::where('id',$id)->first();
+        return view('backend.HRIS.admin.EmployeeStatus.edit',compact('employeeStatus'));
     }
 
     /**
@@ -76,6 +78,11 @@ class EmploymentStatusController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $employeeStatus = EmployeeStatus::findOrFail($id);
+        $employeeStatus->name = $request->name;
+        $employeeStatus->save();
+        return redirect('/administration/employment-status/');
+
     }
 
     /**
