@@ -51,7 +51,7 @@
                                         <td>{{$jobs->job_description}}</td>
                                         <td>{{$jobs->note}}</td>
                                         <td>
-                                            <a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/jobs-title/'.$jobs->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a data-id="{{$jobs->id}}" href="#" style="text-decoration:none;" class="delete-item">
