@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add Pay Grade</h2>
+                        <h2>Edit Pay Grade</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,9 +20,9 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_pay_grade" method="POST" enctype="multipart/form-data" action="{{url('administration/pay-grade')}}" class="smart-form">
+                            <form id="validate_pay_grade" method="POST" enctype="multipart/form-data" action="{{route('pay-grade.update', ['id'=>$pay_grade->id])}}" class="smart-form">
+                                <input type="hidden" name="_method" value="PUT">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                     <section>
                                         <label class="label">Pay Grade</label>
@@ -32,7 +32,7 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                         Back
                                     </button>

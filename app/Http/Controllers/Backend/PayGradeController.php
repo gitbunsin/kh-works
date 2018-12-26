@@ -1,6 +1,7 @@
 <?php
 
-namespace  App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend;
+
 use App\Currency;
 use App\Http\Controllers\Controller;
 use App\PayGrade;
@@ -8,6 +9,7 @@ use App\PayGradeCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 class PayGradeController extends Controller
 {
@@ -20,34 +22,26 @@ class PayGradeController extends Controller
     {
         $this->middleware('isAdmin');
     }
+
     public function index()
     {
-        $pay_grade = PayGrade::all()->toArray();
+        $pay_grade = PayGrade::where(['company_id' => Auth::guard('admins')->user()->id])->get();
         $data = [];
-       // $pay_grade["arr_currency_name"] = [];
-       // dd($pay_grade);
         foreach ($pay_grade as $item) {
-           //dd($item["id"]);
             $result = $this->getCurrencyNameByPaygrade($item["id"]);
-          //  dd($result);
             $item["currency_name"] = $result;
-           //dd($item["currency_name"]);
-//            dd($result);
             array_push($data, $item);
-           // dd(array_push($data, $item));
         }
-        //dd($data);
-
-      //  dd($pay_grade);
-        return view('backend.HRIS.admin.PayGrade.index',compact('data'));
+        return view('backend.HRIS.admin.PayGrade.index', compact('data'));
     }
 
-    public function getCurrencyNameByPaygrade($payGradeId) {
+    public function getCurrencyNameByPaygrade($payGradeId)
+    {
 
         $pay_grade = DB::table('tbl_pay_grade_currency as pc')
             ->select('ct.currency_name')
-            ->leftJoin('tbl_currency_type as ct','pc.currency_id',"=",'ct.currency_id')
-            ->where('pc.pay_grade_id',$payGradeId)
+            ->leftJoin('tbl_currency_type as ct', 'pc.currency_id', "=", 'ct.currency_id')
+            ->where('pc.pay_grade_id', $payGradeId)
             ->get()
             ->toArray();
         return $pay_grade;
@@ -71,25 +65,24 @@ class PayGradeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-//        dd('hello');
         $grade = new PayGrade();
         $grade->name = input::get('name');
-        $grade->created_by = input::get('user_id');
+        $grade->company_id = Auth::guard('admins')->user()->id;
         $grade->fd = \Carbon\Carbon::now();
         $grade->td = \Carbon\Carbon::now();
         $grade->save();
         return redirect('/administration/pay-grade');
     }
+
     public function AddPayGradeCurrency(Request $request)
     {
 
-         $CurrencyPayGrade = new PayGradeCurrency();
-         $CurrencyPayGrade->currency_id = $request->currency_id;
-         $CurrencyPayGrade->pay_grade_id = $request->pay_grade_id;
-         $CurrencyPayGrade->min_salary = $request->min_salary;
-         $CurrencyPayGrade->max_salary = $request->max_salary;
-         $CurrencyPayGrade->save();
+        $CurrencyPayGrade = new PayGradeCurrency();
+        $CurrencyPayGrade->currency_id = $request->currency_id;
+        $CurrencyPayGrade->pay_grade_id = $request->pay_grade_id;
+        $CurrencyPayGrade->min_salary = $request->min_salary;
+        $CurrencyPayGrade->max_salary = $request->max_salary;
+        $CurrencyPayGrade->save();
 
         return response()->json($CurrencyPayGrade);
     }
@@ -115,15 +108,12 @@ class PayGradeController extends Controller
      */
     public function edit($id)
     {
-        $pay_grade = PayGrade::where('id',$id)->first();
-//        dd($pay_grade);
+        $pay_grade = PayGrade::where('id', $id)->first();
         $pay_grade_currency = DB::table('tbl_pay_grade_currency as pc')
-            ->select('pc.*','ct.*')
-            //->join('tbl_pay_grade_currency as pc','p.id',"=",'pc.pay_grade_id')
-            ->join('tbl_currency_type as ct','pc.currency_id',"=",'ct.currency_id')
-            ->where('pc.pay_grade_id',$id)->get();
-//       dd($pay_grade_currency);
-        return view('backend.HRIS.admin.PayGrade.edit',compact('pay_grade_currency','pay_grade'));
+            ->select('pc.*', 'ct.*')
+            ->join('tbl_currency_type as ct', 'pc.currency_id', "=", 'ct.currency_id')
+            ->where('pc.pay_grade_id', $id)->get();
+        return view('backend.HRIS.admin.PayGrade.edit', compact('pay_grade_currency', 'pay_grade'));
     }
 
     /**
@@ -133,16 +123,20 @@ class PayGradeController extends Controller
      * @param  \App\PayGrade  $payGrade
      * @return \Illuminate\Http\Response
      */
-   public function update(Request $request, $currency_id)
-   {
-       $PayGradeCurrency = PayGradeCurrency::findOrFail($currency_id);
-       $PayGradeCurrency->pay_grade_id = $request->pay_grade_id;
-       $PayGradeCurrency->currency_id = $request->currency_id;
-       $PayGradeCurrency->min_salary = $request->min_salary;
-       $PayGradeCurrency->max_salary = $request->max_salary;
-       $PayGradeCurrency->save();
-       return response()->json($PayGradeCurrency);
-   }
+    public function update(Request $request, $currency_id)
+    {
+        $grade = PayGrade::findOrFail($currency_id);
+        $grade->update($request->all());
+
+        return redirect('/administration/pay-grade');
+        // $PayGradeCurrency = PayGradeCurrency::findOrFail($currency_id);
+        // $PayGradeCurrency->pay_grade_id = $request->pay_grade_id;
+        // $PayGradeCurrency->currency_id = $request->currency_id;
+        // $PayGradeCurrency->min_salary = $request->min_salary;
+        // $PayGradeCurrency->max_salary = $request->max_salary;
+        // $PayGradeCurrency->save();
+        // return response()->json($PayGradeCurrency);
+    }
 
     /**
      * Remove the specified resource from storage.
