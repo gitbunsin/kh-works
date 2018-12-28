@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Organization;
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -22,6 +23,8 @@ class CompanyController extends Controller
     public function index()
     {
 //      $CompanyProfiles = DB::table('tbl_organization_gen_info')->get()->first();
+
+//        dd(Gate::allows('admin-only'));
         return view('backend.HRIS.admin.Company.index');
     }
 

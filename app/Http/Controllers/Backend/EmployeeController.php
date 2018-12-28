@@ -51,7 +51,6 @@ class EmployeeController extends Controller
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -59,10 +58,15 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $company_id = Auth::guard('admins')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+
+        }
+
         $employee = DB::table('tbl1_hr_employee as e')
-            ->select('e.*','t.*')
-            ->join('tbl_job_title as t', 'e.job_title_code', '=', 't.id')
+            ->select('e.*')
             ->where('e.company_id',$company_id)
             ->orderBy('e.emp_id','DESC')
             ->get();
@@ -118,21 +122,24 @@ class EmployeeController extends Controller
 //            $emp_log = Employee::findOrFail($employee_id);
             $emp_log  = new UserEmployee();
             $emp_log->email = $request->user_email;
+            $emp_log->role_id = $request->role;
             $emp_log->company_id = $request->company_id;
-            $emp_log->emp_id = $employee_id;
+            $emp_log->employee_id = $employee_id;
             $emp_log->email_token = base64_encode($request->user_email);
             $emp_log->password = Hash::make($request->user_password);
-
             $emp_log->save();
         }
         $company = Organization::findOrFail($request->company_id)->first();
-
         event(new Registered($emp_log));
-
         dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
-
-
         return view('verification');
+
+
+    }
+    public function EmployeeInfo(){
+
+
+        return view('backend.HRIS.PIM.Employee.details');
     }
     /**
      * Handle a registration request for the application.
@@ -237,15 +244,50 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $employee_id)
+    public function update(Request $request, $emp_id)
     {
-        $employee = Employee::where('emp_id', $employee_id)->firstOrFail();
-        $employee->emp_lastname = $request->emp_lastname;
-        $employee->emp_lastname = $request->emp_lastname;
-        $employee->emp_firstname = $request->emp_firstname;
-        $employee->employee_id = $request->employee_id;
-        $employee->save();
+
+//        dd($request->all());
+        $employee = Employee::findOrFail($emp_id);
+//        dd($employee);
+        $check = $request->isPersonalDeatils;
+//        dd($check);
+        if($check == "1") {
+            $employee->emp_lastname = $request->emp_lastname;
+            $employee->emp_lastname = $request->emp_lastname;
+            $employee->emp_firstname = $request->emp_firstname;
+            $employee->employee_id = $request->employee_id;
+            $employee->emp_other_id = $request->other_id;
+            $employee->emp_dri_lice_num = $request->driver_license_number;
+            $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
+            $employee->emp_marital_status = $request->emp_marital_status;
+            $employee->nation_code = $request->nationality;
+            $employee->nickname = $request->nickname;
+            $employee->emp_military_service = $request->military_service;
+            $employee->driver_license = $request->driver_license;
+            $employee->emp_gender = $request->emp_gender;
+            $employee->smoker = $request->smoker;
+            $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
+            $employee->save();
+        }
+        $isContactDetials = $request->isContactDetails;
+        if($isContactDetials == "1"){
+            $employee->emp_street1 = $request->emp_street1;
+            $employee->emp_street2 = $request->emp_street2;
+            $employee->city_code = $request->city_code;
+            $employee->provin_code = $request->provin_code;
+            $employee->emp_zipcode = $request->emp_zipcode;
+            $employee->coun_code = $request->coun_code;
+            $employee->emp_hm_telephone = $request->emp_hm_telephone;
+            $employee->emp_mobile = $request->emp_mobile;
+            $employee->emp_work_telephone = $request->emp_work_telephone;
+            $employee->emp_work_email = $request->emp_work_email;
+            $employee->emp_oth_email = $request->emp_oth_email;
+            $employee->save();
+        }
+
         return response()->json($employee);
+
     }
 
     public function destroy($employee_id)

@@ -103,7 +103,6 @@
                                                 <input type="file" id="resume" name="resume">
                                             </label>
                                         </section>
-
                                         <section class="col col-6">
                                             <label class="label"> Closing Date </label>
                                             <label class="input">

@@ -59,6 +59,19 @@
                                                 <input type="text" name="employee_id" id="employee_id" >
                                             </label>
                                         </section>
+                                        <section class="col col-4">
+                                            <label class="label">Role</label>
+                                            <label class="select">
+                                                @php $role = \App\UserRole::all(); @endphp
+                                                <select name="role" id="role">
+                                                    <option value="0">-- Role --</option>
+                                                    @foreach($role as $roles)
+                                                        <option value="{{$roles->id}}">{{$roles->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
                                     <section class="col col-4">
                                         <label class="label"> Employee Photo</label>
                                         {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
@@ -73,6 +86,17 @@
                                             <a style="color: red" href="javascript:removeImage()"><i class="glyphicon glyphicon-trash"></i> Remove</a>
                                         </p>
 
+                                        {{--<p>--}}
+                                            {{--<a href="javascript:changeProfile()" style="text-decoration: none;">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i> Change--}}
+                                            {{--</a>&nbsp;&nbsp;--}}
+                                            {{--<a href="javascript:removeFile()" style="color: red;text-decoration: none;">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"></i>--}}
+                                                {{--Remove--}}
+                                            {{--</a>--}}
+                                        {{--</p>--}}
+                                        {{--<input type="file" name="file" id="file" style="display: none"/>--}}
+                                        {{--<input type="hidden" name="file" id="file_name"/>--}}
                                     </section>
                                     </div>
                                     <section>

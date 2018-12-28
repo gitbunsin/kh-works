@@ -51,9 +51,9 @@
                                         <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_lastname}} {{$employees->emp_firstname}} </td>
-                                        <td></td>
+                                        <td>{{$employees->job_title}}</td>
                                         <td>
-                                            <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->emp_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                            <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">

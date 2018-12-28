@@ -177,9 +177,14 @@
                     {{--<li class="{{ Request::segment(2) == "vacancy" ? "active" : " " }}">--}}
                         {{--<a href="{{url('administration/vacancy')}}">Vacancy</a>--}}
                     {{--</li>--}}
-
                 </ul>
             </li>
+            {{--@php dd(Auth::guard('employee')->user()) @endphp--}}
+            @if(Auth::guard('employee')->user())
+                <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
+                    <a href="{{url('administration/employee-info')}}"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">My Info</span></a>
+                </li>
+            @endif
         </ul>
     </nav>
 </aside>
