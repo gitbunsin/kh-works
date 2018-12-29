@@ -182,12 +182,15 @@
                                     </section>
                                     <div class="row">
                                         <section class="col col-4">
-                                            <label class="label">Phone *</label>
-                                            <label class="input">
-                                                <input  value="" type="text" name="phone" id="phone">
-                                            </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                            <div class="form-group">
+                                                <label class="label">Phone masking</label>
+                                                <div class="input-group">
+                                                    <input type="text" name="phone" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
+                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                </div>
+                                                <p class="note">
+                                                    Data format (XXX) XXX-XXXX
+                                                </p>
                                             </div>
                                         </section>
                                         <section class="col col-4">
@@ -200,12 +203,15 @@
                                             </div>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">mobile *</label>
-                                            <label class="input">
-                                                <input  value="" type="text" name="mobile" id="mobile">
-                                            </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                            <div class="form-group">
+                                                <label class="label">Mobile</label>
+                                                <div class="input-group">
+                                                    <input type="text" name="mobile" id="mobile" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
+                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                </div>
+                                                <p class="note">
+                                                    Data format (XXX) XXX-XXXX
+                                                </p>
                                             </div>
                                         </section>
                                     </div>
@@ -214,6 +220,11 @@
                                         <label class="input">
                                             <input  value="" type="file" name="company_logo" id="company_logo">
                                         </label>
+                                    </section>
+                                    <section>
+                                        <div id="forumPost">
+
+                                        </div>
                                     </section>
                                 </fieldset>
 
@@ -232,19 +243,19 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
+    {{--<script>--}}
+        {{--if (!window.jQuery) {--}}
+            {{--document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');--}}
+        {{--}--}}
+    {{--</script>--}}
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>--}}
+    {{--<script>--}}
+        {{--if (!window.jQuery.ui) {--}}
+            {{--document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');--}}
+        {{--}--}}
+    {{--</script>--}}
     {{--<script type="text/javascript">--}}
 
         {{--// DO NOT REMOVE : GLOBAL FUNCTIONS!--}}
@@ -257,48 +268,65 @@
 
     {{--</script>--}}
 
-    <script type="text/javascript">
 
+
+    <script type="text/javascript">
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function() {
 
             pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_job").validate({
-                // Rules for form validation
-                rules : {
-                    job_title : {
-                        required : true
-                    },
-                    job_description : {
-                        required : true,
-                    },
-                    note:{
-                        required:true
-                    }
-                },
 
-                // Messages for form validation
-                messages : {
-                    job_title : {
-                        required : 'Please enter Job_title'
-                    },
-                    job_description : {
-                        required: 'Please enter your job desciption'
-                    },
-                    note:{
-                        required:'please enter noted of job description'
-                    }
-                },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
+            $('#forumPost').summernote({
+                height : 180,
+                focus : false,
+                tabsize : 2
             });
-        });
 
+        })
     </script>
+    {{--<script type="text/javascript">--}}
+
+        {{--// DO NOT REMOVE : GLOBAL FUNCTIONS!--}}
+
+        {{--$(document).ready(function() {--}}
+
+            {{--pageSetUp();--}}
+            {{--$('#startdate').datepicker({--}}
+                {{--// format: 'DD - dd MM yyyy'--}}
+            {{--});--}}
+            {{--var $loginForm = $("#validate_job").validate({--}}
+                {{--// Rules for form validation--}}
+                {{--rules : {--}}
+                    {{--job_title : {--}}
+                        {{--required : true--}}
+                    {{--},--}}
+                    {{--job_description : {--}}
+                        {{--required : true,--}}
+                    {{--},--}}
+                    {{--note:{--}}
+                        {{--required:true--}}
+                    {{--}--}}
+                {{--},--}}
+
+                {{--// Messages for form validation--}}
+                {{--messages : {--}}
+                    {{--job_title : {--}}
+                        {{--required : 'Please enter Job_title'--}}
+                    {{--},--}}
+                    {{--job_description : {--}}
+                        {{--required: 'Please enter your job desciption'--}}
+                    {{--},--}}
+                    {{--note:{--}}
+                        {{--required:'please enter noted of job description'--}}
+                    {{--}--}}
+                {{--},--}}
+                {{--// Do not change code below--}}
+                {{--errorPlacement : function(error, element) {--}}
+                    {{--error.insertAfter(element.parent());--}}
+                {{--}--}}
+            {{--});--}}
+        {{--});--}}
+
+    {{--</script>--}}
 @endsection

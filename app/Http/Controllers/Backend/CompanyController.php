@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Organization;
 use App\User;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 

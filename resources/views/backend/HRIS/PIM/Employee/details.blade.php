@@ -268,8 +268,8 @@
                                                     </label>
                                                 </section>
                                             </div>
-                                            <hr/>
-                                            <br/>
+                                            {{--<hr/>--}}
+                                            {{--<br/>--}}
                                             <div class="row">
                                                 <input type="hidden" value="" name="company_id"/>
                                                 <section class="col col-6">
@@ -701,17 +701,6 @@
                                                 </table>
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
                                         {{--==========================================================--}}
 
                                 </div>
