@@ -58,7 +58,7 @@
 <header id="header">
 
     <div id="logo-group">
-        <span id="logo"> <img src="{{asset('img/logo.png')}}" alt="SmartAdmin"> </span>
+        <span id="logo"> <img style="padding-left: 67px;" src="{{asset('img/logo-original.png')}}" alt="SmartAdmin"> </span>
     </div>
 </header>
 
@@ -75,8 +75,8 @@
                     <div class="pull-left login-desc-box-l">
                         <h4 class="paragraph-header">It's Okay to be Smart. Experience the simplicity of SmartAdmin, everywhere you go!</h4>
                         <div class="login-app-icons">
-                            <a href="javascript:void(0);" class="btn btn-danger btn-sm">Frontend Template</a>
-                            <a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>
+                            <a href="#" class="btn btn-danger btn-sm">Employee Details Info</a>
+                            <a href="#" class="btn btn-danger btn-sm">Find Us</a>
                         </div>
                     </div>
 

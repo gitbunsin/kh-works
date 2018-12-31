@@ -25,25 +25,22 @@ use Psy\Util\Json;
 class KhWorksController extends Controller
 {
 
-
     public function __construct()
     {
-
         $this->middleware('isClient');
 //        $this->middleware('auth');
     }
-
     public function index(Request $request)
     {
 
         $searchTerm = $request->input('searchTerm');
         $Job = DB::table('kh_job_vacancy as v')
-            ->select('v.*','t.*','v.id as job_id','com.*')
+            ->select('v.*','t.*','v.id as job_id','com.*','p.*')
             ->join('tbl_job_title as t','v.job_title_code','=','t.id')
             ->join('tbl_organization_gen_info as com','v.company_id','=','com.id')
-//            ->where('job_title', 'like', '%' .$searchTerm. '%')
+            ->join('tbl_province as p', 'v.location', '=' ,'p.id')
             ->orWhere('description', 'like', '%' .$searchTerm. '%')
-            ->paginate(1);
+            ->paginate(10);
 //        dd($Job);
         return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
 

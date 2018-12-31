@@ -65,6 +65,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
         Route::resource('employee','EmployeeController');
         Route::get('/employee-info','EmployeeController@EmployeeInfo');
+//        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');
+//        Route::post('/employee-emergency-update/{emergency_id}','EmployeeController@UpdateEmergencyContact');
+        Route::resource('employee-emergency-contact','EmployeeEmergencyContact');
         Route::resource('interview','InterviewController');
         Route::resource('CandidateAttachment','UsersCvController');
         Route::get('/download/{user_id}', 'UsersCvController@getDownload');

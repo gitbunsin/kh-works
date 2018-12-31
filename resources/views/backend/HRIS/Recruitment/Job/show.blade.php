@@ -50,7 +50,7 @@
                         <div class="ad-meta">
 
                             <ul>
-                                <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$job_title->location}}</a></li>
+                                <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$job_title->NameEn}}</a></li>
                                 <li><a href="#"><i class="fa fa-clock-o " aria-hidden="true"></i>{{$job_title->job_type}}</a></li>
                                 <li><a href="#"><i class="fa fa-money " aria-hidden="true"></i>$ {{$job_title->min_salary}} - $ {{$job_title->max_salary}}</a></li>
 

@@ -101,8 +101,9 @@ class JobController extends Controller
 
 //            dd($isApply);
         $job_title = DB::table('kh_job_vacancy as v')
-            ->select('v.*','t.*','v.id as job_id')
+            ->select('v.*','t.*','v.id as job_id','p.*')
             ->join('tbl_job_title as t','v.job_title_code',"=",'t.id')
+            ->join('tbl_province as p','v.location','=','p.id')
             ->where('v.company_id',$company_id)
             ->first();
         $company = Organization::where('id',$company_id)->first();

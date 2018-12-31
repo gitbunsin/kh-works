@@ -301,33 +301,41 @@
                                             </div>
                                         </div>
                                         <br/>
+                                        {{--<input type="hidden"--}}
                                         <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                             <tr>
                                                 <th data-hide="phone"> Name</th>
                                                 <th data-class="expand"> Relationship</th>
-                                                <th data-hide="phone"> Date of Birth</th>
-                                                {{--<th data-hide="phone"> Employee Status</th>--}}
+                                                <th>Home Telephone</th>
+                                                <th>Mobile</th>
+                                                <th>Work Telephone</th>
+                                                <th>Action</th>
                                                 {{--<th data-hide="posting-date"> Location</th>--}}
                                                 {{--<th data-hide="closing-date"> Supervisor</th>--}}
-                                                <th> Action </th>
                                             </tr>
                                             </thead>
+                                            {{--@php dd($EmergencyContact) @endphp--}}
+                                            @foreach($EmergencyContact as $EmergencyContacts)
                                             <tbody id="products-list" name="products-list">
-                                                <tr id="employee_id">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+
+                                                <tr id="emergency_id{{$EmergencyContacts->id}}">
+                                                    <td>{{$EmergencyContacts->eec_name}}</td>
+                                                    <td>{{$EmergencyContacts->eec_relationship}}</td>
+                                                    <td>{{$EmergencyContacts->eec_home_no}}</td>
+                                                    <td>{{$EmergencyContacts->eec_mobile_no}}</td>
+                                                    <td>{{$EmergencyContacts->eec_office_no}}</td>
                                                     <td>
-                                                        <a data-id="" href="" style="text-decoration:none;" class="btn-detail">
+                                                        <a data-id="{{$EmergencyContacts->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
                                                             <i class="glyphicon glyphicon-edit"></i>
                                                         </a>
-                                                        <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                        <a data-id="{{$EmergencyContacts->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                             <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            @endforeach
                                         </table>
 
                                     </div>
@@ -766,7 +774,7 @@
         </div>
         <input id="url" type="hidden" value="{{ \Request::url() }}">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 {{--<div class="modal-content">--}}
                 <div class="modal-body">
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -33,6 +33,7 @@
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
         <ul>
+            @if(Auth::guard('admins')->user())
             <li>
                 <a href="" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
@@ -82,9 +83,6 @@
                             <li class="{{ Request::segment(2) == "companyProfile" ? "active" : " " }}">
                                 <a href="{{ url('administration/companyProfile') }}">General Information</a>
                             </li>
-                            {{--<li>--}}
-                                {{--<a href="">General Information</a>--}}
-                            {{--</li>--}}
                             <li>
                                 <a href="">Locations</a>
                             </li>
@@ -159,6 +157,7 @@
                     </li>
                 </ul>
             </li>
+
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Recruitment</span></a>
                 <ul>
@@ -179,11 +178,18 @@
                     {{--</li>--}}
                 </ul>
             </li>
+            @endif
             {{--@php dd(Auth::guard('employee')->user()) @endphp--}}
             @if(Auth::guard('employee')->user())
                 <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
                     <a href="{{url('administration/employee-info')}}"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">My Info</span></a>
                 </li>
+                    <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
+                        <a href="#"><i class="fa fa-lg fa-fw fa-caret-square-o-up"></i> <span class="menu-item-parent">Leave</span></a>
+                    </li>
+                    <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
+                        <a href="#"><i class="fa fa-lg fa-fw fa-send-o"></i> <span class="menu-item-parent">Performance</span></a>
+                    </li>
             @endif
         </ul>
     </nav>

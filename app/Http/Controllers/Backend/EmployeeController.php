@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Employee;
+use App\EmployeeEmergencyContacts;
 use App\Http\Controllers\Controller;
 
 use App\Jobs\SendVerificationEmployeeEmail;
@@ -134,12 +135,14 @@ class EmployeeController extends Controller
         dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
         return view('verification');
 
-
     }
     public function EmployeeInfo(){
 
+        $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
+            ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
+            ->get();
 
-        return view('backend.HRIS.PIM.Employee.details');
+        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact'));
     }
     /**
      * Handle a registration request for the application.
@@ -289,6 +292,18 @@ class EmployeeController extends Controller
         return response()->json($employee);
 
     }
+//    =======================
+    public function EditEmergencyContact(Request $request, $emergency_id){
+
+        $EmergencyContact = EmployeeEmergencyContacts::findOrFail($emergency_id);
+        return response()->json($EmergencyContact);
+    }
+    public  function UpdateEmergencyContact(Request $request , $emergency_id){
+
+
+        return response()->json(['data'=>'success','ok'=>'data is working']);
+    }
+
 
     public function destroy($employee_id)
     {

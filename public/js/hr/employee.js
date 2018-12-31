@@ -210,8 +210,11 @@ $(document).ready(function () {
 });
 
 
-var url = $('#url').val();
+// var url = $('#url').val();
 //alert(url);
+var url = '/administration/employee-emergency-contact';
+// var url = '/administration/employee-emergency-update';
+// alert(url);
 //display modal form for creating new product *********************
 $('#btn_add').click(function(){
     //alert('ok');
@@ -223,21 +226,21 @@ $('#btn_add').click(function(){
 
 //alert(url);
 $(document).on('click','.open_modal',function(){
-    var employee_id = $(this).attr('data-id');
-     alert(employee_id);
+    var emergency_id = $(this).attr('data-id');
+     // alert(emergency_id);
     // Populate Data in Edit Modal Form
     //('administration/job/' . $jobs->id . '/edit')
     $.ajax({
         type: "GET",
-        url: url + '/' + employee_id,
+        url: url +'/' + emergency_id,
         success: function (data) {
-           // alert(JSON.stringify(data));
-            $('#product_id').val(data.emp_id);
-            $('#emp_firstname').val(data.emp_firstname);
-            $('#emp_middle_name').val(data.emp_middle_name);
-            $('#emp_lastname').val(data.emp_lastname);
-            $('#employee_id').val(data.employee_id);
-            $('#job_title').append('<option value="'+ data.job_title_code +'">'+ data.job_title +'</option>');
+           // alert(JSON.stringify(data.eec_name));
+            $('#product_id').val(data.id);
+            $('#name').val(data.eec_name);
+            $('#relationship').val(data.eec_relationship);
+            $('#home_telephone').val(data.eec_home_no);
+            $('#mobile').val(data.eec_mobile_no);
+            $('#work_telephone').val(data.eec_office_no);
             $('#btn-save').val("update");
             $('#myModal').modal('show');
             $(".modal-backdrop.in").hide();
@@ -258,20 +261,24 @@ $("#btn-save").click(function (e) {
 
     e.preventDefault();
     var formData = {
-        emp_lastname : $('#emp_lastname').val(),
-        emp_firstname: $('#emp_firstname').val(),
-        emp_middle_name : $('#emp_middle_name').val() ,
-        employee_id : $('#employee_id').val(),
-        job_title :$('#job_title').val(),
+            // emp_id : $('#emp_id').val(),
+            id: $('#product_id').val(),
+            eec_name:$('#name').val(),
+            eec_relationship:$('#relationship').val(),
+            eec_home_no:$('#home_telephone').val(),
+            eec_mobile_no:$('#mobile').val(),
+            eec_office_no:$('#work_telephone').val(),
     }
-     //alert(JSON.stringify(formData));
+     // alert(JSON.stringify(formData));
     var state = $('#btn-save').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
     var type = "POST"; //for creating new resource
-    var employee_id = $('#product_id').val();
+    var emergency_id = $('#product_id').val();
     var my_url = url;
     if (state == "update"){
         type = "PUT"; //for updating existing resource
-        my_url += '/' + employee_id;
+        my_url += '/' + emergency_id;
     }
     //alert(JSON.stringify(formData));
     $.ajax({
@@ -281,20 +288,20 @@ $("#btn-save").click(function (e) {
         data: formData,
         dataType: 'json',
         success: function (data) {
-           // alert(JSON.stringify(data));
             var table =
-                '<tr id="employee_id'+data.emp_id +'">' +
-                '<td class="sorting_1">' + data.employee_id + '</td>'+
-                '<td class="sorting_1">' + data.emp_lastname + '</td>'+
-                '<td class="sorting_1">' + data.emp_lastname + '</td>'+
-                '<td class="sorting_1">' + data.emp_lastname + '</td>'+
-                '<td class="sorting_1">' + data.emp_lastname + '</td>'+
-                '<td class="sorting_1">' + data.emp_lastname + '</td>';
-            table += '<td><a data-id=" '+ data.emp_id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.emp_id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                '<tr id="emergency_id' + data.id +'">' +
+                '<td class="sorting_1">' + data.eec_name + '</td>'+
+                '<td class="sorting_1">' + data.eec_relationship + '</td>'+
+                '<td class="sorting_1">' + data.eec_home_no + '</td>'+
+                '<td class="sorting_1">' + data.eec_mobile_no + '</td>'+
+                '<td class="sorting_1">' + data.eec_office_no + '</td>';
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
             if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
                 $('#products-list').append(table);
             }else{ //if user updated an existing record
-                $("#employee_id" + employee_id).replaceWith(table);
+                alert("data has been updated");
+                $("#emergency_id" + emergency_id).replaceWith(table);
             }
             $('#frmProducts').trigger("reset");
             $('#myModal').modal('hide')

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend;
 use App\EmployeeStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmploymentStatusController extends Controller
 {
@@ -40,7 +41,10 @@ class EmploymentStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $JobTitle = EmployeeStatus::create($request->all());
+        $EmployeeStatus = new EmployeeStatus();
+        $EmployeeStatus->name = $request->name;
+        $EmployeeStatus->company_id = Auth::guard('admins')->user()->id;
+        $EmployeeStatus->save();
         return redirect('/administration/employment-status/');
     }
 
@@ -80,6 +84,7 @@ class EmploymentStatusController extends Controller
         //
         $employeeStatus = EmployeeStatus::findOrFail($id);
         $employeeStatus->name = $request->name;
+        $employeeStatus->company_id = Auth::guard('admins')->user()->id;
         $employeeStatus->save();
         return redirect('/administration/employment-status/');
 

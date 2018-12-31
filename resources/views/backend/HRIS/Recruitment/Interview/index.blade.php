@@ -48,12 +48,15 @@
                                 @foreach($interview as $interviews)
                                     <tr>
                                         <td>{{$interviews->name}}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{date('Y-m-d')}}</td>
+                                        <td><a href="#" class="apply_xeditable" data-type="select" data-name="type" data-value="old value" data-pk="1" data-url="" data-title="Status"></a></td>
                                         <td></td>
                                         <td style="text-align: center;">
                                             <a  href="{{url('administration/download/')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-trash "></i>
+                                                <i class="glyphicon glyphicon-align-center "></i>
+                                            </a>
+                                            <a  href="{{url('administration/download/')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-calendar "></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -68,4 +71,9 @@
     </section>
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.apply_xeditable').editable();
+        })
+    </script>
 @endsection

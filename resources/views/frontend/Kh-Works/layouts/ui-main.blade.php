@@ -105,7 +105,7 @@
                                 <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$Jobs->job_id.'/'.$Jobs->company_id)}}" class="title">{{$Jobs->job_title}}</a></span>
                                 <div class="ad-meta">
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$Jobs->location}}</a></li>
+                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$Jobs->NameEn}}</a></li>
                                         <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>{{$Jobs->job_type}}</a></li>
                                         <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>${{$Jobs->min_salary}} - ${{$Jobs->max_salary}}</a></li>
                                         <li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>

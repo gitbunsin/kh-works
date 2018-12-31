@@ -13,7 +13,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add Job title</h2>
+                        <h2>Post Job</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -41,10 +41,26 @@
                                     </section>
 
                                     <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label"> Location</label>
-                                            <label class="input">
-                                                <input type="text" name="city" id="city" />
+                                        {{--<section class="col col-6">--}}
+                                            {{--<label class="label"> Location</label>--}}
+                                            {{--<label class="input">--}}
+                                                {{--<input type="text" name="city" id="city" />--}}
+                                                {{--<i></i>--}}
+                                            {{--</label>--}}
+                                        {{--</section>--}}
+                                        <section class="col col-4">
+                                            <label class="label">Location</label>
+                                            <label class="select">
+                                                @php
+                                                    //$company_id = Auth::guard('admins')->user()->id;
+                                                    $location = \App\Provinces::all();
+                                                @endphp
+                                                <select name="city" id="city">
+                                                    <option value="0">-- Select location -- </option>
+                                                    @foreach($location as $locations)
+                                                        <option value="{{$locations->id}}">{{$locations->NameEn}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <i></i>
                                             </label>
                                         </section>
