@@ -103,6 +103,7 @@
 		<script src="{{ asset('js/plugin/datatables/dataTables.tableTools.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}"></script>
 		<script src="{{ asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}"></script>
+		<script src="{{ asset('js/plugin/x-editable/x-editable.min.js')}}"></script>
 
 
 <script src="{{ asset('js/plugin/jquery-touch/jquery.ui.touch-punch.min.js')}}"></script>
