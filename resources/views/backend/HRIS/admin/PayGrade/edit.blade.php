@@ -27,7 +27,7 @@
                                     <section>
                                         <label class="label">Pay Grade</label>
                                         <label class="input">
-                                           <input id="pay_grade_id" type="hidden" value="{{$pay_grade->id}}"/> <input value="{{$pay_grade->name}}" class="col-6" type="text" name="name" id="name">
+                                            <input value="{{$pay_grade->name}}" class="col-6" type="text" name="name" id="name">
                                         </label>
                                     </section>
                                 </fieldset>
@@ -56,7 +56,6 @@
                                             </thead>
                                             <tbody id="products-list" name="products-list">
                                             @foreach( $pay_grade_currency  as $pay_grade_currencies )
-                                                {{--{{dd($pay_grade_currencies)}}--}}
                                                 <tr id="currency_id{{$pay_grade_currencies->currency_id}}">
                                                     <td>{{$pay_grade_currencies->currency_name}}</td>
                                                     <td>{{$pay_grade_currencies->min_salary}}</td>
@@ -78,7 +77,6 @@
                             </div>
             </article>
         </div>
-        <input id="url" type="hidden" value="{{ \Request::url() }}">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div style="border: 0px solid rgba(0,0,0,.2);" class="modal-content">
@@ -127,8 +125,9 @@
                                                 </section >
                                             </fieldset>
                                             <footer>
-                                                <input type="button" class="btn btn-primary" id="btn-save" value="add">
+                                                <input type="submit" class="btn btn-primary" id="btn-save" value="add">
                                                 <input type="hidden" id="product_id" name="product_id" value="0">
+                                                <input type="hidden" id="pay_grade_id" name="pay_grade_id" value="{{$pay_grade->id}}">
                                                 <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                             </footer>
                                         </form>
@@ -145,75 +144,16 @@
 
     <!-- Widget ID (each widget will need unique ID)-->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
     <script src="{{ asset('/js/hr/currency.js') }}"></script>
-    <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-        $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_pay_grade").validate({
-                // Rules for form validation
-                rules : {
-                    name : {
-                        required : true
-                    },
-                },
-                // Messages for form validation
-                messages : {
-                    name : {
-                        required : 'field is required !'
-                    },
-                },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
-        });
-
-    </script>
     <script>
         $(document).ready(function() {
-            var $min_range = $("#min-range"),
-                $max_range = $("#max-range");
-            alert($min_range);
-
-            $("#form1").validate({
-                debug: true,
-                onkeyup: false,
-                onfocusout: false,
-                onclick: false,
-                rules: {
-                    minrange: {
-                        required: function() {
-                            return !($min_range.val() === "" && $max_range.val() === "");
-                        },
-                        max: function() {
-                            if ($max_range.val() !== "") {
-                                return $max_range.val();
-                            }
-                        }
-                    },
-                    maxrange: {
-                        required: function() {
-                            return !($min_range.val() === "" && $max_range.val() === "");
-                        },
-                        min: function() {
-                            if ($min_range.val() !== "") {
-                                return $min_range.val();
-                            }
-                        }
-                    }
-                },
-                submitHandler: function(formName, event) {
-                    alert("sucess");
+            alert("Hello");
+            $("#frmProducts").validate({
+                submitHandler: function(form) {
+                    console.log("Sucess", form);
                 }
             });
         });
+    </script>
 @endsection

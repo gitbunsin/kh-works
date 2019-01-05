@@ -74,6 +74,12 @@ class PayGradeController extends Controller
         return redirect('/administration/pay-grade');
     }
 
+    /**
+     * Add Currency to PayGrade
+     *
+     * @param Request $request
+     * @return void
+     */
     public function AddPayGradeCurrency(Request $request)
     {
 
@@ -129,13 +135,6 @@ class PayGradeController extends Controller
         $grade->update($request->all());
 
         return redirect('/administration/pay-grade');
-        // $PayGradeCurrency = PayGradeCurrency::findOrFail($currency_id);
-        // $PayGradeCurrency->pay_grade_id = $request->pay_grade_id;
-        // $PayGradeCurrency->currency_id = $request->currency_id;
-        // $PayGradeCurrency->min_salary = $request->min_salary;
-        // $PayGradeCurrency->max_salary = $request->max_salary;
-        // $PayGradeCurrency->save();
-        // return response()->json($PayGradeCurrency);
     }
 
     /**
