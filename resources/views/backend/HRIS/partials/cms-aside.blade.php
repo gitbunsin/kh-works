@@ -4,26 +4,8 @@
     <!-- User info -->
     <div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
-{{--{{Session::get('user_data')->status}}--}}
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
-                       {{--{{ Auth::tbl_organization_gen_info()->name }}--}}
-                        @if(Auth::guard('admins')->check())
-
-                            {{Auth::guard('admins')->user()->name}}
-
-                        @endif
-                        {{--@if(Session::get('user_register'))--}}
-                            {{--<span>--}}
-                                {{--{{ Session::get('user_register')->name }}--}}
-                            {{--</span>--}}
-                        {{--@elseif(Session::get('company_log'))--}}
-                            {{--<span>--}}
-                                  {{--{{ Session::get('company_log')->name }}--}}
-                             {{--</span>--}}
-                        {{--@endif--}}
-
-                        {{--{{Auth::guard('admins')->name}}--}}
                         <i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -179,7 +161,6 @@
                 </ul>
             </li>
             @endif
-            {{--@php dd(Auth::guard('employee')->user()) @endphp--}}
             @if(Auth::guard('employee')->user())
                 <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
                     <a href="{{url('administration/employee-info')}}"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">My Info</span></a>
