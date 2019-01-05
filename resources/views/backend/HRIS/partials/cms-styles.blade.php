@@ -27,6 +27,7 @@
 		<link href="{{ asset('css/smartadmin-production-plugins.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-production.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-skins.min.css') }}" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 
 		<!-- SmartAdmin RTL Support  -->
 		{{--<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">--}}

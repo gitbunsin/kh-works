@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Candidate;
+use App\Employee;
 use App\Http\Controllers\Controller;
 
+use App\Interview;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InterviewController extends Controller
@@ -15,16 +20,46 @@ class InterviewController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('isAdmin');
+
     }
     public function index()
     {
         $interview = DB::table('tbl_job_interview as v')
+            ->select('v.*','c.*','v.id as interview_id','c.id as candidate_id')
             ->join('tbl_job_candidate as c','c.id','=','v.candidate_id')
+            ->where('v.status',0)
             ->get();
 //        //
 //        dd($interview);
         return view('backend.HRIS.Recruitment.Interview.index',compact('interview'));
+    }
+    public function updateUser(Request $request)
+
+    {
+//         dd($request->all());
+         $interview = Interview::findOrFail($request->pk);
+         if($request->name == "note"){
+
+             $interview->note = $request->value;
+         }
+         if ($request->name == "interview_time"){
+
+             $input = $request->value;
+             $interview->interview_time = Carbon::parse($input)->format('H:i:s');
+         }
+         if($request->name == "interview_date"){
+
+             $input = $request->value;
+             $interview->interview_date =Carbon::parse($input)->format('Y-d-m');
+
+         }
+         $interview->save();
+//        Interview::find($request->pk)->update([$request->interview_name => $request->value]);
+
+        return response()->json(['success'=>'done']);
+
     }
 
     /**
@@ -35,6 +70,35 @@ class InterviewController extends Controller
     public function create()
     {
         //
+    }
+
+    public  function passInterview(Request $request, $candidate_id)
+    {
+//        dd($interview_id);
+      $CanPass = DB::table('tbl_job_interview as v')
+            ->select('c.*','v.*','v.id as interview_id')
+            ->join('tbl_job_candidate as c','v.candidate_id','=','c.id')
+            ->where('c.id',$candidate_id)
+            ->first();
+//      dd($CanPass);
+      $interview_id = $CanPass->interview_id;
+      $interview = Interview::findOrFail($interview_id);
+//      dd($interview);
+      $interview->status = 1;
+      $interview->save();
+      $isPass = new Employee();
+      $isPass->company_id = Auth::guard('admins')->user()->id;
+      $isPass->emp_lastname = $CanPass->name;
+      $isPass->emp_firstname = $CanPass->name;
+      $isPass->emp_middle_name = $CanPass->name;
+      $isPass->save();
+      return response()->json(['data'=>"done"]);
+
+    }
+    public function failInterview()
+    {
+
+
     }
 
     /**
