@@ -1,12 +1,12 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-   <style>
-       textarea {
-           overflow-y: scroll;
-           height: 200px;
-           resize: none;
-       }
-   </style>
+    <style>
+        textarea {
+            overflow-y: scroll;
+            height: 200px;
+            resize: none;
+        }
+    </style>
     <section id="widget-grid" class="">
 
         <!-- row -->
@@ -44,11 +44,19 @@
                                             <input  type="number" name="hours_per_day" id="hours_per_day">
                                         </label>
                                     </section>
+
                                     <div class="row">
                                         <section class="col col-5">
-                                            <label class="label">Avaible Employee</label>
+                                            <label class="label">Available Employee</label>
                                             <label class="input">
-                                                @php $emp = \App\Employee::all(); @endphp
+                                                @php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
+                                                            $emp = DB::table('tbl1_hr_employee')
+                                                ->where('company_id',Auth::guard('admins')->user()->id)
+                                                ->where('status',0)
+                                                ->get();
+                                              // dd($emp);
+                                                @endphp
+                                                {{--<input type="hidden" value="{{$emp->emp_id}}" name="emp_id"/>--}}
                                                 <select style="width: 365px;height: 200px;" name="possible[]" class="possible" multiple>
                                                     @foreach($emp as $emps)
                                                         <option value="{{$emps->emp_id}}">{{$emps->emp_lastname}}{{$emps->emp_firstname}}</option>
@@ -69,7 +77,7 @@
                                             <label class="label">Assign Employer</label>
                                             <label class="input">
                                                 <select id="assign" style="width: 365px;height: 200px;"  name="wishlist[]" class="wishlist" multiple>
-                                                        <option value="volvo"></option>
+                                                    <option value="volvo"></option>
                                                 </select>
                                             </label>
                                         </section>
@@ -103,35 +111,35 @@
             document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
         }
     </script>
-   <script>
-       function MyMoveItem()
-       {
-           var selected = $('.possible option:selected');
-           selected.appendTo('.wishlist');
-       }
+    <script>
+        function MyMoveItem()
+        {
+            var selected = $('.possible option:selected');
+            selected.appendTo('.wishlist');
+        }
 
 
-       function RemoveItem()
-       {
-           var selected = $('.wishlist option:selected');
-           selected.appendTo('.possible');
-       }
-//       $(".add").click(function () {
-//           var multipleValues = $( "#multiple" ).val();
-////           var value = $(this).attr("value");
-////           console.log(multipleValues);
-////           alert(multipleValues);
-//           $( "p" ).html(multipleValues);
-//       });
-//          $(".add").(function () {
-//              var multipleValues = $( "#multiple" ).val() || [];
-//              // When using jQuery 3:
-//              // var multipleValues = $( "#multiple" ).val();
-//              $( "p" ).html(multipleValues.join( ", " ) );
-//          });
-//       $( "select" ).change( displayVals );
-//       displayVals();
-   </script>
+        function RemoveItem()
+        {
+            var selected = $('.wishlist option:selected');
+            selected.appendTo('.possible');
+        }
+        //       $(".add").click(function () {
+        //           var multipleValues = $( "#multiple" ).val();
+        ////           var value = $(this).attr("value");
+        ////           console.log(multipleValues);
+        ////           alert(multipleValues);
+        //           $( "p" ).html(multipleValues);
+        //       });
+        //          $(".add").(function () {
+        //              var multipleValues = $( "#multiple" ).val() || [];
+        //              // When using jQuery 3:
+        //              // var multipleValues = $( "#multiple" ).val();
+        //              $( "p" ).html(multipleValues.join( ", " ) );
+        //          });
+        //       $( "select" ).change( displayVals );
+        //       displayVals();
+    </script>
 
     <script type="text/javascript">
 

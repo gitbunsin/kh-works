@@ -30,6 +30,7 @@ class Employee extends Authenticatable
         'email_verified_at',
         'verified',
         'email',
+        'status',
         'email_token',
         'password'
 

@@ -30,14 +30,19 @@ class UsersCvController extends Controller
         $company_id = Auth::guard('admins')->user()->id;
 //        dd($company_id);
             $user_cv = DB::table('tbl_job_candidate as c')
-                        ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name','cv.user_id as user_cv_id','s.photo as user_photo')
+                        ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name',
+                            'cv.user_id as user_cv_id',
+                            's.photo as user_photo')
                         ->join('tbl_cvs as cv','c.user_id','=','cv.user_id')
                         ->join('tbl_job_candidate_vacancy as jcv','c.id','=','jcv.candidate_id')
                         ->join('kh_job_vacancy as v','jcv.vacancy_id','=','v.id')
                         ->join('tbl_job_title as t','v.job_title_code','=','t.id')
-                        ->join('kh_seeker as s','c.user_id','=','s.id')
+                        ->join('users as s','c.user_id','=','s.id')
                         ->where('v.company_id',$company_id)
+//                        ->groupBy('c.user_id')
                         ->get();
+
+//        $user_cv = DB::table('tbl_job_candidate as c')
 //            dd($user_cv);
 //        $result = DB::table('kh_job_vacancy as v')
 //                     ->select('v.id as job_id')

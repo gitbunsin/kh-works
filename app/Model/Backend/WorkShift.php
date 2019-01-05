@@ -9,6 +9,7 @@ class WorkShift extends Model
     protected $table = 'tbl_work_shift';
     protected $fillable = [
         'id',
+        'company_id',
         'name',
         'hours_per_day',
         'start_time',

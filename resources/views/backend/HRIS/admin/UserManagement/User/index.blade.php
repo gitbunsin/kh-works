@@ -11,7 +11,7 @@
                     <div class="col-lg-12 margin-tb">
 
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/work-shift/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/user/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>

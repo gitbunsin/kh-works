@@ -129,12 +129,13 @@ class EmployeeController extends Controller
             $emp_log->email_token = base64_encode($request->user_email);
             $emp_log->password = Hash::make($request->user_password);
             $emp_log->save();
+            $company = Organization::findOrFail($request->company_id)->first();
+            event(new Registered($emp_log));
+            dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
+            return view('verification');
         }
-        $company = Organization::findOrFail($request->company_id)->first();
-        event(new Registered($emp_log));
-        dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
-        return view('verification');
 
+        return redirect('/administration/employee');
     }
     public function EmployeeInfo(){
 

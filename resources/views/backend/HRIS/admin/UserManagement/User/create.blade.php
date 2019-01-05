@@ -17,7 +17,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Works Shift</h2>
+                        <h2>Add User</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -28,71 +28,52 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_works_shifts" method="POST" enctype="multipart/form-data" action="{{url('/administration/work-shift/'.$work_shift->id)}}" class="smart-form">
-                                <input name="_method" type="hidden" value="PATCH">
+                            <form id="validate_works_shifts" method="POST" enctype="multipart/form-data" action="{{url('administration/userRole')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
-                                    <section>
-                                        <label class="label">Works Shifts</label>
-                                        <label class="input">
-                                            <input value="{{$work_shift->name}}" class="col-6" type="text" name="name" id="name">
-                                        </label>
-                                    </section>
-                                    <section>
-                                        <label class="label">Hour Per Day</label>
-                                        <label class="input">
-                                            <input value="{{$work_shift->hours_per_day}}"  type="number" name="hours_per_day" id="hours_per_day">
-                                        </label>
-                                    </section>
                                     <div class="row">
-                                        <section class="col col-5">
-                                            <label class="label">Available Employee</label>
+                                        <section class="col col-6">
+                                            <label class="label">Username</label>
                                             <label class="input">
-                                                @php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
-                                                            $emp = DB::table('tbl1_hr_employee')
-                                                ->where('company_id',Auth::guard('admins')->user()->id)
-                                                ->where('status',0)
-                                                ->get();
-                                              // dd($emp);
-                                                @endphp
-                                                {{--<input type="hidden" value="{{$emp->emp_id}}" name="emp_id"/>--}}
-                                                <select style="width: 365px;height: 200px;" name="possible[]" class="possible" multiple>
-                                                    @foreach($emp as $emps)
-                                                        <option value="{{$emps->emp_id}}">{{$emps->emp_lastname}}{{$emps->emp_firstname}}</option>
-                                                    @endforeach
-                                                </select>
-                                                {{--{{Form::select('possible[]',$category_details,null,array('multiple'=>true,'class'=>'custom-scroll')); }}--}}
+                                                <input class="col-6" type="text" name="name" id="name">
                                             </label>
                                         </section>
-                                        <p></p>
-                                        <section class="col col-2">
-                                            <div class="add" style="margin-top: 120px">
-                                                <input type="button" value="Add" onclick="MyMoveItem();">
-                                                <input type="button" value="Remove" onclick="RemoveItem();">
-                                            </div>
-
-                                        </section>
-                                        <section class="col col-5">
-                                            <label class="label">Assign Employer</label>
-                                            <label class="input">
-                                                @php
-                                                    $emp_id =
-                                                     DB::table('tbl_employee_work_shift as s')
-                                                                ->select('s.*','e.*')
-                                                                ->join('tbl1_hr_employee as e','s.emp_id','=','e.emp_id')
-                                                                ->where('status',1)
-                                                                ->get();
-                                                               // dd($emp_id);
-
-                                                @endphp
-                                                <select id="assign" style="width: 365px;height: 200px;"  name="wishlist_list[]" class="wishlist_list" multiple>
-                                                        @foreach($emp_id as $emps)
-                                                            <option value="{{$emps->emp_id}}">{{$emps->emp_lastname}}{{$emps->emp_firstname}}</option>
-                                                        @endforeach
+                                        <section class="col col-6">
+                                            <label class="label"> UserRoles</label>
+                                            <label class="select">
+                                                @php use App\JobTitle;$Role= \App\UserRole::all(); @endphp
+                                                <select name="user_roles" id="user_roles">
+                                                    <option value="0">Choose Roles</option>
+                                                    @foreach($Role as $Roles)
+                                                        <option value="{{$Roles->id}}">{{$Roles->name}}</option>
+                                                    @endforeach
                                                 </select>
+                                                <i></i>
                                             </label>
                                         </section>
                                     </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label">Employee</label>
+                                            <label class="input">
+                                                <input class="col-6" type="text" name="name" id="name">
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> Status</label>
+                                            <label class="select">
+                                                {{--@php use App\JobTitle;$Role= \App\UserRole::all(); @endphp--}}
+                                                <select name="user_roles" id="user_roles">
+                                                    <option value="0">Choose Status</option>
+                                                    <option value="1">Enable</option>
+                                                    <option value="2">Disabled</option>
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                    </div>
+
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -126,13 +107,13 @@
         function MyMoveItem()
         {
             var selected = $('.possible option:selected');
-            selected.appendTo('.wishlist_list');
+            selected.appendTo('.wishlist');
         }
 
 
         function RemoveItem()
         {
-            var selected = $('.wishlist_list option:selected');
+            var selected = $('.wishlist option:selected');
             selected.appendTo('.possible');
         }
         //       $(".add").click(function () {

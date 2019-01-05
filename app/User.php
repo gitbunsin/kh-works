@@ -1,21 +1,24 @@
 <?php
 namespace App;
+use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 /**
  * @property mixed country
  */
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens, Notifiable;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = 'kh_seeker';
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',
