@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePayGradesTable extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePayGradesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pay_grades', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -26,6 +26,6 @@ class CreatePayGradesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pay_grades');
+        Schema::dropIfExists('currencies');
     }
 }

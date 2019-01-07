@@ -1,24 +1,26 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
-
-class PayGrade extends Model
+use App\Model\Backend\Currency;
+class Paygrade extends Model
 {
     //
-    protected $table = 'tbl_pay_grade';
+    protected $table = "paygrades";
     protected $fillable = [
         'id',
         'name',
-        'created_by',
-        'fd',
-        'td',
+        'created_at',
+        'updatead_at',
+        'company_id'
     ];
-    public $timestamps = false;
-    public function PayGrade (){
 
-        return $this->hasMany('App\PayGradeCurrency', 'pay_grade_id', 'id');
+    public function currencies() {
+        return $this->belongsToMany(Currency::class)->withPivot('min_salary', 'max_salary');
+    }
 
+    public function companies() {
+        return $this->belongsTo(\App\Organization::class, 'company_id');
     }
 }

@@ -53,6 +53,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
         Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
         Route::resource('pay-grade', 'PayGradeController');
+
+        Route::get('/paygrade/{id}', 'PayGradeController@getRelationPayGradeCurrency');
+
         Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
         Route::resource('work-shift', 'WorkShiftController');
         Route::resource('employment-status', 'EmploymentStatusController');

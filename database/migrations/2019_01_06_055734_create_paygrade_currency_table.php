@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserEmployeeTable extends Migration
+class CreatePaygradeCurrencyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateUserEmployeeTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_user_employee', function (Blueprint $table) {
+        Schema::create('paygrade_currency', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('emp_id');
-            $table->integer('company_id');
-            $table->integer('role_id');
-            $table->string('email');
-            $table->string('password');
-            $table->string('email_token');
+            $table->decimal('max_salary',9,3);
+            $table->decimal('min_salary',9,3);
+            $table->integer('paygrade_id')->unsigned();
+            $table->integer('currency_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateUserEmployeeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_employee');
+        Schema::dropIfExists('paygrade_currency');
     }
 }

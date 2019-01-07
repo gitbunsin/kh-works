@@ -13,7 +13,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<!-- <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"> -->
 		<link href="{{ asset('css/smartadmin-production-plugins.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-production.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-skins.min.css') }}" rel="stylesheet">
@@ -34,6 +35,10 @@
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-landscape.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-portrait.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}" media="screen and (max-device-width: 320px)">
+		
+		<!-- Custom Own Style -->
+		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
+	
 	</head>
 <body class="">
 
@@ -69,6 +74,7 @@
     </div>
     <!-- END MAIN PANEL -->
     @include('backend.HRIS.partials.cms-script')
+	@yield('script')
 </div>
 </body>
 </html>

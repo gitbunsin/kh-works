@@ -101,11 +101,11 @@
                                                 <section>
                                                     <label class="label">Currency</label>
                                                     <label class="select state-success">
-                                                        @php $currency = \App\Currency::all(); @endphp
-                                                        <select name="currency_id" id="currency_id">
-                                                            <option value="0">Choose name</option>
+                                                        @php $currency = \App\Model\Backend\Currency::all(); @endphp
+                                                        <select name="currency_id" id="currency_id" class="required">
+                                                            <option value="">Choose name</option>
                                                             @foreach($currency as $item)
-                                                                <option value="{{$item->currency_id}}">{{$item->currency_name}}</option>
+                                                                <option value="{{$item->id}}">{{$item->name}}</option>
                                                             @endforeach
                                                         </select>
                                                         <i></i>
@@ -114,13 +114,13 @@
                                                 <section>
                                                     <label class="label">Minimum Salary</label>
                                                     <label class="input">
-                                                        <input required type="number" maxlength="20" name="min_salary" id="min_salary">
+                                                        <input required type="number" maxlength="20" name="min_salary" id="minSalary">
                                                     </label>
                                                 </section >
                                                 <section>
                                                     <label class="label">Maximum Salary</label>
                                                     <label class="input">
-                                                        <input required type="number" maxlength="20" name="	max_salary" id="max_salary">
+                                                        <input required type="number" maxlength="20" name="max_salary" id="maxSalary">
                                                     </label>
                                                 </section >
                                             </fieldset>
@@ -141,19 +141,85 @@
             </div>
     </section>
 
+@endsection
+@section('script')
 
-    <!-- Widget ID (each widget will need unique ID)-->
-
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
     <script src="{{ asset('/js/hr/currency.js') }}"></script>
     <script>
         $(document).ready(function() {
-            alert("Hello");
+
+            //Base URL
+            var baseURL = "{{URL::to('/')}}/"
+
+            //custom rule method
+            $.validator.addMethod("isBiggerThanMinSalary", function(value, element, arg) {
+                var maxSalary = $("#maxSalary").val();
+               return maxSalary > value;
+            }, "Minimum Salary must be smaller than Maximun Salary");
+
+            //Create currency to Paygrade
             $("#frmProducts").validate({
+                rules: {
+                    min_salary: {
+                        required: true,
+                        isBiggerThanMinSalary: ""
+                    },
+                    max_salary: {
+                        required: true
+                    }
+                },
+                messages: {
+                    currency_id: {
+                        required: "Please select the currency option"
+                    },
+                    min_salary: {
+                        required: "Minimum Salary is required"
+                    },
+                    max_salary: {
+                        required: "Maximum Salary is required"
+                    }
+                },
                 submitHandler: function(form) {
-                    console.log("Sucess", form);
+                    var formData = {
+                        pay_grade_id : $('#pay_grade_id').val(),
+                        currency_id : $('#currency_id').val(),
+                        min_salary : $('#minSalary').val(),
+                        max_salary : $('#maxSalary').val()
+                    };
+
+                    //ajax sumit request
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        method: "POST",
+                        url: baseURL + "administration/add-currency-pay",
+                        data: formData,
+                        dataType: "json",
+                        success: function(respond) {
+                            console.log("Success", respond);
+                            // bindDataToTable(respond);
+                        },
+                        error: function(error) {
+                            console.log("Error ", error);
+                        }
+                    });
                 }
             });
+
+            function bindDataToTable(data) {
+                $("tbody>tr>td.dataTables_empty").hide();
+                var table =
+                    '<tr id="currency_id'+data.id+'">' +
+                    '<td class="sorting_1">' + data.currency_name + '</td>'+
+                    '<td class="sorting_1">' + data.min_salary+ '</td>'+
+                    '<td class="sorting_1">' + data.max_salary + '</td>';
+                table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                
+                $('#products-list').append(table);
+                $('#frmProducts').trigger("reset");
+                $('#myModal').modal('hide')
+            }
         });
     </script>
 @endsection
