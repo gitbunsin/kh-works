@@ -1,5 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+        <title> SmartAdmin </title>
 
-@include('backend.HRIS.partials.cms-styles')
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- iOS web-app metas : hides Safari pages Components and Changes Status Bar Appearance -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/smartadmin-production-plugins.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/smartadmin-production.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/smartadmin-skins.min.css') }}" rel="stylesheet">
+
+		<!-- SmartAdmin RTL Support  -->
+		<link href="{{ asset('css/smartadmin-rtl.min.css') }}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/demo.min.css')}}">
+
+		<!-- FAVICONS -->
+		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
+		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
+		<link rel="apple-touch-icon" href=" {{asset('img/splash/sptouch-icon-iphone.png')}}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/splash/touch-icon-ipad.png')}}">
+		<link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/splash/touch-icon-iphone-retina.png')}}">
+		<link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/splash/touch-icon-ipad-retina.png')}}">
+		
+		<!-- Startup image for web apps -->
+		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-landscape.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-portrait.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+		<link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}" media="screen and (max-device-width: 320px)">
+	</head>
 <body class="">
 
 <!-- HEADER -->
@@ -20,38 +55,10 @@
 
     <!-- MAIN CONTENT -->
     <div id="content">
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                <h1 class="page-title txt-color-blueDark">
-                    <i class="fa fa-table fa-fw "></i>
-                    Table
-                    <span>
-                Data Tables
-            </span>
-                </h1>
-            </div>
-        </div>
         <!-- widget grid -->
         <section id="widget-grid" class="">
-
-            <!-- row -->
             <div class="row">
                 <article class="col-sm-12">
-
-                    <div class="flash-message">
-                        {{--@if (session('status'))--}}
-                            {{--<div class="alert alert-success">--}}
-                                {{--{{ session('status') }}--}}
-                            {{--</div>--}}
-                        {{--@endif--}}
-                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                            @if(Session::has('alert-' . $msg))
-                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                            @endif
-                        @endforeach
-                    </div> <!-- end .flash-message -->
-                    <!-- new widget -->
                     <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                         <!-- END MAIN CONTENT -->
                         @yield('content')
@@ -64,3 +71,4 @@
     @include('backend.HRIS.partials.cms-script')
 </div>
 </body>
+</html>
