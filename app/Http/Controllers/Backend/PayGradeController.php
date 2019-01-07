@@ -80,7 +80,7 @@ class PayGradeController extends Controller
     public function AddPayGradeCurrency(Request $request)
     {
 
-        $currency = Currency::findOrFail($request->currency_id);
+        $currency = \App\Model\Backend\Currency::findOrFail($request->currency_id);
         $paygrade = Paygrade::findOrFail($request->pay_grade_id);
         $arrPovit = [
             'min_salary' => $request->min_salary,
@@ -88,16 +88,20 @@ class PayGradeController extends Controller
         ];
         $paygrade->currencies()->attach($currency, $arrPovit);
 
-        
+        //retrive paygrade back
+        $p = Paygrade::findOrFail($paygrade->id);
+        $data = $p->currencies()->wherePivot('currency_id', $currency->id)->first();
 
-        // $CurrencyPayGrade = new PayGradeCurrency();
-        // $CurrencyPayGrade->currency_id = $request->currency_id;
-        // $CurrencyPayGrade->pay_grade_id = $request->pay_grade_id;
-        // $CurrencyPayGrade->min_salary = $request->min_salary;
-        // $CurrencyPayGrade->max_salary = $request->max_salary;
-        // $CurrencyPayGrade->save();
+        return response()->json($data);
+    }
 
-        return response()->json($paygrade);
+    function destroyPaygradeCurrency(Request $request) {
+        $currency_id = $request->currency_id;
+        $paygrade_id = $request->paygrade_id;
+        $currency = \App\Model\Backend\Currency::findOrFail($currency_id);
+        $currency->paygrades()->detach([$paygrade_id]);
+
+        return response()->json($currency);
     }
 
     /**

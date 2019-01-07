@@ -55,16 +55,16 @@
                                             </tr>
                                             </thead>
                                             <tbody id="products-list" name="products-list">
-                                            @foreach( $pay_grade_currency  as $pay_grade_currencies )
-                                                <tr id="currency_id{{$pay_grade_currencies->currency_id}}">
-                                                    <td>{{$pay_grade_currencies->currency_name}}</td>
-                                                    <td>{{$pay_grade_currencies->min_salary}}</td>
-                                                    <td>{{$pay_grade_currencies->max_salary}}</td>
+                                            @foreach( $pay_grade->currencies  as $pay_grade_currencies )
+                                                <tr id="currency_id{{$pay_grade_currencies->id}}">
+                                                    <td>{{$pay_grade_currencies->name}}</td>
+                                                    <td>{{$pay_grade_currencies->pivot->min_salary}}</td>
+                                                    <td>{{$pay_grade_currencies->pivot->max_salary}}</td>
                                                     <td>
-                                                        <a data-id="{{$pay_grade_currencies->currency_id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                                        <a data-id="{{$pay_grade_currencies->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
                                                             <i class="glyphicon glyphicon-edit"></i>
                                                         </a>
-                                                        <a data-id="{{$pay_grade_currencies->currency_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                        <a data-id="{{$pay_grade_currencies->id}}" href="#" style="text-decoration:none;" onclick="deletedPayCurrency('{{$pay_grade_currencies->id}}', '{{$pay_grade->id}}')">
                                                             <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                                         </a>
                                                     </td>
@@ -146,10 +146,11 @@
 
     <script src="{{ asset('/js/hr/currency.js') }}"></script>
     <script>
+    
+        //Base URL
+        var baseURL = "{{URL::to('/')}}/";
+        var paygradeID = "{{$pay_grade->id}}";
         $(document).ready(function() {
-
-            //Base URL
-            var baseURL = "{{URL::to('/')}}/"
 
             //custom rule method
             $.validator.addMethod("isBiggerThanMinSalary", function(value, element, arg) {
@@ -197,8 +198,8 @@
                         data: formData,
                         dataType: "json",
                         success: function(respond) {
-                            console.log("Success", respond);
-                            // bindDataToTable(respond);
+                            // console.log("Success", respond);
+                            bindDataToTable(respond);
                         },
                         error: function(error) {
                             console.log("Error ", error);
@@ -211,15 +212,47 @@
                 $("tbody>tr>td.dataTables_empty").hide();
                 var table =
                     '<tr id="currency_id'+data.id+'">' +
-                    '<td class="sorting_1">' + data.currency_name + '</td>'+
-                    '<td class="sorting_1">' + data.min_salary+ '</td>'+
-                    '<td class="sorting_1">' + data.max_salary + '</td>';
-                table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                    '<td class="sorting_1">' + data.name + '</td>'+
+                    '<td class="sorting_1">' + data.pivot.min_salary+ '</td>'+
+                    '<td class="sorting_1">' + data.pivot.max_salary + '</td>';
+                table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '
+                + data.id +' " href="#" style="text-decoration:none;" onclick="deletedPayCurrency('+data.id+','+paygradeID+')"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
                 
                 $('#products-list').append(table);
                 $('#frmProducts').trigger("reset");
                 $('#myModal').modal('hide')
             }
         });
+
+        function deletedPayCurrency(currency_id, paygrade_id) {
+            var confirmation = confirm("are you sure you want to remove the item?");
+            if (confirmation) {
+                var formData = {
+                    currency_id: currency_id,
+                    paygrade_id: paygrade_id
+                }
+
+                //ajax sumit request
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: "POST",
+                    url: baseURL + "administration/remove-currency-pay",
+                    data: formData,
+                    dataType: "json",
+                    success: function(respond) {
+                        console.log("Success", respond);
+                        // bindDataToTable(respond);
+                        var elementCurrency = "#currency_id"+currency_id
+                        $(elementCurrency).remove();
+                        $("tbody>tr>td.dataTables_empty").show();
+                    },
+                    error: function(error) {
+                        console.log("Error ", error);
+                    }
+                });
+            }
+        }
     </script>
 @endsection

@@ -55,8 +55,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('pay-grade', 'PayGradeController');
 
         Route::get('/paygrade/{id}', 'PayGradeController@getRelationPayGradeCurrency');
-
+        
         Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
+        Route::post('/remove-currency-pay', 'PayGradeController@destroyPaygradeCurrency');
         Route::resource('work-shift', 'WorkShiftController');
         Route::resource('employment-status', 'EmploymentStatusController');
         Route::resource('companyProfile', 'CompanyController');

@@ -17,7 +17,7 @@ class Paygrade extends Model
     ];
 
     public function currencies() {
-        return $this->belongsToMany(Currency::class)->withPivot('min_salary', 'max_salary');
+        return $this->belongsToMany(Currency::class)->withPivot('min_salary', 'max_salary')->withTimestamps();
     }
 
     public function companies() {
