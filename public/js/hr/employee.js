@@ -350,5 +350,115 @@ $( document ).ready(function() {
 
     });
 });
+// ============================================Emp work Experience======================
+$('#btn_add_experience').click(function(){
+    //alert('ok');
+    $('#btn-save').val("add");
+    $('#frmProducts').trigger("reset");
+    $('#myModal_qualifications').modal('show');
+    $(".modal-backdrop.in").hide();
+});
+//////////////////////////////////
+$(document).on('click','.open_modal_experience',function(){
+    var emp_work_id = $(this).attr('data-id');
+    // alert(emergency_id);
+    // Populate Data in Edit Modal Form
+    //('administration/job/' . $jobs->id . '/edit')
+    $.ajax({
+        type: "GET",
+        url: '/administration/employee-work-experience'+'/' + emp_work_id,
+        success: function (data) {
+            alert(JSON.stringify(data));
+            $('#product_id').val(data.id);
+            $('#company').val(data.eexp_employer);
+            $('#job_title').val(data.eexp_jobtit);
+            $('#from_date').val(data.eexp_from_date);
+            $('#to_date').val(data.eexp_to_date);
+            $('#comment').val(data.eexp_comments);
+            $('#btn-save_experience').val("update");
+            $('#myModal_qualifications').modal('show');
+            $(".modal-backdrop.in").hide();
+        },
+        error: function (data) {
+            alert(JSON.stringify(data));
+            console.log('Error:', data);
+        }
+    });
+});
+////////////////////
+$("#btn-save_experience").click(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
+    e.preventDefault();
+    var formData =
+    {
+        eexp_employer: $('#company').val(),
+        eexp_jobtit: $('#job_title').val(),
+        eexp_from_date: $('#from_date').val(),
+        eexp_to_date: $('#to_date').val(),
+        eexp_comments: $('#comment').val(),
+
+    }
+    // alert(JSON.stringify(formData));
+    var state = $('#btn-save_experience').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
+    var type = "POST"; //for creating new resource
+    var emp_work_id = $('#product_id').val();
+    // alert(emp_work_id);
+    var my_url = '/administration/employee-work-experience';
+    if (state == "update"){
+        type = "PUT"; //for updating existing resource
+        my_url += '/' + emp_work_id;
+    }
+    //alert(JSON.stringify(formData));
+    $.ajax({
+        cache:false,
+        type: type,
+        url: my_url,
+        data: formData,
+        dataType: 'json',
+        success: function (data) {
+            var table =
+                '<tr id="work_experience_id' + data.id +'">' +
+                '<td>' + data.eexp_employer+ '</td>'+
+                '<td>' + data.eexp_jobtit + '</td>'+
+                '<td>' + data.eexp_from_date + '</td>'+
+                '<td>' + data.eexp_to_date + '</td>'+
+                '<td>' + data.eexp_comments + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_experience"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+            if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
+                $('#employee-works-list').append(table);
+            }else{ //if user updated an existing record
+                alert("data has been updated");
+                $("#work_experience_id" + emp_work_id).replaceWith(table);
+            }
+            $('#frmProducts').trigger("reset");
+            $('#myModal_qualifications').modal('hide')
+        },
+        error: function (data) {
+            (JSON.stringify(data));
+            console.log(data);
+            //alert('failed');
+        }
+    });
+});
+// $('.datepicker1').datepicker({
+//
+// });
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
+// ============================================Emp Skills======================
+$('#btn_add_skills').click(function(){
+    //alert('ok');
+    $('#btn-save').val("add");
+    $('#frmProducts').trigger("reset");
+    $('#myModal_skills').modal('show');
+    $(".modal-backdrop.in").hide();
+});
+
+

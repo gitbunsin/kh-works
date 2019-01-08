@@ -7,22 +7,22 @@
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div style="background: white;" class="product-content product-wrap clearfix product-deatil">
                     <div class="row">
-                        <div class="col-md-2 col-sm-12 col-xs-12 ">
-                            <div class="product-image">
-                                <hr/>
+                        {{--<div class="col col-1 col-sm-12 col-xs-12 ">--}}
+                            {{--<div class="product-image">--}}
+                                {{--<hr/>--}}
                                 @php $employee = \App\Employee::where('emp_id',Auth::guard('employee')->user()->employee_id)->first(); @endphp
-                                    <img width="150px" height="150px" style="margin-left: 10px;" src="{{asset('/uploads/EmpPhoto/'.$employee->photo)}}">
-                            </div>
-                        </div>
-                        <div class="col-md-10 col-sm-12 col-xs-12">
+                                    {{--<img width="150px" height="150px" style="margin-left: 10px;" src="{{asset('/uploads/EmpPhoto/'.$employee->photo)}}">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <hr>
                             <div class="description description-tabs">
                                 <ul id="myTab2" class="nav nav-tabs">
                                     <li class="active"><a href="#more-information2" data-toggle="tab" class="no-margin" aria-expanded="true"> Personal Details </a></li>
                                     <li class=""><a href="#specifications2" data-toggle="tab" aria-expanded="false"> Contact Details </a></li>
                                     <li class=""><a href="#Emergency_contact" data-toggle="tab" aria-expanded="false">Emergency</a></li>
-                                    {{--<li class=""><a href="#reviews2" data-toggle="tab" aria-expanded="false"> Dependents</a></li>--}}
-                                    {{--<li class=""><a href="#reviews2" data-toggle="tab" aria-expanded="false"> Immigration</a></li>--}}
+                                    <li class=""><a href="#reviews2" data-toggle="tab" aria-expanded="false"> Dependents</a></li>
+                                    <li class=""><a href="#reviews2" data-toggle="tab" aria-expanded="false"> Immigration</a></li>
                                     <li class=""><a href="#job" data-toggle="tab" aria-expanded="false"> Job</a></li>
                                     <li class=""><a href="#Salary" data-toggle="tab" aria-expanded="false"> Salary</a></li>
                                     <li class=""><a href="#Report" data-toggle="tab" aria-expanded="false"> Report-to</a></li>
@@ -552,9 +552,17 @@
                                     <div class="tab-pane fade" id="Qualifications">
                                         <br/>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"><strong>Work Experience</strong></div>
+                                            <div class="panel-heading">
+                                                <strong>Work Experience</strong>
+                                                <div class="pull-right">
+                                                    <a style="background: #333;" id="btn_add_experience" class="btn btn-primary" href="#" role="button">
+                                                        <i class="glyphicon glyphicon-plus-sign "></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
                                             <div class="panel-body">
-                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%" >
                                                     <thead>
                                                     <tr>
                                                         <th> Company </th>
@@ -565,23 +573,25 @@
                                                         <th> Action </th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody id="products-list" name="products-list">
-                                                    <tr id="employee_id">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                @foreach($employee_experience as $employee_experiences)
+                                                    <tbody id="employee-works-list" name="employee-works-list">
+                                                    <tr id="work_experience_id{{$employee_experiences->id}}">
+                                                        <td>{{$employee_experiences->eexp_employer}}</td>
+                                                        <td>{{$employee_experiences->eexp_jobtit}}</td>
+                                                        <td>{{$employee_experiences->eexp_from_date}}</td>
+                                                        <td>{{$employee_experiences->eexp_to_date}}</td>
+                                                        <td>{{$employee_experiences->eexp_comments}}</td>
                                                         <td>
-                                                            <a data-id="" href="" style="text-decoration:none;" class="btn-detail">
+                                                            <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal_experience">
                                                                 <i class="glyphicon glyphicon-edit"></i>
                                                             </a>
-                                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                            <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
                                                     </tbody>
+                                                @endforeach
                                                 </table>
                                             </div>
                                         </div>
@@ -589,7 +599,9 @@
                                         {{--===--}}
                                         <br/>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"><strong> Education </strong></div>
+                                            <div class="panel-heading">
+                                                <strong> Education </strong>
+                                            </div>
                                             <div class="panel-body">
                                                 <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                                     <thead>
@@ -620,7 +632,14 @@
                                         </div>
 
                                         <div class="panel panel-default">
-                                            <div class="panel-heading"><strong> Skills </strong></div>
+                                            <div class="panel-heading">
+                                                <strong> Skills </strong>
+                                                <div class="pull-right">
+                                                    <a style="background: #333;" id="btn_add_skills" class="btn btn-primary" href="#" role="button">
+                                                        <i class="glyphicon glyphicon-plus-sign "></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                             <div class="panel-body">
                                                 <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                                     <thead>
@@ -845,8 +864,147 @@
                 </div>
             </div>
         </div>
+        {{--=======================================================================================================--}}
+        <input id="url" type="hidden" value="{{ \Request::url() }}">
+        <div class="modal fade" id="myModal_qualifications" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                {{--<div class="modal-content">--}}
+                <div class="modal-body">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2> Work Experience * </h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                </div>
+                                <!-- widget content -->
+                                <div class="widget-body no-padding">
+                                    <form id="frmProducts"  class="smart-form">
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label"> Company *</label>
+                                                    <label class="input">
+
+                                                        <input type="text" name="company" id="company">
+
+                                                    </label>
+                                                </section>
+
+                                                <section class="col col-6">
+                                                    <label class="label">Job Title *</label>
+                                                    <label class="input">
+                                                        <input type="text" name="job_title" id="job_title">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label"> From </label>
+                                                    <label class="input">
+                                                        <i class="icon-append fa fa-calendar"></i>
+                                                        <input value="" type="text" id="from_date" name="from_date" class="datepicker">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label class="label"> To </label>
+                                                    <label class="input">
+                                                        <i class="icon-append fa fa-calendar"></i>
+                                                        <input value="" type="text" id="to_date" name="to_date" class="datepicker">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <section>
+                                                <label class="label">comment</label>
+                                                <label class="input">
+                                                    <input type="text" class="comment" id="comment">
+                                                </label>
+                                            </section>
+                                        </fieldset>
+                                        <footer>
+                                            <input type="button" class="btn btn-primary" id="btn-save_experience" value="add">
+                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                        </footer>
+                                    </form>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        {{--======================================================================Skills===================--}}
+        <div class="modal fade" id="myModal_skills" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                {{--<div class="modal-content">--}}
+                <div class="modal-body">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Widget ID (each widget will need unique ID)-->
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                                <h2> Skills * </h2>
+                            </header>
+                            <!-- widget div-->
+                            <div>
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+                                </div>
+                                <!-- widget content -->
+                                <div class="widget-body no-padding">
+                                    <form id="frmProducts"  class="smart-form">
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label"> Level *</label>
+                                                    <label class="input">
+                                                        <input type="text" name="company" id="company">
+                                                    </label>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label class="label"> Year *</label>
+                                                    <label class="input">
+                                                        <input type="text" name="job_title" id="job_title">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label"> GPA/Score *</label>
+                                                    <label class="input">
+                                                        <input type="text" name="score" id="score">
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </fieldset>
+                                        <footer>
+                                            <input type="button" class="btn btn-primary" id="btn-save_experience" value="add">
+                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                        </footer>
+                                    </form>
+                                </div>
+                                <!-- end widget content -->
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hr/employee.js') }}"></script>
+    <script src="{{ asset('/js/hr/employee.js') }}">
+
 @endsection

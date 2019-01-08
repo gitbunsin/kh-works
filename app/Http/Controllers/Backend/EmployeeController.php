@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Employee;
 use App\EmployeeEmergencyContacts;
+use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
 use App\Jobs\SendVerificationEmployeeEmail;
@@ -142,8 +143,8 @@ class EmployeeController extends Controller
         $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
             ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
             ->get();
-
-        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact'));
+        $employee_experience = EmployeeWorkExperience::all();
+        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience'));
     }
     /**
      * Handle a registration request for the application.
@@ -304,6 +305,14 @@ class EmployeeController extends Controller
 
         return response()->json(['data'=>'success','ok'=>'data is working']);
     }
+    public function addExperience(Request $request){
+
+
+        return response()->json(['data'=>'ok']);
+    }
+
+
+
 
 
     public function destroy($employee_id)
