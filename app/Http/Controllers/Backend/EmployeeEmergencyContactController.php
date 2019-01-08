@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeEmergencyContact extends Controller
+class EmployeeEmergencyContactController extends Controller
 {
     /**
      * Display a listing of the resource.
