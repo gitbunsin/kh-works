@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Model\Backend\Currency;
 class Paygrade extends Model
 {
-    //
+    
     protected $table = "paygrades";
     protected $fillable = [
         'id',
