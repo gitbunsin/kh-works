@@ -69,6 +69,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('employee','EmployeeController');
         Route::get('/employee-info','EmployeeController@EmployeeInfo');
         Route::resource('employee-work-experience','EmployeeWorkExperienceController');
+        Route::resource('employee-work-skills','EmployeeSkillsController');
+        Route::resource('skills','SkillController');
+//        Route::resource('employee-skills',)
 //        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');
 //        Route::post('/employee-emergency-update/{emergency_id}','EmployeeController@UpdateEmergencyContact');
         Route::post('/update-user', 'InterviewController@updateUser');

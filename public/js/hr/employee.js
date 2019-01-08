@@ -455,10 +455,41 @@ $("#btn-save_experience").click(function (e) {
 // ============================================Emp Skills======================
 $('#btn_add_skills').click(function(){
     //alert('ok');
-    $('#btn-save').val("add");
+    $('#btn_add_skills').val("add");
     $('#frmProducts').trigger("reset");
     $('#myModal_skills').modal('show');
     $(".modal-backdrop.in").hide();
 });
 
 
+$(document).on('click','.open_modal_skills',function(){
+    var emp_work_id = $(this).attr('data-id');
+    // alert(emp_work_id);
+    // alert(emergency_id);
+    // Populate Data in Edit Modal Form
+    //('administration/job/' . $jobs->id . '/edit')
+    $.ajax({
+        type: "GET",
+        url: '/administration/employee-work-skills/' + emp_work_id,
+        success: function (data) {
+           // alert(JSON.stringify(data));
+            $('#product_id').val(data.id);
+            $('#year_of_experience').val(data.years_of_exp);
+            // $('select[name="skills"]').empty();
+            $.each(data, function(key, value) {
+
+                $('select[name="skills"]').append('<option class="select" value="'+ key +'">'+ value +'</option>');
+
+            });
+
+            $('#comments').val(data.comments);
+            $('#btn_add_skills').val("update");
+            $('#myModal_skills').modal('show');
+            $(".modal-backdrop.in").hide();
+        },
+        error: function (data) {
+            alert(JSON.stringify(data));
+            console.log('Error:', data);
+        }
+    });
+});
