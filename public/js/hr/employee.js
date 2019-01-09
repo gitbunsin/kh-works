@@ -1,4 +1,6 @@
 // alert('ok');
+
+
 //  $(".custom_date").datetimepicker({format: 'dd-mm-yyy'});
 
  $('#emp_firstname').prop('disabled', true);
@@ -453,43 +455,100 @@ $("#btn-save_experience").click(function (e) {
 // });
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 // ============================================Emp Skills======================
-$('#btn_add_skills').click(function(){
-    //alert('ok');
-    $('#btn_add_skills').val("add");
-    $('#frmProducts').trigger("reset");
-    $('#myModal_skills').modal('show');
-    $(".modal-backdrop.in").hide();
-});
+// $('#btn_add_skills').click(function(){
+//     //alert('ok');
+//     $('#btn_add_skills').val("add");
+//     $('#frmProducts').trigger("reset");
+//     $('#myModal_skills').modal('show');
+//     $(".modal-backdrop.in").hide();
+// });
+//
+//
+// $(document).on('click','.open_modal_skills',function(){
+//     var emp_work_id = $(this).attr('data-id');
+//     // alert(emp_work_id);
+//     // alert(emergency_id);
+//     // Populate Data in Edit Modal Form
+//     //('administration/job/' . $jobs->id . '/edit')
+//     $.ajax({
+//         type: "GET",
+//         url: '/administration/employee-work-skills/' + emp_work_id,
+//         success: function (data) {
+//            // alert(JSON.stringify(data));
+//             $('#product_id').val(data.id);
+//             $('#year_of_experience').val(data.years_of_exp);
+//             // $('select[name="skills"]').empty();
+//             $.each(data, function(key, value) {
+//
+//                 $('select[name="skills"]').append('<option class="select" value="'+ key +'">'+ value +'</option>');
+//
+//             });
+//
+//             $('#comments').val(data.comments);
+//             $('#btn_add_skills').val("update");
+//             $('#myModal_skills').modal('show');
+//             $(".modal-backdrop.in").hide();
+//         },
+//         error: function (data) {
+//             alert(JSON.stringify(data));
+//             console.log('Error:', data);
+//         }
+//     });
+// });
 
+$("#btn_add_skills").click(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    e.preventDefault();
+    var formData =
+        {
+            skill_id : $('#skills').val(),
+            years_of_exp: $('#year_of_experience').val(),
+            comments: $('#comments').val(),
 
-$(document).on('click','.open_modal_skills',function(){
-    var emp_work_id = $(this).attr('data-id');
+        }
+    // alert(JSON.stringify(formData));
+    var state = $('#btn_add_skills').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
+    var type = "POST"; //for creating new resource
+    var emp_work_id = $('#product_id').val();
     // alert(emp_work_id);
-    // alert(emergency_id);
-    // Populate Data in Edit Modal Form
-    //('administration/job/' . $jobs->id . '/edit')
+    var my_url = '/administration/employee-work-skills';
+    if (state == "update"){
+        type = "PUT"; //for updating existing resource
+        my_url += '/' + emp_work_id;
+    }
+    //alert(JSON.stringify(formData));
     $.ajax({
-        type: "GET",
-        url: '/administration/employee-work-skills/' + emp_work_id,
+        cache:false,
+        type: type,
+        url: my_url,
+        data: formData,
+        dataType: 'json',
         success: function (data) {
-           // alert(JSON.stringify(data));
-            $('#product_id').val(data.id);
-            $('#year_of_experience').val(data.years_of_exp);
-            // $('select[name="skills"]').empty();
-            $.each(data, function(key, value) {
-
-                $('select[name="skills"]').append('<option class="select" value="'+ key +'">'+ value +'</option>');
-
-            });
-
-            $('#comments').val(data.comments);
-            $('#btn_add_skills').val("update");
-            $('#myModal_skills').modal('show');
-            $(".modal-backdrop.in").hide();
+            var table =
+                '<tr id="employee_skills_id' + data.id +'">' +
+                '<td class="sorting_1">' + data.eec_name + '</td>'+
+                '<td class="sorting_1">' + data.eec_relationship + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+            if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
+                $('#employee_skills_id').append(table);
+            }else{ //if user updated an existing record
+                alert("data has been updated");
+                $("#employee_skills_id" + emp_work_id).replaceWith(table);
+            }
+            $('#frmProducts').trigger("reset");
+            // $('#myModal_qualifications').modal('hide')
         },
         error: function (data) {
-            alert(JSON.stringify(data));
-            console.log('Error:', data);
+            (JSON.stringify(data));
+            console.log(data);
+            //alert('failed');
         }
     });
 });

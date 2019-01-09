@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
-use App\EmployeeSkills;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-
-
-class EmployeeSkillsController extends Controller
+class QualificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,12 @@ class EmployeeSkillsController extends Controller
     public function index()
     {
 
-        //
+        $employee_skill = DB::table('tbl_hr_emp_skill as es')
+            ->join('tbl_skill as s','es.skill_id','=','s.id')
+            ->get();
+//        dd($employee_skill);
+        $employee_experience = EmployeeWorkExperience::all();
+        return view('backend.HRIS.PIM.Employee.qualification',compact('employee_experience','employee_skill'));
     }
 
     /**
@@ -38,14 +43,6 @@ class EmployeeSkillsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $EmployeeSkill = new EmployeeSkills();
-        $EmployeeSkill->skill_id = $request->skill_id;
-        $EmployeeSkill->years_of_exp = $request->years_of_exp;
-        $EmployeeSkill->comments = $request->comments;
-        $EmployeeSkill->save();
-
-        return response()->json(['ok'=>'Done']);
         //
     }
 
@@ -55,11 +52,9 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($emp_work_id)
+    public function show($id)
     {
-        $EmployeeSkill = EmployeeSkills::findOrFail($emp_work_id);
-        return response()->json($EmployeeSkill);
-
+        //
     }
 
     /**

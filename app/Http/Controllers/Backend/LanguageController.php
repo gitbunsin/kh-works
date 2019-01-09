@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
-use App\EmployeeSkills;
+use App\language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-
-
-class EmployeeSkillsController extends Controller
+class LanguageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class EmployeeSkillsController extends Controller
      */
     public function index()
     {
-
-        //
+        $language = language::all();
+        return view('backend.HRIS.admin.Qualifications.Language.index',compact('language'));
     }
 
     /**
@@ -28,6 +28,7 @@ class EmployeeSkillsController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.admin.Qualifications.Language.create');
     }
 
     /**
@@ -38,15 +39,13 @@ class EmployeeSkillsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $EmployeeSkill = new EmployeeSkills();
-        $EmployeeSkill->skill_id = $request->skill_id;
-        $EmployeeSkill->years_of_exp = $request->years_of_exp;
-        $EmployeeSkill->comments = $request->comments;
-        $EmployeeSkill->save();
-
-        return response()->json(['ok'=>'Done']);
         //
+        $language = new language();
+        $language->name = $request->name;
+        $language->description = $request->description;
+        $language->company_id = Auth::guard('admins')->user()->id;
+        $language->save();
+        return redirect('/administration/language');
     }
 
     /**
@@ -55,11 +54,9 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($emp_work_id)
+    public function show($id)
     {
-        $EmployeeSkill = EmployeeSkills::findOrFail($emp_work_id);
-        return response()->json($EmployeeSkill);
-
+        //
     }
 
     /**
@@ -70,7 +67,10 @@ class EmployeeSkillsController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $language = language::where('id',$id)->first();
+        return view('backend.HRIS.admin.Qualifications.Language.edit',compact('language'));
+
     }
 
     /**
@@ -83,6 +83,13 @@ class EmployeeSkillsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $language = language::findorFail($id);
+        $language->name = $request->name;
+        $language->description = $request->description;
+        $language->company_id = Auth::guard('admins')->user()->id;
+        $language->save();
+        return redirect('/administration/language');
+
     }
 
     /**

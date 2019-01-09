@@ -141,15 +141,18 @@ class EmployeeController extends Controller
     }
     public function EmployeeInfo(){
 
-        $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
-            ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
-            ->get();
         $employee_experience = EmployeeWorkExperience::all();
         $employee_skill = DB::table('tbl_hr_emp_skill as es')
                  ->join('tbl_skill as s','es.skill_id','=','s.id')
                  ->get();
 //        $employee_skill = EmployeeSkills::all();
         return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience','employee_skill'));
+    }
+    public  function EmployeeContactDetails()
+    {
+
+        return view('backend.HRIS.PIM.Employee.contact');
+
     }
     /**
      * Handle a registration request for the application.

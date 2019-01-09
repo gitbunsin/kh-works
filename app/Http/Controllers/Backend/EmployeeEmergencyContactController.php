@@ -23,7 +23,7 @@ class EmployeeEmergencyContactController extends Controller
                         ->get();
 //        dd($EmergencyContact);
 
-        return view('backend.HRIS.PIM.Employee.index',compact('EmergencyContact'));
+        return view('backend.HRIS.PIM.Employee.emergency',compact('EmergencyContact'));
     }
 
     /**

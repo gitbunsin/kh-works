@@ -85,8 +85,8 @@
                             <li>
                                 <a href="">Licenses</a>
                             </li>
-                            <li>
-                                <a href="">Language</a>
+                            <li class="{{ Request::segment(2) == "language" ? "active" : " " }}">
+                                <a href="{{ url('administration/language') }}">Language</a>
                             </li>
                             <li>
                                 <a href="">Memberships</a>
@@ -163,8 +163,47 @@
             @endif
             @if(Auth::guard('employee')->user())
                 <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
-                    <a href="{{url('administration/employee-info')}}"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">My Info</span></a>
-                </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-lg fa-fw fa-table"></i>
+                            <span class="menu-item-parent">My Info</span>
+                        </a>
+                        <ul>
+                            <li class="{{ Request::segment(2) == "employee-personal-details" ? "active" : " " }}">
+                                <a href="{{ url('/administration/employee-personal-details') }}"> Personal Details</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "employee-contact-details" ? "active" : " " }}">
+                                <a href="{{ url('administration/employee-contact-details') }}"> Contact Details</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "employee-emergency-contact" ? "active" : " " }}">
+                                <a href="{{ url('administration/employee-emergency-contact') }}">Emergency Contacts</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Dependents</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Immigration</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Job</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Salary</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Report-to</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "employee-qualification" ? "active" : " " }}">
+                                <a href="{{url('administration/employee-qualification')}}">Qualifications</a>
+                            </li>
+                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
+                                <a href="{{url('administration/candidate')}}">Memberships</a>
+                            </li>
+                            {{--<li class="{{ Request::segment(2) == "vacancy" ? "active" : " " }}">--}}
+                            {{--<a href="{{url('administration/vacancy')}}">Vacancy</a>--}}
+                            {{--</li>--}}
+                        </ul>
+                    </li>
                     <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
                         <a href="#"><i class="fa fa-lg fa-fw fa-caret-square-o-up"></i> <span class="menu-item-parent">Leave</span></a>
                     </li>

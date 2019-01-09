@@ -57,7 +57,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('/paygrade/{id}', 'PayGradeController@getRelationPayGradeCurrency');
         Route::post('/remove-currency-pay', 'PayGradeController@destroyPaygradeCurrency');
 
-        
+
         Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
         Route::resource('work-shift', 'WorkShiftController');
         Route::resource('employment-status', 'EmploymentStatusController');
@@ -69,10 +69,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('post-jobs','JobController');
         Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
         Route::resource('employee','EmployeeController');
-        Route::get('/employee-info','EmployeeController@EmployeeInfo');
+        Route::get('/employee-personal-details','EmployeeController@EmployeeInfo');
+        Route::get('/employee-contact-details','EmployeeController@EmployeeContactDetails');
         Route::resource('employee-work-experience','EmployeeWorkExperienceController');
         Route::resource('employee-work-skills','EmployeeSkillsController');
         Route::resource('skills','SkillController');
+        Route::resource('employee-qualification','QualificationController');
+        Route::resource('language','LanguageController');
+
 //        Route::resource('employee-skills',)
 //        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');
 //        Route::post('/employee-emergency-update/{emergency_id}','EmployeeController@UpdateEmergencyContact');
