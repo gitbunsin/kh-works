@@ -146,7 +146,6 @@
 
     <script src="{{ asset('/js/hr/currency.js') }}"></script>
     <script>
-
         //Base URL
         var baseURL = "{{URL::to('/')}}/";
         var paygradeID = "{{$pay_grade->id}}";
@@ -188,8 +187,9 @@
                         max_salary : $('#maxSalary').val()
                     };
 
-                    //ajax sumit request
+                    //ajax submit request
                     $.ajax({
+
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },

@@ -42,70 +42,15 @@
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <a style="background: #333;" id="btn_add_experience" class="btn btn-primary" href="#" role="button">
-                                                <i class="glyphicon glyphicon-plus-sign "></i>
-                                            </a>
+                                            <button id="show" type="button" class="btn btn-info">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
+                                            </button>
                                         </div>
                                     </div>
+
                                 </div>
                                 <br/>
-                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th> Company </th>
-                                        <th> Job Title</th>
-                                        <th> From </th>
-                                        <th> To </th>
-                                        <th> Comment </th>
-                                        <th> Action </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="products-list" name="products-list">
-                                    @foreach($employee_experience as $employee_experiences)
-                                        <tr id="work_experience_id{{$employee_experiences->id}}">
-                                            <td>{{$employee_experiences->eexp_employer}}</td>
-                                            <td>{{$employee_experiences->eexp_jobtit}}</td>
-                                            <td>{{$employee_experiences->eexp_from_date}}</td>
-                                            <td>{{$employee_experiences->eexp_to_date}}</td>
-                                            <td>{{$employee_experiences->eexp_comments}}</td>
-                                            <td>
-                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal_experience">
-                                                    <i class="glyphicon glyphicon-edit"></i>
-                                                </a>
-                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </div>
-        <input id="url" type="hidden" value="{{ \Request::url() }}">
-        <div class="modal fade" id="myModal_qualifications" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                {{--<div class="modal-content">--}}
-                <div class="modal-body">
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!-- Widget ID (each widget will need unique ID)-->
-                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                                <h2> Work Experience * </h2>
-                            </header>
-                            <!-- widget div-->
-                            <div>
-                                <!-- widget edit box -->
-                                <div class="jarviswidget-editbox">
-                                    <!-- This area used as dropdown edit box -->
-                                </div>
-                                <!-- widget content -->
-                                <div class="widget-body no-padding">
+                                <div id="demo-experience">
                                     <form id="frmProducts"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
@@ -152,17 +97,49 @@
                                         <footer>
                                             <input type="button" class="btn btn-primary" id="btn-save_experience" value="add">
                                             <input type="hidden" id="product_id" name="product_id" value="0">
-                                            <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                            <button data-toggle="collapse" data-target="#demo-experience" type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                         </footer>
                                     </form>
                                 </div>
-                                <!-- end widget content -->
+                                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th> Company </th>
+                                        <th> Job Title</th>
+                                        <th> From </th>
+                                        <th> To </th>
+                                        <th> Comment </th>
+                                        <th> Action </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="products-list" name="products-list">
+                                    @foreach($employee_experience as $employee_experiences)
+                                        <tr id="work_experience_id{{$employee_experiences->id}}">
+                                            <td>
+                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="open_modal_experience">
+                                                    {{$employee_experiences->eexp_employer}}
+                                                </a>
+                                            </td>
+                                            <td>{{$employee_experiences->eexp_jobtit}}</td>
+                                            <td>{{$employee_experiences->eexp_from_date}}</td>
+                                            <td>{{$employee_experiences->eexp_to_date}}</td>
+                                            <td>{{$employee_experiences->eexp_comments}}</td>
+                                            <td>
+                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </article>
+                    </div>
                 </div>
-            </div>
+            </article>
         </div>
+        <input id="url" type="hidden" value="{{ \Request::url() }}">
     </section>
 
     <section id="widget-grid" class="">
@@ -252,21 +229,16 @@
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            {{--<a  id="#" class="btn btn-primary" href="#"  data-toggle="collapse" data-target="#demo"   role="button">--}}
-                                               {{----}}
-                                            {{--</a>--}}
-                                            <button  type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">
-
+                                            <button id="show_skill"  type="button" class="btn btn-info">
                                                 <i class="glyphicon glyphicon-plus-sign "></i> Add
-
                                             </button>
                                         </div>
                                     </div>
 
                                 </div>
                                 <br/>
-                                <div id="demo" class="collapse">
-                                    <form id="frmProducts"  class="smart-form">
+                                <div id="demo_skill">
+                                    <form id="frmProducts_skill"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
                                             <section>
@@ -300,11 +272,11 @@
                                         <footer>
                                             <input type="button" class="btn btn-primary" id="btn_add_skills" value="add">
                                             <input type="hidden" id="product_id" name="product_id" value="0">
-                                            <button data-toggle="collapse" data-target="#demo" type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                            <button  type="button" class="btn btn-default" id="btnclose_skill" data-dismiss="modal">Close</button>
                                         </footer>
                                     </form>
                                 </div>
-                                <table id="dt_basic1" class="table table-striped table-bordered table-hover" width="100%">
+                                <table id="dt_basic" class="display table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                     <tr>
                                         <th> Skill </th>
@@ -313,16 +285,16 @@
                                         <th> Action </th>
                                     </tr>
                                     </thead>
-                                        <tbody id="products-list" name="products-list">
+                                        <tbody id="products-list-skill" name="products-list">
                                         @foreach($employee_skill as $employee_skills)
                                             <tr id="employee_skills_id">
-                                                <td>{{$employee_skills->name}}</td>
+                                                <td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">
+                                                       {{$employee_skills->name}}
+                                                    </a>
+                                                </td>
                                                 <td>{{$employee_skills->years_of_exp}}</td>
                                                 <td>{{$employee_skills->comments}}</td>
                                                 <td>
-                                                    <a data-id="{{$employee_skills->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">
-                                                        <i class="glyphicon glyphicon-edit"></i>
-                                                    </a>
                                                     <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
                                                         <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                                     </a>
@@ -330,9 +302,7 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
-
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -423,7 +393,6 @@
 
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -500,8 +469,4 @@
     </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="{{ asset('/js/hr/employee.js') }}"></script>
-    <script type="text/javascript">
-
-    </script>
-
 @endsection

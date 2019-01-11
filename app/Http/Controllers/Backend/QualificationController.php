@@ -18,6 +18,7 @@ class QualificationController extends Controller
     {
 
         $employee_skill = DB::table('tbl_hr_emp_skill as es')
+            ->select('es.*','s.*','es.id as employee_skill_id')
             ->join('tbl_skill as s','es.skill_id','=','s.id')
             ->get();
 //        dd($employee_skill);

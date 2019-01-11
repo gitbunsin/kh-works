@@ -30,7 +30,7 @@ class JobApply extends Controller
             $user_id = Auth::user()->id;
 //            dd($user_id);
             $candidate = new Candidate();
-            $user_candidate = DB::table('kh_seeker as u')
+            $user_candidate = DB::table('users as u')
                 ->select('c.*', 'c.id as cv_id', 'u.*')
                 ->join('tbl_cvs as c', 'c.user_id', '=', 'u.id')
                 ->where('c.user_id', '=', $user_id)

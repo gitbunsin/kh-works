@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\EmployeeSkills;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class EmployeeSkillsController extends Controller
@@ -45,7 +45,7 @@ class EmployeeSkillsController extends Controller
         $EmployeeSkill->comments = $request->comments;
         $EmployeeSkill->save();
 
-        return response()->json(['ok'=>'Done']);
+        return response()->json($EmployeeSkill);
         //
     }
 
@@ -55,9 +55,10 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($emp_work_id)
+    public function show($emp_skill_id)
     {
-        $EmployeeSkill = EmployeeSkills::findOrFail($emp_work_id);
+
+        $EmployeeSkill = EmployeeSkills::findOrFail($emp_skill_id);
         return response()->json($EmployeeSkill);
 
     }
@@ -80,8 +81,16 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $emp_skill_id)
     {
+        $EmployeeSkill = EmployeeSkills::findOrFail($emp_skill_id);
+        $EmployeeSkill->skill_id = $request->skill_id;
+        $EmployeeSkill->years_of_exp = $request->years_of_exp;
+        $EmployeeSkill->emp_number = Auth::guard('employee')->user()->id;
+        $EmployeeSkill->comments = $request->comments;
+        $EmployeeSkill->save();
+
+        return response()->json($EmployeeSkill);
         //
     }
 

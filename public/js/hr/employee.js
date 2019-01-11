@@ -353,33 +353,50 @@ $( document ).ready(function() {
     });
 });
 // ============================================Emp work Experience======================
-$('#btn_add_experience').click(function(){
-    //alert('ok');
-    $('#btn-save').val("add");
-    $('#frmProducts').trigger("reset");
-    $('#myModal_qualifications').modal('show');
-    $(".modal-backdrop.in").hide();
-});
+// $('#btn_add_experience').click(function(){
+//     //alert('ok');
+//     $('#btn-save').val("add");
+//     $('#frmProducts').trigger("reset");
+//     $('#myModal_qualifications').modal('show');
+//     $(".modal-backdrop.in").hide();
+// });
 //////////////////////////////////
-$(document).on('click','.open_modal_experience',function(){
+$('#demo-experience').hide();
+$(document).on('click','#btnclose',function(e){
+    $('#demo-experience').hide({
+        duration: 500,
+    });
+    $('#frmProducts').trigger("reset");
+});
+
+$(document).on('click','#show',function(e){
+    $('#demo-experience').show({
+        duration: 500,
+    });
+    $('#frmProducts').trigger("reset");
+    $('#btn-save_experience').val("add");
+});
+
+$(document).on('click','.open_modal_experience',function(e){
     var emp_work_id = $(this).attr('data-id');
-    // alert(emergency_id);
+    // alert(emp_work_id);
     // Populate Data in Edit Modal Form
     //('administration/job/' . $jobs->id . '/edit')
     $.ajax({
         type: "GET",
         url: '/administration/employee-work-experience'+'/' + emp_work_id,
         success: function (data) {
-            alert(JSON.stringify(data));
+            $('#demo-experience').show({
+                duration: 500,
+            });//you can list several class names
             $('#product_id').val(data.id);
             $('#company').val(data.eexp_employer);
             $('#job_title').val(data.eexp_jobtit);
             $('#from_date').val(data.eexp_from_date);
+            $('#btn-save_experience').val("update");
             $('#to_date').val(data.eexp_to_date);
             $('#comment').val(data.eexp_comments);
-            $('#btn-save_experience').val("update");
-            $('#myModal_qualifications').modal('show');
-            $(".modal-backdrop.in").hide();
+            e.preventDefault();
         },
         error: function (data) {
             alert(JSON.stringify(data));
@@ -388,13 +405,13 @@ $(document).on('click','.open_modal_experience',function(){
     });
 });
 ////////////////////
+//Create currency to Paygrade
 $("#btn-save_experience").click(function (e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
     e.preventDefault();
     var formData =
     {
@@ -425,23 +442,26 @@ $("#btn-save_experience").click(function (e) {
         data: formData,
         dataType: 'json',
         success: function (data) {
+            $('#demo-experience').hide();
             var table =
                 '<tr id="work_experience_id' + data.id +'">' +
-                '<td>' + data.eexp_employer+ '</td>'+
-                '<td>' + data.eexp_jobtit + '</td>'+
-                '<td>' + data.eexp_from_date + '</td>'+
-                '<td>' + data.eexp_to_date + '</td>'+
-                '<td>' + data.eexp_comments + '</td>'
-            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_experience"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                '<td class="sorting_1"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_experience">' + data.eexp_employer+ '</a></td>'+
+                '<td class="sorting_1">' + data.eexp_jobtit +'</td>'+
+                '<td class="sorting_1">' + data.eexp_from_date + '</td>'+
+                '<td class="sorting_1">' + data.eexp_to_date + '</td>'+
+                '<td class="sorting_1">' + data.eexp_comments + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
             if (state == "add"){ //if user added a new record
                 alert("data has been inserted");
-                $('#employee-works-list').append(table);
+                $('#demo-experience').hide();
+                $("tbody>tr>td.dataTables_empty").hide();
+                $('#products-list').append(table);
             }else{ //if user updated an existing record
                 alert("data has been updated");
+                $('#demo-experience').hide();
                 $("#work_experience_id" + emp_work_id).replaceWith(table);
             }
-            $('#frmProducts').trigger("reset");
-            $('#myModal_qualifications').modal('hide')
+             $('#frmProducts').trigger("reset");
         },
         error: function (data) {
             (JSON.stringify(data));
@@ -464,37 +484,52 @@ $("#btn-save_experience").click(function (e) {
 // });
 //
 //
-// $(document).on('click','.open_modal_skills',function(){
-//     var emp_work_id = $(this).attr('data-id');
-//     // alert(emp_work_id);
-//     // alert(emergency_id);
-//     // Populate Data in Edit Modal Form
-//     //('administration/job/' . $jobs->id . '/edit')
-//     $.ajax({
-//         type: "GET",
-//         url: '/administration/employee-work-skills/' + emp_work_id,
-//         success: function (data) {
-//            // alert(JSON.stringify(data));
-//             $('#product_id').val(data.id);
-//             $('#year_of_experience').val(data.years_of_exp);
-//             // $('select[name="skills"]').empty();
-//             $.each(data, function(key, value) {
-//
-//                 $('select[name="skills"]').append('<option class="select" value="'+ key +'">'+ value +'</option>');
-//
-//             });
-//
-//             $('#comments').val(data.comments);
-//             $('#btn_add_skills').val("update");
-//             $('#myModal_skills').modal('show');
-//             $(".modal-backdrop.in").hide();
-//         },
-//         error: function (data) {
-//             alert(JSON.stringify(data));
-//             console.log('Error:', data);
-//         }
-//     });
-// });
+
+$('#demo_skill').hide();
+$(document).on('click','#btnclose_skill',function(e){
+    $('#demo_skill').hide({
+        duration: 500,
+    });
+    $('#frmProducts_skill').trigger("reset");
+});
+
+$(document).on('click','#show_skill',function(e){
+    $('#demo_skill').show({
+        duration: 500,
+    });
+    $('#frmProducts').trigger("reset");
+    $('#btn_add_skills').val("add");
+});
+$(document).on('click','.open_modal_skills',function(){
+    var emp_skill_id = $(this).attr('data-id');
+    // alert(emp_skill_id);
+    // alert(emp_work_id);
+    // alert(emergency_id);
+    // Populate Data in Edit Modal Form
+    //('administration/job/' . $jobs->id . '/edit')
+    $.ajax({
+        type: "GET",
+        url: '/administration/employee-work-skills/' + emp_skill_id,
+        success: function (data) {
+           // alert(JSON.stringify(data));
+            $('#product_id').val(data.id);
+            $('#year_of_experience').val(data.year_of_experience);
+            // $('select[name="skills"]').empty();
+            $.each(data, function(key, value) {
+
+                $('select[name="skills"]').append('<option class="select" value="'+ key +'">'+ value +'</option>');
+
+            });
+            $('#comments').val(data.comments);
+            $('#btn_add_skills').val("update");
+            $('#frmProducts_skill').trigger("reset");
+        },
+        error: function (data) {
+            alert(JSON.stringify(data));
+            console.log('Error:', data);
+        }
+    });
+});
 
 $("#btn_add_skills").click(function (e) {
     $.ajaxSetup({
@@ -505,13 +540,12 @@ $("#btn_add_skills").click(function (e) {
     e.preventDefault();
     var formData =
         {
-            skill_id : $('#skills').val(),
-            years_of_exp: $('#year_of_experience').val(),
-            comments: $('#comments').val(),
-
+             skill_id: $('#skills').val(),
+             years_of_exp: $('#year_of_experience ').val(),
+             comments: $('#comments').val(),
         }
     // alert(JSON.stringify(formData));
-    var state = $('#btn_add_skills').val();
+    var state = $('#btn-save_experience').val();
     var employee_id = $('#emp_id').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
@@ -530,20 +564,24 @@ $("#btn_add_skills").click(function (e) {
         data: formData,
         dataType: 'json',
         success: function (data) {
+            $('#demo_skill').hide();
             var table =
                 '<tr id="employee_skills_id' + data.id +'">' +
-                '<td class="sorting_1">' + data.eec_name + '</td>'+
-                '<td class="sorting_1">' + data.eec_relationship + '</td>'
-            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                '<td class="sorting_1"><a data-id=" '+ data.skill_id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.eexp_employer+ '</a></td>'+
+                '<td class="sorting_1">' + data.years_of_exp + '</td>'+
+                '<td class="sorting_1">' + data.comments + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
             if (state == "add"){ //if user added a new record
                 alert("data has been inserted");
-                $('#employee_skills_id').append(table);
+                $('#demo_skill').hide();
+                $("tbody>tr>td.dataTables_empty").hide();
+                $('#products-list-skill').append(table);
             }else{ //if user updated an existing record
                 alert("data has been updated");
+                $('#demo_skill').hide();
                 $("#employee_skills_id" + emp_work_id).replaceWith(table);
             }
-            $('#frmProducts').trigger("reset");
-            // $('#myModal_qualifications').modal('hide')
+            $('#frmProducts_skill').trigger("reset");
         },
         error: function (data) {
             (JSON.stringify(data));
@@ -552,3 +590,4 @@ $("#btn_add_skills").click(function (e) {
         }
     });
 });
+
