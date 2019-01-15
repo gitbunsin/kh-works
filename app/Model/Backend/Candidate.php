@@ -9,9 +9,8 @@ class Candidate extends Model
     protected $table = 'tbl_job_candidate';
     protected $fillable = [
         'id',
-        'first_name',
-        'middle_name',
-        'last_name',
+        'name',
+        'company_id',
         'email',
         'contact_number',
         'status',

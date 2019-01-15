@@ -51,7 +51,7 @@
                                 </div>
                                 <br/>
                                 <div id="demo-experience">
-                                    <form id="frmProducts"  class="smart-form">
+                                    <form id="frmExperience"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
                                             <div class="row">
@@ -76,7 +76,7 @@
                                                     <label class="label"> From </label>
                                                     <label class="input">
                                                         <i class="icon-append fa fa-calendar"></i>
-                                                        <input value="" type="text" id="from_date" name="from_date" class="datepicker">
+                                                        <input value="" type="text" id="from_date" name="from_date" class="datepicker_from">
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
@@ -95,7 +95,7 @@
                                             </section>
                                         </fieldset>
                                         <footer>
-                                            <input type="button" class="btn btn-primary" id="btn-save_experience" value="add">
+                                            <input type="submit" class="btn btn-primary" id="btn-save_experience" value="add">
                                             <input type="hidden" id="product_id" name="product_id" value="0">
                                             <button data-toggle="collapse" data-target="#demo-experience" type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                         </footer>
@@ -180,6 +180,33 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                <table id="dt_basic" class="display_education table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th> Level </th>
+                                        <th> Year </th>
+                                        <th> GPA/Score</th>
+                                        <th> Action </th>
+                                    </tr>
+                                    </thead>
+                                    {{--<tbody id="products-list-skill" name="products-list">--}}
+                                    {{--@foreach($employee_skill as $employee_skills)--}}
+                                        {{--<tr id="employee_skills_id">--}}
+                                            {{--<td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">--}}
+                                                    {{--{{$employee_skills->name}}--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                            {{--<td>{{$employee_skills->years_of_exp}}</td>--}}
+                                            {{--<td>{{$employee_skills->comments}}</td>--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                        {{--</tr>--}}
+                                    {{--@endforeach--}}
+                                    {{--</tbody>--}}
+                                </table>
 
                             </div>
                         </div>
@@ -413,6 +440,33 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                <table id="dt_basic" class="display_language table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th> Languages </th>
+                                        <th> Fluency </th>
+                                        <th> Competency</th>
+                                        <th> Comments </th>
+                                    </tr>
+                                    </thead>
+                                    {{--<tbody id="products-list-skill" name="products-list">--}}
+                                    {{--@foreach($employee_skill as $employee_skills)--}}
+                                    {{--<tr id="employee_skills_id">--}}
+                                    {{--<td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">--}}
+                                    {{--{{$employee_skills->name}}--}}
+                                    {{--</a>--}}
+                                    {{--</td>--}}
+                                    {{--<td>{{$employee_skills->years_of_exp}}</td>--}}
+                                    {{--<td>{{$employee_skills->comments}}</td>--}}
+                                    {{--<td>--}}
+                                    {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                    {{--</a>--}}
+                                    {{--</td>--}}
+                                    {{--</tr>--}}
+                                    {{--@endforeach--}}
+                                    {{--</tbody>--}}
+                                </table>
 
                             </div>
                         </div>
@@ -459,7 +513,33 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
-
+                                <table id="dt_basic" class="display_license table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th> License Type </th>
+                                        <th> Issued Date </th>
+                                        <th> Expiry Date</th>
+                                        <th> Action </th>
+                                    </tr>
+                                    </thead>
+                                    {{--<tbody id="products-list-skill" name="products-list">--}}
+                                    {{--@foreach($employee_skill as $employee_skills)--}}
+                                    {{--<tr id="employee_skills_id">--}}
+                                    {{--<td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">--}}
+                                    {{--{{$employee_skills->name}}--}}
+                                    {{--</a>--}}
+                                    {{--</td>--}}
+                                    {{--<td>{{$employee_skills->years_of_exp}}</td>--}}
+                                    {{--<td>{{$employee_skills->comments}}</td>--}}
+                                    {{--<td>--}}
+                                    {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                    {{--</a>--}}
+                                    {{--</td>--}}
+                                    {{--</tr>--}}
+                                    {{--@endforeach--}}
+                                    {{--</tbody>--}}
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -467,6 +547,34 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
+@endsection
+
+@section('script')
     <script src="{{ asset('/js/hr/employee.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker_from').datepicker();
+            // $(".datepicker_from").datepicker("setDate", new Date());
+            $('#frmExperience').validate({
+                rules: {
+                    company: {
+                        required: true,
+                    },
+                    job_title : {
+                        required: true,
+                    },
+                    from_date : {
+                        required : true,
+                    },
+                    to_date : {
+                        required : true,
+                    }
+                },
+                submitHandle: function (e) {
+                    
+                }
+            })
+        });
+    </script>
 @endsection

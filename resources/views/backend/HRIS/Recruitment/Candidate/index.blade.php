@@ -58,7 +58,6 @@
                                     <th> email </th>
                                     <th> Date-of-Application</th>
                                     <th style="text-align: center;" >Interview</th>
-
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">

@@ -62,6 +62,7 @@
                                             <input type="hidden" name="company_id" value="{{$company->id}}"/>
                                             <input id="url" type="hidden" value="{{ \Request::url() }}">
                                             <input type="hidden" value="{{$job_title->job_id}}" name="job_id"/>
+                                            <input type="hidden" value="{{$job_title->job_title_code}}" name="job_title_code"/>
                                     {{--{{dd($isApply)}}--}}
                                     @if(Auth::check())
                                     @if($isApply->isEmpty())

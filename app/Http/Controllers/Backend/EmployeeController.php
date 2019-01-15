@@ -148,11 +148,24 @@ class EmployeeController extends Controller
 //        $employee_skill = EmployeeSkills::all();
         return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience','employee_skill'));
     }
+    public  function  getJob()
+    {
+
+        return view('backend.HRIS.PIM.Employee.job');
+    }
     public  function EmployeeContactDetails()
     {
 
         return view('backend.HRIS.PIM.Employee.contact');
+    }
+    public function  getSalary()
+    {
 
+        return view('backend.HRIS.PIM.Employee.salary');
+    }
+    public function getReport()
+    {
+        return view('backend.HRIS.PIM.Employee.report');
     }
     /**
      * Handle a registration request for the application.

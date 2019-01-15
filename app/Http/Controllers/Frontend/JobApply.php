@@ -42,6 +42,8 @@ class JobApply extends Controller
                 $candidate->name = $user_candidate->name;
                 $candidate->email = $user_candidate->email;
                 $candidate->mode_of_application = 1;
+                $candidate->company_id = $request->company_id;
+                $candidate->job_title_code = $request->job_title_code;
                 $candidate->status = 1;
                 $candidate->user_id = $user_id;
                 $candidate->save();
@@ -56,7 +58,7 @@ class JobApply extends Controller
                 $date_applied = \Carbon\Carbon::now();
                 $vacancy_candidate->applied_date = $date_applied;
                 $vacancy_candidate->save();
-
+//                dd($id,$company_id);
 //                $user = User::where('id', $user_id)->select('name', 'email')->get();
 //                $job = Job::where('id', $id)->select('company_id', 'job_title_code')->get();
 //                Excel::create('User', function ($excel) use ($user, $job) {
@@ -73,10 +75,8 @@ class JobApply extends Controller
 //                        }
 //                    });
 //                })->download();
-                return redirect('/administration/display-job-details/'.$company_id .'/'.$id);
-
+                return redirect('/administration/display-job-details/'.$id .'/'.$company_id);
             }
-
             else {
                 return redirect('/kh-works/resume');
             }

@@ -1,39 +1,38 @@
 
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    <form id="job_validate" method="POST" enctype="multipart/form-data" action="{{url('administration/post-jobs')}}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <form id="frmJob" method="POST" enctype="multipart/form-data" action="{{url('administration/post-jobs/'.$job->id)}}">
+        {{csrf_field()}}
+        <input name="_method" type="hidden" value="PATCH">
         <section id="widget-grid" class="">
-
-            <!-- row -->
             <div class="row">
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <!-- Widget ID (each widget will need unique ID)-->
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                         <header>
                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                            <h2>Add Job title</h2>
+                            <h2>Post Job</h2>
                         </header>
-                        <!-- widget div-->
                         <div>
-                            <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
                             </div>
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
                             <div class="widget-body no-padding">
                                 <div class="smart-form">
                                     <fieldset>
                                         <section>
                                             <label class="label"> Job Title</label>
                                             <label class="select">
-                                                @php use App\JobTitle;$Job_Title= JobTitle::all(); @endphp
-                                                <select name="job_title_code" id="job_title_code">
-                                                    <option value="0">Choose Manager</option>
-                                                    @foreach($Job_Title as $Job_Titles)
-                                                        <option value="{{$Job_Titles->id}}">{{$Job_Titles->job_title}}</option>
+                                                @php
+                                                    $company_id = Auth::guard('admins')->user()->id;
+                                                    use App\JobTitle;use Illuminate\Support\Facades\Auth;
+                                                    $t= JobTitle::where('company_id',$company_id)->get();
+                                                @endphp
+                                                <select name="job_title_code" id="job_title_code" class="required">
+                                                    <option value="">Choose Manager</option>
+                                                    @foreach($t as $ts)
+                                                        <option value="{{$ts->id}}" {{$ts->id ==$job->job_title_code ? 'selected="selected"':''}}>
+                                                            {{$ts->job_title}}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -41,42 +40,57 @@
                                         </section>
 
                                         <div class="row">
-                                            <section class="col col-6">
-                                                <label class="label">Job Types</label>
-                                                <div class="inline-group">
-                                                    <label class="radio">
-                                                        <input value="Full time" type="radio" name="job_type" id="job_type">
-                                                        <i></i>Full time
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" value="Part Time" id="job_type" name="radio-inline">
-                                                        <i></i>Part Time
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" value="Freelance" id="job_type" name="radio-inline">
-                                                        <i></i>Freelance</label>
-                                                    <label class="radio">
-                                                        <input type="radio" value="Contract" id="job_type" name="radio-inline">
-                                                        <i></i>Contract</label>
-                                                </div>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label class="label"> City</label>
+                                            <section class="col col-4">
+                                                <label class="label">Location</label>
                                                 <label class="select">
-                                                    <select name="city" id="city">
-                                                        <option value="1">Phnom Penh</option>
-                                                        <option value="2" >Banlung</option>
-                                                        <option value="3" >Banteay Meanchey</option>
+                                                    @php
+                                                        //$company_id = Auth::guard('admins')->user()->id;
+                                                        $location = \App\Provinces::all();
+                                                    @endphp
+                                                    <select  name="city" id="city" class="required">
+                                                        <option value="">-- Select location -- </option>
+                                                        @foreach($location as $locations)
+                                                            <option value="{{$locations->id}}" {{$locations->id ==$job->location ? 'selected="selected"':''}}>
+                                                                {{$locations->NameEn}}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                     <i></i>
                                                 </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label class="label">Job Types</label>
+                                                <div class="inline-group">
+                                                    @if($job->job_type == "Full time")
+                                                        <label class="radio">
+                                                            <input value="Full time" type="radio" name="full" id="full" checked>
+                                                            <i></i>Full time
+                                                        </label>
+                                                    @else
+                                                        <label class="radio">
+                                                            <input value="part time" type="radio" name="full" id="full">
+                                                            <i></i>Part Time
+                                                        </label>
+                                                    @endif
+                                                        @if($job->job_type == "part time")
+                                                            <label class="radio">
+                                                                <input value="part time" type="radio" name="full" id="full" checked>
+                                                                <i></i>Full time
+                                                            </label>
+                                                        @else
+                                                            <label class="radio">
+                                                                <input value="Full time" type="radio" name="full" id="full">
+                                                                <i></i>Part Time
+                                                            </label>
+                                                        @endif
+                                                </div>
                                             </section>
                                         </div>
                                         <div class="row">
                                             <section class="col col-4">
                                                 <label class="label"> Salary*</label>
                                                 <label class="input">
-                                                    <input type="number" id="min" name="min" placeholder="mix ($)" class="custom-scroll">
+                                                    <input type="number" value="{{$job->min_salary}}" id="min" name="min" placeholder="min ($)" class="custom-scroll">
                                                 </label>
                                                 <div class="note">
                                                     <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -85,16 +99,26 @@
                                             <section class="col col-4">
                                                 <label class="label">**</label>
                                                 <label class="input">
-                                                    <input type="number" id="max" name="max" placeholder="max ($)">
+                                                    <input type="number" value="{{$job->max_salary}}" id="max" name="max" placeholder="max ($)">
                                                 </label>
                                             </section>
                                             <section class="col col-4">
-                                                <label class="label"> Negotiable *</label>
-                                                <div class="inline-group">
-                                                    <label class="radio">
-                                                        <input type="radio" name="negotiable" id="negotiable">
-                                                        <i></i></label>
-                                                </div>
+                                                <label class="label">Hiring Manager</label>
+                                                <label class="select">
+                                                    @php
+                                                        $company_id = Auth::guard('admins')->user()->id;
+                                                        $e = \App\Employee::where('company_id',$company_id)->get();
+                                                    @endphp
+                                                    <select name="manager" id="manager" class="required">
+                                                        <option value=""> Select Manager </option>
+                                                        @foreach($e as $m)
+                                                            <option value="{{$m->emp_id}}" {{$m->emp_id ==$job->hiring_manager_id ? 'selected="selected"':''}}>
+                                                                {{$m->emp_lastname}} {{$m->emp_firstname}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <i></i>
+                                                </label>
                                             </section>
                                         </div>
                                         <div class="row">
@@ -104,7 +128,6 @@
                                                     <input type="file" id="resume" name="resume">
                                                 </label>
                                             </section>
-
                                             <section class="col col-6">
                                                 <label class="label"> Closing Date </label>
                                                 <label class="input">
@@ -127,125 +150,49 @@
         <section id="widget-grid" class="">
             <!-- row -->
             <div class="row">
-
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!-- Widget ID (each widget will need unique ID)-->
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
-                        <!-- widget options:
-                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                        -->
                         <header>
                             <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
                             <h2> Job Description </h2>
-
                         </header>
-
-                        <!-- widget div-->
                         <div>
-
-                            <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
-
                             </div>
-                            <!-- end widget edit box -->
-
-                            <!-- widget content -->
                             <div class="widget-body no-padding">
-
-                            <textarea name="ckeditor">
-
+                            <textarea name="description" id="description" required>
+                                    {{$job->description}}
                             </textarea>
 
                             </div>
-                            <!-- end widget content -->
-
                         </div>
-                        <!-- end widget div -->
-
                     </div>
-                    <!-- end widget -->
-
                 </article>
-                <!-- WIDGET END -->
-
             </div>
-
-            <!-- end row -->
-
         </section>
         <section id="widget-grid" class="">
-
-            <!-- row -->
             <div class="row">
-
-                <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <!-- Widget ID (each widget will need unique ID)-->
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
-                        <!-- widget options:
-                            usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                            data-widget-colorbutton="false"
-                            data-widget-editbutton="false"
-                            data-widget-togglebutton="false"
-                            data-widget-deletebutton="false"
-                            data-widget-fullscreenbutton="false"
-                            data-widget-custombutton="false"
-                            data-widget-collapsed="true"
-                            data-widget-sortable="false"
-
-                        -->
                         <header>
                             <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
                             <h2> Job Requirement </h2>
-
                         </header>
-
-                        <!-- widget div-->
                         <div>
-
-                            <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
-
                             </div>
-                            <!-- end widget edit box -->
-
-                            <!-- widget content -->
                             <div class="widget-body no-padding">
-
-                            <textarea name="ckeditor1">
-
+                            <textarea name="requirement" id="message" type="text" value=""  dir="ltr" required>
+                                {!! $job->requirement !!}
                             </textarea>
-
+                                <br>
                             </div>
-                            <!-- end widget content -->
-
                         </div>
-                        <!-- end widget div -->
-
                     </div>
-                    <!-- end widget -->
-
                 </article>
-                <!-- WIDGET END -->
-
             </div>
-
-            <!-- end row -->
-
         </section>
         <section id="widget-grid" class="">
 
@@ -259,14 +206,9 @@
                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                             <h2>Add Job title</h2>
                         </header>
-                        <!-- widget div-->
                         <div>
-                            <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
                             </div>
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
                             <div class="widget-body no-padding">
                                 <div class="smart-form">
                                     <fieldset>
@@ -275,15 +217,15 @@
                                             <div class="row">
                                                 <section class="col col-6">
                                                     <label class="label">Company Name*</label>
-                                                    <input name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />
+                                                    <input  name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />
                                                     <label class="input">
-                                                        <input  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">
+                                                        <input disabled value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
                                                     <label class="label">Contact Name * </label>
                                                     <label class="input">
-                                                        <input type="text" name="ContactName" id="ContactName">
+                                                        <input disabled type="text" name="ContactName" id="ContactName">
                                                     </label>
                                                 </section>
                                             </div>
@@ -291,20 +233,20 @@
                                                 <section class="col col-6">
                                                     <label class="label">Email ID *</label>
                                                     <label class="input">
-                                                        <input  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
+                                                        <input disabled  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
                                                     <label class="label">Mobile Number *</label>
                                                     <label class="input">
-                                                        <input value="{{Auth::guard('admins')->user()->phone}}" id="mobile" type="text" name="mobile">
+                                                        <input disabled value="{{Auth::guard('admins')->user()->phone}}" id="mobile" type="text" name="mobile">
                                                     </label>
                                                 </section>
                                             </div>
                                             <section>
                                                 <label class="label"> Address *</label>
                                                 <label class="textarea">
-                                                    <textarea name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                                    <textarea disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                                 </label>
                                             </section>
 
@@ -323,7 +265,7 @@
                                                 <hr>
                                                 <br/>
                                                 <footer>
-                                                    <button type="submit" id="btnUploadJob" class="btn btn-primary">Submit</button>
+                                                    <input type="submit" id="btnUploadJob" class="btn btn-primary" value="save"/>
                                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                                         Back
                                                     </button>
@@ -339,30 +281,40 @@
             </div>
         </section>
     </form>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-    <script>
+@endsection
+@section('script')
+    <script type="text/javascript">
         $(document).ready(function() {
+            CKEDITOR.replace( 'description', { height: '380px', startupFocus : true} );
+            CKEDITOR.replace( 'requirement', { height: '380px'} );
 
-            CKEDITOR.replace( 'ckeditor', { height: '380px', startupFocus : true} );
-            CKEDITOR.replace( 'ckeditor1', { height: '380px'} );
-
-        })
-    </script>
-    <script>
-        $("body").on("click", "#btnUploadJob", function () {
-//        var allowedFiles = [".doc", ".docx", ".pdf"];
+            var $loginForm = $("#frmJob").validate({
+                // Rules for form validation
+                rules : {
+                    city : {
+                        required : true
+                    },
+                    job_title_code:{
+                        required: true
+                    },
+                    manager:{
+                        required:true
+                    },
+                    description:{
+                        required : true
+                    },
+                    requirement : {
+                        required : true
+                    }
+                },
+                // Do not change code below
+                errorPlacement : function(error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        });
+        var allowedFiles = [".doc", ".docx", ".pdf"];
+        $('#btnUploadJob').click(function () {
             var allowedFiles = [".pdf"];
             var fileUpload = $("#resume");
             var lblError = $("#lblErrorresume");
@@ -375,5 +327,4 @@
             return true;
         });
     </script>
-
 @endsection

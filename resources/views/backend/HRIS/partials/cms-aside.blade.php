@@ -6,6 +6,7 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
+                        <span>{{Auth::guard('admins')->user()->name}}</span>
                         <i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -184,14 +185,14 @@
                             <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                 <a href="{{url('administration/candidate')}}">Immigration</a>
                             </li>
-                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                <a href="{{url('administration/candidate')}}">Job</a>
+                            <li class="{{ Request::segment(2) == "employee-job" ? "active" : " " }}">
+                                <a href="{{url('administration/employee-job')}}">Job</a>
                             </li>
-                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                <a href="{{url('administration/candidate')}}">Salary</a>
+                            <li class="{{ Request::segment(2) == "employee-salary" ? "active" : " " }}">
+                                <a href="{{url('administration/employee-salary')}}">Salary</a>
                             </li>
-                            <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                <a href="{{url('administration/candidate')}}">Report-to</a>
+                            <li class="{{ Request::segment(2) == "report-to" ? "active" : " " }}">
+                                <a href="{{url('administration/report-to')}}">Report-to</a>
                             </li>
                             <li class="{{ Request::segment(2) == "employee-qualification" ? "active" : " " }}">
                                 <a href="{{url('administration/employee-qualification')}}">Qualifications</a>

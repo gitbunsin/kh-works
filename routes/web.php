@@ -69,6 +69,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('post-jobs','JobController');
         Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
         Route::resource('employee','EmployeeController');
+        Route::get('/employee-job','EmployeeController@getJob');
+        Route::get('/employee-salary','EmployeeController@getSalary');
+        Route::get('/employee-report-to','EmployeeController@getReport');
         Route::get('/employee-personal-details','EmployeeController@EmployeeInfo');
         Route::get('/employee-contact-details','EmployeeController@EmployeeContactDetails');
         Route::resource('employee-work-experience','EmployeeWorkExperienceController');
@@ -84,7 +87,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('employee-emergency-contact','EmployeeEmergencyContactController');
         Route::resource('interview','InterviewController');
         Route::post('/pass-interview/{candidate_id}','InterviewController@passInterview');
-        Route::post('/fail-interview','InterviewController@failInterview');
+        Route::post('/fail-interview/{candidate_id}','InterviewController@failInterview');
         Route::resource('CandidateAttachment','UsersCvController');
         Route::get('/download/{user_id}', 'UsersCvController@getDownload');
 

@@ -7,15 +7,6 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="row">
-                    <div class="col-lg-12 margin-tb">
-                        <div class="pull-right">
-                            <button style="background: #333;" id="btn_add" name="btn_add" class="btn btn-default pull-right"><span style="color:white;">Add Interview</span></button>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -80,7 +71,7 @@
                                                 {{--<i class="glyphicon glyphicon-align-center "></i>--}}
                                                 Pass ||
                                             </a>
-                                            <a  href="{{url('administration/download/')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$interviews->candidate_id}}"  href="#" style="text-decoration:none;" class="btn-detail fail">
                                                 {{--<i class="glyphicon glyphicon-calendar "></i>--}}
                                                 Fail
                                             </a>
@@ -122,6 +113,35 @@
                         document.getElementById(concatId).remove();
                         $("tbody>tr>td.dataTables_empty").show();
 
+                    },
+                    error: function (data) {
+                        alert(JSON.stringify(data));
+                    }
+                });
+            }
+        });
+        // =================if fail=======================
+        $(document).on('click','.fail',function(){
+            var confirmation = confirm("are you reject this candidate ?");
+            if(confirmation) {
+                var candidate_id = $(this).attr('data-id');
+                // alert(candidate_id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: '/administration/fail-interview/' + candidate_id,
+                    dataType: "Json",
+                    success: function (data) {
+                        alert(JSON.stringify(data));
+                        var concatId = 'candidate_id'+candidate_id;
+                        concatId = concatId.replace(/\s/g, '');
+                        document.getElementById(concatId).remove();
+                        $("tbody>tr>td.dataTables_empty").show();
                     },
                     error: function (data) {
                         alert(JSON.stringify(data));

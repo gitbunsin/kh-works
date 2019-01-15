@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\CandiateHistory;
 use App\Candidate;
 use App\Employee;
 use App\Http\Controllers\Controller;
@@ -72,7 +73,7 @@ class InterviewController extends Controller
         //
     }
 
-    public  function passInterview(Request $request, $candidate_id)
+    public  function passInterview($candidate_id)
     {
 //        dd($interview_id);
       $CanPass = DB::table('tbl_job_interview as v')
@@ -86,18 +87,35 @@ class InterviewController extends Controller
 //      dd($interview);
       $interview->status = 1;
       $interview->save();
-      $isPass = new Employee();
-      $isPass->company_id = Auth::guard('admins')->user()->id;
-      $isPass->emp_lastname = $CanPass->name;
-      $isPass->emp_firstname = $CanPass->name;
-      $isPass->emp_middle_name = $CanPass->name;
-      $isPass->save();
+      $p = new Employee();
+      $p->company_id = Auth::guard('admins')->user()->id;
+      $p->emp_lastname = $CanPass->name;
+      $p->emp_firstname = $CanPass->name;
+      $p->emp_middle_name = $CanPass->name;
+      $p->save();
       return response()->json(['data'=>"done"]);
 
     }
-    public function failInterview()
+    public function failInterview($candidate_id)
     {
 
+        $fail = DB::table('tbl_job_interview as v')
+            ->select('c.*','v.*','v.id as interview_id')
+            ->join('tbl_job_candidate as c','v.candidate_id','=','c.id')
+            ->where('c.id',$candidate_id)
+            ->first();
+//      dd($CanPass);
+        $interview_id = $fail->interview_id;
+        $interview = Interview::findOrFail($interview_id);
+//      dd($interview);
+        $interview->status = 1;
+        $interview->save();
+        $f = new CandiateHistory();
+        $f->candidate_id = $candidate_id;
+        $f->performed_date = $fail->interview_date;
+        $f->note = $fail->note;
+        $f->save();
+        return response()->json($candidate_id);
 
     }
 

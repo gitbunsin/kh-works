@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\CandiateHistory;
 use App\CandidateVacancy;
 use App\Http\Controllers\Controller;
 use App\Interview;
@@ -27,43 +28,16 @@ class CandidateController extends Controller
     }
     public function index()
     {
-//        $candidate = DB::table('tbl_job_candidate_vacancy as cv')
-//            ->join('tbl_job_candidate as c','cv.candidate_id','=','c.id')
-//            ->join('tbl_job_vacancy as v','cv.vacancy_id','=','v.id')
-//            ->select('cv.*','c.*','v.*')
-//            ->get();
-//        $candidate = Candidate::all();
             $company_id = Auth::guard('admins')->user()->id;
-//            dd($company_id);
-
             $candidate = DB::table('tbl_job_candidate_vacancy as cv')
-                        ->select('cv.*','v.*','c.*','jt.*','cv.id as apply_id')
+                        ->select('cv.*','c.*','v.*','jt.*','cv.id as apply_id')
+//                        ->select('cv.*','c.*','jt.*','cv.id as apply_id')
                         ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
                         ->join('tbl_job_candidate as c','c.id','=','cv.candidate_id')
-                        ->join('tbl_job_title as jt','v.job_title_code','=','jt.id')
+                        ->join('tbl_job_title as jt','c.job_title_code','=','jt.id')
                         ->where('v.company_id',$company_id)
                         ->where('cv.status',2)
                         ->get();
-//            dd($candidate);
-//        dd($company_id);
-
-//        $name = Auth::guard('admins')->user()->name();
-//        dd($name);
-//        dd($company_id);
-//        $candidate = DB::table('tbl_job_candidate as c')
-//                 ->select('c.*','cv.*','v.*','c.id as candidate_id','t.*')
-//                 ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
-//                 ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
-//                 ->join('tbl_job_title as t','v.job_title_code','=','t.id')
-//                 ->Where('v.company_id',$company_id)
-//                 ->get();
-//        $candidate = DB::table('kh_job_vacancy as v')
-//                    ->select('v.*')
-//                    ->join('tbl_job_candidate_vacancy as cv','cv.vacancy_id','v.id')
-//                    ->
-//                    ->where('v.company_id',$company_id)
-//                    ->get();
-//          dd($candidate);
         return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate'));
     }
 
@@ -90,49 +64,13 @@ class CandidateController extends Controller
         $candidate = CandidateVacancy::findOrFail($candidate_id);
         $candidate->status = 0;
         $candidate->save();
+        $can_history = new CandiateHistory();
+        $can_history->candidate_id = $candidate_id;
+        $can_history->vacancy_id = $candidate->vacancy_id;
+        $can_history->save();
         return response()->json(['success'=>'Data is successfully added']);
 
     }
-
-//    public function store(Request $request)
-//    {
-//        //dd($request->all());
-//        $Candidate = Candidate::create($request->all());
-//        return response()->json($Candidate);
-//    }
-
-//    public function accepts(Request $request)
-//    {
-//        //dd($request->all());
-//        $Candidate = Interview::create($request->all());
-//        return response()->json($Candidate);
-//    }
-
-//    public function show($candidate_id)
-//    {
-//        $Candidate = Candidate::findOrFail($candidate_id);
-//        return response()->json($Candidate);
-//    }
-
-//    public function update(Request $request, $candidate_id)
-//    {
-//        $Candidate = Candidate::findOrFail($candidate_id);
-//        $Candidate->first_name = $request->first_name;
-//        $Candidate->last_name = $request->last_name;
-//        $Candidate->middle_name = $request->middle_name;
-//        $Candidate->email = $request->email;
-//        $Candidate->comment = $request->comment;
-//        $Candidate->keywords = $request->keywords;
-//        $Candidate->save();
-//        return response()->json($Candidate);
-//    }
-
-//    public function destroy($candidate_id)
-//    {
-//        $Candidate = Candidate::destroy($candidate_id);
-//        return response()->json($Candidate);
-//    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -152,20 +90,29 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        $candidate = new Candidate();
-        $candidate->first_name = Input::get('first_name');
-        $candidate->last_name = Input::get('last_name');
-        $candidate->middle_name = Input::get('middle_name');
-        $candidate->email = Input::get('email');
-        $candidate->keywords = Input::get('keyword');
-        $candidate->status = 2;
-        $candidate->mode_of_application = 1;
-        $candidate->cv_file_id = 1;
+        //dd($request->all());
+        $c = new Candidate();
+        $c->name = Input::get('full_name');
+        $c->email = Input::get('email');
+        $c->keywords = Input::get('keyword');
+        $c->status = 1;
+        $c->job_title_code = $request->job_title;
+        $c->mode_of_application = 1;
+        $c->company_id = Auth::guard('admins')->user()->id;
+        $c->cv_file_id = 1;
         $input  = Input::get('date-of-application');
         $date_of_application = Carbon::parse($input )->format('Y-m-d');
-        $candidate->date_of_application = $date_of_application;
-        $candidate->save();
-        $id = $candidate->id;
+        $c->date_of_application = $date_of_application;
+        $c->save();
+        $C_id = $c->id;
+        //C_V = Candidate_Vacancy
+        $c_v = new CandidateVacancy();
+        $c_v->candidate_id = $C_id;
+        $c_v->vacancy_id = $request->vacancy_id;
+        $c_v->status = 2;
+        $date_applied = \Carbon\Carbon::now();
+        $c_v->applied_date = $date_applied;
+        $c_v->save();
         //dd($id);
         $file = Input::file('cv_file_id');
         //dd($request->all());
@@ -178,7 +125,7 @@ class CandidateController extends Controller
             $destinationPath = public_path('/uploaded');
             $image->move($destinationPath,$name);
             $CandidateAttachment = new CandidateAttachment();
-            $CandidateAttachment->candidate_id = $id;
+            $CandidateAttachment->candidate_id = $C_id;
             $CandidateAttachment->file_name = $name;
             $CandidateAttachment->file_size = $size;
             $CandidateAttachment->file_type = $type;

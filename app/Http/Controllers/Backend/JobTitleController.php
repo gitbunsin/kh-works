@@ -6,6 +6,7 @@ use App\Job;
 use App\JobCategory;
 use App\JobTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -69,16 +70,17 @@ class JobTitleController extends Controller
     public function store(Request $request)
     {
         //$JobTitle = JobTitle::create($request->all());
-        $job_title = new JobTitle();
+        $j = new JobTitle();
         $user_id = input::get('user_id');
-        $job_title->job_title = input::get('job_title');
-        $job_title->job_description = input::get('job_description');
-        $job_title->note = input::get('note');
-        $job_title->is_deleted = 0;
-        $job_title->created_by = $user_id;
-        $job_title->fd = \Carbon\Carbon::now();
-        $job_title->td = \Carbon\Carbon::now();
-        $job_title->save();
+        $j->job_title = input::get('job_title');
+        $j->job_description = input::get('job_description');
+        $j->note = input::get('note');
+        $j->is_deleted = 0;
+        $j->created_by = $user_id;
+        $j->company_id = Auth::guard('admins')->user()->id;
+        $j->fd = \Carbon\Carbon::now();
+        $j->td = \Carbon\Carbon::now();
+        $j->save();
         session()->flash('success', 'Task was successful!');
         return redirect('/administration/jobs-title');
 //        return response()->json($JobTitle);

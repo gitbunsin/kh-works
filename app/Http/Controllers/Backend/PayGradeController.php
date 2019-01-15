@@ -88,7 +88,7 @@ class PayGradeController extends Controller
         ];
         $paygrade->currencies()->attach($currency, $arrPovit);
 
-        //retrive paygrade back
+        //reterive paygrade back
         $p = Paygrade::findOrFail($paygrade->id);
         $data = $p->currencies()->wherePivot('currency_id', $currency->id)->first();
 

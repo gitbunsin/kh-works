@@ -8,50 +8,30 @@
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Add new Candidate</h2>
-
                     </header>
-
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-
                             <form id="validate" method="POST" action="{{ url('administration/candidate') }}" class="smart-form" enctype="multipart/form-data" >
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-4">
-                                            <label class="label">First Name</label>
+                                            <label class="label">Full Name</label>
                                             <label class="input">
-                                                <input type="text" maxlength="20" name="first_name" id="first_name">
-                                            </label>
-                                        </section >
-                                        <section class="col col-4">
-                                            <label class="label">Middle Name</label>
-                                            <label class="input">
-                                                <input type="text" maxlength="20" name="middle_name" id="middle_name">
+                                                <input type="text" maxlength="20" id="full_name" name="full_name">
                                             </label>
                                         </section>
-                                        <section class="col col-4">
-                                            <label class="label">last Name</label>
-                                            <label class="input">
-                                                <input type="text" maxlength="20" id="last_name" name="last_name">
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Email</label>
                                             <label class="input">
@@ -59,20 +39,51 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
+                                            @php
+                                                use Illuminate\Support\Facades\DB;$c_id = Auth::guard('admins')->user()->id;
+                                                $j = DB::table('kh_job_vacancy as v')
+                                                        ->select('v.*','t.*','v.id as j_id')
+                                                        ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+                                                        ->get();
+
+                                            @endphp
+
+                                            <label class="label">Job Title</label>
+                                            <label class="select">
+                                                <select name="job_title" id="job_title">
+                                                    <option value="0">-- select --</option>
+                                                    @foreach($j as $js)
+                                                        <option value="{{$js->id}}">{{$js->job_title}}</option>
+                                                        <input type="hidden" id="vacancy_id" name="vacancy_id" value="{{$j->j_id}}"/>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-4">
                                             <label class="label">Contact Number</label>
                                             <label class="input">
                                                 <input name="contact_number" id="contact_number" type="text" list="list">
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">KeyWord</label>
+                                            <label class="label">Key Words</label>
                                             <label class="input">
                                                 <input name="keyword" id="keyword" placeholder="Enter comma separated words..." type="text" maxlength="10">
                                             </label>
                                         </section>
+                                        <section class="col col-4">
+                                            <label class="label"> Date </label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="date-of-application" placeholder="Request activation on" class="datepicker">
+                                            </label>
+                                        </section>
                                     </div>
-                                    <div class="row">
-                                        <section class="col col-6">
+                                    <div>
+                                        <section>
                                             <label class="label">Resume</label>
                                             <div class="input input-file">
                                                 <span class="button">
@@ -81,13 +92,6 @@
                                             <div class="note">
                                                 <strong>Note:</strong> Accepts .docx, .doc, .odt, .pdf, .rtf, .txt up to 1MB
                                             </div>
-                                        </section>
-                                        <section class="col col-6">
-                                            <label class="label"> Date </label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="date-of-application" placeholder="Request activation on" class="datepicker">
-                                            </label>
                                         </section>
                                     </div>
 
@@ -102,9 +106,7 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                         Back
                                     </button>

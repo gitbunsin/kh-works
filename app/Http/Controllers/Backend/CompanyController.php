@@ -60,28 +60,9 @@ class CompanyController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\organization  $company
-     * @return \Illuminate\Http\Response
-     */
-//    public function edit($id)
-//    {
-//        //
-//        dd($id);
-//    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\organization  $company
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request , $id)
     {
-//        dd($request->name);
+
         $company = Organization::findOrFail($id);
         $company->name = $request->name;
         $company->tax_id = $request->tax_id;
@@ -101,8 +82,6 @@ class CompanyController extends Controller
         $company->mobile = $request->mobile;
         $company->status = $request->status;
         $file = Input::file('company_logo');
-//        dd($request->hasFile('company_logo'));
-        //dd($request->all());
         if ($request->hasFile('company_logo')) {
             $image = $request->file('company_logo');
             $mytime = \Carbon\Carbon::now()->toDateTimeString();
@@ -114,8 +93,7 @@ class CompanyController extends Controller
             $company->company_logo = $name;
         }
         $company->save();
-//        flash('Create Successfully')->success();
-        return redirect('/administration');
+        return response()->json($company);
 
     }
 

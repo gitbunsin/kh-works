@@ -38,7 +38,7 @@
 		
 		<!-- Custom Own Style -->
 		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
-	
+
 	</head>
 <body class="">
 

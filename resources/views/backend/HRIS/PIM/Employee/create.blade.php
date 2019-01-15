@@ -201,7 +201,8 @@
 
                 pageSetUp();
                 $('#startdate').datepicker({
-                    // format: 'DD - dd MM yyyy'
+
+                    format: 'DD - dd MM yyyy'
                 });
                 var $loginForm = $("#validate_employee").validate({
                     // Rules for form validation
@@ -219,7 +220,6 @@
                             required:true
                         }
                     },
-
                     // Messages for form validation
                     messages : {
                         emp_firstname : {

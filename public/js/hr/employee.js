@@ -405,7 +405,9 @@ $(document).on('click','.open_modal_experience',function(e){
     });
 });
 ////////////////////
-//Create currency to Paygrade
+
+
+
 $("#btn-save_experience").click(function (e) {
     $.ajaxSetup({
         headers: {
@@ -564,10 +566,11 @@ $("#btn_add_skills").click(function (e) {
         data: formData,
         dataType: 'json',
         success: function (data) {
+            // alert(JSON.stringify(data));
             $('#demo_skill').hide();
             var table =
                 '<tr id="employee_skills_id' + data.id +'">' +
-                '<td class="sorting_1"><a data-id=" '+ data.skill_id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.eexp_employer+ '</a></td>'+
+                '<td class="sorting_1"><a data-id=" '+ data.skill_id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.name + '</a></td>'+
                 '<td class="sorting_1">' + data.years_of_exp + '</td>'+
                 '<td class="sorting_1">' + data.comments + '</td>'
             table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
