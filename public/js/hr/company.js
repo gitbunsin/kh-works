@@ -14,6 +14,7 @@ $('#company_profile').prop('disabled', true);
 $('#phone').prop('disabled', true);
 $('#fax').prop('disabled', true);
 $('#mobile').prop('disabled', true);
+$('#company_logo').prop('disabled',true);
 
 $(document).ready(function () {
 
@@ -39,6 +40,7 @@ $(document).ready(function () {
             $('#phone').prop('disabled', false);
             $('#fax').prop('disabled', false);
             $('#mobile').prop('disabled', false);
+            $('#company_logo').prop('disabled',false);
             var Save = $('#btn_company').val('Save');
         }else{
             $isSave = $('#btn_company').val();
@@ -66,7 +68,8 @@ $(document).ready(function () {
                     company_profile:$('#company_profile').val(),
                     phone:$('#phone').val(),
                     fax: $('#fax').val(),
-                    mobile:$('#mobile').val()
+                    mobile:$('#mobile').val(),
+                    company_log:$('#company_logo').val()
                 }
                 $.ajax({
                     cache:false,
@@ -91,6 +94,7 @@ $(document).ready(function () {
                         $('#phone').prop('disabled', true);
                         $('#fax').prop('disabled', true);
                         $('#mobile').prop('disabled', true);
+                        $('#company_logo').prop('disabled',true);
                         alert('data has been insert !');
                         var Save = $('#btn_company').val('Edit');
                     },

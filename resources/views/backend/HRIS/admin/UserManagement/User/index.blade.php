@@ -17,49 +17,51 @@
                     </div>
                 </div>
                 <br/>
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2> List User</h2>
                     </header>
-
-                    <!-- widget div-->
                     <div>
-                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
 
                         </div>
-                        <!-- end widget edit box -->
-
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone"><i class="hidden-xs"></i>Username</th>
-                                    <th data-hide="phone">User Role(s)</th>
-                                    <th data-hide="phone">Employee</th>
-                                    <th data-hide="phone">Status</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                {{--@foreach($WorkShift as $WorkShifts)--}}
-                                    {{--<tr id="job_id{{$WorkShifts->id}}">--}}
-                                        {{--<td>{{$WorkShifts->name}}</td>--}}
-                                        {{--<td>{{$WorkShifts->hours_per_day}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="{{$WorkShifts->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
+                                @foreach($u as $us)
+                                    {{$us->status}}
+                                    <tr id="user_id{{$us->id}}">
+                                        <td>{{$us->name}}</td>
+                                        <td>{{$us->email}}</td>
+                                        @if($us->verified == "1")
+                                            <td style="color: blue;">
+                                                Enable
+                                            </td>
+                                        @else
+                                            <td style="color:red;">
+                                                Disabled
+                                            </td>
+                                        @endif
+                                        <td>
+                                            <a data-id="" href="{{url('administration/user/'.$us->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$us->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

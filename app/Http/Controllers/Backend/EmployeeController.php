@@ -26,39 +26,7 @@ use Psy\Util\Json;
 class EmployeeController extends Controller
 {
 
-    protected $redirectTo = '/administration/companyProfile';
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-//    public function __construct()
-//    {
-//        $this->middleware('isAdmin');
-////       $this->middleware('isEmployee');
-//    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-    public function index()
-    {
-        $company_id = Auth::guard('admins')->user()->id;
-        $employee = DB::table('tbl1_hr_employee as e')
-            ->select('e.*','t.*')
-            ->join('tbl_job_title as t', 'e.job_title_code', '=', 't.id')
-            ->where('e.company_id',$company_id)
-            ->orderBy('e.emp_id','DESC')
-            ->get();
-//        $employee = Employee::all();
-        return view('backend.HRIS.PIM.Employee.index',compact('employee'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $redirectTo = '/administration/employee-personal-details';
     public function index()
     {
         if(Auth::guard('admins')->user()){

@@ -28,51 +28,49 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_works_shifts" method="POST" enctype="multipart/form-data" action="{{url('administration/userRole')}}" class="smart-form">
+                            <form id="frmUser" method="POST" enctype="multipart/form-data" action="{{url('administration/user')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
+                                        <div class="row">
+                                            <section class="col col-6">
+                                                <label class="label">Username</label>
+                                                <label class="input">
+                                                    <input class="form-control" type="text" name="username" id="username">
+                                                </label>
+                                            </section>
+                                            <section class="col col-6">
+                                                <label class="label">Email</label>
+                                                <label class="input">
+                                                    <input class="form-control" type="text" name="email" id="email">
+                                                </label>
+                                            </section>
+                                        </div>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">Username</label>
+                                            <label class="label">Password</label>
                                             <label class="input">
-                                                <input class="col-6" type="text" name="name" id="name">
+                                                <input class="form-control" type="password" name="password" id="password">
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> UserRoles</label>
-                                            <label class="select">
-                                                @php use App\JobTitle;$Role= \App\UserRole::all(); @endphp
-                                                <select name="user_roles" id="user_roles">
-                                                    <option value="0">Choose Roles</option>
-                                                    @foreach($Role as $Roles)
-                                                        <option value="{{$Roles->id}}">{{$Roles->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <i></i>
+                                            <label class="label">Confirm Password</label>
+                                            <label class="input">
+                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password">
                                             </label>
                                         </section>
                                     </div>
-                                    <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label">Employee</label>
-                                            <label class="input">
-                                                <input class="col-6" type="text" name="name" id="name">
-                                            </label>
-                                        </section>
-                                        <section class="col col-6">
+                                        <section>
                                             <label class="label"> Status</label>
                                             <label class="select">
-                                                {{--@php use App\JobTitle;$Role= \App\UserRole::all(); @endphp--}}
-                                                <select name="user_roles" id="user_roles">
-                                                    <option value="0">Choose Status</option>
+                                                <select name="status" id="status" class="required">
+                                                    <option value="">Choose Status</option>
                                                     <option value="1">Enable</option>
                                                     <option value="2">Disabled</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                    </div>
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -89,77 +87,31 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-    <script>
-        function MyMoveItem()
-        {
-            var selected = $('.possible option:selected');
-            selected.appendTo('.wishlist');
-        }
-
-
-        function RemoveItem()
-        {
-            var selected = $('.wishlist option:selected');
-            selected.appendTo('.possible');
-        }
-        //       $(".add").click(function () {
-        //           var multipleValues = $( "#multiple" ).val();
-        ////           var value = $(this).attr("value");
-        ////           console.log(multipleValues);
-        ////           alert(multipleValues);
-        //           $( "p" ).html(multipleValues);
-        //       });
-        //          $(".add").(function () {
-        //              var multipleValues = $( "#multiple" ).val() || [];
-        //              // When using jQuery 3:
-        //              // var multipleValues = $( "#multiple" ).val();
-        //              $( "p" ).html(multipleValues.join( ", " ) );
-        //          });
-        //       $( "select" ).change( displayVals );
-        //       displayVals();
-    </script>
-
+@endsection
+@section('script')
     <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_works_shifts").validate({
+            var $loginForm = $("#frmUser").validate({
                 // Rules for form validation
                 rules : {
-                    name : {
+                    username : {
                         required : true
                     },
-                    hours_per_day:{
+                    email:{
                         required : true
                     },
-                },
-                // Messages for form validation
-                messages : {
-                    name : {
-                        required : 'field is required !'
+                    password : {
+                        required : true,
+                        minlength : 6
                     },
-                    hours_per_day : {
-                        required : 'field is required !'
+                    confirm_password : {
+                        required : true,
+                        minlength : 6,
+                        equalTo : "#password"
                     },
+                    status : {
+                        required : true
+                    }
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {
@@ -167,6 +119,5 @@
                 }
             });
         });
-
     </script>
 @endsection

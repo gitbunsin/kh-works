@@ -13,16 +13,13 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Add New Employee</h2>
-
                     </header>
 
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
 
@@ -72,32 +69,20 @@
                                                 <i></i>
                                             </label>
                                         </section>
-                                    <section class="col col-4">
-                                        <label class="label"> Employee Photo</label>
-                                        {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
+                                        <section class="col col-4">
+                                            <label class="label"> Employee Photo</label>
+                                            {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
                                             {{--<img width="100%" height="100%" id="preview_image" src="{{asset('img/noimage.png')}}"/>--}}
                                             {{--<i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>--}}
-                                        {{--</div>--}}
-                                        <img id="preview" src="{{asset('img/noimage.jpg')}}" width="200px" height="200px"/><br/>
-                                        <input name="photo" type="file" id="image" style="display: none;"/>
-                                        <!--<input type="hidden" style="display: none" value="0" name="remove" id="remove">-->
-                                        <p>
-                                            <a href="javascript:changeProfile()"><i class="glyphicon glyphicon-edit"></i> Change</a> |
-                                            <a style="color: red" href="javascript:removeImage()"><i class="glyphicon glyphicon-trash"></i> Remove</a>
-                                        </p>
-
-                                        {{--<p>--}}
-                                            {{--<a href="javascript:changeProfile()" style="text-decoration: none;">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i> Change--}}
-                                            {{--</a>&nbsp;&nbsp;--}}
-                                            {{--<a href="javascript:removeFile()" style="color: red;text-decoration: none;">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"></i>--}}
-                                                {{--Remove--}}
-                                            {{--</a>--}}
-                                        {{--</p>--}}
-                                        {{--<input type="file" name="file" id="file" style="display: none"/>--}}
-                                        {{--<input type="hidden" name="file" id="file_name"/>--}}
-                                    </section>
+                                            {{--</div>--}}
+                                            <img id="preview" src="{{asset('img/noimage.jpg')}}" width="200px" height="200px"/><br/>
+                                            <input name="photo" type="file" id="image" style="display: none;"/>
+                                            <!--<input type="hidden" style="display: none" value="0" name="remove" id="remove">-->
+                                            <p>
+                                                <a href="javascript:changeProfile()"><i class="glyphicon glyphicon-edit"></i> Change</a> |
+                                                <a style="color: red" href="javascript:removeImage()"><i class="glyphicon glyphicon-trash"></i> Remove</a>
+                                            </p>
+                                        </section>
                                     </div>
                                     <section>
                                         <label class="checkbox">
@@ -167,19 +152,8 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
+@endsection
+@section('script')
     <script>
         $( document ).ready(function() {
             $("#div_login").hide();
@@ -195,54 +169,48 @@
                 }
             });
         });
-            // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-            $(document).ready(function() {
-
-                pageSetUp();
-                $('#startdate').datepicker({
-
-                    format: 'DD - dd MM yyyy'
-                });
-                var $loginForm = $("#validate_employee").validate({
-                    // Rules for form validation
-                    rules : {
-                        emp_firstname : {
-                            required : true
-                        },
-                        emp_lastname : {
-                            required : true
-                        },
-                        emp_middle_name:{
-                            required:true
-                        },
-                        employee_id :{
-                            required:true
-                        }
+        $(document).ready(function() {
+            var $loginForm = $("#validate_employee").validate({
+                // Rules for form validation
+                rules : {
+                    emp_firstname : {
+                        required : true
                     },
-                    // Messages for form validation
-                    messages : {
-                        emp_firstname : {
-                            required : 'filed is requried !'
-                        },
-                        emp_middle_name : {
-                            required: 'field is required !'
-                        },
-                        emp_lastname:{
-                            required:'field is required !'
-                        },
-                        employee_id : {
-                            required:'field is required !'
-                        }
+                    emp_lastname : {
+                        required : true
                     },
-                    // Do not change code below
-                    errorPlacement : function(error, element) {
-                        error.insertAfter(element.parent());
+                    emp_middle_name:{
+                        required:true
+                    },
+                    employee_id :{
+                        required:true
                     }
-                });
+                },
+                // Messages for form validation
+                messages : {
+                    emp_firstname : {
+                        required : 'filed is requried !'
+                    },
+                    emp_middle_name : {
+                        required: 'field is required !'
+                    },
+                    emp_lastname:{
+                        required:'field is required !'
+                    },
+                    employee_id : {
+                        required:'field is required !'
+                    }
+                },
+                // Do not change code below
+                errorPlacement : function(error, element) {
+                    error.insertAfter(element.parent());
+                }
             });
-
+        });
     </script>
+
     <script>
         function changeProfile() {
             $('#image').click();
@@ -269,78 +237,4 @@
             $('#preview').attr('src', '{{asset('img/noimage.jpg')}}');
 //      $("#remove").val(1);
         }
-
-        {{--function changeProfile() {--}}
-            {{--$('#file').click();--}}
-        {{--}--}}
-        {{--$('#file').change(function () {--}}
-            {{--if ($(this).val() != '') {--}}
-                {{--upload(this);--}}
-
-            {{--}--}}
-        {{--});--}}
-        {{--function upload(img) {--}}
-            {{--var form_data = new FormData();--}}
-            {{--form_data.append('file', img.files[0]);--}}
-            {{--form_data.append('_token', '{{csrf_token()}}');--}}
-{{--//            form_data = {--}}
-{{--//                employee_id : $('#employee_id').val(),--}}
-{{--//                emp_lastname: $('#emp_lastname').val(),--}}
-{{--//                emp_firstname : $('#emp_firstname').val(),--}}
-{{--//                emp_middle_name:$('#emp_middle_name').val(),--}}
-{{--//            }--}}
-            {{--$('#loading').css('display', 'block');--}}
-            {{--$.ajax({--}}
-                {{--url: "{{url('administration/ajax-image-upload')}}",--}}
-                {{--data: form_data,--}}
-                {{--type: 'POST',--}}
-                {{--contentType: false,--}}
-                {{--processData: false,--}}
-                {{--success: function (data) {--}}
-                    {{--if (data.fail) {--}}
-                        {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
-                        {{--alert(data.errors['file']);--}}
-                    {{--}--}}
-                    {{--else {--}}
-{{--//                        alert(JSON.stringify(data));--}}
-                        {{--$('#file_name').val(data);--}}
-                        {{--$('#preview_image').attr('src', '{{asset('uploads')}}/' + data);--}}
-                    {{--}--}}
-                    {{--$('#loading').css('display', 'none');--}}
-                {{--},--}}
-                {{--error: function (xhr, status, error) {--}}
-                    {{--alert(xhr.responseText);--}}
-                    {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
-                {{--}--}}
-            {{--});--}}
-        {{--}--}}
-        {{--function removeFile() {--}}
-            {{--if ($('#file_name').val() != '')--}}
-                {{--if (confirm('Are you sure want to remove profile picture?')) {--}}
-                    {{--$('#loading').css('display', 'block');--}}
-                    {{--var form_data = new FormData();--}}
-                    {{--form_data.append('_method', 'DELETE');--}}
-                    {{--form_data.append('_token', '{{csrf_token()}}');--}}
-                    {{--var filename = $('#file_name').val();--}}
-                    {{--alert(filename);--}}
-                    {{--$.ajax({--}}
-                        {{--url: "ajax-remove-image/"+ filename ,--}}
-                        {{--data: form_data,--}}
-                        {{--type: 'POST',--}}
-                        {{--contentType: false,--}}
-                        {{--processData: false,--}}
-                        {{--success: function (data) {--}}
-                            {{--$('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');--}}
-                            {{--$('#file_name').val('');--}}
-                            {{--$('#loading').css('display', 'none');--}}
-                        {{--},--}}
-                        {{--error: function (xhr, status, error) {--}}
-                            {{--alert(xhr.responseText);--}}
-                            {{--//alert(JSON.stringify(error));--}}
-                        {{--}--}}
-                    {{--});--}}
-                {{--}--}}
-        {{--}--}}
-    </script>
-
 @endsection

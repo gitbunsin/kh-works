@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_skills" method="POST" enctype="multipart/form-data" action="{{url('administration/language')}}" class="smart-form">
+                            <form id="frmLanguage" method="POST" enctype="multipart/form-data" action="{{url('administration/language')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
@@ -55,41 +55,15 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@endsection
+@section('script')
     <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-
-    <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_skills").validate({
+            var $loginForm = $("#frmLanguage").validate({
                 // Rules for form validation
                 rules : {
                     name : {
                         required : true
-                    },
-                },
-                // Messages for form validation
-                messages : {
-                    name : {
-                        required : 'field is required !'
                     },
                 },
                 // Do not change code below
@@ -98,6 +72,5 @@
                 }
             });
         });
-
     </script>
 @endsection

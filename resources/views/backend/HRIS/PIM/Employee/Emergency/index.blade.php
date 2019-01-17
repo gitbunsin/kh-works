@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-emergency-contact/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List all Employee</h2>
+                        <h2> List all Emergency Contact</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -46,15 +46,15 @@
                                     <tbody id="products-list" name="products-list">
                                     <tr id="emergency_id{{$EmergencyContacts->id}}">
                                         <td>{{$EmergencyContacts->eec_name}}</td>
-                                        <td>{{$EmergencyContacts->eec_relationship}}</td>
+                                        <td>{{$EmergencyContacts->name}}</td>
                                         <td>{{$EmergencyContacts->eec_home_no}}</td>
                                         <td>{{$EmergencyContacts->eec_mobile_no}}</td>
                                         <td>{{$EmergencyContacts->eec_office_no}}</td>
                                         <td>
-                                            <a data-id="{{$EmergencyContacts->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$EmergencyContacts->emergency_id}}" href="{{url('administration/employee-emergency-contact/'.$EmergencyContacts->emergency_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$EmergencyContacts->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$EmergencyContacts->emergency_id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -68,7 +68,4 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hr/employee.js') }}"></script>
 @endsection

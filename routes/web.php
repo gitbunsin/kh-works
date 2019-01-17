@@ -53,11 +53,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
         Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
         Route::resource('pay-grade', 'PayGradeController');
-
         Route::get('/paygrade/{id}', 'PayGradeController@getRelationPayGradeCurrency');
         Route::post('/remove-currency-pay', 'PayGradeController@destroyPaygradeCurrency');
-
-
         Route::post('/add-currency-pay', 'PayGradeController@AddPayGradeCurrency');
         Route::resource('work-shift', 'WorkShiftController');
         Route::resource('employment-status', 'EmploymentStatusController');
@@ -77,6 +74,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('employee-work-experience','EmployeeWorkExperienceController');
         Route::resource('employee-work-skills','EmployeeSkillsController');
         Route::resource('skills','SkillController');
+        Route::resource('education','EducationController');
+        Route::resource('employee-education','EmployeeEducationController');
+        Route::resource('license-types','LicenseTypeController');
+        Route::resource('license','LicenseController');
+        Route::resource('membership','MembershipController');
         Route::resource('employee-qualification','QualificationController');
         Route::resource('language','LanguageController');
 

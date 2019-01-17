@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Education;
+use App\EmployeeEducation;
 use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
+use App\License;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,14 +19,23 @@ class QualificationController extends Controller
      */
     public function index()
     {
-
         $employee_skill = DB::table('tbl_hr_emp_skill as es')
             ->select('es.*','s.*','es.id as employee_skill_id')
             ->join('tbl_skill as s','es.skill_id','=','s.id')
             ->get();
-//        dd($employee_skill);
+//        dd($employee_skill);\
+        $employee_education = EmployeeEducation::all();
+//        dd($e);
         $employee_experience = EmployeeWorkExperience::all();
-        return view('backend.HRIS.PIM.Employee.qualification',compact('employee_experience','employee_skill'));
+        return view('backend.HRIS.PIM.Employee.qualification'
+                ,["employee_skill"=>$employee_skill,"employee_experience"=>$employee_experience
+                ,"employee_education"=>$employee_education
+                ,"license"=>License::all()
+
+            ]
+
+        );
+
     }
 
     /**

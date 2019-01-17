@@ -50,7 +50,7 @@
                                                         <section class="col col-4">
                                                             <label class="label">First Name</label>
                                                             <label class="input">
-                                                                <input value="{{$employee->emp_firstname}}" type="text" name="emp_firstname" id="emp_firstname">
+                                                                <input  value="{{$employee->emp_firstname}}" type="text" name="emp_firstname" id="emp_firstname">
                                                             </label>
                                                         </section>
                                                         <section class="col col-4">
@@ -653,7 +653,7 @@
                                             {{--</div>--}}
                                         {{--</div>--}}
                                         {{--<div class="panel panel-default">--}}
-                                            {{--<div class="panel-heading"><strong> License </strong></div>--}}
+                                            {{--<div class="panel-heading"><strong> LicenseType </strong></div>--}}
                                             {{--<div class="panel-body">--}}
                                                 {{--<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">--}}
                                                     {{--<thead>--}}

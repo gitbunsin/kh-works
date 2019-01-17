@@ -35,15 +35,17 @@
                                 <div class="row">
                                     <section class="col col-6">
                                         <label class="label">Company Profiles </label>
-                                        <label class="input">
-                                            <input  value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->company_id}}" type="text" name="name" id="name">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->company_id}}" type="text" name="name" id="name">
+                                            <span class="input-group-addon"><i class="fa fa-book "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-6">
                                         <label class="label">Company Email</label>
-                                        <label class="input">
-                                            <input  value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->email : Auth::guard('employee')->user()->email}}" type="text" name="email" id="email">
-                                        </label>
+                                        <div class="input-group">
+                                            <input  class="form-control" value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->email : Auth::guard('employee')->user()->email}}" type="text" name="email" id="email">
+                                            <span class="input-group-addon"><i class="fa fa-send-o "></i></span>
+                                        </div>
                                     </section>
                                 </div>
                                 <section>
@@ -58,61 +60,70 @@
                                 <div class="row">
                                     <section class="col col-4">
                                         <label class="label">City</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->city}}" type="text" name="city" id="city">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->city}}" type="text" name="city" id="city">
+                                            <span class="input-group-addon"><i class="fa fa-send-o "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Zip Code</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->zip_code}}" type="text" name="zip_code" id="zip_code">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->zip_code}}" type="text" name="zip_code" id="zip_code">
+                                            <span class="input-group-addon"><i class="fa fa-code "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Street</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->street1}}" type="text" name="street1" id="street1">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->street1}}" type="text" name="street1" id="street1">
+                                            <span class="input-group-addon"><i class="fa fa-street-view "></i></span>
+                                        </div>
                                     </section>
                                 </div>
                                 <div class="row">
                                     <section class="col col-4">
                                         <label class="label">Country</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->country}}" type="text" name="country" id="country">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control"  value="{{Auth::guard('admins')->user()->country}}" type="text" name="country" id="country">
+                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Province</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->province}}" type="text" name="province" id="province">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->province}}" type="text" name="province" id="province">
+                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Tax Id</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->tax_id}}" type="text" name="tax_id" id="tax_id">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control"  value="{{Auth::guard('admins')->user()->tax_id}}" type="text" name="tax_id" id="tax_id">
+                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                        </div>
                                     </section>
                                 </div>
                                 <div class="row">
                                     <section class="col col-4">
                                         <label class="label">Websites</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->website}}" type="text" name="website" id="website">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->website}}" type="text" name="website" id="website">
+                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">registration number</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->registration_number}}" type="text" name="registration_number" id="registration_number">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control"  value="{{Auth::guard('admins')->user()->registration_number}}" type="text" name="registration_number" id="registration_number">
+                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                        </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Noted</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->note}}" type="text" name="note" id="note">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->note}}" type="text" name="note" id="note">
+                                            <span class="input-group-addon"><i class="fa fa-circle-o-notch "></i></span>
+                                        </div>
                                     </section>
                                 </div>
 
@@ -130,7 +141,7 @@
                                         <div class="form-group">
                                             <label class="label">Phone masking</label>
                                             <div class="input-group">
-                                                <input id="phone" value="{{Auth::guard('admins')->user()->phone}}" type="text" name="phone" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
+                                                <input  id="phone" value="{{Auth::guard('admins')->user()->phone}}" type="text" name="phone" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
                                                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                             </div>
                                             <p class="note">
@@ -140,9 +151,10 @@
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">fax *</label>
-                                        <label class="input">
-                                            <input  value="{{Auth::guard('admins')->user()->fax}}" type="text" name="fax" id="fax">
-                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control"  value="{{Auth::guard('admins')->user()->fax}}" type="text" name="fax" id="fax">
+                                            <span class="input-group-addon"><i class="fa fa-fax"></i></span>
+                                        </div>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                         </div>
@@ -162,9 +174,10 @@
                                 </div>
                                 <section>
                                     <label class="label">Company Logos *</label>
-                                    <label class="input">
-                                        <input  value="" type="file" name="company_logo" id="company_logo">
-                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control"  value="" type="file" name="company_logo" id="company_logo">
+                                        <span class="input-group-addon"><i class="fa fa-file "></i></span>
+                                    </div>
                                 </section>
                                 <section>
                                     <div id="forumPost">

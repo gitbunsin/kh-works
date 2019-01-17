@@ -17,13 +17,13 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function index()
     {
-        //
-        $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
-                        ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
-                        ->get();
-//        dd($EmergencyContact);
 
-        return view('backend.HRIS.PIM.Employee.emergency',compact('EmergencyContact'));
+        $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
+                        ->select('c.*','e.*','r.*','c.id as emergency_id')
+                        ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
+                        ->join('tbl_relationship as r','c.relationship_id','=','r.id')
+                        ->get();
+        return view('backend.HRIS.PIM.Employee.Emergency.index',compact('EmergencyContact'));
     }
 
     /**
@@ -34,6 +34,7 @@ class EmployeeEmergencyContactController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.PIM.Employee.Emergency.create');
     }
 
     /**
@@ -44,16 +45,16 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
         $emergency = new EmployeeEmergencyContacts();
-        $emergency->eec_name = $request->eec_name;
+        $emergency->eec_name = $request->name;
         $emergency->emp_number = Auth::guard('employee')->user()->id;
-        $emergency->eec_relationship = $request->eec_relationship;
-        $emergency->eec_home_no = $request->eec_home_no;
-        $emergency->eec_mobile_no = $request->eec_mobile_no;
-        $emergency->eec_office_no = $request->eec_office_no;
+        $emergency->relationship_id = $request->relationship_id;
+        $emergency->eec_home_no = $request->home_telephone;
+        $emergency->eec_mobile_no = $request->mobile;
+        $emergency->eec_office_no = $request->work_telephone;
         $emergency->save();
-        return response()->json($emergency);
+        return redirect('/administration/employee-emergency-contact/');
     }
 
     /**
@@ -77,7 +78,15 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $e = DB::table('tbl_hr_emp_emergency_contacts as e')
+                        ->select('e.*','r.*','e.id as emergency_id')
+                        ->join('tbl_relationship as r','e.relationship_id',"=",'r.id')
+                        ->where('e.id',$id)
+                        ->first();
+//        dd($e);
+        return view('backend.HRIS.PIM.Employee.Emergency.edit',compact('e'));
+
     }
 
     /**
@@ -87,16 +96,19 @@ class EmployeeEmergencyContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $emergency_id)
+    public function update(Request $request, $id)
     {
-        $emergency = EmployeeEmergencyContacts::findOrFail($emergency_id);
-        $emergency->eec_name = $request->eec_name;
-        $emergency->eec_relationship = $request->eec_relationship;
-        $emergency->eec_home_no = $request->eec_home_no;
-        $emergency->eec_mobile_no = $request->eec_mobile_no;
-        $emergency->eec_office_no = $request->eec_office_no;
+
+        $emergency = EmployeeEmergencyContacts::findOrFail($id);
+        $emergency->eec_name = $request->name;
+        $emergency->emp_number = Auth::guard('employee')->user()->id;
+        $emergency->relationship_id = $request->relationship_id;
+        $emergency->eec_home_no = $request->home_telephone;
+        $emergency->eec_mobile_no = $request->mobile;
+        $emergency->eec_office_no = $request->work_telephone;
         $emergency->save();
-        return response()->json($emergency);
+
+        return redirect('/administration/employee-emergency-contact');
     }
 
     /**

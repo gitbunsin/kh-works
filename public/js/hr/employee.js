@@ -593,4 +593,166 @@ $("#btn_add_skills").click(function (e) {
         }
     });
 });
+// ================================================================= Education ==============================
+
+$('#demo_Education').hide();
+$(document).on('click','#btnclose_education',function(e){
+    $('#demo_Education').hide({
+        duration: 500,
+    });
+    $('#frmProducts_education').trigger("reset");
+});
+
+$(document).on('click','#btn_education',function(e){
+    $('#demo_Education').show({
+        duration: 500,
+    });
+    $('#frmProducts_education').trigger("reset");
+    $('#btn_save_education').val("add");
+});
+$("#btn_save_education").click(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    e.preventDefault();
+    var formData =
+        {
+            education_id: $('#level_id').val(),
+            institute: $('#institute_id ').val(),
+            major: $('#major').val(),
+            year: $('#year').val(),
+            score: $('#gpa_id').val(),
+            start_date: $('#start_date').val(),
+            end_date: $('#end_date').val(),
+        }
+    // alert(JSON.stringify(formData));
+    var state = $('#btn_save_education').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
+    var type = "POST"; //for creating new resource
+    var education_id = $('#product_id').val();
+    // alert(emp_work_id);
+    var my_url = '/administration/employee-education';
+    if (state == "update"){
+        type = "PUT"; //for updating existing resource
+        my_url += '/' + education_id;
+    }
+    //alert(JSON.stringify(formData));
+    $.ajax({
+        cache:false,
+        type: type,
+        url: my_url,
+        data: formData,
+        dataType: 'json',
+        success: function (data) {
+            // alert(JSON.stringify(data));
+            $('#demo_Education').hide();
+            var table =
+                '<tr id="education_id' + data.id +'">' +
+                '<td class="sorting_1"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.name + '</a></td>'+
+                '<td class="sorting_1">' + data.year+ '</td>'+
+                '<td class="sorting_1">' + data.score + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+            if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
+                $('#demo_Education').hide();
+                $("tbody>tr>td.dataTables_empty").hide();
+                $('#list-education').append(table);
+            }else{ //if user updated an existing record
+                alert("data has been updated");
+                $('#demo_Education').hide();
+                $("#education_id" + education_id).replaceWith(table);
+            }
+            $('#frmProducts_education').trigger("reset");
+        },
+        error: function (data) {
+            (JSON.stringify(data));
+            console.log(data);
+            //alert('failed');
+        }
+    });
+});
+// ==========================LicenseType====================================
+$('#demo_license').hide();
+$(document).on('click','#btnclose_license',function(e){
+    $('#demo_license').hide({
+        duration: 500,
+    });
+    $('#frmProducts_license').trigger("reset");
+});
+
+$(document).on('click','#btn_license',function(e){
+    $('#demo_license').show({
+        duration: 500,
+    });
+    $('#frmProducts_license').trigger("reset");
+    $('#btn_save_license').val("add");
+});
+$("#btn_save_license").click(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    e.preventDefault();
+    var formData =
+        {
+            licenseType_id : $('#license_type_id').val(),
+            license_number: $('#license_number ').val(),
+            issued_date: $('#issued_date').val(),
+            expiry_date: $('#expiry_date').val(),
+        }
+    alert(JSON.stringify(formData));
+    var state = $('#btn_save_license').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
+    var type = "POST"; //for creating new resource
+    var license_id = $('#product_id').val();
+    // alert(emp_work_id);
+    var my_url = '/administration/license';
+    if (state == "update"){
+        type = "PUT"; //for updating existing resource
+        my_url += '/' + license_id;
+    }
+    //alert(JSON.stringify(formData));
+    $.ajax({
+        cache:false,
+        type: type,
+        url: my_url,
+        data: formData,
+        dataType: 'json',
+        success: function (data) {
+            alert(JSON.stringify(data));
+            $('#demo_license').hide();
+            var table =
+                '<tr id="license_id' + data.id +'">' +
+                '<td class="sorting_1"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.name + '</a></td>'+
+                '<td class="sorting_1">' + data.issued_date+ '</td>'+
+                '<td class="sorting_1">' + data.expiry_date + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+            if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
+                $('#demo_license').hide();
+                $("tbody>tr>td.dataTables_empty").hide();
+                $('#list-license').append(table);
+            }else{ //if user updated an existing record
+                alert("data has been updated");
+                $('#demo_license').hide();
+                $("#license_id" + license_id).replaceWith(table);
+            }
+            $('#frmProducts_license').trigger("reset");
+        },
+        error: function (data) {
+            (JSON.stringify(data));
+            console.log(data);
+            //alert('failed');
+        }
+    });
+});
+
+
+
+
 

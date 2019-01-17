@@ -6,7 +6,7 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
-                        <span>{{Auth::guard('admins')->user()->name}}</span>
+                        <span>{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->email}}</span>
                         <i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -32,9 +32,9 @@
                             <li class="{{ Request::segment(2) == "user" ? "active" : " " }}">
                                 <a href="{{url ('administration/user')}}">User</a>
                             </li>
-                            <li class="{{ Request::segment(2) == "userRole" ? "active" : " " }}">
-                                <a href="{{url ('administration/userRole')}}">UserRole</a>
-                            </li>
+                            {{--<li class="{{ Request::segment(2) == "userRole" ? "active" : " " }}">--}}
+                                {{--<a href="{{url ('administration/userRole')}}">UserRole</a>--}}
+                            {{--</li>--}}
                         </ul>
                     </li>
                     <li>
@@ -80,17 +80,17 @@
                             <li class="{{ Request::segment(2) == "skills" ? "active" : " " }}">
                                 <a href="{{ url('administration/skills') }}">Skills</a>
                             </li>
-                            <li>
-                                <a href="">Education</a>
+                            <li class="{{ Request::segment(2) == "education" ? "active" : " " }}">
+                                <a href="{{ url('administration/education') }}">Education</a>
                             </li>
-                            <li>
-                                <a href="">Licenses</a>
+                            <li class="{{ Request::segment(2) == "license-types" ? "active" : " " }}">
+                                <a href="{{ url('administration/license-types') }}">LicenseType</a>
                             </li>
                             <li class="{{ Request::segment(2) == "language" ? "active" : " " }}">
                                 <a href="{{ url('administration/language') }}">Language</a>
                             </li>
-                            <li>
-                                <a href="">Memberships</a>
+                            <li class="{{ Request::segment(2) == "membership" ? "active" : " " }}">
+                                <a href="{{ url('administration/membership') }}">Membership</a>
                             </li>
                         </ul>
 

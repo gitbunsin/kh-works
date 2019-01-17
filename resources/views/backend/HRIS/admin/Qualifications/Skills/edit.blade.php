@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_skills" method="POST" enctype="multipart/form-data" action="{{url('administration/skills/'.$skills->id)}}" class="smart-form">
+                            <form id="frmSkill" method="POST" enctype="multipart/form-data" action="{{url('administration/skills/'.$skills->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -55,31 +55,11 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@endsection
+@section('script')
     <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-
-    <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_skills").validate({
+            var $loginForm = $("#frmSkill").validate({
                 // Rules for form validation
                 rules : {
                     name : {
@@ -98,6 +78,5 @@
                 }
             });
         });
-
     </script>
 @endsection
