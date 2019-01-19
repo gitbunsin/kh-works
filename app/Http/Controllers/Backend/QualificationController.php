@@ -30,8 +30,8 @@ class QualificationController extends Controller
         return view('backend.HRIS.PIM.Employee.qualification'
                 ,["employee_skill"=>$employee_skill,"employee_experience"=>$employee_experience
                 ,"employee_education"=>$employee_education
-                ,"license"=>License::all()
-
+                ,"license"=>License::all(),
+                "language"=>DB::table('tbl_hr_emp_language as l')->join('tbl_language as lg','l.lang_id',"=","lg.id")->get(),
             ]
 
         );

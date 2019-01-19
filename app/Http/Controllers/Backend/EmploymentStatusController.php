@@ -20,6 +20,7 @@ class EmploymentStatusController extends Controller
     {
         //
         $employee_status = EmployeeStatus::all();
+//        dd($employee_status);
         return view('backend.HRIS.admin.EmployeeStatus.index',compact('employee_status'));
     }
 

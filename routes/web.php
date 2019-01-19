@@ -81,6 +81,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('membership','MembershipController');
         Route::resource('employee-qualification','QualificationController');
         Route::resource('language','LanguageController');
+        Route::post('/employee-language','LanguageController@addLanguage');
 
 //        Route::resource('employee-skills',)
 //        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');

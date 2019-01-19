@@ -751,6 +751,84 @@ $("#btn_save_license").click(function (e) {
         }
     });
 });
+// ==========================================Language==========================================
+$('#demo_Language').hide();
+$(document).on('click','#btnclose_language',function(e){
+    $('#demo_Language').hide({
+        duration: 500,
+    });
+    $('#frmLanguage').trigger("reset");
+});
+
+$(document).on('click','#btn_language',function(e){
+    $('#demo_Language').show({
+        duration: 500,
+    });
+    // $('#frmLanguage').trigger("reset");
+    $('#btn_save_language').val("add");
+});
+$("#btn_add_language").click(function (e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    e.preventDefault();
+    var formData =
+        {
+            lang_id : $('#lang_id').val(),
+            fluency_id: $('#fluency_id ').val(),
+            competency_id : $('#competency_id').val(),
+            comments : $('#comments_id').val()
+        }
+    // alert(JSON.stringify(formData));
+    var state = $('#btn_save_license').val();
+    var employee_id = $('#emp_id').val();
+    // alert(employee_id);
+    var type = "POST"; //for creating new resource
+    var lang_id = $('#product_id').val();
+    // alert(emp_work_id);
+    var my_url = '/administration/employee-language';
+    if (state == "update"){
+        type = "PUT"; //for updating existing resource
+        my_url += '/' + lang_id;
+    }
+    //alert(JSON.stringify(formData));
+    $.ajax({
+        cache:false,
+        type: type,
+        url: my_url,
+        data: formData,
+        dataType: 'json',
+        success: function (data) {
+            // alert(JSON.stringify(data));
+            $('#demo_Language').hide();
+            var table =
+                '<tr id="language_id' + data.id +'">' +
+                '<td class="sorting_1"><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">' + data.name + '</a></td>'+
+                '<td class="sorting_1">' + data.fluency+ '</td>'+
+                '<td class="sorting_1">' + data.competency + '</td>'+
+                '<td class="sorting_1">' + data.comments + '</td>'
+            table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+            if (state == "add"){ //if user added a new record
+                alert("data has been inserted");
+                $('#demo_Language').hide();
+                $("tbody>tr>td.dataTables_empty").hide();
+                $('#list-language').append(table);
+            }else{ //if user updated an existing record
+                alert("data has been updated");
+                $('#demo_Language').hide();
+                $("#language_id" + lang_id).replaceWith(table);
+            }
+            $('#frmLanguage').trigger("reset");
+        },
+        error: function (data) {
+            (JSON.stringify(data));
+            console.log(data);
+            //alert('failed');
+        }
+    });
+});
 
 
 

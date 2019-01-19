@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\EmployeeLanguage;
 use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 use App\language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LanguageController extends Controller
 {
@@ -46,6 +48,21 @@ class LanguageController extends Controller
         $language->company_id = Auth::guard('admins')->user()->id;
         $language->save();
         return redirect('/administration/language');
+    }
+    public function addLanguage(Request $request)
+    {
+        $l = new EmployeeLanguage();
+        $l->emp_number = Auth::guard('employee')->user()->id;
+        $l->lang_id = $request->lang_id;
+        $l->fluency = $request->fluency_id;
+        $l->competency = $request->competency_id;
+        $l->comments = $request->comments;
+        $l->save();
+        $l = DB::table('tbl_hr_emp_language as es')
+            ->join('tbl_language as s','es.lang_id','=','s.id')
+            ->where('s.id',$request->lang_id)
+            ->first();
+        return response()->json($l);
     }
 
     /**

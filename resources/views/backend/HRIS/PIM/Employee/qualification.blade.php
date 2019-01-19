@@ -515,6 +515,77 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                <div class="row">
+                                    <div class="col-lg-12 margin-tb">
+                                        <div class="pull-right">
+                                            <button id="btn_language" type="button" class="btn btn-info">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div id="demo_Language">
+                                    <form id="frmLanguage"  class="smart-form">
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label">Language</label>
+                                                    <label class="select">
+                                                        <select name="lang_id" id="lang_id">
+                                                            <option value="">-- select --</option>
+                                                            @php $l = \App\language::all(); @endphp
+                                                            @foreach($l as $ls)
+                                                                <option value="{{$ls->id}}">{{$ls->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label class="label">Fluency</label>
+                                                    <label class="select">
+                                                        <select name="fluency_id" id="fluency_id">
+                                                            <option value="">-- select --</option>
+                                                            @php $p = array('Poor','Basic','Good','Mother Tough'); @endphp
+                                                            @foreach($p as $ps)
+                                                                <option value="{{$ps}}">{{$ps}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-6">
+                                                    <label class="label"> Competency *</label>
+                                                    <label class="select">
+                                                        <select name="competency_id" id="competency_id">
+                                                            <option value="">-- select --</option>
+                                                            @php $f = array('writing','speaking','reading'); @endphp
+                                                            @foreach($f as $fs)
+                                                                <option value="{{$fs}}">{{$fs}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-6">
+                                                    <label class="label">comments *</label>
+                                                    <label class="input">
+                                                        <input name="comments_id" id="comments_id" type="text"/>
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <footer>
+                                                <input type="button" class="btn btn-primary" id="btn_add_language" value="add">
+                                                <input type="hidden" id="product_id" name="product_id" value="0">
+                                                <button type="button" class="btn btn-default" id="btnclose_language" data-dismiss="modal">Close</button>
+                                            </footer>
+                                        </fieldset>
+                                    </form>
+                                </div>
                                 <table id="dt_basic" class="display_language table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                     <tr>
@@ -522,25 +593,27 @@
                                         <th> Fluency </th>
                                         <th> Competency</th>
                                         <th> Comments </th>
+                                        <th> Action</th>
                                     </tr>
                                     </thead>
-                                    {{--<tbody id="products-list-skill" name="products-list">--}}
-                                    {{--@foreach($employee_skill as $employee_skills)--}}
-                                    {{--<tr id="employee_skills_id">--}}
-                                    {{--<td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">--}}
-                                    {{--{{$employee_skills->name}}--}}
-                                    {{--</a>--}}
-                                    {{--</td>--}}
-                                    {{--<td>{{$employee_skills->years_of_exp}}</td>--}}
-                                    {{--<td>{{$employee_skills->comments}}</td>--}}
-                                    {{--<td>--}}
-                                    {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                    {{--</a>--}}
-                                    {{--</td>--}}
-                                    {{--</tr>--}}
-                                    {{--@endforeach--}}
-                                    {{--</tbody>--}}
+                                    <tbody id="list-language" name="list-language">
+                                    @foreach($language as $languages)
+                                        <tr id="language_id{{$languages->id}}">
+                                            <td> <a data-id="{{$languages->id}}" href="#" class="btn-detail open_modal_skills">
+                                                    {{$languages->name}}
+                                                </a>
+                                            </td>
+                                            <td>{{$languages->fluency}}</td>
+                                            <td>{{$languages->competency}}</td>
+                                            <td>{{$languages->comments}}</td>
+                                            <td>
+                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
                                 </table>
 
                             </div>

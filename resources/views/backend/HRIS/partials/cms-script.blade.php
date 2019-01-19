@@ -41,6 +41,9 @@
 		<!-- FastClick: For mobile devices -->
 		<script src="{{ asset('js/plugin/fastclick/fastclick.min.js')}}"></script>
 
+<script src="{{ asset('js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+
+
 
 		<!--[if IE 8]>
 
@@ -168,8 +171,15 @@
             tablet : 1024,
             phone : 480
         };
+		var initializeDuallistbox = $('#initializeDuallistbox').bootstrapDualListbox({
+			nonSelectedListLabel: 'Available Employees',
+			selectedListLabel: 'Assigned Employees',
+			preserveSelectionOnMove: 'moved',
+			moveOnSelect: false,
+			nonSelectedFilter: ''
+		});
 
-        $('#dt_basic').dataTable({
+		$('#dt_basic').dataTable({
             "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
             "t"+
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
