@@ -140,9 +140,11 @@ class EmployeeController extends Controller
      *
      * @param $token
      * @return \Illuminate\Http\Response
+     * login employee still error
      */
         public function loginEmployee(Request $request,$company_name,$token)
         {
+
             return view('backend.HRIS.PIM.Employee.login',compact('company_name','email'));
         }
 
