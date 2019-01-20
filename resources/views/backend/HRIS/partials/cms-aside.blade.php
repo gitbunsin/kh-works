@@ -167,7 +167,7 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-lg fa-fw fa-table"></i>
-                            <span class="menu-item-parent">My Info</span>
+                            <span class="menu-item-parent">My Info 1</span>
                         </a>
                         <ul>
                             <li class="{{ Request::segment(2) == "employee-personal-details" ? "active" : " " }}">
