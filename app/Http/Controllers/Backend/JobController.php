@@ -70,10 +70,11 @@ class JobController extends Controller
 //        return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
 //    }
         public  function displayJob($job_id , $company_id){
-//            $isApply = false;
+
             if(auth::user()){
                 $user_id  = auth::user()->id;
-//                dd($user_id);
+
+                //dd($user_id);
 //                $result = DB::table('tbl_job_candidate as c')
 //                    ->select('c.id')
 //                    ->where('c.user_id',$user_id)->get()->groupBy('c.user_id');
