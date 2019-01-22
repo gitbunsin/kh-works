@@ -46,11 +46,6 @@ class WorkShiftController extends Controller
      */
     public function store(Request $request)
     {
-
-
-//        dd($request->all());
-//        $input = $request->except('wishlist');
-//        dd($input);
         $WorkShift  = new WorkShift();
         $WorkShift->name = $request->name;
         $WorkShift->hours_per_day = $request->hours_per_day;
@@ -67,9 +62,6 @@ class WorkShiftController extends Controller
             $employee-> status = 1;
             $employee->save();
         }
-//        dd($item);
-
-
         return redirect('/administration/work-shift');
     }
 

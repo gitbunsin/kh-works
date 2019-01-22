@@ -247,29 +247,7 @@
             {{--$('#startdate').datepicker({--}}
                 {{--// format: 'DD - dd MM yyyy'--}}
             {{--});--}}
-            {{--var $loginForm = $("#validate_works_shifts").validate({--}}
-                {{--// Rules for form validation--}}
-                {{--rules : {--}}
-                    {{--name : {--}}
-                        {{--required : true--}}
-                    {{--},--}}
-                    {{--hours_per_day:{--}}
-                        {{--required : true--}}
-                    {{--},--}}
-                {{--},--}}
-                {{--// Messages for form validation--}}
-                {{--messages : {--}}
-                    {{--name : {--}}
-                        {{--required : 'field is required !'--}}
-                    {{--},--}}
-                    {{--hours_per_day : {--}}
-                        {{--required : 'field is required !'--}}
-                    {{--},--}}
-                {{--},--}}
-                {{--// Do not change code below--}}
-                {{--errorPlacement : function(error, element) {--}}
-                    {{--error.insertAfter(element.parent());--}}
-                {{--}--}}
+            {{--
             {{--});--}}
         {{--});--}}
 

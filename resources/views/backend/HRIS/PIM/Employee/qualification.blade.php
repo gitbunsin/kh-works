@@ -58,9 +58,7 @@
                                                 <section class="col col-6">
                                                     <label class="label"> Company *</label>
                                                     <label class="input">
-
                                                         <input type="text" name="company" id="company">
-
                                                     </label>
                                                 </section>
 
@@ -272,9 +270,12 @@
                                     <tbody id="list-education" name="list-education">
                                      @foreach($employee_education as $es)
                                         <tr id="education_id{{$es->id}}">
-                                            <td></td>
+                                           <td> <a data-id="{{$es->id}}" href="#" class="btn-detail education_edit">
+                                                       {{$es->name}}
+                                                    </a>
+                                                </td>
                                             <td>{{$es->year}}</td>
-                                            <td></td>
+                                            <td>{{$es->score}}</td>
                                             <td>
                                                 <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
                                                     <i class="glyphicon glyphicon-trash"  style="color:red;"></i>

@@ -114,7 +114,7 @@ class EmployeeController extends Controller
                  ->join('tbl_skill as s','es.skill_id','=','s.id')
                  ->get();
 //        $employee_skill = EmployeeSkills::all();
-        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience','employee_skill'));
+        return view('backend.HRIS.PIM.Employee.details',compact('employee_experience','employee_skill'));
     }
     public  function  getJob()
     {
@@ -145,7 +145,7 @@ class EmployeeController extends Controller
         public function loginEmployee(Request $request,$company_name,$token)
         {
 
-            return view('backend.HRIS.PIM.Employee.login',compact('company_name','email'));
+            return view('backend.HRIS.PIM.Employee.login',compact('company_name'));
         }
 
         public function EmployeeLogin(Request $request)

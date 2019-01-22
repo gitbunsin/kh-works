@@ -61,9 +61,16 @@ class EmployeeEducationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($education_id)
     {
         //
+        $e = EmployeeEducation::findOrFail($education_id);
+        $e = DB::table('tbl_hr_education as es')
+            ->join('tbl_education as s','es.education_id','=','s.id')
+            ->where('s.id',$education_id)
+            ->first();
+        return response()->json($e);
+
     }
 
     /**

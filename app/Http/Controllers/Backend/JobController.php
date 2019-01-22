@@ -70,7 +70,7 @@ class JobController extends Controller
 //        return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
 //    }
         public  function displayJob($job_id , $company_id){
-
+            $isApply = false;
             if(auth::user()){
                 $user_id  = auth::user()->id;
 

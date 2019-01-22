@@ -366,14 +366,14 @@ $(document).on('click','#btnclose',function(e){
     $('#demo-experience').hide({
         duration: 500,
     });
-    $('#frmProducts').trigger("reset");
+    $('#frmExperience').trigger("reset");
 });
 
 $(document).on('click','#show',function(e){
     $('#demo-experience').show({
         duration: 500,
     });
-    $('#frmProducts').trigger("reset");
+    $('#frmExperience').trigger("reset");
     $('#btn-save_experience').val("add");
 });
 
@@ -463,7 +463,7 @@ $("#btn-save_experience").click(function (e) {
                 $('#demo-experience').hide();
                 $("#work_experience_id" + emp_work_id).replaceWith(table);
             }
-             $('#frmProducts').trigger("reset");
+             $('#frmExperience').trigger("reset");
         },
         error: function (data) {
             (JSON.stringify(data));
@@ -607,9 +607,42 @@ $(document).on('click','#btn_education',function(e){
     $('#demo_Education').show({
         duration: 500,
     });
-    $('#frmProducts_education').trigger("reset");
+    $('#frmEducation').trigger("reset");
     $('#btn_save_education').val("add");
+
 });
+
+//Edit Education 
+$(document).on('click','.education_edit',function(e){
+    var education_id = $(this).attr('data-id');
+    // alert(emp_work_id);
+    // Populate Data in Edit Modal Form
+    //('administration/job/' . $jobs->id . '/edit')
+    $.ajax({
+        type: "GET",
+        url: '/administration/employee-education'+'/' + education_id,
+        success: function (data) {
+            alert(JSON.stringify(data));
+            $('#demo_Education').show({
+                duration: 500,
+            });//you can list several class names
+            $('#level_id').val(data.name),
+            $('#institute_id ').val(data.institute),
+            $('#major').val(data.major),
+            $('#year').val(data.year),
+            $('#gpa_id').val(data.score),
+            $('#start_date').val(data.start_date),
+            $('#end_date').val(data.end_date),
+            $('#btn_save_education').val("update");
+            e.preventDefault();
+        },
+        error: function (data) {
+            alert(JSON.stringify(data));
+            console.log('Error:', data);
+        }
+    });
+});
+//
 $("#btn_save_education").click(function (e) {
     $.ajaxSetup({
         headers: {
@@ -647,7 +680,7 @@ $("#btn_save_education").click(function (e) {
         data: formData,
         dataType: 'json',
         success: function (data) {
-            // alert(JSON.stringify(data));
+           // alert(JSON.stringify(data));
             $('#demo_Education').hide();
             var table =
                 '<tr id="education_id' + data.id +'">' +
@@ -660,12 +693,13 @@ $("#btn_save_education").click(function (e) {
                 $('#demo_Education').hide();
                 $("tbody>tr>td.dataTables_empty").hide();
                 $('#list-education').append(table);
+                $('#frmEducation').trigger("reset");
             }else{ //if user updated an existing record
                 alert("data has been updated");
                 $('#demo_Education').hide();
                 $("#education_id" + education_id).replaceWith(table);
             }
-            $('#frmProducts_education').trigger("reset");
+            $('#frmEducation').trigger("reset");
         },
         error: function (data) {
             (JSON.stringify(data));
