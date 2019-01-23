@@ -66,8 +66,8 @@
                             <li class="{{ Request::segment(2) == "companyProfile" ? "active" : " " }}">
                                 <a href="{{ url('administration/companyProfile') }}">General Information</a>
                             </li>
-                            <li>
-                                <a href="">Locations</a>
+                            <li class="{{ Request::segment(2) == "locations" ? "active" : " " }}">
+                                <a href="{{ url('administration/locations') }}">Locations</a>
                             </li>
                             <li>
                                 <a href="">Stature</a>
@@ -95,8 +95,8 @@
                         </ul>
 
                     </li>
-                    <li>
-                        <a href="#">Nationalities<span class="badge pull-right inbox-badge bg-color-yellow"></span></a>
+                    <li class="{{ Request::segment(2) == "nationality" ? "active" : " " }}">
+                        <a href="{{ url('administration/nationality') }}">Nationalities</a>
                     </li>
                     <li>
                         <a href="#">Configuration<span class="badge pull-right inbox-badge bg-color-yellow"></span></a>

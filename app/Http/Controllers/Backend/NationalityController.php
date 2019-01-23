@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\EmployeeSkills;
-use App\Skill;
+
+
+use App\nation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-
-class EmployeeSkillsController extends Controller
+class NationalityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,10 @@ class EmployeeSkillsController extends Controller
      */
     public function index()
     {
-
         //
+
+        $n = nation::where('company_id',Auth::guard('admins')->user()->id)->get();
+        return view('backend.HRIS.admin.Nationality.index',compact('n'));
     }
 
     /**
@@ -30,6 +31,7 @@ class EmployeeSkillsController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.admin.Nationality.create');
     }
 
     /**
@@ -40,18 +42,14 @@ class EmployeeSkillsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $data = new EmployeeSkills();
-        $data->skill_id = $request->skill_id;
-        $data->years_of_exp = $request->years_of_exp;
-        $data->comments = $request->comments;
-        $data->save();
-        $data = DB::table('tbl_hr_emp_skill as es')
-            ->join('tbl_skill as s','es.skill_id','=','s.id')
-            ->where('s.id',$request->skill_id)
-            ->first();
-        return response()->json($data);
         //
+        $n = new nation();
+        $n->name = $request->name;
+        $n->description = $request->description;
+        $n->company_id = Auth::guard('admins')->user()->id;
+        $n->save();
+        return redirect('/administration/nationality');
+
     }
 
     /**
@@ -60,11 +58,9 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($skill_id)
+    public function show($id)
     {
-
-        $data = EmployeeSkills::findOrFail($skill_id);
-        return response()->json($data);
+        //
     }
 
     /**
@@ -76,6 +72,8 @@ class EmployeeSkillsController extends Controller
     public function edit($id)
     {
         //
+        $n = nation::findOrFail($id);
+        return view('backend.HRIS.admin.Nationality.edit',compact('n'));
     }
 
     /**
@@ -85,21 +83,17 @@ class EmployeeSkillsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $emp_skill_id)
+    public function update(Request $request, $id)
     {
-        //dd($request->all());
-        $data =  EmployeeSkills::findOrFail($emp_skill_id);
-        $data->skill_id = $request->skill_id;
-        $data->years_of_exp = $request->years_of_exp;
-        $data->comments = $request->comments;
-        $data->save();
-        $data = DB::table('tbl_hr_emp_skill as es')
-            ->join('tbl_skill as s','es.skill_id','=','s.id')
-            ->where('s.id',$request->skill_id)
-            ->first();
-        //dd($data);
-        return response()->json($data);
         //
+        dd($request->all());
+        $n = nation::findOrFail($id);
+        $n->name = $request->name;
+        $n->description = $request->description;
+        $n->company_id = Auth::guard('admins')->user()->id;
+        $n->save();
+        return redirect('/administration/nationality');
+
     }
 
     /**

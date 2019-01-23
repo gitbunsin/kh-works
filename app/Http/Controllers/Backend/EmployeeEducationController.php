@@ -104,7 +104,11 @@ class EmployeeEducationController extends Controller
         $E->start_date = \Carbon\Carbon::parse($request->start_date);
         $E->end_date = \Carbon\Carbon::parse($request->end_date);
         $E->save();
-        return respone()->json($E);
+        $E = DB::table('tbl_hr_education as es')
+            ->join('tbl_education as s','es.education_id','=','s.id')
+            ->where('s.id',$request->education_id)
+            ->first();
+        return response()->json($E);
     }
 
     /**

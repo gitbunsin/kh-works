@@ -253,7 +253,7 @@
                                         </fieldset>
                                         <footer>
                                             <input type="submit" class="btn btn-primary" id="btn_save_education" value="">
-                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <input type="hidden" id="education_id" name="product_id" value="0">
                                             <button data-toggle="collapse" data-target="#demo-experience" type="button" class="btn btn-default" id="btnclose_education" data-dismiss="modal">Close</button>
                                         </footer>
                                     </form>
@@ -303,7 +303,6 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2> Skills </h2>
-
                     </header>
 
                     <!-- widget div-->
@@ -374,7 +373,7 @@
                                         </fieldset>
                                         <footer>
                                             <input type="button" class="btn btn-primary" id="btn_add_skills" value="add">
-                                            <input type="hidden" id="product_id" name="product_id" value="0">
+                                            <input type="hidden" id="skill_id" name="skill_id" value="0">
                                             <button  type="button" class="btn btn-default" id="btnclose_skill" data-dismiss="modal">Close</button>
                                         </footer>
                                     </form>
@@ -388,10 +387,10 @@
                                         <th> Action </th>
                                     </tr>
                                     </thead>
-                                        <tbody id="products-list-skill" name="products-list">
+                                        <tbody id="products-list-skill" name="products-list-skill">
                                         @foreach($employee_skill as $employee_skills)
-                                            <tr id="employee_skills_id">
-                                                <td> <a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail open_modal_skills">
+                                            <tr id="employee_skills_id{{$employee_skills->id}}">
+                                                <td><a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail edit_skill">
                                                        {{$employee_skills->name}}
                                                     </a>
                                                 </td>
