@@ -91,9 +91,20 @@ class EmployeeEducationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $education_id)
     {
         //
+        $E = EmployeeEducation::findOrFail($education_id);
+        $E->emp_number = Auth::guard('employee')->user()->id;
+        $E->education_id = $request->education_id;
+        $E->institute= $request->institute;
+        $E->major = $request->major;
+        $E->year = $request->year;
+        $E->score = $request->score;
+        $E->start_date = \Carbon\Carbon::parse($request->start_date);
+        $E->end_date = \Carbon\Carbon::parse($request->end_date);
+        $E->save();
+        return respone()->json($E);
     }
 
     /**

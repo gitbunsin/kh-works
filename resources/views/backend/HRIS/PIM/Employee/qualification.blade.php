@@ -151,7 +151,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Educations </h2>
+                        <h2> Educations 1</h2>
 
                     </header>
 
