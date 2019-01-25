@@ -48,7 +48,7 @@ class NationalityController extends Controller
         $n->description = $request->description;
         $n->company_id = Auth::guard('admins')->user()->id;
         $n->save();
-        return redirect('/administration/nationality');
+        return redirect('/administration/nationality')->with('success','Item created successfully!');
 
     }
 
@@ -85,14 +85,13 @@ class NationalityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        dd($request->all());
+//        dd($request->all());
         $n = nation::findOrFail($id);
         $n->name = $request->name;
         $n->description = $request->description;
         $n->company_id = Auth::guard('admins')->user()->id;
         $n->save();
-        return redirect('/administration/nationality');
+        return redirect('/administration/nationality')->with('success','Item edited successfully!');
 
     }
 

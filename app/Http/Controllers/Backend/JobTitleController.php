@@ -46,7 +46,7 @@ class JobTitleController extends Controller
         $job_title->is_deleted = 0;
         $job_title->save();
 //        dd($job_title);
-        return  redirect('/administration/jobs-title');
+        return  redirect('/administration/jobs-title')->with('success','Item Edited successfully!');
     }
 
 
@@ -82,7 +82,7 @@ class JobTitleController extends Controller
         $j->td = \Carbon\Carbon::now();
         $j->save();
         session()->flash('success', 'Task was successful!');
-        return redirect('/administration/jobs-title');
+        return redirect('/administration/jobs-title')->with('success','Item created successfully!');
 //        return response()->json($JobTitle);
     }
 

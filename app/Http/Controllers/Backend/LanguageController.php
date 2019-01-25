@@ -47,7 +47,7 @@ class LanguageController extends Controller
         $language->description = $request->description;
         $language->company_id = Auth::guard('admins')->user()->id;
         $language->save();
-        return redirect('/administration/language');
+        return redirect('/administration/language')->with('success','Item created successfully!');
     }
     public function addLanguage(Request $request)
     {
@@ -105,7 +105,7 @@ class LanguageController extends Controller
         $language->description = $request->description;
         $language->company_id = Auth::guard('admins')->user()->id;
         $language->save();
-        return redirect('/administration/language');
+        return redirect('/administration/language')->with('success','Item edited successfully!');
 
     }
 

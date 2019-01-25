@@ -1,12 +1,5 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    <style>
-        textarea {
-            overflow-y: scroll;
-            height: 200px;
-            resize: none;
-        }
-    </style>
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -27,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_pay_grade" method="POST" enctype="multipart/form-data" action="{{url('administration/locations')}}" class="smart-form">
+                            <form id="frmLocations" method="POST" enctype="multipart/form-data" action="{{url('administration/locations')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
@@ -115,4 +108,23 @@
             </article>
         </div>
     </section>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        var $loginForm = $("#frmLocations").validate({
+            // Rules for form validation
+            rules : {
+                name : {
+                    required : true
+                },
+                country_code: {
+                    required: true
+                }
+            },
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+    </script>
 @endsection

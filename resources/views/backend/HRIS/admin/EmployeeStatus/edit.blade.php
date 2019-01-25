@@ -21,7 +21,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_job_title" method="POST" enctype="multipart/form-data" action="{{url('administration/employment-status/'.$employeeStatus->id)}}" class="smart-form">
+                            <form id="frmEmployeeStatus" method="POST" enctype="multipart/form-data" action="{{url('administration/employment-status/'.$employeeStatus->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -47,41 +47,18 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-
+@endsection
+@section('script')
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_job_title").validate({
+            var $loginForm = $("#frmEmployeeStatus").validate({
                 // Rules for form validation
                 rules : {
-                    job_title : {
+                    name : {
                         required : true
-                    },
-                },
-                // Messages for form validation
-                messages : {
-                    job_title : {
-                        required : 'field is required !'
                     },
                 },
                 // Do not change code below
@@ -90,6 +67,6 @@
                 }
             });
         });
-
     </script>
+
 @endsection

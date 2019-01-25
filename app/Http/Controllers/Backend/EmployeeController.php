@@ -105,7 +105,7 @@ class EmployeeController extends Controller
             return view('verification');
         }
 
-        return redirect('/administration/employee');
+        return redirect('/administration/employee')->with('success','Item created successfully!');
     }
     public function EmployeeInfo(){
 
@@ -160,61 +160,7 @@ class EmployeeController extends Controller
                 return Redirect::route('login')->with('global', 'You do not confirm your email yet.');
             }
             return redirect($this->redirectTo);
-//            dd('hello');
-//            $email = input::get('email');
-//            $password = input::get('password');
-////            dd($password);
-//            $validate_admin = DB::table('tbl1_hr_employee')
-//                ->select('email','password')
-//                ->where('email', Input::get('email'))
-//                ->first();
-//
-//            if ($validate_admin && Hash::check(Input::get('password'), $validate_admin->password)) {
-//
-//                // here you know data is valid
-////                return redirect($this->redirectTo);
-//                dd('hello');
-//            }
-     }
-
-
-//    public function verify($token)
-//    {
-//        $employee = Employee::where('email_token', $token)->first();
-//        $employee->verified = 1;
-//
-//        if($employee->save()){
-//            return view('verifyEmployee', ['employee' => $employee]);
-//        }
-//    }
-//    public function ajaxImage(Request $request)
-//    {
-//        if ($request->isMethod('get'))
-//            return view('ajax_image_upload');
-//        else {
-//            $validator = Validator::make($request->all(),
-//                [
-//                    'file' => 'image',
-//                ],
-//                [
-//                    'file.image' => 'The file must be an image (jpeg, png, bmp, gif, or svg)'
-//                ]);
-//            if ($validator->fails())
-//                return array(
-//                    'fail' => true,
-//                    'errors' => $validator->errors()
-//                );
-//            if ($request->hasFile('file')) {
-//                $image = $request->file('file');
-//                $extension = $image->getClientOriginalName();
-//                $dir = 'uploads/';
-//                $filename = uniqid() . '_' . time() . '.' . $extension;
-//                $request->file('file')->move($dir, $filename);
-//                return $filename;
-//            }
-//        }
-//
-//    }
+        }
 
     public function deleteImage($filename)
     {
@@ -301,10 +247,6 @@ class EmployeeController extends Controller
 
         return response()->json(['data'=>'ok']);
     }
-
-
-
-
 
     public function destroy($employee_id)
     {

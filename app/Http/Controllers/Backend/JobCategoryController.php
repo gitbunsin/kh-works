@@ -43,7 +43,7 @@ class JobCategoryController extends Controller
         $job_category->description = $request->description;
         $job_category->save();
 
-        return redirect('/administration/jobs-category');
+        return redirect('/administration/jobs-category')->with('success','Item created successfully!');
     }
     /**
      * Display the specified resource.
@@ -71,7 +71,7 @@ class JobCategoryController extends Controller
         $JobCategory->name = $request->name;
         $JobCategory->description = $request->description;
         $JobCategory->save();
-        return redirect('/administration/jobs-category');
+        return redirect('/administration/jobs-category')->with('success','Item edited successfully!');
     }
 
 

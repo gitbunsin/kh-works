@@ -64,12 +64,15 @@
         <section id="widget-grid" class="">
             <div class="row">
                 <article class="col-sm-12">
+					@include('flash-message')
                     <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                         <!-- END MAIN CONTENT -->
+
                         @yield('content')
                     </div>
                 </article>
             </div>
+
         </section>
     </div>
     <!-- END MAIN PANEL -->

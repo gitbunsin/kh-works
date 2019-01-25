@@ -47,7 +47,7 @@ class SkillController extends Controller
         $skill->name = $request->name;
         $skill->description = $request->description;
         $skill->save();
-        return redirect('/administration/skills');
+        return redirect('/administration/skills')->with('success','Item created successfully!');
 
     }
 
@@ -91,7 +91,7 @@ class SkillController extends Controller
         $skill->name = $request->name;
         $skill->description = $request->description;
         $skill->save();
-        return redirect('/administration/skills');
+        return redirect('/administration/skills')->with('success','Item created successfully!');
 
     }
 

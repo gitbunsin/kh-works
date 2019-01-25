@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Eduction</h2>
+                        <h2> License Types</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmEducation" method="POST" enctype="multipart/form-data" action="{{url('administration/license-types/'.$l->id)}}" class="smart-form">
+                            <form id="frmLicense" method="POST" enctype="multipart/form-data" action="{{url('administration/license-types/'.$l->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -59,7 +59,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var $loginForm = $("#frmEducation").validate({
+            var $loginForm = $("#frmLicense").validate({
                 // Rules for form validation
                 rules : {
                     name : {

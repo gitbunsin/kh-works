@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_job_title" method="POST" enctype="multipart/form-data" action="{{url('administration/nationality')}}" class="smart-form">
+                            <form id="frmNationality" method="POST" enctype="multipart/form-data" action="{{url('administration/nationality')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
@@ -59,7 +59,7 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-            var $loginForm = $("#validate_job_title").validate({
+            var $loginForm = $("#frmNationality").validate({
                 // Rules for form validation
                 rules : {
                     name : {

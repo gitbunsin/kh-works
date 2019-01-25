@@ -57,7 +57,7 @@ class LocationController extends Controller
         $l->fax = $request->fax;
         $l->notes = $request->notes;
         $l->save();
-        return redirect('/administration/locations');
+        return redirect('/administration/locations')->with('success','Item created successfully!');
     }
 
     /**
@@ -111,7 +111,7 @@ class LocationController extends Controller
         $l->fax = $request->fax;
         $l->notes = $request->notes;
         $l->save();
-        return redirect('/administration/locations');
+        return redirect('/administration/locations')->with('success','Item edited successfully!');
     }
 
     /**

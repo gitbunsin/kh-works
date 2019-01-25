@@ -54,7 +54,7 @@ class UserController extends Controller
             $u->verified = 0;
         }
         $u->save();
-        return redirect('/administration/user');
+        return redirect('/administration/user')->with('success','Item created successfully!');
     }
 
     /**
@@ -108,7 +108,7 @@ class UserController extends Controller
             $u->verified = 0;
         }
         $u->save();
-        return redirect('/administration/user');
+        return redirect('/administration/user')->with('success','Item edited successfully!');
     }
 
     /**

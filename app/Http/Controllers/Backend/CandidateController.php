@@ -131,7 +131,7 @@ class CandidateController extends Controller
             $CandidateAttachment->file_type = $type;
             $CandidateAttachment->save();
         }
-        return redirect('/administration/candidate');
+        return redirect('/administration/candidate')->with('success','Item created successfully!');
     }
 
     /**
@@ -146,7 +146,7 @@ class CandidateController extends Controller
 //    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource->with('success','Item created successfully!')
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

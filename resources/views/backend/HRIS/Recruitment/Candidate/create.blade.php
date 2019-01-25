@@ -22,7 +22,7 @@
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate" method="POST" action="{{ url('administration/candidate') }}" class="smart-form" enctype="multipart/form-data" >
+                            <form id="frmCandidate" method="POST" action="{{ url('administration/candidate') }}" class="smart-form" enctype="multipart/form-data" >
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
@@ -45,16 +45,15 @@
                                                         ->select('v.*','t.*','v.id as j_id')
                                                         ->join('tbl_job_title as t','v.job_title_code','=','t.id')
                                                         ->get();
-
                                             @endphp
 
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                <select name="job_title" id="job_title">
-                                                    <option value="0">-- select --</option>
+                                                <select name="job_title" id="job_title" class="required">
+                                                    <option value="">-- select --</option>
                                                     @foreach($j as $js)
                                                         <option value="{{$js->id}}">{{$js->job_title}}</option>
-                                                        <input type="hidden" id="vacancy_id" name="vacancy_id" value="{{$j->j_id}}"/>
+                                                        <input type="hidden" id="vacancy_id" name="vacancy_id" value="{{$js->j_id}}"/>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -121,42 +120,17 @@
             </article>
         </div>
     </section>
-
-    <!--================================================== -->
-
-    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-
+@endsection
+@section('script')
     <script type="text/javascript">
-
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate").validate({
+            var $loginForm = $("#frmCandidate").validate({
                 // Rules for form validation
                 rules : {
-                    first_name : {
+                    full_name : {
                         required : true
                     },
-                    last_name : {
+                    job_title : {
                         required : true,
                         maxlength : 20
                     },
@@ -168,23 +142,6 @@
                         email : true
                     }
                 },
-
-                // Messages for form validation
-                messages : {
-                    first_name : {
-                        required : 'Please enter first name'
-                    },
-                    last_name : {
-                        required: 'Please enter your last name'
-                    },
-                    middle_name : {
-                        required:'Pleae inter middle name'
-                    },
-                    email :{
-                        required:'please enter correct email'
-                    }
-                },
-
                 // Do not change code below
                 errorPlacement : function(error, element) {
                     error.insertAfter(element.parent());
@@ -193,4 +150,5 @@
         });
 
     </script>
+
 @endsection

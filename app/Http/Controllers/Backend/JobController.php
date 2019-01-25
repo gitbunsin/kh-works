@@ -174,7 +174,7 @@ class JobController extends Controller
             $jd->job_vacancy_id =$job_id;
             $jd->save();
         }
-        return redirect('/administration/post-jobs');
+        return redirect('/administration/post-jobs')->with('success','Item created successfully!');
     }
 
     public function edit($id)
@@ -227,7 +227,7 @@ class JobController extends Controller
             $jd->job_vacancy_id =$job_id;
             $jd->save();
         }
-        return redirect('/administration/post-jobs');
+        return redirect('/administration/post-jobs')->with('success','Item edited successfully!');
     }
 //
 //    /**

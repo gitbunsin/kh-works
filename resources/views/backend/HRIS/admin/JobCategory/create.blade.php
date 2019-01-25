@@ -21,7 +21,7 @@
                         </div>
                         <!-- end widget edit box -->
                         <div class="widget-body no-padding">
-                            <form id="" action="{{url('/administration/jobs-category')}}" method="post"  class="smart-form">
+                            <form id="frmCategory" action="{{url('/administration/jobs-category')}}" method="post"  class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <section>
@@ -41,7 +41,7 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" class="btn btn-primary" id="btn-save" value="submit">
+                                    <input type="submit" class="btn btn-primary" id="btn-save" value="Save">
                                     <input type="hidden" id="product_id" name="product_id" value="0">
                                     <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                 </footer>
@@ -53,30 +53,14 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-
+@endsection
+@section('script')
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function() {
-
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
             var $loginForm = $("#frmCategory").validate({
                 // Rules for form validation
                 rules : {

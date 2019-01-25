@@ -46,7 +46,7 @@ class EmploymentStatusController extends Controller
         $EmployeeStatus->name = $request->name;
         $EmployeeStatus->company_id = Auth::guard('admins')->user()->id;
         $EmployeeStatus->save();
-        return redirect('/administration/employment-status/');
+        return redirect('/administration/employment-status/')->with('success','Item created successfully!');
     }
 
     /**
@@ -87,7 +87,7 @@ class EmploymentStatusController extends Controller
         $employeeStatus->name = $request->name;
         $employeeStatus->company_id = Auth::guard('admins')->user()->id;
         $employeeStatus->save();
-        return redirect('/administration/employment-status/');
+        return redirect('/administration/employment-status/')->with('success','Item Edited successfully!');
 
     }
 

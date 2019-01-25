@@ -84,6 +84,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::post('/employee-language','LanguageController@addLanguage');
         Route::resource('nationality','NationalityController');
         Route::resource('locations','LocationController');
+        Route::resource('termination-reason','TerminationReasonController');
+        Route::resource('employee-kpi','KpiController');
+        Route::resource('employee-performance-trackers','PerformanceTrackerController');
+        Route::resource('employee-performance-review','PerformanceReviewController');
+
 
 //        Route::resource('employee-skills',)
 //        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');

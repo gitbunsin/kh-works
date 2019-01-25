@@ -20,29 +20,20 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmJobTitle" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
+                            <form id="frmTerminationReason" method="POST" enctype="multipart/form-data" action="{{url('administration/termination-reason/'.$t->id)}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
+                                <input name="_method" type="hidden" value="PATCH">
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" name="job_title" id="job_title">
+                                            <input type="text" value="{{$t->name}}" name="name" id="name">
                                         </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
-                                            <textarea rows="8" id="job_description" name="job_description" class="custom-scroll"></textarea>
-                                        </label>
-                                        <div class="note">
-                                            <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                        </div>
-                                    </section>
-                                    <section>
-                                        <label class="label">note</label>
-                                        <label class="textarea">
-                                            <textarea rows="8" id="note" name="note" class="custom-scroll"></textarea>
+                                            <textarea rows="8" id="description" name="description" class="custom-scroll">{{$t->description}}</textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -64,21 +55,20 @@
             </article>
         </div>
     </section>
-    
 @endsection
 @section('script')
-<script type="text/javascript">
-            var $loginForm = $("#frmJobTitle").validate({
-                // Rules for form validation
-                rules : {
-                    job_title : {
-                        required : true
-                    },
+    <script type="text/javascript">
+        var $loginForm = $("#frmTerminationReason").validate({
+            // Rules for form validation
+            rules : {
+                name : {
+                    required : true
                 },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
+            },
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
     </script>
 @endsection

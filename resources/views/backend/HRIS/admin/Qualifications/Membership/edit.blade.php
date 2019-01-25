@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmEducation" method="POST" enctype="multipart/form-data" action="{{url('administration/membership/'.$m->id)}}" class="smart-form">
+                            <form id="frmMembership" method="POST" enctype="multipart/form-data" action="{{url('administration/membership/'.$m->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -59,7 +59,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var $loginForm = $("#frmEducation").validate({
+            var $loginForm = $("#frmMembership").validate({
                 // Rules for form validation
                 rules : {
                     name : {

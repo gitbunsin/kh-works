@@ -42,7 +42,7 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <input type="submit" class="btn btn-primary" id="btn-save" value="submit">
+                                    <input type="submit" class="btn btn-primary" id="btn-save" value="Save">
                                     <input type="hidden" id="product_id" name="product_id" value="0">
                                     <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                 </footer>

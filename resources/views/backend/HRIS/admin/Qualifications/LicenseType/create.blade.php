@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_skills" method="POST" enctype="multipart/form-data" action="{{url('administration/license-types')}}" class="smart-form">
+                            <form id="frmLicense" method="POST" enctype="multipart/form-data" action="{{url('administration/license-types')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
@@ -59,7 +59,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var $loginForm = $("#frmEducation").validate({
+            var $loginForm = $("#frmLicense").validate({
                 // Rules for form validation
                 rules : {
                     name : {

@@ -1,13 +1,11 @@
 <?php
 
-namespace  App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\LicenseType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class LicenseTypeController extends Controller
+class PerformanceTrackerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class LicenseTypeController extends Controller
      */
     public function index()
     {
-        $l = LicenseType::all();
-        return view('backend.HRIS.admin.Qualifications.LicenseType.index',compact('l'));
+        //
+        return view('backend.HRIS.performance.trackers.index');
     }
 
     /**
@@ -27,7 +25,9 @@ class LicenseTypeController extends Controller
      */
     public function create()
     {
-        return view('backend.HRIS.admin.Qualifications.LicenseType.create');
+        //
+        return view('backend.HRIS.performance.trackers.create');
+
     }
 
     /**
@@ -39,14 +39,6 @@ class LicenseTypeController extends Controller
     public function store(Request $request)
     {
         //
-//        dd($request->all());
-        $l = new LicenseType();
-        $l->company_id = Auth::guard('admins')->user()->id;
-        $l->name = $request->name;
-        $l->description = $request->description;
-        $l->save();
-        return redirect('/administration/license-types')->with('success','Item created successfully!');
-
     }
 
     /**
@@ -69,9 +61,8 @@ class LicenseTypeController extends Controller
     public function edit($id)
     {
         //
-        $l = LicenseType::where('id',$id)->first();
-//        dd($skills);
-        return view('backend.HRIS.admin.Qualifications.LicenseType.edit',compact('l'));
+        return view('backend.HRIS.performance.trackers.edit');
+
     }
 
     /**
@@ -84,12 +75,6 @@ class LicenseTypeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $l = LicenseType::findOrFail($id);
-        $l->company_id = Auth::guard('admins')->user()->id;
-        $l->name = $request->name;
-        $l->description = $request->description;
-        $l->save();
-        return redirect('/administration/license-types')->with('success','Item edited successfully!');
     }
 
     /**
