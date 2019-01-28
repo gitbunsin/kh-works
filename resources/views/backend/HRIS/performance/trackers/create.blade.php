@@ -30,7 +30,10 @@
                                         <section class="col col-6">
                                             <label class="label">Employee Name</label>
                                             <div class="form-group">
-                                                <select style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                <select name="employee_tracker"
+                                                        id="employee_tracker"
+                                                        style="width:100%" class="select2 select2-hidden-accessible"
+                                                        tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="0">-- select trackers --</option>
                                                         @php $tracker = \App\Employee::all(); @endphp
@@ -46,14 +49,9 @@
                                         </section>
                                     </fieldset>
                                 </div>
-                                @php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
-                                                $e = DB::table('tbl1_hr_employee')
-                                                ->get();
-                                @endphp
-                                <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
-                                    @foreach($e as $es)
-                                        <option value="{{$es->emp_id}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
-                                    @endforeach
+
+                                <select multiple="multiple" size="10" name="duallistbox_demo1[]" id="employeeTrackers">
+                                        {{--<option value="">Name</option>--}}
                                 </select>
                             </div>
                             <br/>
@@ -84,6 +82,8 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
+        let baseURL = "{{URL::to('/')}}/";
         var $loginForm = $("#frmWorkshift").validate({
             // Rules for form validation
             rules : {
@@ -99,5 +99,59 @@
                 error.insertAfter(element.parent());
             }
         });
+
+        $("#employee_tracker").on('change', function () {
+            let employeeID = this.value;
+
+            if (employeeID != 0) {
+                //console.log("Employee ID = ", employeeID);
+                /**
+                 * 1. Make ajax Request
+                 * 2. Append data result as employee option
+                 *
+                 */
+                $.ajax({
+                    url: baseURL+"administration/employee/tracker/" + employeeID,
+                    method: "GET",
+                    type: "json",
+                    success: function (respond) {
+                        //console.log(respond)
+                        bindEmployeeOption(respond.data)
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+
+                });
+            }
+
+        });
+
+        //employee-tracker
+        var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+            nonSelectedListLabel: 'Available Reviewers',
+            selectedListLabel: 'Assigned Reviewer',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: true,
+            helperSelectNamePostfix: '_helper',
+            nonSelectedFilter: ''
+
+        });
+
+
+        function bindEmployeeOption(employees) {
+            // employees.each(emp => {
+            //     console.log(emp);
+            // })
+            //$("#bootstrap-duallistbox-nonselected-list_duallistbox_demo2").empty();
+
+            $.each(employees, function (key, value) {
+                console.log(employeeTrackers);
+                $("#employeeTrackers").append('<option value="'+ value.emp_id +'">'+ value.emp_lastname + " " +value.emp_firstname +'</option>')
+            })
+            $("#employeeTrackers").bootstrapDualListbox('refresh', true);
+
+
+        }
     </script>
 @endsection

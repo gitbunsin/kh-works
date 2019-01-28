@@ -179,6 +179,8 @@
 			nonSelectedFilter: ''
 		});
 
+
+
 		$('#dt_basic').dataTable({
             "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
             "t"+

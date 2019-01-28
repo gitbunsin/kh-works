@@ -238,8 +238,8 @@
                         <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                             <a href="{{url('administration/candidate')}}">My Trackers</a>
                         </li>
-                        <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                            <a href="{{url('administration/candidate')}}">Employee Trackers</a>
+                        <li class="{{ Request::segment(2) == "employee-trackers" ? "active" : " " }}">
+                            <a href="{{url('administration/employee-trackers')}}">Employee Trackers</a>
                         </li>
                         </li>
                         @endif

@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Employee;
 use App\Http\Controllers\Controller;
 
+use App\PerformanceTrack;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class PerformanceTrackerController extends Controller
@@ -29,6 +32,10 @@ class PerformanceTrackerController extends Controller
         return view('backend.HRIS.performance.trackers.create');
 
     }
+    public function employeeTracker(){
+
+        return view('backend.HRIS.performance.trackers.index');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,7 +45,19 @@ class PerformanceTrackerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+           // dd($request->all());
+        $p = new PerformanceTrack();
+        $p->tracker_name = $request->name;
+        $employeeId = $request->duallistbox_demo1;
+        dd($employeeId);
+            foreach ($employeeId as $data)
+            {
+                $p->employee_id = $data;
+            }
+        $p->save();
+        return redirect('/administration/employee-performance-trackers');
+
     }
 
     /**
@@ -86,5 +105,20 @@ class PerformanceTrackerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get all employee where no Employee that as tracker
+     * @param $id employee tracker id
+     *
+     * @return json
+     */
+    public function getEmployeeNoTrakerEmp($id) {
+
+        $employee = Employee::where('emp_id', '!=', $id)->get();
+
+
+        return Response()->json(["success" => true, "data" => $employee]);
+
     }
 }

@@ -87,6 +87,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('termination-reason','TerminationReasonController');
         Route::resource('employee-kpi','KpiController');
         Route::resource('employee-performance-trackers','PerformanceTrackerController');
+        Route::get('employee-trackers','PerformanceTrackerController@employeeTracker');
+        Route::get('employee/tracker/{id}', 'PerformanceTrackerController@getEmployeeNoTrakerEmp');
         Route::resource('employee-performance-review','PerformanceReviewController');
 
 
