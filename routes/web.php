@@ -87,9 +87,33 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('termination-reason','TerminationReasonController');
         Route::resource('employee-kpi','KpiController');
         Route::resource('employee-performance-trackers','PerformanceTrackerController');
+
         Route::get('employee-trackers','PerformanceTrackerController@employeeTracker');
+        Route::get('my-performance-tracker-list','PerformanceTrackerController@viewMyPerformanceTrackerList');
+
         Route::get('employee/tracker/{id}', 'PerformanceTrackerController@getEmployeeNoTrakerEmp');
         Route::resource('employee-performance-review','PerformanceReviewController');
+        Route::resource('performance-tracker-log','PerformanceTrackerLogController');
+
+
+        Route::get('evaluate-performance-review','PerformanceReviewController@EvaluatePerformancReview');
+        Route::get('employee/tracker/review/{id}','PerformanceReviewController@getEmployeeTrackerReview');
+        Route::get('my-review','PerformanceReviewController@getMyReviewPerformance');
+
+
+
+        //Leave
+        Route::resource('leave-type','LeaveTypeController');
+        Route::resource('define-leave-period','LeavePeriodController');
+        Route::resource('define-holiday','HolidayController');
+        Route::resource('define-workweek','WorkWeekController');
+        Route::resource('define-leave-list','LeaveController');
+        Route::get('assign-leave','LeaveController@assginLeave');
+
+
+
+
+
 
 
 //        Route::resource('employee-skills',)

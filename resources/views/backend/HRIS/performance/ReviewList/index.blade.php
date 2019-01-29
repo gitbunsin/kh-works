@@ -42,29 +42,38 @@
                                     <th> Due Date </th>
                                     <th> Review Period</th>
                                     <th> Job Title</th>
+                                    <th> Department</th>
+                                    <th> Review Status</th>
+                                    <th> Evaluation Status</th>
                                     <th> Status</th>
-                                    <th> Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($p as $ps)
-                                    <tr id="termination-reason{{$ps->id}}">
-                                        <td></td>
-                                        <td>{{$ps->due_date}}</td>
-                                        <td>{{$ps->work_period_start}}</td>
-                                        <td></td>
-                                        <td>{{$ps->work_period_end}}</td>
-
-                                        <td>
-                                            <a  href="{{url('/administration/employee-kpi/'.$ps->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="{{$ps->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                {{--@foreach($k as $ks)--}}
+                                {{--<tr id="termination-reason{{$ks->kpi_id}}">--}}
+                                {{--<td>{{$ks->kpi_indicators}}</td>--}}
+                                {{--<td>{{$ks->job_title}}</td>--}}
+                                {{--<td>{{$ks->min_rating}}</td>--}}
+                                {{--<td>{{$ks->max_rating}}</td>--}}
+                                {{--@if($ks->default_kpi)--}}
+                                {{--<td>--}}
+                                {{--Yes--}}
+                                {{--</td>--}}
+                                {{--@else--}}
+                                {{--<td>--}}
+                                {{--No--}}
+                                {{--</td>--}}
+                                {{--@endif--}}
+                                {{--<td>--}}
+                                {{--<a  href="{{url('/administration/employee-kpi/'.$ks->kpi_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
+                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                {{--</a>--}}
+                                {{--<a data-id="{{$ks->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                {{--</a>--}}
+                                {{--</td>--}}
+                                {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

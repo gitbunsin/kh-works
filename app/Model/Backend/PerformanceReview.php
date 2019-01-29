@@ -11,7 +11,7 @@ class PerformanceReview extends Model
     protected $table = 'tbl_hr_performance_review';
     protected $fillable =
         ['id',
-            'employee_id',
+            'employee_number',
             'status_id',
             'work_period_start',
             'work_period_end',

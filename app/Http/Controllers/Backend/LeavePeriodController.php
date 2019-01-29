@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceReview;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 
-class PerformanceReviewController extends Controller
+class LeavePeriodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +15,8 @@ class PerformanceReviewController extends Controller
     public function index()
     {
         //
-        $p = PerformanceReview::all();
-        return view('backend.HRIS.performance.ManageReview.index',compact('p'));
+
+        return view('backend.HRIS.Leave.LeavePeriod.create');
     }
 
     /**
@@ -30,26 +27,7 @@ class PerformanceReviewController extends Controller
     public function create()
     {
         //
-        return view('backend.HRIS.performance.ManageReview.create');
-
     }
-    public function getEmployeeTrackerReview($id)
-      {
-
-
-          return response()->json(['data'=>'ok','id'=>$id]);
-       }
-       public function EvaluatePerformancReview(){
-
-
-           return view('backend.HRIS.performance.ReviewList.index');
-       }
-        public function getMyReviewPerformance()
-        {
-
-            return view('backend.HRIS.performance.MyReview.index');
-
-        }
 
     /**
      * Store a newly created resource in storage.
@@ -60,15 +38,6 @@ class PerformanceReviewController extends Controller
     public function store(Request $request)
     {
         //
-        $p = new PerformanceReview();
-        $p->employee_id = $request->employee;
-        $p->work_period_start = Carbon::parse($request->start_date)->format('Y-m-d');
-        $p->work_period_end = Carbon::parse($request->end_date)->format('Y-m-d');$request->end_date;
-        $p->due_date = Carbon::parse($request->due_date)->format('Y-m-d');
-        $p->save();
-
-        return redirect('administration/employee-performance-review');
-        //dd('hello');
     }
 
     /**

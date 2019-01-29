@@ -5,8 +5,10 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 
 use App\PerformanceTrack;
+use App\PerformanceTrackerLog;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PerformanceTrackerController extends Controller
 {
@@ -18,8 +20,27 @@ class PerformanceTrackerController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.performance.trackers.index');
+        $p = DB::table('tbl_hr_performance_track as p')
+            ->select('tracker_name', DB::raw('count(*) as total'))
+            ->groupBy('tracker_name')
+            ->get();
+
+//        dd($p);
+
+       // dd($p);
+        //dd($user_info);
+        return view('backend.HRIS.performance.trackers.index',compact('p'));
     }
+
+        public function addPerformanceTrackerLog()
+        {
+
+            $t = PerformanceTrackerLog::all();
+            //dd($t);
+            return view('backend.HRIS.performance.TrackerLog.index',compact('t'));
+
+        }
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,8 +55,19 @@ class PerformanceTrackerController extends Controller
     }
     public function employeeTracker(){
 
-        return view('backend.HRIS.performance.trackers.index');
+        $p = DB::table('tbl_hr_performance_track as p')
+            ->select('tracker_name', DB::raw('count(*) as total'))
+            ->groupBy('tracker_name')
+            ->get();
+        //dd($p);
+        return view('backend.HRIS.performance.EmployeeTracker.index',compact('p'));
+
     }
+    public function viewMyPerformanceTrackerList(){
+        return view('backend.HRIS.performance.MyTracker.index');
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,16 +79,25 @@ class PerformanceTrackerController extends Controller
     {
 
            // dd($request->all());
-        $p = new PerformanceTrack();
-        $p->tracker_name = $request->name;
-        $employeeId = $request->duallistbox_demo1;
-        dd($employeeId);
-            foreach ($employeeId as $data)
+
+//        $employeeId = $request->duallistbox_demo1;
+//        dd($employeeId);
+//            foreach ($employeeId as $data)
+//            {
+//                $p = new PerformanceTrack();
+//                $p->tracker_name = $request->name;
+//                $p->employee_id = $data;
+//            }
+//        $p->save();
+        if ($request->duallistbox_demo1)
+            foreach($request->duallistbox_demo1 as $subject)
             {
-                $p->employee_id = $data;
+                $forumTeacher= new PerformanceTrack(); // I think this is your intermediat, pivot, table
+                $forumTeacher->tracker_name = $request->name; // you should know how to find this id
+                $forumTeacher->employee_id= $subject;
+                $forumTeacher->save();
             }
-        $p->save();
-        return redirect('/administration/employee-performance-trackers');
+        return redirect('/administration/employee-performance-trackers')->with('success','Item added successfully');
 
     }
 

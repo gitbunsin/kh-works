@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceReview;
+use App\LeaveType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 
-class PerformanceReviewController extends Controller
+class LeaveTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +16,9 @@ class PerformanceReviewController extends Controller
     public function index()
     {
         //
-        $p = PerformanceReview::all();
-        return view('backend.HRIS.performance.ManageReview.index',compact('p'));
+        $l = LeaveType::all();
+        return view('backend.HRIS.Leave.leaveTypes.index',compact('l'));
+
     }
 
     /**
@@ -30,26 +29,9 @@ class PerformanceReviewController extends Controller
     public function create()
     {
         //
-        return view('backend.HRIS.performance.ManageReview.create');
+        return view('backend.HRIS.Leave.leaveTypes.create');
 
     }
-    public function getEmployeeTrackerReview($id)
-      {
-
-
-          return response()->json(['data'=>'ok','id'=>$id]);
-       }
-       public function EvaluatePerformancReview(){
-
-
-           return view('backend.HRIS.performance.ReviewList.index');
-       }
-        public function getMyReviewPerformance()
-        {
-
-            return view('backend.HRIS.performance.MyReview.index');
-
-        }
 
     /**
      * Store a newly created resource in storage.
@@ -60,15 +42,11 @@ class PerformanceReviewController extends Controller
     public function store(Request $request)
     {
         //
-        $p = new PerformanceReview();
-        $p->employee_id = $request->employee;
-        $p->work_period_start = Carbon::parse($request->start_date)->format('Y-m-d');
-        $p->work_period_end = Carbon::parse($request->end_date)->format('Y-m-d');$request->end_date;
-        $p->due_date = Carbon::parse($request->due_date)->format('Y-m-d');
-        $p->save();
-
-        return redirect('administration/employee-performance-review');
-        //dd('hello');
+        $l = new LeaveType();
+        $l->name = $request->name;
+        $l->description = $request->description;
+        $l->save();
+        return redirect('/administration/leave-type')->with('success','Item added successfully');
     }
 
     /**
@@ -91,6 +69,8 @@ class PerformanceReviewController extends Controller
     public function edit($id)
     {
         //
+        $l = LeaveType::findOrFail($id);
+        return view('backend.HRIS.Leave.leaveTypes.edit',compact('l'));
     }
 
     /**
@@ -103,6 +83,11 @@ class PerformanceReviewController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $l = LeaveType::findOrFail($id);
+        $l->name = $request->name;
+        $l->description = $request->description;
+        $l->save();
+        return redirect('/administration/leave-type')->with('success','Item Edited successfully');
     }
 
     /**
