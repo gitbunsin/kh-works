@@ -99,17 +99,25 @@ class KpiController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //dd($request->IsDefault_yes);
         $k =  Kpi::findOrFail($id);
         $k->job_title_code = $request->job_title_code;
         $k->employee_id = Auth::guard('employee')->user()->id;
         $k->kpi_indicators = $request->performance;
         $k->min_rating	= $request->min_id;
         $k->max_rating = $request->max_id;
-        $IsCheck = $request->IsDefault;
-        if($IsCheck == "0"){
-            $k->default_kpi = 0;
-        }else{
+
+        $IsCheck_yes = $request->IsDefault_yes;
+        //dd($IsCheck_no);
+        if($IsCheck_yes == "1"){
             $k->default_kpi = 1;
+        }else{
+            $k->default_kpi = 0;
+        }
+        if($request->IsDefault_no == "1"){
+            $k->default_kpi = 1;
+        }else{
+            $k->default_kpi = 0;
         }
         $k->save();
         return redirect('/administration/employee-kpi')->with('success','Item Edited successfully!');

@@ -16,44 +16,45 @@
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
                         </div>
-                        <form id="frmWorkshift" method="POST" enctype="multipart/form-data" action="{{url('administration/employee-performance-trackers')}}" class="">
+                        <form id="frmWorkshift" method="POST" enctype="multipart/form-data" action="{{url('administration/employee-performance-tracker')}}" class="">
                             <div class="widget-body">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div id="log_id">
+                                <input name="_method" type="hidden" value="PATCH">
+                                <div class="row">
                                     <fieldset class="smart-form">
-                                        <div class="row">
-                                            <section class="col col-6">
-                                                <label class="label"> Tracker Name</label>
-                                                <label class="input">
-                                                    <input type="text" name="name" id="name">
-                                                </label>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label class="label"> Marital Status</label>
-                                                <label class="select">
-                                                    <select name="marital_status" id="martial_Status" disabled="">
-                                                        <option value="">-- select --</option>
-                                                        <option value="1">Positive</option>
-                                                        <option value="2">Negative</option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row">
-                                            <section class="col col-lg-12">
-                                                <label class="label">Postal Address *</label>
-                                                <label class="input">
-                                                    <textarea id="postal_address" name="postal_address" rows="10" cols="150">{{Auth::guard('admins')->user()->postal_address}}</textarea>
-                                                </label>
+                                        <section class="col col-6">
+                                            <label class="label"> Tracker Name</label>
+                                            <label class="input">
+                                                <input type="text" name="name" id="name">
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label">Employee Name</label>
+                                            <div class="form-group">
+                                                <select style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                    <optgroup label="Performance Employee Trackers">
+                                                        <option value="0">-- select trackers --</option>
+                                                        @php $tracker = \App\Employee::all(); @endphp
+                                                        @foreach($tracker as $trackers)
+                                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                </select>
                                                 <div class="note">
-                                                    <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                                    <strong>Usage:</strong> Employee performance tracker
                                                 </div>
-                                            </section>
-                                        </div>
-
+                                            </div>
+                                        </section>
                                     </fieldset>
                                 </div>
+                                @php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
+                                                $e = DB::table('tbl1_hr_employee')->get();
+                                @endphp
+                                <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
+                                    @foreach($e as $es)
+                                        <option value="{{$es->emp_id}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <br/>
                             <!-- end widget content -->
@@ -83,8 +84,6 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-
-        let baseURL = "{{URL::to('/')}}/";
         var $loginForm = $("#frmWorkshift").validate({
             // Rules for form validation
             rules : {
@@ -100,8 +99,5 @@
                 error.insertAfter(element.parent());
             }
         });
-        $('')
-
-
     </script>
 @endsection

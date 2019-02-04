@@ -40,18 +40,15 @@
                                                 </label>
                                             </section>
                                         </div>
-                                        <div class="row">
-                                            <section class="col col-lg-12">
+                                            <section>
                                                 <label class="label">Comment</label>
                                                 <label class="input">
-                                                    <textarea id="comment" name="comment" rows="10" cols="150"></textarea>
+                                                    <textarea id="comment" name="comment" rows="10" cols="165"></textarea>
                                                 </label>
                                                 <div class="note">
                                                     <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                                 </div>
                                             </section>
-                                        </div>
-
                                     </fieldset>
                                 </div>
                             </div>

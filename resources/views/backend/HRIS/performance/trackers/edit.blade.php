@@ -18,8 +18,8 @@
                         </div>
                         <form id="frmWorkshift" method="POST" enctype="multipart/form-data" action="{{url('administration/employee-performance-tracker')}}" class="">
                             <div class="widget-body">
-                                <input type="hidden" name="_token" value="{{PATCH}}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input name="_method" type="hidden" value="PATCH">
                                 <div class="row">
                                     <fieldset class="smart-form">
                                         <section class="col col-6">

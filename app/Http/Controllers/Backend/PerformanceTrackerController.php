@@ -8,6 +8,7 @@ use App\PerformanceTrack;
 use App\PerformanceTrackerLog;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PerformanceTrackerController extends Controller
@@ -21,14 +22,10 @@ class PerformanceTrackerController extends Controller
     {
         //
         $p = DB::table('tbl_hr_performance_track as p')
-            ->select('tracker_name', DB::raw('count(*) as total'))
-            ->groupBy('tracker_name')
+            ->select('p.*','e.*')
+            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
             ->get();
 
-//        dd($p);
-
-       // dd($p);
-        //dd($user_info);
         return view('backend.HRIS.performance.trackers.index',compact('p'));
     }
 
@@ -56,8 +53,8 @@ class PerformanceTrackerController extends Controller
     public function employeeTracker(){
 
         $p = DB::table('tbl_hr_performance_track as p')
-            ->select('tracker_name', DB::raw('count(*) as total'))
-            ->groupBy('tracker_name')
+            ->select('p.*','e.*')
+            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
             ->get();
         //dd($p);
         return view('backend.HRIS.performance.EmployeeTracker.index',compact('p'));

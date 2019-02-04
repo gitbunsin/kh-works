@@ -55,11 +55,11 @@
                                         <td>{{$ks->max_rating}}</td>
                                         @if($ks->default_kpi)
                                         <td>
-                                            Yes
+                                           <b>Yes</b>
                                         </td>
                                         @else
                                             <td>
-                                                No
+                                               <b style="color: red;"> No </b>
                                             </td>
                                         @endif
                                         <td>

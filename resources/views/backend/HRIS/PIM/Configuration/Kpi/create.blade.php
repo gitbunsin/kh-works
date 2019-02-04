@@ -71,7 +71,7 @@
                                         <label class="label"></label>
                                         <div class="inline-group">
                                             <label class="checkbox">
-                                                <input value="0" type="checkbox" name="IsDefault" id="IsDefault">
+                                                <input value="" type="checkbox" name="IsDefault" id="IsDefault">
                                                 <i></i>Make Default Scale
                                             </label>
                                         </div>
@@ -97,27 +97,45 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-            var $loginForm = $("#frmKpi").validate({
-                // Rules for form validation
-                rules : {
-                    job_title_code : {
-                        required : true
-                    },
-                    performance : {
-                        required: true
-                    },
-                    min_id : {
-                        required : true
-                    },
-                    max_id : {
-                        required: true
-                    }
-
-                },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
+            $('#IsDefault').val("0");
+            $('#IsDefault').click(function () {
+                $('#IsDefault').val("1");
             });
+
+            $(document).ready(function() {
+
+                //custom rule method
+                $.validator.addMethod("isBiggerThanMinSalary", function (value, element, arg) {
+                    var maxSalary = $("#max_id").val();
+                    return parseInt(maxSalary) > parseInt(value);
+                }, "Minimum Salary must be smaller than Maximun Salary");
+                var $loginForm = $("#frmKpi").validate({
+                    // Rules for form validation
+                    rules : {
+                        job_title_code : {
+                            required : true
+                        },
+                        performance : {
+                            required: true
+                        },
+                        min_id : {
+                            required : true,
+                            isBiggerThanMinSalary: ""
+
+                        },
+                        max_id : {
+                            required: true,
+
+
+                        }
+
+                    },
+                    // Do not change code below
+                    errorPlacement : function(error, element) {
+                        error.insertAfter(element.parent());
+                    }
+                });
+            });
+
     </script>
 @endsection

@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add Termination Reason</h2>
+                        <h2> Project </h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,16 +20,41 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmTerminationReason" method="POST" enctype="multipart/form-data" action="{{url('administration/termination-reason')}}" class="smart-form">
+                            <form id="frmProject" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
+                                    <div class="form-group">
+                                        <label> Customer Name</label>
+                                        @php $c = \App\Customer::all(); @endphp
+                                        <select multiple style="width:100%" class="select2">
+                                            <option value=""> -- Customer Name --</option>
+                                            @foreach($c as $cs)
+                                                <option value="{{$cs->id}}">{{$cs->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="note">
+                                            <strong>Usage:</strong> &lt;select multiple style=&quot;width:100%&quot; class=&quot;select2&quot; &gt;...&lt;/select&gt;
+                                        </div>
+                                    </div>
                                     <section>
                                         <label class="label">Name</label>
                                         <label class="input">
                                             <input type="text" name="name" id="name">
                                         </label>
                                     </section>
+                                    <div class="form-group">
+                                        <label> Project Admin</label>
+                                        @php $p = \App\Employee::all(); @endphp
+                                        <select multiple style="width:100%" class="select2">
+                                            @foreach($p as $ps)
+                                                <option value="{{$ps->emp_id}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="note">
+                                            <strong>Usage:</strong> &lt;select multiple style=&quot;width:100%&quot; class=&quot;select2&quot; &gt;...&lt;/select&gt;
+                                        </div>
+                                    </div>
+
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
@@ -55,25 +80,21 @@
             </article>
         </div>
     </section>
-    
+
 @endsection
 @section('script')
-<script type="text/javascript">
-    $.validator.addMethod("isBiggerThanMinSalary", function(value, element, arg) {
-        var maxSalary = $("#maxSalary").val();
-        return maxSalary > value;
-    }, "Minimu
-            var $loginForm = $("#frmTerminationReason").validate({
-                // Rules for form validation
-                rules : {
-                    name : {
-                        required : true
-                    },
+    <script type="text/javascript">
+        var $loginForm = $("#frmProject").validate({
+            // Rules for form validation
+            rules : {
+                name : {
+                    required : true
                 },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
+            },
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
     </script>
 @endsection

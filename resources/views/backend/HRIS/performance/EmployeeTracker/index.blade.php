@@ -48,7 +48,7 @@
                                 <tbody id="products-list" name="products-list">
                                 @foreach($p as $ps)
                                     <tr id="termination-reason">
-                                        <td></td>
+                                        <td>{{$ps->emp_lastname}}{{$ps->emp_firstname}}</td>
                                         <td><a href="/administration/performance-tracker-log">{{$ps->tracker_name}}</a> </td>
                                         <td></td>
                                         <td></td>

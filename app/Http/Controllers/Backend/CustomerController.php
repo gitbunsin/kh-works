@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Customer;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceReview;
+use DemeterChain\C;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class PerformanceReviewController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +18,10 @@ class PerformanceReviewController extends Controller
     public function index()
     {
         //
-        //$p = PerformanceReview::all();
-        $p = DB::table('tbl_hr_performance_review as p')
-            ->select('p.*','e.*')
-            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
-            ->get();
-//        dd($p);
-        return view('backend.HRIS.performance.ManageReview.index',compact('p'));
+
+        $l = Customer::all();
+        return view('backend.HRIS.Time.Customer.index',compact('l'));
+
     }
 
     /**
@@ -36,26 +32,9 @@ class PerformanceReviewController extends Controller
     public function create()
     {
         //
-        return view('backend.HRIS.performance.ManageReview.create');
+        return view('backend.HRIS.Time.Customer.create');
 
     }
-    public function getEmployeeTrackerReview($id)
-      {
-
-
-          return response()->json(['data'=>'ok','id'=>$id]);
-       }
-       public function EvaluatePerformancReview(){
-
-
-           return view('backend.HRIS.performance.ReviewList.index');
-       }
-        public function getMyReviewPerformance()
-        {
-
-            return view('backend.HRIS.performance.MyReview.index');
-
-        }
 
     /**
      * Store a newly created resource in storage.
@@ -66,15 +45,12 @@ class PerformanceReviewController extends Controller
     public function store(Request $request)
     {
         //
-        $p = new PerformanceReview();
-        $p->employee_id = $request->employee;
-        $p->work_period_start = Carbon::parse($request->start_date)->format('Y-m-d');
-        $p->work_period_end = Carbon::parse($request->end_date)->format('Y-m-d');$request->end_date;
-        $p->due_date = Carbon::parse($request->due_date)->format('Y-m-d');
-        $p->save();
-
-        return redirect('administration/employee-performance-review');
-        //dd('hello');
+        $c = new Customer();
+        $c->name = $request->name;
+        $c->description = $request->description;
+        $c->employee_id = Auth::guard('employee')->user()->id;
+        $c->save();
+        return redirect('/administration/customer-project')->with('success','Item added Successfully');
     }
 
     /**
@@ -96,8 +72,11 @@ class PerformanceReviewController extends Controller
      */
     public function edit($id)
     {
+        //dd('hello');
         //
-        return view('backend.HRIS.performance.ManageReview.edit');
+        $c = Customer::findOrFail($id);
+        return view('backend.HRIS.Time.Customer.edit',compact('c'));
+
     }
 
     /**
@@ -110,6 +89,12 @@ class PerformanceReviewController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $c =  Customer::findOrFail($id);
+        $c->name = $request->name;
+        $c->description = $request->description;
+        $c->employee_id = Auth::guard('employee')->user()->id;
+        $c->save();
+        return redirect('/administration/customer-project')->with('success','Item Edited Successfully');
     }
 
     /**

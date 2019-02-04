@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceTrackerLog;
+use App\Module;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class PerformanceTrackerLogController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,15 +15,9 @@ class PerformanceTrackerLogController extends Controller
     public function index()
     {
         //
-       // dd('hell');
-        $t = PerformanceTrackerLog::all();
-//        $t = DB::table('tbl_performance_tracker_log as p')
-//            ->select('p.*','e.*')
-//            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
-//            ->get();
-//        dd($t);
-        //dd($t);
-        return view('backend.HRIS.performance.TrackerLog.index',compact('t'));
+        $m = Module::all();
+        return view('backend.HRIS.admin.Configuration.index',compact('m'));
+
     }
 
     /**
@@ -46,13 +38,9 @@ class PerformanceTrackerLogController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $l = new PerformanceTrackerLog();
-        $l->log = $request->log;
-        $l->employee_id = Auth::guard('employee')->user()->id;
-        $l->achievement = $request->achievement;
-        $l->save();
-        return redirect('administration/performance-tracker-log');
+
+        dd($request->all());
+
     }
 
     /**
@@ -76,6 +64,30 @@ class PerformanceTrackerLogController extends Controller
     {
         //
     }
+    public  function ModuleUpdate(Request $request){
+        $allStatus = $request->status_menu;
+        $Module  =  Module::get();
+        foreach ($Module as $EachModule){
+            $menu_id = $EachModule->id;
+            $findModule  =  Module::findOrFail($menu_id);
+            if($allStatus){
+                $filtered_array = array_filter($allStatus, function ($status_id) use ($menu_id) { return ($status_id == $menu_id); } );
+                if($filtered_array){
+                    $findModule->status="true";
+                    $findModule->update();
+                }
+                else{
+                    $findModule->status="false";
+                    $findModule->update();
+                }
+            }
+            else{
+                $findModule->status="false";
+                $findModule->update();
+            }
+        }
+        return redirect('/administration/view-module')->with('success','Item added Successfully');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -84,9 +96,10 @@ class PerformanceTrackerLogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        dd('hell0');
     }
 
     /**

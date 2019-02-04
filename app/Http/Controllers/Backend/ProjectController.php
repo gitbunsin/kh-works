@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceReview;
+use App\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-class PerformanceReviewController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +16,7 @@ class PerformanceReviewController extends Controller
     public function index()
     {
         //
-        //$p = PerformanceReview::all();
-        $p = DB::table('tbl_hr_performance_review as p')
-            ->select('p.*','e.*')
-            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
-            ->get();
-//        dd($p);
-        return view('backend.HRIS.performance.ManageReview.index',compact('p'));
+        return view('backend.HRIS.Time.Project.index');
     }
 
     /**
@@ -36,26 +27,9 @@ class PerformanceReviewController extends Controller
     public function create()
     {
         //
-        return view('backend.HRIS.performance.ManageReview.create');
+        return view('backend.HRIS.Time.Project.create');
 
     }
-    public function getEmployeeTrackerReview($id)
-      {
-
-
-          return response()->json(['data'=>'ok','id'=>$id]);
-       }
-       public function EvaluatePerformancReview(){
-
-
-           return view('backend.HRIS.performance.ReviewList.index');
-       }
-        public function getMyReviewPerformance()
-        {
-
-            return view('backend.HRIS.performance.MyReview.index');
-
-        }
 
     /**
      * Store a newly created resource in storage.
@@ -66,15 +40,20 @@ class PerformanceReviewController extends Controller
     public function store(Request $request)
     {
         //
-        $p = new PerformanceReview();
-        $p->employee_id = $request->employee;
-        $p->work_period_start = Carbon::parse($request->start_date)->format('Y-m-d');
-        $p->work_period_end = Carbon::parse($request->end_date)->format('Y-m-d');$request->end_date;
-        $p->due_date = Carbon::parse($request->due_date)->format('Y-m-d');
-        $p->save();
+        //dd($request->all());
+        $forumProject= new Project(); // I think this is your intermediat, pivot, table
+        if ($request->customer_name && $request->project_name)
+            foreach($request->customer_name as $subject)
+            {
+                $forumProject->customer_id = $subject;
+                $forumProject->employee_id = $subject;
+                $forumProject->name = $request->name;
+                $forumProject->description = $request->description;
+                $forumProject->save();
+            }
 
-        return redirect('administration/employee-performance-review');
-        //dd('hello');
+
+        return redirect('/administration/defined-project')->with('success','Item added successfully');
     }
 
     /**
@@ -97,7 +76,6 @@ class PerformanceReviewController extends Controller
     public function edit($id)
     {
         //
-        return view('backend.HRIS.performance.ManageReview.edit');
     }
 
     /**

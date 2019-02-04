@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add Termination Reason</h2>
+                        <h2> Customer </h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,9 +20,8 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmTerminationReason" method="POST" enctype="multipart/form-data" action="{{url('administration/termination-reason')}}" class="smart-form">
+                            <form id="frmCustomer" method="POST" enctype="multipart/form-data" action="{{url('administration/customer-project')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                     <section>
                                         <label class="label">Name</label>
@@ -59,11 +58,7 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    $.validator.addMethod("isBiggerThanMinSalary", function(value, element, arg) {
-        var maxSalary = $("#maxSalary").val();
-        return maxSalary > value;
-    }, "Minimu
-            var $loginForm = $("#frmTerminationReason").validate({
+            var $loginForm = $("#frmCustomer").validate({
                 // Rules for form validation
                 rules : {
                     name : {

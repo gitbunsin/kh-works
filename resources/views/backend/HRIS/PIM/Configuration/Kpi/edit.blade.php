@@ -72,10 +72,11 @@
                                         <label class="label"></label>
                                         <div class="inline-group">
                                             <label class="checkbox">
-                                                @if($k->default_id == "1")
-                                                <input value="" type="checkbox" name="IsDefault" id="IsDefault" checked>
+                                                {{--@php dd($k->default_kpi) @endphp--}}
+                                                @if($k->default_kpi == "1")
+                                                <input  value="1" type="checkbox" name="IsDefault_yes" id="IsDefault_yes" checked>
                                                 @else
-                                                    <input value="" type="checkbox" name="IsDefault" id="IsDefault">
+                                                    <input value="0" type="checkbox" name="IsDefault_no" id="IsDefault_no">
                                                 @endif
                                                 <i></i>Make Default Scale
                                             </label>
@@ -102,6 +103,14 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        // $('#IsDefault_yes').val("1");
+        $('#IsDefault_no').click(function () {
+           $('#IsDefault_no').val("1");
+        });
+
+        $('#IsDefault_yes').click(function () {
+            $('#IsDefault_yes').val("0");
+        });
         var $loginForm = $("#frmKpi").validate({
             // Rules for form validation
             rules : {

@@ -114,6 +114,17 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
 
 
+        //Time
+        Route::resource('customer-project','CustomerController');
+        Route::resource('defined-project','ProjectController');
+
+        //Admin
+        Route::resource('view-module','ModuleController');
+        Route::post('view-module-update','ModuleController@ModuleUpdate');
+
+
+
+
 
 
 //        Route::resource('employee-skills',)
