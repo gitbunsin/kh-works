@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WorkWeek extends Model
 {
     //
-    protected $table = 'tbl_hr_leave_type';
+    protected $table = 'tbl_hr_work_week';
     protected $fillable = [
         'id',
         'employee_id',

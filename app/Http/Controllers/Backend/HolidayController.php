@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Holiday;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HolidayController extends Controller
 {
@@ -15,8 +18,8 @@ class HolidayController extends Controller
     public function index()
     {
         //
-
-        return view('backend.HRIS.Leave.Holiday.index');
+        $h = Holiday::all();
+        return view('backend.HRIS.Leave.Holiday.index',compact('h'));
     }
 
     /**
@@ -39,6 +42,16 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         //
+
+        $l = new Holiday();
+        $l->name = $request->name;
+        $l->employee_id = Auth::guard('employee')->user()->id;
+        $l->date = Carbon::parse($request->date);
+        $l->operational_country_id = $request->IsDefault;
+        $l->save();
+        return redirect('/administration/define-holiday')->with('success','Item Added successfully');
+
+
     }
 
     /**

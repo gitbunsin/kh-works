@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Dependents;
 use App\Http\Controllers\Controller;
 
-use App\WorkWeek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class WorkWeekController extends Controller
+class DependentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +19,10 @@ class WorkWeekController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.Leave.WorkWeek.index');
+        $d = DB::table('tbl_hr_emp_dependents as d')
+                ->join('tbl_relationship as r','d.relationship_id','=','r.id')
+                ->get();
+        return view('backend.HRIS.PIM.Employee.dependents.index',compact('d'));
 
     }
 
@@ -29,6 +34,8 @@ class WorkWeekController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.PIM.Employee.dependents.create');
+
     }
 
     /**
@@ -39,18 +46,14 @@ class WorkWeekController extends Controller
      */
     public function store(Request $request)
     {
-
-        $w = new WorkWeek();
-        $w->mon = $request->mon;
-        $w->employee_id = Auth::guard('employee')->user()->id;
-        $w->tue = $request->tue;
-        $w->wed = $request->wed;
-        $w->thu = $request->thu;
-        $w->fri = $request->fri;
-        $w->sat = $request->sat;
-        $w->sun = $request->sun;
-        $w->save();
-        return response()->json($w);
+        //
+        $d = new Dependents();
+        $d->emp_number = Auth::guard('employee')->user()->id;
+        $d->ed_name = $request->name;
+        $d->relationship_id = $request->relationship_id;
+        $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
+        $d->save();
+        return redirect('/administration/view-dependents')->with('success','Item added successfully');
     }
 
     /**
@@ -73,6 +76,10 @@ class WorkWeekController extends Controller
     public function edit($id)
     {
         //
+        $d = Dependents::findOrFail($id);
+//        dd($d);
+        return view('backend.HRIS.PIM.Employee.dependents.edit',compact('d'));
+
     }
 
     /**
@@ -85,6 +92,13 @@ class WorkWeekController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $d =  Dependents::findOrFail($id);
+        $d->emp_number = Auth::guard('employee')->user()->id;
+        $d->ed_name = $request->name;
+        $d->relationship_id = $request->relationship_id;
+        $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
+        $d->save();
+        return redirect('/administration/view-dependents')->with('success','Item added successfully');
     }
 
     /**

@@ -58,12 +58,14 @@
                                             </label>
                                         </section>
                                     </div>
-                                    <section>
-                                        <label class="label"> Leave Balance</label>
-                                        <label class="input">
-                                            <input type="text" name="name" id="name">
-                                        </label>
-                                    </section>
+                                    <div id="div_balance">
+                                        <section>
+                                            <label class="label"> Leave Balance</label>
+                                            <label class="input">
+                                                 <h3 style="color:red;"><a href="#">Hello </a> </h3>
+                                            </label>
+                                        </section>
+                                    </div>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label class="label"> From Date * </label>
@@ -113,6 +115,7 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        let baseURL = "{{URL::to('/')}}/";
         var $loginForm = $("#frmLeavetype").validate({
             // Rules for form validation
             rules : {
@@ -124,6 +127,34 @@
             errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
             }
+        });
+        $("#div_balance").hide();
+        $("#employee_tracker").on('change', function () {
+            let employeeID = this.value;
+
+            //alert(employeeID);
+            if (employeeID != 0) {
+                //console.log("Employee ID = ", employeeID);
+                /**
+                 * 1. Make ajax Request
+                 * 2. Append data result as employee option
+                 *
+                 */
+                $.ajax({
+                    url: baseURL+"administration/request-leave-balance/" + employeeID,
+                    method: "GET",
+                    type: "json",
+                    success: function (respond) {
+                        $("#div_balance").show();
+                        //bindEmployeeOption(respond.data)
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+
+                });
+            }
+
         });
     </script>
 @endsection

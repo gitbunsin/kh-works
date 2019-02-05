@@ -108,10 +108,11 @@
                                     </section>
                                 </fieldset>
                                 <footer>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <button type="button" class="btn btn-default" onclick="window.history.back();">
-                                        Back
-                                    </button>
+                                    <input type="button" value="" class="btn btn-primary" id="btn_save_week"/>
+                                    {{--<button type="submit" class="btn btn-primary">Save</button>--}}
+                                    {{--<button type="button" class="btn btn-default" onclick="window.history.back();">--}}
+                                        {{--Back--}}
+                                    {{--</button>--}}
                                 </footer>
                             </form>
                         </div>
@@ -126,6 +127,78 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        let baseURL = "{{URL::to('/')}}/";
+        $('#mon').prop("disabled", true);
+        $('#tue').prop("disabled", true);
+        $('#wed').prop("disabled", true);
+        $('#thu').prop("disabled", true);
+        $('#fri').prop("disabled", true);
+        $('#sat').prop("disabled", true);
+        $('#sun').prop("disabled", true);
+        $('#btn_save_week').val("Edit");
+        $('#btn_save_week').click(function () {
+            $isEdit = $('#btn_save_week').val();
+            if($isEdit =="Edit") {
+                $('#mon').prop("disabled", false);
+                $('#tue').prop("disabled", false);
+                $('#wed').prop("disabled", false);
+                $('#thu').prop("disabled", false);
+                $('#fri').prop("disabled", false);
+                $('#sat').prop("disabled", false);
+                $('#sun').prop("disabled", false);
+                $('#btn_save_week').val("Save");
+
+            }else{
+                $isSave = $('#btn_save_week').val();
+                if($isSave == "Save") {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var formData = {
+
+                mom : $('#mon').val(),
+                tue : $('#tue').val(),
+                wed : $('#wed').val(),
+                thu : $('#thu').val(),
+                fri : $('#fri').val(),
+                sat : $('#sat').val(),
+                sun : $('#sun').val(),
+            }
+            //alert(JSON.stringify(formData));
+            $.ajax({
+                url: baseURL+"administration/define-workweek",
+                method: "POST",
+                type: "json",
+                data: formData,
+                success: function (respond) {
+                    DisabledForm();
+                    var Save = $('#btn_save_week').val('Edit');
+                    //$('#btn_save_week').val("Edit");
+                    //alert('OK');
+                    //bindEmployeeOption(respond.data)
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            });
+
+
+                }
+
+            }
+        });
+        function DisabledForm() {
+
+            $('#mon').prop("disabled", true);
+            $('#tue').prop("disabled", true);
+            $('#wed').prop("disabled", true);
+            $('#thu').prop("disabled", true);
+            $('#fri').prop("disabled", true);
+            $('#sat').prop("disabled", true);
+            $('#sun').prop("disabled", true);
+        }
         var $loginForm = $("#frmWorkWeek").validate({
             // Rules for form validation
             rules : {

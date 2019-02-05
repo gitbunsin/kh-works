@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Holiday </h2>
+                        <h2> Assigned Dependents </h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -20,44 +20,40 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmHoliday" method="POST" enctype="multipart/form-data" action="{{url('administration/define-holiday')}}" class="smart-form">
+                            <form id="frmDependents" method="POST" enctype="multipart/form-data" action="{{url('administration/view-dependents')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    <section>
-                                        <label class="label">Name *</label>
-                                        <label class="input">
-                                            <input type="text" name="name" id="name">
-                                        </label>
-                                    </section>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label"> Date * </label>
+                                            <label class="label"> Name</label>
                                             <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" name="name" id="name">
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> Full Day/Half Day </label>
-                                            <label class="select">
-                                                <select name="day" id="day">
-                                                    <option value="">-- select --</option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                            <label class="label">Relationship</label>
+                                            @php
+                                                $r = \App\Relationship::all();
+                                            @endphp
+                                            <label class="select state-success">
+                                                <select name="relationship_id" id="relationship_id" class="valid">
+                                                    <option value="">-- Relationship --</option>
+                                                    @foreach($r as $rs)
+                                                        <option value="{{$rs->id}}">{{$rs->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
                                     </div>
                                     <section>
-                                        <label class="label"></label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input value="0" type="checkbox" name="IsDefault" id="IsDefault">
-                                                <i></i>Repeats Annually
-                                            </label>
-                                        </div>
+                                        <label class="label"> Date Of Birth </label>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-calendar"></i>
+                                            <input value="" type="text" id="from_date" name="date_of_birth" class="datepicker_from">
+                                        </label>
                                     </section>
+
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -78,17 +74,19 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-            var $loginForm = $("#frmHoliday").validate({
+
+            $('.datepicker_from').datepicker();
+            var $loginForm = $("#frmDependents").validate({
                 // Rules for form validation
                 rules : {
                     name : {
                         required : true
                     },
-                    date : {
+                    relationship_id: {
                         required: true
                     },
-                    day: {
-                        required:true
+                    date_of_birth : {
+                        required : true
                     }
                 },
                 // Do not change code below

@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
 
-use App\WorkWeek;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class WorkWeekController extends Controller
+class SubUnitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,6 @@ class WorkWeekController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.Leave.WorkWeek.index');
-
     }
 
     /**
@@ -39,18 +34,7 @@ class WorkWeekController extends Controller
      */
     public function store(Request $request)
     {
-
-        $w = new WorkWeek();
-        $w->mon = $request->mon;
-        $w->employee_id = Auth::guard('employee')->user()->id;
-        $w->tue = $request->tue;
-        $w->wed = $request->wed;
-        $w->thu = $request->thu;
-        $w->fri = $request->fri;
-        $w->sat = $request->sat;
-        $w->sun = $request->sun;
-        $w->save();
-        return response()->json($w);
+        //
     }
 
     /**

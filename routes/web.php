@@ -109,9 +109,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('define-workweek','WorkWeekController');
         Route::resource('define-leave-list','LeaveController');
         Route::get('assign-leave','LeaveController@assginLeave');
+        Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
+        Route::resource('leave-adjustment','LeaveAdjustmentController');
 
 
-
+        //Employee
+        Route::resource('view-dependents','DependentsController');
 
 
         //Time

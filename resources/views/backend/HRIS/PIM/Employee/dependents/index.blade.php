@@ -11,7 +11,7 @@
                     <div class="col-lg-12 margin-tb">
 
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/define-holiday/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/view-dependents/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List All Holiday</h2>
+                        <h2> Assigned Dependents</h2>
                     </header>
 
                     <!-- widget div-->
@@ -39,34 +39,22 @@
                                 <thead>
                                 <tr>
                                     <th> Name</th>
-                                    <th> Date</th>
-                                    <th> Full Day/Half Day</th>
-                                    <th> Repeats Annually</th>
+                                    <th> Relationship</th>
+                                    <th> Date of Birth</th>
                                     <th> Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($h as $hs)
-                                    <tr id="job_id{{$hs->id}}">
-                                        <td>{{$hs->name}}</td>
-                                        <td>{{$hs->date}}</td>
-                                        @if($hs->recurring == 1)
-                                            <td>
-                                                Full DAy
-
-                                            </td>
-                                        @else
-                                            <td>
-                                                Half Day
-                                            </td>
-
-                                        @endif
-                                        <td>{{$hs->date}}</td>
+                                @foreach($d as $ds)
+                                    <tr id="job_id{{$ds->id}}">
+                                        <td>{{$ds->ed_name}}</td>
+                                        <td>{{$ds->name}}</td>
+                                        <td>{{$ds->ed_date_of_birth}}</td>
                                         <td>
-                                            <a  href="{{url('administration/define-holiday/'.$hs->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/view-dependents/'.$ds->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$hs->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$ds->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -80,4 +68,6 @@
             </article>
         </div>
     </section>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    {{--<script src="{{ asset('currenccurrency.js</script>--}}
 @endsection

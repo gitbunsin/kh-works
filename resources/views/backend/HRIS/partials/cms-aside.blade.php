@@ -185,8 +185,8 @@
                                 <li class="{{ Request::segment(2) == "employee-emergency-contact" ? "active" : " " }}">
                                     <a href="{{ url('administration/employee-emergency-contact') }}">Emergency Contacts</a>
                                 </li>
-                                <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                    <a href="{{url('administration/candidate')}}">Dependents</a>
+                                <li class="{{ Request::segment(2) == "view-dependents" ? "active" : " " }}">
+                                    <a href="{{url('administration/view-dependents')}}">Dependents</a>
                                 </li>
                                 <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                     <a href="{{url('administration/candidate')}}">Immigration</a>
@@ -225,8 +225,8 @@
                                    <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                        <a href="#">My Leave</a>
                                        <ul>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-kpi')}}"> Add Entitlement </a>
+                                           <li class="{{ Request::segment(2) == "leave-adjustment" ? "active" : " " }}">
+                                               <a href="{{url('administration/leave-adjustment')}}"> Add Entitlement </a>
                                            </li>
                                            <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
                                                <a href="{{url('administration/employee-performance-trackers')}}"> Employee Entitlement</a>
