@@ -112,6 +112,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
         Route::resource('leave-adjustment','LeaveAdjustmentController');
 
+        Route::get('view-leave-balance-report','LeaveController@viewLeaveBalanceReport');
+        Route::get('view-leave-entitlements','LeaveAdjustmentController@viewLeaveEntitlements');
+
 
         //Employee
         Route::resource('view-dependents','DependentsController');
@@ -120,6 +123,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         //Time
         Route::resource('customer-project','CustomerController');
         Route::resource('defined-project','ProjectController');
+        Route::resource('view-attendance-record','AttendanceController');
+        Route::get('attendance-configure','AttendanceController@AttendanceConfigure');
+        Route::Resource('display-project-report','ProjectReportController');
+        Route::get('display-attendance-summary-report','EmployeeReportController@displayAttendanceSummaryReport');
+        Route::Resource('display-employee-report','EmployeeReportController');
 
         //Admin
         Route::resource('view-module','ModuleController');

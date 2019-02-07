@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class LeaveController extends Controller
+class EmployeeReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,13 @@ class LeaveController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.Leave.Leave.index');
+        return view('backend.HRIS.Time.Project.employee_report');
     }
+    public function displayAttendanceSummaryReport(){
 
 
+        return view('backend.HRIS.Time.Project.summary_report');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -28,28 +31,6 @@ class LeaveController extends Controller
     public function create()
     {
         //
-    }
-    public function viewLeaveBalanceReport()
-    {
-
-
-        return view('backend.HRIS.Leave.Leave.leave_report');
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function requestLeaveBalance($id)
-    {
-
-
-        return response()->json(["Data"=>"ok"]);
-    }
-    public function assginLeave()
-    {
-
-        return view('backend.HRIS.Leave.Leave.assignLeave');
     }
 
     /**

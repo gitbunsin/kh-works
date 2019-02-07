@@ -217,19 +217,19 @@
                                </a>
 
                                <ul>
-                                   <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                       <a href="#">Apply</a>
-                                   </li><li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                       <a href="#">Entitlement</a>
-                                   </li>
+                                   {{--<li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">--}}
+                                       {{--<a href="#">Apply</a>--}}
+                                   {{--</li><li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">--}}
+                                       {{--<a href="#">Entitlement</a>--}}
+                                   {{--</li>--}}
                                    <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                        <a href="#">My Leave</a>
                                        <ul>
                                            <li class="{{ Request::segment(2) == "leave-adjustment" ? "active" : " " }}">
                                                <a href="{{url('administration/leave-adjustment')}}"> Add Entitlement </a>
                                            </li>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-performance-trackers')}}"> Employee Entitlement</a>
+                                           <li class="{{ Request::segment(2) == "view-leave-entitlements" ? "active" : " " }}">
+                                               <a href="{{url('administration/view-leave-entitlements')}}"> Employee Entitlement</a>
                                            </li>
                                            <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
                                                <a href="{{url('administration/employee-performance-trackers')}}"> My Entitlement</a>
@@ -239,8 +239,8 @@
                                    <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                        <a href="#">Reports</a>
                                        <ul>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-kpi')}}"> Leave Entitlement and usage Report</a>
+                                           <li class="{{ Request::segment(2) == "view-leave-balance-report" ? "active" : " " }}">
+                                               <a href="{{url('administration/view-leave-balance-report')}}"> Leave Entitlement and usage Report</a>
                                            </li>
                                            <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
                                                <a href="{{url('administration/employee-performance-trackers')}}"> My Entitlement and usage Report </a>
@@ -292,24 +292,24 @@
                                    <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
                                        <a href="#">Attendances</a>
                                        <ul>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-performance-review')}}">Employee Record</a>
+                                           <li class="{{ Request::segment(2) == "view-attendance-record" ? "active" : " " }}">
+                                               <a href="{{url('administration/view-attendance-record')}}">Employee Record</a>
                                            </li>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/my-review')}}">Configuration</a>
+                                           <li class="{{ Request::segment(2) == "attendance-configure" ? "active" : " " }}">
+                                               <a href="{{url('administration/attendance-configure')}}">Configuration</a>
                                            </li>
                                        </ul>
                                    <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                       <a href="{{url('administration/my-performance-tracker-list')}}">Report</a>
+                                       <a href="#">Report</a>
                                        <ul>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-kpi')}}"> Project Report</a>
+                                           <li class="{{ Request::segment(2) == "display-project-report" ? "active" : " " }}">
+                                               <a href="{{url('administration/display-project-report')}}"> Project Report</a>
                                            </li>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-kpi')}}"> Employee Report</a>
+                                           <li class="{{ Request::segment(2) == "display-employee-report" ? "active" : " " }}">
+                                               <a href="{{url('administration/display-employee-report')}}"> Employee Report</a>
                                            </li>
-                                           <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                               <a href="{{url('administration/employee-kpi')}}"> Attendances Summary</a>
+                                           <li class="{{ Request::segment(2) == "display-attendance-summary-report" ? "active" : " " }}">
+                                               <a href="{{url('administration/display-attendance-summary-report')}}"> Attendances Summary</a>
                                            </li>
                                        </ul>
                                    </li>

@@ -19,6 +19,11 @@ class LeaveAdjustmentController extends Controller
         return view('backend.HRIS.Leave.Entitlement.index');
 
     }
+    public function viewLeaveEntitlements()
+    {
+
+        return view('backend.HRIS.Leave.Entitlement.employee_entitlement');
+    }
 
     /**
      * Show the form for creating a new resource.
