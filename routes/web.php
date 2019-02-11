@@ -102,6 +102,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
 
 
+
+        //TestingController
+        Route::resource('view-testing','TestingController');
+
+
         //Leave
         Route::resource('leave-type','LeaveTypeController');
         Route::resource('define-leave-period','LeavePeriodController');
@@ -118,6 +123,10 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
         //Employee
         Route::resource('view-dependents','DependentsController');
+        Route::resource('view-ReportTo-details','ReportingToController');
+        Route::get('employee/report/{report_id}/{method_id}/{employee_id}','ReportingToController@ShowEmployeeReport');
+        Route::resource('view-immigration','ImmigrationController');
+        Route::resource('view-membership','EmployeeMembershipController');
 
 
         //Time
@@ -133,7 +142,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('view-module','ModuleController');
         Route::post('view-module-update','ModuleController@ModuleUpdate');
 
-
+        //PIM
+        Route::resource('view-reporting-methods','ReportingMethodsController');
 
 
 
