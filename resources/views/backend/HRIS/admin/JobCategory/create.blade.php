@@ -39,6 +39,17 @@
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                         </div>
                                     </section>
+                                    {{--<section class="col col-4">--}}
+                                        {{--<label class="label">Country</label>--}}
+                                        {{--<label class="select state-success">--}}
+                                            {{--<select name="country_code" id="country_code" class="valid">--}}
+                                                {{--<option value="">-- country --</option>--}}
+                                                {{--<option value="1">Cambodia--}}
+                                                {{--</option>--}}
+                                            {{--</select>--}}
+                                            {{--<i></i>--}}
+                                        {{--</label>--}}
+                                    {{--</section>--}}
                                 </fieldset>
                                 <footer>
                                     <input type="submit" class="btn btn-primary" id="btn-save" value="Save">

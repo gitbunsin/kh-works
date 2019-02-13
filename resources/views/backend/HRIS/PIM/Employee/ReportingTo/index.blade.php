@@ -11,7 +11,7 @@
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
                             <a style="background: #333;" id="btn_add_sup" class="btn btn-primary" href="{{url('/administration/view-ReportTo-details/create')}}" role="button">
-                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
+                                <i class="glyphicon glyphicon-plus-sign "></i> Add </a>
                         </div>
                     </div>
                 </div>
@@ -78,25 +78,6 @@
                     <div class="modal-body no-padding">
                         <form action="" id="frmSupervisor" class="smart-form" novalidate="novalidate">
                             <fieldset>
-                                {{--<section>--}}
-                                    {{--<div class="row">--}}
-                                        {{--<label class="label col col-2"> Name </label>--}}
-                                    {{--<div class="form-group col col-10">--}}
-                                        {{--<select name="supervisor_id"--}}
-                                                {{--id="supervisor_id"--}}
-                                                {{--style="width:100%" class="select2 select2-hidden-accessible"--}}
-                                                {{--tabindex="-1" aria-hidden="true">--}}
-                                            {{--<optgroup label="Performance Employee Trackers">--}}
-                                                {{--<option value="">-- select employee --</option>--}}
-                                                {{--@php $tracker = \App\Employee::all(); @endphp--}}
-                                                {{--@foreach($tracker as $trackers)--}}
-                                                    {{--<option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>--}}
-                                                {{--@endforeach--}}
-                                            {{--</optgroup>--}}
-                                        {{--</select>--}}
-                                     {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</section>--}}
                                 <section>
                                     <div class="row">
                                         <label class="label col col-2"> Name</label>
@@ -149,14 +130,13 @@
 
         <!-- row -->
         <div class="row">
-
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee/create')}}" role="button">
-                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/view-ReportTo-details/create')}}" role="button">
+                                <i class="glyphicon glyphicon-plus-sign "></i> Add</a>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,8 @@ class Subunit extends Model
     protected $fillable =
         ['id',
             'employee_id',
-            'name',
+            'title',
+            'parent_id',
             'unit_id',
             'description',
             'lft',
@@ -21,4 +22,9 @@ class Subunit extends Model
             'level',
         ];
     public $timestamps = false;
+
+    public function childs(){
+
+        return $this->hasMany('App\Subunit','parent_id','id');
+    }
 }

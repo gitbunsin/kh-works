@@ -21,7 +21,7 @@ class KpiController extends Controller
         $k = DB::table('tbl_kpi as k')
                 ->select('k.*','j.*','k.id as kpi_id')
                 ->join('tbl_job_title as j','k.job_title_code','=','j.id')
-                ->where('k.employee_id',Auth::guard('employee')->user()->id)
+                ->where('k.company_id',Auth::guard('admins')->user()->id)
                 ->get();
 //        $k = Kpi::all();
        // dd($k);

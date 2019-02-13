@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\Subunit;
 use Illuminate\Http\Request;
 
-class SubUnitController extends Controller
+class EmployeeContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,21 +14,8 @@ class SubUnitController extends Controller
      */
     public function index()
     {
-        $categories = Subunit::where('parent_id', '=', 0)->get();
-        $allCategories = Subunit::pluck('title','id')->all();
-//        return view('categoryTreeview');
-        return view('backend.HRIS.admin.Company.structure.index',compact('categories','allCategories'))->with('success','Item has been added');
-
-    }
-
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function addCategory(Request $request)
-    {
+        //
+        return view('backend.HRIS.PIM.Employee.Contact.index');
 
     }
 
@@ -51,16 +37,7 @@ class SubUnitController extends Controller
      */
     public function store(Request $request)
     {
-        //dd('hello');
         //
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
-        $input = $request->all();
-        $input['parent_id'] = empty($input['parent_id']) ? 0 : $input['parent_id'];
-
-        Subunit::create($input);
-        return back();
     }
 
     /**

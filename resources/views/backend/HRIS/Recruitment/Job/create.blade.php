@@ -35,7 +35,6 @@
                                             <i></i>
                                         </label>
                                     </section>
-
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Location</label>

@@ -143,7 +143,7 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@endsection
+@section('script')
     <script src="{{ asset('/js/hr/employee.js') }}"></script>
 @endsection

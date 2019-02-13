@@ -70,7 +70,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('/employee-salary','EmployeeController@getSalary');
         Route::get('/employee-report-to','EmployeeController@getReport');
         Route::get('/employee-personal-details','EmployeeController@EmployeeInfo');
-        Route::get('/employee-contact-details','EmployeeController@EmployeeContactDetails');
+        Route::resource('employee-contact-details','EmployeeContactController');
         Route::resource('employee-work-experience','EmployeeWorkExperienceController');
         Route::resource('employee-work-skills','EmployeeSkillsController');
         Route::resource('skills','SkillController');
@@ -99,12 +99,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('evaluate-performance-review','PerformanceReviewController@EvaluatePerformancReview');
         Route::get('employee/tracker/review/{id}','PerformanceReviewController@getEmployeeTrackerReview');
         Route::get('my-review','PerformanceReviewController@getMyReviewPerformance');
-
-
-
-
-        //TestingController
-        Route::resource('view-testing','TestingController');
 
 
         //Leave
@@ -141,6 +135,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         //Admin
         Route::resource('view-module','ModuleController');
         Route::post('view-module-update','ModuleController@ModuleUpdate');
+
+
+        Route::resource('view-company-structure','SubUnitController');
 
         //PIM
         Route::resource('view-reporting-methods','ReportingMethodsController');

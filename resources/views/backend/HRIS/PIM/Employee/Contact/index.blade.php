@@ -1,5 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
+    @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -12,12 +13,9 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2> Contact Details </h2>
-
                     </header>
-
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -46,19 +44,19 @@
                                         <section class="col col-4">
                                             <label class="label">Address Street 1</label>
                                             <label class="input">
-                                                <input value="" type="text" name="emp_street1" id="emp_street1">
+                                                <input value="{{$employee->emp_street1}}" type="text" name="emp_street1" id="emp_street1">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Address Street 2</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="emp_street2" id="emp_street2">
+                                                <input  value="{{$employee->emp_street2}}" type="text" name="emp_street2" id="emp_street2">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">City</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="city_code" id="city_code" >
+                                                <input  value="{{$employee->city_code}}" type="text" name="city_code" id="city_code" >
                                             </label>
                                         </section>
                                     </div>
@@ -67,13 +65,13 @@
                                         <section class="col col-4">
                                             <label class="label">State/Province</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="provin_code" id="provin_code">
+                                                <input  value="{{$employee->provin_code}}" type="text" name="provin_code" id="provin_code">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Zip/Postal Code</label>
                                             <label class="input">
-                                                <input value="" type="text" name="emp_zipcode" id="emp_zipcode">
+                                                <input value="{{$employee->emp_zipcode}}" type="text" name="emp_zipcode" id="emp_zipcode">
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -94,19 +92,19 @@
                                         <section class="col col-4">
                                             <label class="label">Home Telephone</label>
                                             <label class="input">
-                                                <input type="number" value=""  name="emp_hm_telephone" id="emp_hm_telephone">
+                                                <input type="number" value="{{$employee->emp_hm_telephone}}"  name="emp_hm_telephone" id="emp_hm_telephone">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Mobile</label>
                                             <label class="input">
-                                                <input type="number" value=""  name="emp_mobile" id="emp_mobile">
+                                                <input type="number" value="{{$employee->emp_mobile}}"  name="emp_mobile" id="emp_mobile">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label"> Work Telephone</label>
                                             <label class="input">
-                                                <input type="number" value=""  name="emp_work_telephone" id="emp_work_telephone">
+                                                <input type="number" value="{{$employee->emp_work_telephone}}"  name="emp_work_telephone" id="emp_work_telephone">
                                             </label>
                                         </section>
                                     </div>
@@ -117,13 +115,13 @@
                                         <section class="col col-6">
                                             <label class="label">Work Email</label>
                                             <label class="input">
-                                                <input type="email" name="emp_work_email" value="" id="emp_work_email">
+                                                <input type="email" name="emp_work_email" value="{{$employee->emp_work_email}}" id="emp_work_email">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">Other Email</label>
                                             <label class="input">
-                                                <input type="email" name="emp_oth_email" value="" id="emp_oth_email">
+                                                <input type="email" name="emp_oth_email" value="{{$employee->emp_oth_email}}" id="emp_oth_email">
                                             </label>
                                         </section>
                                     </div>
@@ -138,5 +136,8 @@
             </article>
         </div>
     </section>
-    <script src="{{ asset('/js/hr/employee.js') }}">
+
+@endsection
+@section('script')
+    <script src="{{ asset('/js/hr/employee.js') }}"></script>
 @endsection

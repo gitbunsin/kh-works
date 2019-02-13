@@ -26,6 +26,7 @@ use Psy\Util\Json;
 class EmployeeController extends Controller
 {
 
+
     protected $redirectTo = '/administration/employee-personal-details';
     public function index()
     {
@@ -43,6 +44,16 @@ class EmployeeController extends Controller
             ->get();
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
+    }
+
+    public function EmployeeInfo(){
+
+        $employee_experience = EmployeeWorkExperience::all();
+        $employee_skill = DB::table('tbl_hr_emp_skill as es')
+            ->join('tbl_skill as s','es.skill_id','=','s.id')
+            ->get();
+//        $employee_skill = EmployeeSkills::all();
+        return view('backend.HRIS.PIM.Employee.Details.index',compact('employee_experience','employee_skill'));
     }
     
     public function create()
@@ -65,6 +76,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        dd('hello');
 //        dd($request->all());
         $employee = new Employee();
         $employee->emp_firstname = $request->emp_firstname;
@@ -107,29 +119,17 @@ class EmployeeController extends Controller
 
         return redirect('/administration/employee')->with('success','Item created successfully!');
     }
-    public function EmployeeInfo(){
 
-        $employee_experience = EmployeeWorkExperience::all();
-        $employee_skill = DB::table('tbl_hr_emp_skill as es')
-                 ->join('tbl_skill as s','es.skill_id','=','s.id')
-                 ->get();
-//        $employee_skill = EmployeeSkills::all();
-        return view('backend.HRIS.PIM.Employee.details',compact('employee_experience','employee_skill'));
-    }
     public  function  getJob()
     {
 
-        return view('backend.HRIS.PIM.Employee.job');
-    }
-    public  function EmployeeContactDetails()
-    {
-
-        return view('backend.HRIS.PIM.Employee.contact');
+        return view('backend.HRIS.PIM.Employee.Job.index');
     }
     public function  getSalary()
     {
 
-        return view('backend.HRIS.PIM.Employee.salary');
+
+        return view('backend.HRIS.PIM.Employee.Salary.index');
     }
     public function getReport()
     {

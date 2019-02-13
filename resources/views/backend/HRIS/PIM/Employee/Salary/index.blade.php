@@ -6,15 +6,6 @@
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="row">
-                    <div class="col-lg-12 margin-tb">
-                        <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee/create')}}" role="button">
-                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
-                        </div>
-                    </div>
-                </div>
-                <br/>
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
