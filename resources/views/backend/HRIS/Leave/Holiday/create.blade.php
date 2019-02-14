@@ -42,8 +42,8 @@
                                             <label class="select">
                                                 <select name="day" id="day">
                                                     <option value="">-- select --</option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0"> Full Day</option>
+                                                    <option value="8"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -53,7 +53,7 @@
                                         <label class="label"></label>
                                         <div class="inline-group">
                                             <label class="checkbox">
-                                                <input value="0" type="checkbox" name="IsDefault" id="IsDefault">
+                                                <input value="" type="checkbox" name="IsDefault" id="IsDefault">
                                                 <i></i>Repeats Annually
                                             </label>
                                         </div>
@@ -78,6 +78,15 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+         $('#IsDefault').val("0");
+         $("#IsDefault").click(function(){
+             if ($(this).prop('checked')==true){
+                 //do something
+                 $('#IsDefault').val("1");
+             }else{
+                 $('#IsDefault').val("0");
+             }
+         });
             var $loginForm = $("#frmHoliday").validate({
                 // Rules for form validation
                 rules : {

@@ -48,9 +48,14 @@
                                 <tbody id="products-list" name="products-list">
                                 @foreach($h as $hs)
                                     <tr id="job_id{{$hs->id}}">
-                                        <td>{{$hs->name}}</td>
-                                        <td>{{$hs->date}}</td>
-                                        @if($hs->recurring == 1)
+                                        <td>
+                                            <a  href="{{url('administration/define-holiday/'.$hs->id.'/edit')}}">
+                                                {{$hs->name}}</a>
+
+                                        </td>
+                                        <td>{{date('d-m-Y', strtotime($hs->date))}}</td>
+
+                                        @if($hs->length == 0)
                                             <td>
                                                 Full DAy
 
@@ -61,7 +66,18 @@
                                             </td>
 
                                         @endif
-                                        <td>{{$hs->date}}</td>
+                                        @if($hs->recurring =="1")
+                                            <td>
+                                               <strong> Yes</strong>
+
+                                            </td>
+                                        @else
+                                            <td>
+                                                <strong> No</strong>
+
+                                            </td>
+
+                                        @endif
                                         <td>
                                             <a  href="{{url('administration/define-holiday/'.$hs->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>

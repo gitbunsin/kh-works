@@ -107,6 +107,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('define-holiday','HolidayController');
         Route::resource('define-workweek','WorkWeekController');
         Route::resource('define-leave-list','LeaveController');
+        Route::get('applyLeave','LeaveController@applyLeave');
         Route::get('assign-leave','LeaveController@assginLeave');
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
         Route::resource('leave-adjustment','LeaveAdjustmentController');
@@ -121,6 +122,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('employee/report/{report_id}/{method_id}/{employee_id}','ReportingToController@ShowEmployeeReport');
         Route::resource('view-immigration','ImmigrationController');
         Route::resource('view-membership','EmployeeMembershipController');
+        Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');
 
 
         //Time

@@ -42,12 +42,15 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         //
+        //dd($request->all());
 
         $l = new Holiday();
         $l->name = $request->name;
-        $l->employee_id = Auth::guard('employee')->user()->id;
+        $l->company_id = Auth::guard('admins')->user()->id;
+        //$l->employee_id = Auth::guard('employee')->user()->id;
         $l->date = Carbon::parse($request->date);
-        $l->operational_country_id = $request->IsDefault;
+        $l->recurring = $request->IsDefault;
+        $l->length = $request->day;
         $l->save();
         return redirect('/administration/define-holiday')->with('success','Item Added successfully');
 
@@ -74,6 +77,8 @@ class HolidayController extends Controller
     public function edit($id)
     {
         //
+        $h = Holiday::FindOrFail($id);
+        return view('backend.HRIS.Leave.Holiday.edit',compact('h'));
     }
 
     /**
@@ -85,7 +90,24 @@ class HolidayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $l = Holiday::FindOrFail($id);
+        $l->name = $request->name;
+        $l->company_id = Auth::guard('admins')->user()->id;
+        //$l->employee_id = Auth::guard('employee')->user()->id;
+        $l->date = Carbon::parse($request->date);
+        $length = $request->IsDefault;
+        if($length){
+            $l->recurring = $length;
+        }
+        $length1 = $request->IsDefault1;
+        if($length1){
+            $l->recurring = $length1;
+        }
+        $l->length = $request->day;
+        $l->save();
+        return redirect('/administration/define-holiday')->with('success','Item Edited successfully');
     }
 
     /**

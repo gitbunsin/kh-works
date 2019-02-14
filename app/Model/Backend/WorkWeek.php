@@ -10,6 +10,7 @@ class WorkWeek extends Model
     protected $table = 'tbl_hr_work_week';
     protected $fillable = [
         'id',
+        'company_id',
         'employee_id',
         'operational_country_id',
         'mon',

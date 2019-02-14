@@ -84,7 +84,20 @@ class WorkWeekController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+       // dd($request->all());
+        //dd($id);
+        $w = WorkWeek::FindOrFail($id);
+        $w->mon = $request->mon;
+        $w->company_id = Auth::guard('admins')->user()->id;
+        $w->tue = $request->tue;
+        $w->wed = $request->wed;
+        $w->thu = $request->thu;
+        $w->fri = $request->fri;
+        $w->sat = $request->sat;
+        $w->sun = $request->sun;
+        $w->save();
+        return response()->json($w);
     }
 
     /**

@@ -15,7 +15,14 @@ class LeaveController extends Controller
     public function index()
     {
         //
+
         return view('backend.HRIS.Leave.Leave.index');
+    }
+    public function applyLeave()
+    {
+
+
+        return view('backend.HRIS.Leave.Leave.applyLeave');
     }
 
 

@@ -1,6 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    <section id="widget-grid" class="">
+    <section id="widget-grid" class="" xmlns="http://www.w3.org/1999/html">
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
@@ -23,15 +23,23 @@
                             <form id="frmEntitlement" method="POST" enctype="multipart/form-data" action="{{url('administration/define-holiday')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    <section>
-                                        <label class="label"></label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck" >Add new item type
-                                                <i></i> Add to Multiple Employee
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label"></label>
+                                            <div class="inline-group">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" id="myCheck" >Add new item type
+                                                    <i></i> Add to Multiple Employee
+                                                </label>
+                                            </div>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"></label>
+                                            <label class="input">
+                                                <span class="emp_number"> <strong></strong></span>
                                             </label>
-                                        </div>
-                                    </section>
+                                        </section>
+                                    </div>
                                     <div class="row" id="div_show">
                                         <section class="col col-6">
                                             <label class="label"> Location * </label>
@@ -47,14 +55,20 @@
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> Sub unit * </label>
+                                            <label class="label"> Sub Unit * </label>
                                             <label class="select">
-                                                <select name="sub_unit" id="sub_unit">
-                                                    <option value="">-- select Unit --</option>
-                                                    @php $subunit = \App\Subunit::all(); @endphp
-                                                    @foreach($subunit as $subunits)
-                                                        <option value="{{$subunits->id}}">{{$subunits->name}}</option>
-                                                    @endforeach
+                                                <select name="location" id="location">
+                                                    <option value="">-- select location --</option>
+                                                    @foreach($categories as $category)
+                                                       <option value="">{{ $category->title }}
+                                                           @if(count($category->childs))
+                                                               @include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])
+                                                           @endif
+
+                                                       </option>
+
+                                                        @endforeach
+
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -125,7 +139,6 @@
                             </form>
                         </div>
                         <!-- end widget content -->
-
                     </div>
                 </div>
             </article>
@@ -136,14 +149,34 @@
 @section('script')
 <script type="text/javascript">
     $('#div_show').hide();
-
+    let baseURL = "{{URL::to('/')}}/";
     function checkval() {
 
         if ($('#myCheck').is(':checked')) {
             $('#div_show').show({
                 duration: 800,
             });
-        } else {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var formData = {}
+            $.ajax({
+                url: baseURL + "administration/viewMatchEmployee",
+                method: "GET",
+                type: "json",
+                data: formData,
+                success: function (respond) {
+                    //alert(JSON.stringify(respond));
+                    $('.emp_number').text("( Matches "  + respond + " Employees )");
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            });
+
+    } else {
             $('#div_show').hide({
                 duration: 800,
             });

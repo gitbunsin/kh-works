@@ -221,6 +221,12 @@
                         <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
                             <a href="#">My Leave</a>
                             <ul>
+                                <li class="{{ Request::segment(2) == "applyLeave" ? "active" : " " }}">
+                                    <a href="{{url('administration/applyLeave')}}"> Apply </a>
+                                </li>
+                                <li class="{{ Request::segment(2) == "leave-adjustment" ? "active" : " " }}">
+                                    <a href="{{url('administration/leave-adjustment')}}"> My Leave </a>
+                                </li>
                                 <li class="{{ Request::segment(2) == "leave-adjustment" ? "active" : " " }}">
                                     <a href="{{url('administration/leave-adjustment')}}"> Add Entitlement </a>
                                 </li>

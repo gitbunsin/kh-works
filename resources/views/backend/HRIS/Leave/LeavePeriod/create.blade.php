@@ -23,10 +23,12 @@
                             <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    <section>
+                                    <div class="row">
+                                    <section class="col col-6">
+
                                         <label class="label"> Start Month</label>
                                         <label class="select">
-                                            <select name="leaveperiod[cmbStartMonth]" id="leaveperiod_cmbStartMonth">
+                                            <select name="leaveperiod" id="leaveperiod_cmbStartMonth">
                                                 <option value="0">-- Month --</option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
@@ -44,10 +46,10 @@
                                             <i></i>
                                         </label>
                                     </section>
-                                    <section>
+                                    <section class="col col-6">
                                         <label class="label"> Start Date</label>
                                         <label class="select">
-                                            <select name="leaveperiod[cmbStartDate]" id="leaveperiod_cmbStartDate">
+                                            <select name="leaveperiod" id="leaveperiod_cmbStartDate">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -83,24 +85,25 @@
                                             <i></i>
                                         </label>
                                     </section>
+                                    </div>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label class="label">End Date</label>
                                             <label class="input">
-                                                <input disabled type="text" name="end_date" id="start_date">
+                                                <span><strong>January 31 (Following Year)</strong></span>
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">Current Leave Period</label>
                                             <label class="input">
-                                                <input disabled type="text" name="leave_period" id="leave_period">
+                                                <span><strong>2019-01-01 to 2020-01-31</strong></span>
                                             </label>
                                         </section>
                                     </div>
 
                                 </fieldset>
                                 <footer>
-                                    <input  type="submit" value="Edit" id="btn_save" name="btn_save" class="btn_save btn btn-primary" />
+                                    <input  type="button" value="" id="btn_save_leave" name="btn_save" class="btn_save btn btn-primary" />
                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                         Back
                                     </button>
@@ -118,6 +121,53 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        $('#btn_save_leave').val('Edit');
+        $('#leaveperiod_cmbStartMonth').prop('disabled',true);
+        $('#leaveperiod_cmbStartDate').prop('disabled',true);
+        let baseURL = "{{URL::to('/')}}/";
+        $('#btn_save_leave').click(function () {
+            var IsEdit = $('#btn_save_leave').val();
+            if (IsEdit == "Edit") {
+                $('#leaveperiod_cmbStartMonth').prop("disabled", false);
+                $('#leaveperiod_cmbStartDate').prop("disabled", false);
+                $('#btn_save_leave').val('Save');
+            } else {
+                var Save = $('#btn_save_leave').val();
+                if (Save == "Save") {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var formData = {
+                        start_month : $('#leaveperiod_cmbStartMonth').val(),
+                        start_date  :  $('#leaveperiod_cmbStartDate').val(),
+                    }
+                    $.ajax({
+                        url: baseURL + "administration/define-leave-period",
+                        method: "POST",
+                        type: "json",
+                        data: formData,
+                        success: function (respond) {
+                            //console.log(respond);
+                            $('#leaveperiod_cmbStartMonth').prop('disabled',true);
+                            $('#leaveperiod_cmbStartDate').prop('disabled',true);
+                            $('#btn_save_leave').val('Edit');
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    });
+                }
+            }
+        });
+        $( "#leaveperiod_cmbStartDate" ).change(function() {
+
+            $start_month = $('#leaveperiod_cmbStartMonth').val();
+            $start_date = $('#leaveperiod_cmbStartDate').val();
+
+            //alert($start_date);
+        });
         var $loginForm = $("#frmLeavetype").validate({
             // Rules for form validation
             rules : {
@@ -130,5 +180,6 @@
                 error.insertAfter(element.parent());
             }
         });
+
     </script>
 @endsection

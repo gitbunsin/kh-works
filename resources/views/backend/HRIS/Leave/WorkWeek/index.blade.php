@@ -1,5 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
+
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -7,6 +8,7 @@
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2> Work Week </h2>
@@ -20,6 +22,11 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
+                            <br/>
+                            <div style="display: none;" class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                Success! message sent successfully.
+                            </div>
                             <form id="frmWorkWeek" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -27,10 +34,13 @@
                                         <section class="col col-6">
                                             <label class="label"> Monday </label>
                                             <label class="select">
+                                                @php $w = \App\WorkWeek::all();@endphp
                                                 <select name="mon" id="mon">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    @foreach($w as $ws)
+                                                            <option value="0" {{"8" == $ws->mon ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                            <option value="8" {{"0" == $ws->mon ? "selected == 'selected'" :''}}> Full Day</option>
+                                                            <option value="4" {{"4" == $ws->mon ? "selected == 'selected'" :''}}> Half Day</option>
+                                                     @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -39,9 +49,9 @@
                                             <label class="label"> Tuesday </label>
                                             <label class="select">
                                                 <select name="tue" id="tue">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0" {{"8" == $ws->tue ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                    <option value="8" {{"0" == $ws->tue ? "selected == 'selected'" :''}}> Full Day</option>
+                                                    <option value="4" {{"4" == $ws->tue ? "selected == 'selected'" :''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -52,9 +62,9 @@
                                             <label class="label"> Wednesday </label>
                                             <label class="select">
                                                 <select name="wed" id="wed">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0" {{"8" == $ws->wed ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                    <option value="8" {{"0" == $ws->wed ? "selected == 'selected'" :''}}> Full Day</option>
+                                                    <option value="4" {{"4" == $ws->wed ? "selected == 'selected'" :''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -63,9 +73,9 @@
                                             <label class="label"> Thursday </label>
                                             <label class="select">
                                                 <select name="thu" id="thu">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0" {{"8" == $ws->thu ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                    <option value="8" {{"0" == $ws->thu ? "selected == 'selected'" :''}}> Full Day</option>
+                                                    <option value="4" {{"4" == $ws->thu ? "selected == 'selected'" :''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -76,9 +86,9 @@
                                             <label class="label"> friday </label>
                                             <label class="select">
                                                 <select name="fri" id="fri">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0" {{"8" == $ws->fri ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                    <option value="8" {{"0" == $ws->fri ? "selected == 'selected'" :''}}> Full Day</option>
+                                                    <option value="4" {{"4" == $ws->fri ? "selected == 'selected'" :''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -87,9 +97,9 @@
                                             <label class="label"> Saturday </label>
                                             <label class="select">
                                                 <select name="sat" id="sat">
-                                                    <option value=""> Non Working day </option>
-                                                    <option value="1"> Full Day</option>
-                                                    <option value="2"> Half Day</option>
+                                                    <option value="0" {{"8" == $ws->sat ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                    <option value="8" {{"0" == $ws->sat ? "selected == 'selected'" :''}}> Full Day</option>
+                                                    <option value="4" {{"4" == $ws->sat ? "selected == 'selected'" :''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -99,9 +109,9 @@
                                         <label class="label"> Sunday </label>
                                         <label class="select">
                                             <select name="sun" id="sun">
-                                                <option value=""> Non Working day </option>
-                                                <option value="1"> Full Day</option>
-                                                <option value="2"> Half Day</option>
+                                                <option value="0" {{"8" == $ws->sun ? "selected == 'selected'" :''}}> Non Working day </option>
+                                                <option value="8" {{"0" == $ws->sun ? "selected == 'selected'" :''}}> Full Day</option>
+                                                <option value="4" {{"4" == $ws->sun ? "selected == 'selected'" :''}}> Half Day</option>
                                             </select>
                                             <i></i>
                                         </label>
@@ -109,10 +119,6 @@
                                 </fieldset>
                                 <footer>
                                     <input type="button" value="" class="btn btn-primary" id="btn_save_week"/>
-                                    {{--<button type="submit" class="btn btn-primary">Save</button>--}}
-                                    {{--<button type="button" class="btn btn-default" onclick="window.history.back();">--}}
-                                        {{--Back--}}
-                                    {{--</button>--}}
                                 </footer>
                             </form>
                         </div>
@@ -127,6 +133,7 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
         let baseURL = "{{URL::to('/')}}/";
         $('#mon').prop("disabled", true);
         $('#tue').prop("disabled", true);
@@ -158,7 +165,7 @@
             });
             var formData = {
 
-                mom : $('#mon').val(),
+                mon : $('#mon').val(),
                 tue : $('#tue').val(),
                 wed : $('#wed').val(),
                 thu : $('#thu').val(),
@@ -166,18 +173,20 @@
                 sat : $('#sat').val(),
                 sun : $('#sun').val(),
             }
+           // alert(JSON.stringify(formData));
+            var id = 1;
             //alert(JSON.stringify(formData));
             $.ajax({
-                url: baseURL+"administration/define-workweek",
-                method: "POST",
+                url: baseURL+"administration/define-workweek/" + id,
+                method: "PUT",
                 type: "json",
                 data: formData,
                 success: function (respond) {
                     DisabledForm();
                     var Save = $('#btn_save_week').val('Edit');
-                    //$('#btn_save_week').val("Edit");
-                    //alert('OK');
-                    //bindEmployeeOption(respond.data)
+                    $('.alert').show();
+                    //$('#msg').html("data insert successfully").fadeIn('slow') //also show a success message
+                    $('.alert').delay(5000).fadeOut('slow');
                 },
                 error: function (err) {
                     console.log(err)

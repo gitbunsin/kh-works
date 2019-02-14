@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\LeavePeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LeavePeriodController extends Controller
 {
@@ -16,6 +18,7 @@ class LeavePeriodController extends Controller
     {
         //
 
+        $p = DB::table('tbl_hr_leave_period_history')->get();
         return view('backend.HRIS.Leave.LeavePeriod.create');
     }
 
@@ -38,6 +41,12 @@ class LeavePeriodController extends Controller
     public function store(Request $request)
     {
         //
+        $p = new LeavePeriod();
+        $p->leave_period_start_month = $request->start_month;
+            $p->leave_period_start_day = $request->start_date;
+            $p->save();
+          //  $p = $p->id;
+        return response()->json($p);
     }
 
     /**
