@@ -1,5 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -18,69 +19,36 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <!-- end widget edit box -->
+                        {{--@php dd(date('2019 1 1 (Y-m-d)', strtotime(' 5 days'))); @endphp--}}
                         <!-- widget content -->
+                        @php
+                           // dd(date("Y-m-d", strtotime("2019-02-16 + 365 days"))) @endphp
                         <div class="widget-body no-padding">
                             <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                                 <fieldset>
                                     <div class="row">
-                                    <section class="col col-6">
-
-                                        <label class="label"> Start Month</label>
-                                        <label class="select">
-                                            <select name="leaveperiod" id="leaveperiod_cmbStartMonth">
-                                                <option value="0">-- Month --</option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
-                                                <option value="3">March</option>
-                                                <option value="4">April</option>
-                                                <option value="5">May</option>
-                                                <option value="6">June</option>
-                                                <option value="7">July</option>
-                                                <option value="8">August</option>
-                                                <option value="9">September</option>
-                                                <option value="10">October</option>
-                                                <option value="11">November</option>
-                                                <option value="12">December</option>
-                                            </select>
-                                            <i></i>
-                                        </label>
-                                    </section>
-                                    <section class="col col-6">
+                                    {{--<section class="col col-4">--}}
+                                        {{--<label class="label"> Current Years</label>--}}
+                                        {{--<label class="select">--}}
+                                            {{--<select id="byear" name="byear" required>--}}
+                                                {{--<option value="">Select Year</option>--}}
+                                                {{--<option value="{{date('Y')}}">{{date('Y')}}</option>--}}
+                                            {{--</select>--}}
+                                            {{--<i></i>--}}
+                                        {{--</label>--}}
+                                    {{--</section>--}}
+                                        <section class="col col-6">
+                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date" class="hasDatepicker">
+                                            </label>
+                                        </section>
+                                    <section class="col col-4">
                                         <label class="label"> Start Date</label>
                                         <label class="select">
-                                            <select name="leaveperiod" id="leaveperiod_cmbStartDate">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                                <option value="13">13</option>
-                                                <option value="14">14</option>
-                                                <option value="15">15</option>
-                                                <option value="16">16</option>
-                                                <option value="17">17</option>
-                                                <option value="18">18</option>
-                                                <option value="19">19</option>
-                                                <option value="20">20</option>
-                                                <option value="21">21</option>
-                                                <option value="22">22</option>
-                                                <option value="23">23</option>
-                                                <option value="24">24</option>
-                                                <option value="25">25</option>
-                                                <option value="26">26</option>
-                                                <option value="27">27</option>
-                                                <option value="28">28</option>
-                                                <option value="29">29</option>
-                                                <option value="30">30</option>
-                                                <option value="31">31</option>
+                                            <select id="bday" name="bday" required disabled>
+                                                <option value="">Select Day</option>
                                             </select>
                                             <i></i>
                                         </label>
@@ -90,7 +58,7 @@
                                         <section class="col col-6">
                                             <label class="label">End Date</label>
                                             <label class="input">
-                                                <span><strong>January 31 (Following Year)</strong></span>
+                                                <span><strong> {{ date("Y-m-d", strtotime( "2019-02-16 + 365 days"))}} </strong></span>
                                             </label>
                                         </section>
                                         <section class="col col-6">
@@ -120,54 +88,105 @@
 
 @endsection
 @section('script')
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
     <script type="text/javascript">
-        $('#btn_save_leave').val('Edit');
-        $('#leaveperiod_cmbStartMonth').prop('disabled',true);
-        $('#leaveperiod_cmbStartDate').prop('disabled',true);
-        let baseURL = "{{URL::to('/')}}/";
-        $('#btn_save_leave').click(function () {
-            var IsEdit = $('#btn_save_leave').val();
-            if (IsEdit == "Edit") {
-                $('#leaveperiod_cmbStartMonth').prop("disabled", false);
-                $('#leaveperiod_cmbStartDate').prop("disabled", false);
-                $('#btn_save_leave').val('Save');
-            } else {
-                var Save = $('#btn_save_leave').val();
-                if (Save == "Save") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    var formData = {
-                        start_month : $('#leaveperiod_cmbStartMonth').val(),
-                        start_date  :  $('#leaveperiod_cmbStartDate').val(),
-                    }
-                    $.ajax({
-                        url: baseURL + "administration/define-leave-period",
-                        method: "POST",
-                        type: "json",
-                        data: formData,
-                        success: function (respond) {
-                            //console.log(respond);
-                            $('#leaveperiod_cmbStartMonth').prop('disabled',true);
-                            $('#leaveperiod_cmbStartDate').prop('disabled',true);
-                            $('#btn_save_leave').val('Edit');
-                        },
-                        error: function (err) {
-                            console.log(err)
-                        }
-                    });
-                }
-            }
+        // START AND FINISH DATE
+        $('#startdate').datepicker({
+            dateFormat : 'dd.mm.yy',
+            prevText : '<i class="fa fa-chevron-left"></i>',
+            nextText : '<i class="fa fa-chevron-right"></i>'
         });
-        $( "#leaveperiod_cmbStartDate" ).change(function() {
 
-            $start_month = $('#leaveperiod_cmbStartMonth').val();
-            $start_date = $('#leaveperiod_cmbStartDate').val();
+        {{--function daysInMonth(month, year) {--}}
+            {{--return new Date(year, month, 0).getDate();--}}
+        {{--}--}}
+        {{--$('#byear, #bmonth').change(function() {--}}
 
-            //alert($start_date);
-        });
+            {{--if ($('#byear').val().length > 0 && $('#bmonth').val().length > 0) {--}}
+                {{--$('#bday').prop('disabled', false);--}}
+                {{--$('#bday').find('option').remove();--}}
+                {{--var EndDate = year.concat(month,day);--}}
+                {{----}}
+                {{--var daysInSelectedMonth = daysInMonth($('#bmonth').val(), $('#byear').val());--}}
+
+                {{--for (var i = 1; i <= daysInSelectedMonth; i++) {--}}
+                    {{--$('#bday').append($("<option></option>").attr("value", i).text(i));--}}
+                {{--}--}}
+            {{--} else {--}}
+                {{--$('#bday').prop('disabled', true);--}}
+            {{--}--}}
+
+        {{--});--}}
+        {{--function GetValue()--}}
+        {{--{--}}
+
+
+        {{--}--}}
+
+
+        {{--function daysInMonth(month, year) {--}}
+            {{--return new Date(year, month, 0).getDate();--}}
+        {{--}--}}
+        {{--$('#byear, #bmonth').change(function() {--}}
+
+            {{--if ($('#byear').val().length > 0 && $('#bmonth').val().length > 0) {--}}
+                {{--$('#bday').prop('disabled', false);--}}
+                {{--$('#bmonth').prop('disabled', false);--}}
+                {{--$('#bday').find('option').remove();--}}
+
+
+                {{--var daysInSelectedMonth = daysInMonth($('#bmonth').val(), $('#byear').val());--}}
+
+                {{--for (var i = 1; i <= daysInSelectedMonth; i++) {--}}
+                    {{--$('#bday').append($("<option></option>").attr("value", i).text(i));--}}
+                {{--}--}}
+
+            {{--} else {--}}
+                {{--//alert('ok');--}}
+                {{--$('#bday').prop('disabled', true);--}}
+            {{--}--}}
+        {{--});--}}
+        {{--$('#btn_save_leave').val('Edit');--}}
+        {{--$('#bmonth').prop('disabled',true);--}}
+        {{--$('#bday').prop('disabled',true);--}}
+        {{--$('#byear').prop('disabled',true);--}}
+
+        {{--let baseURL = "{{URL::to('/')}}/";--}}
+        {{--$('#btn_save_leave').click(function () {--}}
+            {{--var IsEdit = $('#btn_save_leave').val();--}}
+            {{--if (IsEdit == "Edit") {--}}
+                {{--$('#byear').prop('disabled',false);--}}
+                {{--$('#btn_save_leave').val('Save');--}}
+            {{--} else {--}}
+                {{--var Save = $('#btn_save_leave').val();--}}
+                {{--if (Save == "Save") {--}}
+                    {{--$.ajaxSetup({--}}
+                        {{--headers: {--}}
+                            {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+                        {{--}--}}
+                    {{--});--}}
+                    {{--var formData = {--}}
+                        {{--start_month : $('#leaveperiod_cmbStartMonth').val(),--}}
+                        {{--start_date  :  $('#leaveperiod_cmbStartDate').val(),--}}
+                    {{--}--}}
+                    {{--$.ajax({--}}
+                        {{--url: baseURL + "administration/define-leave-period",--}}
+                        {{--method: "POST",--}}
+                        {{--type: "json",--}}
+                        {{--data: formData,--}}
+                        {{--success: function (respond) {--}}
+                            {{--//console.log(respond);--}}
+                            {{--$('#leaveperiod_cmbStartMonth').prop('disabled',true);--}}
+                            {{--$('#leaveperiod_cmbStartDate').prop('disabled',true);--}}
+                            {{--$('#btn_save_leave').val('Edit');--}}
+                        {{--},--}}
+                        {{--error: function (err) {--}}
+                            {{--console.log(err)--}}
+                        {{--}--}}
+                    {{--});--}}
+                {{--}--}}
+            {{--}--}}
+        {{--});--}}
         var $loginForm = $("#frmLeavetype").validate({
             // Rules for form validation
             rules : {

@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
+                            <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-request')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                         <section>
@@ -38,10 +38,16 @@
                                         </section>
                                     <div id="div_balance">
                                         <section>
-                                            <label class="label"> Leave Balance</label>
-                                            <label class="input">
-                                                <h3 style="color:red;"><a href="#">Hello </a> </h3>
+                                            <div class="row">
+                                            <label class="label col col-2"> Leave Balance</label>
+                                            <label class="input col col-1">
+                                                <h3 id="leave_balance_id" style="color:red;"> </h3>
                                             </label>
+                                                <label class="input col col-2">
+                                                   <h5><a id="leave_balance_id" href="#"> View Details </a></h5>
+                                                </label>
+
+                                            </div>
                                         </section>
                                     </div>
                                     <div class="row">
@@ -49,7 +55,7 @@
                                             <label class="label"> From Date * </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="from_date" name="from_date" class="datepicker">
                                             </label>
                                         </section>
 
@@ -57,7 +63,7 @@
                                             <label class="label"> To Date * </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="to_date" name="to_date" class="datepicker">
                                             </label>
                                         </section>
 
@@ -86,10 +92,10 @@
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-3">
+                                        <section class="col col-3" id="duration_morning">
                                             <label class="label"> - - -</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="duration_morning" id="duration_morning">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
@@ -127,44 +133,44 @@
                                         <section class="col col-3">
                                             <label class="label"> Start Day </label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="start_day" id="start_day">
                                                     <option value="1">Half Days</option>
                                                     <option value="2">Specific time</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-3">
+                                        <section class="col col-3" id="start_date_morning">
                                             <label class="label"> - - -</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="start_date_morning" id="start_date_morning">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-2" id="from_date">
+                                        <section class="col col-2" id="start_from_date">
                                             <label class="label"> From</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="start_from_date" id="start_from_date">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-2">
+                                        <section class="col col-2" id="start_to_date">
                                             <label class="label"> To</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="" id="">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-1">
+                                        <section class="col col-1" id="start_date_duration">
                                             <label class="label"> Duration </label>
                                             <label class="input">
                                                 <input type="text" disabled id="duration" name="duration" class="">
@@ -175,44 +181,44 @@
                                         <section class="col col-3">
                                             <label class="label"> End Day </label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="end_date" id="end_date">
                                                     <option value="1">Half Days</option>
                                                     <option value="2">Specific time</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-3">
+                                        <section class="col col-3" id="end_date_morning">
                                             <label class="label"> - - -</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="" id="">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-2" id="duration_from_date">
+                                        <section class="col col-2" id="end_from_date">
                                             <label class="label"> From</label>
                                             <label class="select">
-                                                <select name="" id="partial_day">
+                                                <select name="" id="">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-2">
+                                        <section class="col col-2" id="end_to_date">
                                             <label class="label"> To</label>
                                             <label class="select">
-                                                <select name="partial_day" id="partial_day">
+                                                <select name="" id="">
                                                     <option value="1">Morning</option>
                                                     <option value="2">Afternoon</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-1">
+                                        <section class="col col-1" id="end_duration">
                                             <label class="label"> Duration </label>
                                             <label class="input">
                                                 <input type="text" disabled id="duration" name="duration" class="">
@@ -223,7 +229,7 @@
                                     <section>
                                         <label class="label">Comment *</label>
                                         <label class="input">
-                                            <textarea id="postal_address" name="postal_address" rows="10" cols="164"></textarea>
+                                            <textarea id="comment" name="comment" rows="10" cols="164"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -251,13 +257,52 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
         let baseURL = "{{URL::to('/')}}/";
+        $("#leave_type").on('change', function () {
+            let leave_id = this.value;
+            //alert(employeeID);
+            if (leave_id != 0) {
+               // console.log("Leave ID = ", leave_id);
+                /**
+                 * 1. Make ajax Request
+                 * 2. Append data result as employee option
+                 *
+                 */
+                $.ajax({
+                    url: baseURL+"administration/request-leave-balance/" + leave_id,
+                    method: "GET",
+                    type: "json",
+                    success: function (respond) {
+                        $("#div_balance").show();
+                        $("#leave_balance_id").text(respond.no_of_day);
+                        //console.log("Leave balance = ", respond);
+                        //bindEmployeeOption(respond.data)
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+
+                });
+            }else{
+
+                $("#div_balance").hide();
+            }
+
+        });
         var $loginForm = $("#frmLeavetype").validate({
             // Rules for form validation
             rules : {
-                name : {
+                leave_type : {
                     required : true
                 },
+                from_date  : {
+                    required: true
+                },
+                to_date : {
+                    required : true
+                }
+
             },
             // Do not change code below
             errorPlacement : function(error, element) {
@@ -268,19 +313,74 @@
         $('#end_days').hide();
         $('#start_days').hide();
         $('#duration').hide();
+
         $('#duration_from_date').hide();
         $('#duration_to_date').hide();
         $('#duration_duration').hide();
 
 
+        $('#start_from_date').hide();
+        $('#start_to_date').hide();
+        $('#start_date_duration').hide();
+
+        //Edn date
+        $('#end_from_date').hide();
+        $('#end_to_date').hide();
+        $('#end_duration').hide();
+
+
+
         $('#duration_half_day').on('change',function () {
              var sp = $('#duration_half_day').val();
              if(sp == "2"){
+                 $('#duration_morning').hide();
                  $('#duration_from_date').show({duration: 800,});
                  $('#duration_to_date').show({duration : 800 ,})
                  $('#duration_duration').show({duration : 800 ,})
              }
+             if(sp == "1"){
+                 $('#duration_morning').show({duration: 800,});
+                 $('#duration_from_date').hide();
+                 $('#duration_to_date').hide();
+                 $('#duration_duration').hide();
+             }
         });
+        //Start Date
+
+        $('#start_day').on('change',function () {
+            var sp = $('#start_day').val();
+            if(sp == "1"){
+                $('#start_date_morning').show({duration: 800,})
+                $('#start_from_date').hide();
+                $('#start_to_date').hide();
+                $('#start_date_duration').hide();
+            }
+            if(sp == "2"){
+                $('#start_date_morning').hide();
+                $('#start_from_date').show({duration: 800,})
+                $('#start_to_date').show({duration: 800,})
+                $('#start_date_duration').show({duration: 800,})
+            }
+        });
+
+        //Eed Date
+        $('#end_date').on('change',function () {
+            var sp = $('#end_date').val();
+            if(sp == "1"){
+                $('#end_date_morning').show({duration: 800,})
+                $('#end_from_date').hide();
+                $('#end_to_date').hide();
+                $('#end_duration').hide();
+            }
+            if(sp == "2"){
+
+               $('#end_date_morning').hide();
+                $('#end_from_date').show({duration: 800,})
+                $('#end_to_date').show({duration: 800,})
+                $('#end_duration').show({duration: 800,})
+            }
+        });
+
 
 
         $('#partial_day').on('change', function (){
@@ -291,12 +391,11 @@
                  $('#end_days').hide();
                  $('#start_days').hide();
                  $('#duration').show({duration:800,});
-
-
              }
              if(all_day == "2"){
                  $('#duration').hide();
                  $('#start_days').show({duration: 800,});
+                 $('#end_days').hide();
              }
              if(all_day == "3"){
                  $('#start_days').hide();
@@ -308,37 +407,28 @@
                  $('#start_days').show({duration: 800,});
                  $('#end_days').show({duration:800,});
              }
+             if(all_day == ""){
+
+                 $("#div_balance").hide();
+                 $('#end_days').hide();
+                 $('#start_days').hide();
+                 $('#duration').hide();
+
+                 $('#duration_from_date').hide();
+                 $('#duration_to_date').hide();
+                 $('#duration_duration').hide();
 
 
+                 $('#start_from_date').hide();
+                 $('#start_to_date').hide();
+                 $('#start_date_duration').hide();
 
-
+                 //Edn date
+                 $('#end_from_date').hide();
+                 $('#end_to_date').hide();
+                 $('#end_duration').hide();
+             }
         });
-        $("#leave_type").on('change', function () {
-            let employeeID = this.value;
 
-            //alert(employeeID);
-            if (employeeID != 0) {
-                //console.log("Employee ID = ", employeeID);
-                /**
-                 * 1. Make ajax Request
-                 * 2. Append data result as employee option
-                 *
-                 */
-                $.ajax({
-                    url: baseURL+"administration/request-leave-balance/" + employeeID,
-                    method: "GET",
-                    type: "json",
-                    success: function (respond) {
-                        $("#div_balance").show();
-                        //bindEmployeeOption(respond.data)
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-
-                });
-            }
-
-        });
     </script>
 @endsection

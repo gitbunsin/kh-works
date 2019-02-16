@@ -1,6 +1,15 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+
+
+    @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
+
+        @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+    @else
+
+        @php $employee = \App\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+
+    @endif
     <section id="widget-grid" class="">
 
         <!-- row -->
@@ -43,7 +52,7 @@
                                 <form id="validate_employee" method="POST"  action="{{url('administration/employee')}}" class="smart-form" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input name="_method" type="hidden" value="PATCH">
-                                    <input type="hidden" id="emp_id" value="{{Auth::guard('admins')->user()->id}}" name="emp_id"/>
+                                    <input type="hidden" id="emp_id" value="" name="emp_id"/>
                                     <input type="hidden" id="isPersonalDeatils" name="isPersonalDeatils" value="1"/>
                                     <div class="row">
                                         <input type="hidden" value="" name="company_id"/>

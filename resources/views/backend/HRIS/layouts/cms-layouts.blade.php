@@ -13,7 +13,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
 		<!-- <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"> -->
 		<link href="{{ asset('css/smartadmin-production-plugins.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-production.min.css') }}" rel="stylesheet">
@@ -38,6 +38,7 @@
 		
 		<!-- Custom Own Style -->
 		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
+		{{--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">--}}
 
 	</head>
 <body class="">

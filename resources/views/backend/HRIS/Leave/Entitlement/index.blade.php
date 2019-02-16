@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmEntitlement" method="POST" enctype="multipart/form-data" action="{{url('administration/define-holiday')}}" class="smart-form">
+                            <form id="frmEntitlement" method="POST" enctype="multipart/form-data" action="{{url('administration/add-leave-entitlement')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
@@ -33,14 +33,15 @@
                                                 </label>
                                             </div>
                                         </section>
-                                        <section class="col col-6">
+
+                                    </div>
+                                    <div class="row" id="div_show">
+                                        <section>
                                             <label class="label"></label>
                                             <label class="input">
                                                 <span class="emp_number"> <strong></strong></span>
                                             </label>
                                         </section>
-                                    </div>
-                                    <div class="row" id="div_show">
                                         <section class="col col-6">
                                             <label class="label"> Location * </label>
                                             <label class="select">
@@ -60,13 +61,12 @@
                                                 <select name="location" id="location">
                                                     <option value="">-- select location --</option>
                                                     @foreach($categories as $category)
-                                                       <option value="">{{ $category->title }}
+                                                       <option value="">{{ $category->title }}&nbsp;&nbsp;&nbsp;&nbsp;
                                                            @if(count($category->childs))
                                                                @include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])
                                                            @endif
 
                                                        </option>
-
                                                         @endforeach
 
                                                 </select>
@@ -114,10 +114,11 @@
                                                 <label class="select">
                                                     <select name="leave_period" id="leave_period">
                                                         <option value="">-- select leave periods --</option>
-                                                       @php $leave_period = \App\LeavePeriod::all(); @endphp
-                                                        @foreach($leave_period as $leave_periods)
-                                                            <option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}}</option>
-                                                        @endforeach
+                                                        <option value="1"> 2019-01-01 - 2019-12-31</option>
+                                                       {{--@php $leave_period = \App\LeavePeriod::all(); @endphp--}}
+                                                        {{--@foreach($leave_period as $leave_periods)--}}
+                                                            {{--<option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}}</option>--}}
+                                                        {{--@endforeach--}}
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -126,7 +127,7 @@
                                     <section>
                                         <label class="label">Entitlements  *</label>
                                         <label class="input">
-                                            <input type="number" name="entitlements" id="entitlements">
+                                            <input type="number" name="entitlements_day" id="entitlements_day">
                                         </label>
                                     </section>
                                 </fieldset>
@@ -168,11 +169,13 @@
                 type: "json",
                 data: formData,
                 success: function (respond) {
-                    //alert(JSON.stringify(respond));
+
+                    alert(JSON.stringify(respond));
                     $('.emp_number').text("( Matches "  + respond + " Employees )");
                 },
                 error: function (err) {
                     console.log(err)
+                    //$('.emp_number').hide();
                 }
             });
 
@@ -188,6 +191,7 @@
         checkval(); // this is launched on load
         $('#myCheck').click(function () {
              checkval();
+            $('#employee_id').show();
         });
 
     });

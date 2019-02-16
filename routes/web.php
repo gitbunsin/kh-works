@@ -105,15 +105,25 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('leave-type','LeaveTypeController');
         Route::resource('define-leave-period','LeavePeriodController');
         Route::resource('define-holiday','HolidayController');
+
+
         Route::resource('define-workweek','WorkWeekController');
         Route::resource('define-leave-list','LeaveController');
-        Route::get('applyLeave','LeaveController@applyLeave');
+        Route::get('get-applyLeave','LeaveController@applyLeave');
+        Route::post('leave-request','LeaveController@leaveRequest');
+
+
         Route::get('assign-leave','LeaveController@assginLeave');
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
         Route::resource('leave-adjustment','LeaveAdjustmentController');
 
         Route::get('view-leave-balance-report','LeaveController@viewLeaveBalanceReport');
         Route::get('view-leave-entitlements','LeaveAdjustmentController@viewLeaveEntitlements');
+        Route::get('view-leave-my-entitlements','LeaveController@viewMyLeaveEntitlements');
+        Route::get('view-my-leave-list','LeaveController@viewMyLeaveList');
+        Route::resource('add-leave-entitlement','LeaveEntitlementController');
+
+
 
 
         //Employee

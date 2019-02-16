@@ -24,27 +24,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
-                                    <section class="col col-4">
-                                        <label class="label">Employee Name</label>
-                                        <div class="form-group">
-                                            <select name="employee_entitlement"
-                                                    id="employee_entitlement"
-                                                    style="width:100%" class="select2 select2-hidden-accessible"
-                                                    tabindex="-1" aria-hidden="true">
-                                                <optgroup label="Performance Employee Trackers">
-                                                    <option value="">-- select employee --</option>
-                                                    @php $tracker = \App\Employee::all(); @endphp
-                                                    @foreach($tracker as $trackers)
-                                                        <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            </select>
-                                            <div class="note">
-                                                <strong>Usage:</strong> Employee performance tracker
-                                            </div>
-                                        </div>
-                                    </section>
-                                        <section class="col col-4">
+                                        <section class="col col-6">
                                             <label class="label"> Leave Type * </label>
                                             <label class="select">
                                                 <select name="leave_type" id="leave_type">
@@ -57,7 +37,7 @@
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
+                                        <section class="col col-6">
                                             <label class="label"> Leave Period * </label>
                                             <label class="select">
                                                 <select name="leave_period" id="leave_period">
@@ -121,6 +101,7 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
+                                    <th> Leave Type</th>
                                     <th> Entitlement Type</th>
                                     <th> Valid From</th>
                                     <th> Valid To</th>
@@ -134,6 +115,7 @@
                                         <td>{{$leave_entitlements->name}}</td>
                                         <td>{{$leave_entitlements->from_date}}</td>
                                         <td>{{$leave_entitlements->to_date}}</td>
+                                        <td>{{$leave_entitlements->no_of_day}}</td>
                                         <td>{{$leave_entitlements->no_of_day}}</td>
                                         <td>
                                             <a  href="{{url('administration/view-leave-entitlements/'.$leave_entitlements->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
@@ -153,6 +135,7 @@
             </article>
         </div>
     </section>
+
 @endsection
 @section('script')
     <script type="text/javascript">

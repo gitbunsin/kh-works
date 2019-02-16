@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeMembership;
 use App\Http\Controllers\Controller;
 
+use App\LeaveEntitlement;
 use App\Subunit;
-use http\Env\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-class LeaveAdjustmentController extends Controller
+class LeaveEntitlementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,22 +19,10 @@ class LeaveAdjustmentController extends Controller
     {
         //
 
-    }
-    public function viewMatchEmployee()
-    {
+        $categories = Subunit::where('parent_id', '=', 0)->get();
+        $allCategories = Subunit::pluck('title','id')->all();
+        return view('backend.HRIS.Leave.Entitlement.index',compact('allCategories','categories'));
 
-        $e = DB::table('tbl1_hr_employee')->count(DB::raw('DISTINCT emp_id'));
-        return Response()->json($e);
-
-    }
-    public function viewLeaveEntitlements()
-    {
-
-        $leave_entitlement = DB::table('tbl_hr_leave_entitlement as e')
-            ->select('e.*','l.*')
-            ->join('tbl_hr_leave_entitlement_type as l','e.adjustment_type','=','l.id')
-            ->get();
-        return view('backend.HRIS.Leave.Entitlement.employee_entitlement',compact('leave_entitlement'));
     }
 
     /**
@@ -57,6 +44,17 @@ class LeaveAdjustmentController extends Controller
     public function store(Request $request)
     {
         //
+        $e = New LeaveEntitlement();
+        $e->employee_id = $request->employee_entitlement;
+        $e->company_id = Auth::guard('admins')->user()->id;
+        $e->created_by_name = Auth::guard('admins')->user()->name;
+        $e->leave_type_id = $request->leave_type;
+        $e->adjustment_type = 1;
+        $e->no_of_day = $request->entitlements_day;
+        $e->save();
+        return redirect('/administration/view-leave-entitlements')->with('success','Item has been added successfully');
+//        $e->employee_id =
+        //dd('hello');
     }
 
     /**

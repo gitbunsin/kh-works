@@ -17,11 +17,17 @@ class KpiController extends Controller
      */
     public function index()
     {
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
         //
         $k = DB::table('tbl_kpi as k')
                 ->select('k.*','j.*','k.id as kpi_id')
                 ->join('tbl_job_title as j','k.job_title_code','=','j.id')
-                ->where('k.company_id',Auth::guard('admins')->user()->id)
+                ->where('k.company_id',$company_id)
                 ->get();
 //        $k = Kpi::all();
        // dd($k);
