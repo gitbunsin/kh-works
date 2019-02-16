@@ -644,19 +644,20 @@
                                                 <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                                     <thead>
                                                     <tr>
-                                                        <th> Level </th>
-                                                        <th> Year</th>
-                                                        <th> GPA/Score </th>
+                                                        <th> Skill </th>
+                                                        <th> years_of_exp </th>
+                                                        <th> Description</th>
                                                         <th> Action </th>
                                                     </tr>
                                                     </thead>
+                                                    @foreach($employee_skill as $employee_skills)
                                                     <tbody id="products-list" name="products-list">
-                                                    <tr id="employee_id">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                    <tr id="employee_skills_id">
+                                                        <td>{{$employee_skills->name}}</td>
+                                                        <td>{{$employee_skills->years_of_exp}}</td>
+                                                        <td>{{$employee_skills->comments}}</td>
                                                         <td>
-                                                            <a data-id="" href="" style="text-decoration:none;" class="btn-detail">
+                                                            <a data-id="{{$employee_skills->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal_skills">
                                                                 <i class="glyphicon glyphicon-edit"></i>
                                                             </a>
                                                             <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
@@ -665,6 +666,7 @@
                                                         </td>
                                                     </tr>
                                                     </tbody>
+                                                    @endforeach
                                                 </table>
                                             </div>
                                         </div>
@@ -965,31 +967,36 @@
                                     <form id="frmProducts"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
+                                            <section>
+                                                @php $skill = \App\Skill::all(); @endphp
+                                                <label class="label"> Skills</label>
+                                                <label class="select">
+                                                    <select name="skills" id="skills">
+                                                        <option value="0"> -- Select skills -- </option>
+                                                        @foreach($skill as $skills)
+                                                        <option value="{{$skills->id}}">{{$skills->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
                                             <div class="row">
                                                 <section class="col col-6">
-                                                    <label class="label"> Level *</label>
+                                                    <label class="label"> Years of Experience *</label>
                                                     <label class="input">
-                                                        <input type="text" name="company" id="company">
+                                                        <input type="number" name="year_of_experience" id="year_of_experience">
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
-                                                    <label class="label"> Year *</label>
+                                                    <label class="label"> comments *</label>
                                                     <label class="input">
-                                                        <input type="text" name="job_title" id="job_title">
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label class="label"> GPA/Score *</label>
-                                                    <label class="input">
-                                                        <input type="text" name="score" id="score">
+                                                        <input type="text" name="comments" id="comments">
                                                     </label>
                                                 </section>
                                             </div>
                                         </fieldset>
                                         <footer>
-                                            <input type="button" class="btn btn-primary" id="btn-save_experience" value="add">
+                                            <input type="button" class="btn btn-primary" id="btn_add_skills" value="add">
                                             <input type="hidden" id="product_id" name="product_id" value="0">
                                             <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                         </footer>

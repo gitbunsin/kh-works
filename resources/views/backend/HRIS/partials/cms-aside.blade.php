@@ -76,8 +76,8 @@
                     <li>
                         <a href="#">Qualifications </a>
                         <ul>
-                            <li>
-                                <a href="">Skills</a>
+                            <li class="{{ Request::segment(2) == "skills" ? "active" : " " }}">
+                                <a href="{{ url('administration/skills') }}">Skills</a>
                             </li>
                             <li>
                                 <a href="">Education</a>

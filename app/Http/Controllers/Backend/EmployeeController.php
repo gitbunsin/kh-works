@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Employee;
 use App\EmployeeEmergencyContacts;
+use App\EmployeeSkills;
 use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
@@ -144,7 +145,11 @@ class EmployeeController extends Controller
             ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
             ->get();
         $employee_experience = EmployeeWorkExperience::all();
-        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience'));
+        $employee_skill = DB::table('tbl_hr_emp_skill as es')
+                 ->join('tbl_skill as s','es.skill_id','=','s.id')
+                 ->get();
+//        $employee_skill = EmployeeSkills::all();
+        return view('backend.HRIS.PIM.Employee.details',compact('EmergencyContact','employee_experience','employee_skill'));
     }
     /**
      * Handle a registration request for the application.
