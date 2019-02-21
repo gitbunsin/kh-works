@@ -29,7 +29,6 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
-                                        <input type="hidden" value="{{Auth::guard('admins')->user()->id}}" name="company_id"/>
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input">

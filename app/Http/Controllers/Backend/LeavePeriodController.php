@@ -5,7 +5,9 @@ use App\Http\Controllers\Controller;
 
 use App\LeavePeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use function Sodium\compare;
 
 class LeavePeriodController extends Controller
 {
@@ -16,10 +18,21 @@ class LeavePeriodController extends Controller
      */
     public function index()
     {
-        //
+        return $this->listLeavePeriod();
+    }
 
+    public function listLeavePeriod(){
         $p = DB::table('tbl_hr_leave_period_history')->get();
-        return view('backend.HRIS.Leave.LeavePeriod.create');
+        $userId = Auth::guard('admins')->user()->id;
+        $FindLeavePeriod = LeavePeriod::where('company_id', '=', $userId)->orderBy('id', 'desc')->first();
+        $checkStatusLeavePeriod = '';
+        if($FindLeavePeriod){
+            $checkStatusLeavePeriod = "true";
+        }
+        else{
+            $checkStatusLeavePeriod = "false";
+        }
+        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
     }
 
     /**
@@ -42,11 +55,11 @@ class LeavePeriodController extends Controller
     {
         //
         $p = new LeavePeriod();
-        $p->leave_period_start_month = $request->start_month;
-            $p->leave_period_start_day = $request->start_date;
-            $p->save();
-          //  $p = $p->id;
-        return response()->json($p);
+        $p->leave_period_start_month = $request->bmonth;
+        $p->leave_period_start_day = $request->bday;
+        $p->company_id = Auth::guard('admins')->user()->id;
+        $p->save();
+        return redirect('/administration/define-leave-period');
     }
 
     /**

@@ -27,6 +27,7 @@ class EmployeeEducationController extends Controller
      */
     public function create()
     {
+        return view('backend.HRIS.PIM.Employee.Education.create');
         //
     }
     /**
@@ -38,21 +39,31 @@ class EmployeeEducationController extends Controller
     public function store(Request $request)
     {
         //
+       // dd('hooe');
+
+        //
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
         $E = new EmployeeEducation();
-        $E->emp_number = Auth::guard('employee')->user()->id;
-        $E->education_id = $request->education_id;
-        $E->institute= $request->institute;
+        $E->employee_id = 1;
+        $E->company_id = $company_id;
+        $E->education_id = $request->level_id;
+        $E->institute= $request->institute_id;
         $E->major = $request->major;
         $E->year = $request->year;
         $E->score = $request->score;
         $E->start_date = \Carbon\Carbon::parse($request->start_date);
         $E->end_date = \Carbon\Carbon::parse($request->end_date);
         $E->save();
-        $E = DB::table('tbl_hr_education as es')
-            ->join('tbl_education as s','es.education_id','=','s.id')
-            ->where('s.id',$request->education_id)
-            ->first();
-        return response()->json($E);
+        return redirect('/administration/employee-qualification')->with('success','Item has been added successfully');
+//        $E = DB::table('tbl_hr_education as es')
+//            ->join('tbl_education as s','es.education_id','=','s.id')
+//            ->where('s.id',$request->education_id)
+//            ->first();
+//        return response()->json($E);
     }
 
     /**
@@ -81,7 +92,12 @@ class EmployeeEducationController extends Controller
      */
     public function edit($id)
     {
-        //
+        //dd($id);
+        //dd('hello');
+
+
+        $ex = EmployeeEducation::findOrFail($id);
+        return view('backend.HRIS.PIM.Employee.Education.edit',compact('ex'));
     }
 
     /**
@@ -91,24 +107,26 @@ class EmployeeEducationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $education_id)
+    public function update(Request $request, $id)
     {
         //
-        $E = EmployeeEducation::findOrFail($education_id);
-        $E->emp_number = Auth::guard('employee')->user()->id;
-        $E->education_id = $request->education_id;
-        $E->institute= $request->institute;
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
+        $E = EmployeeEducation::findOrFail($id);
+        $E->employee_id = 1;
+        $E->company_id = $company_id;
+        $E->education_id = $request->level_id;
+        $E->institute= $request->institute_id;
         $E->major = $request->major;
         $E->year = $request->year;
         $E->score = $request->score;
         $E->start_date = \Carbon\Carbon::parse($request->start_date);
         $E->end_date = \Carbon\Carbon::parse($request->end_date);
         $E->save();
-        $E = DB::table('tbl_hr_education as es')
-            ->join('tbl_education as s','es.education_id','=','s.id')
-            ->where('s.id',$request->education_id)
-            ->first();
-        return response()->json($E);
+        return redirect('/administration/employee-qualification')->with('success','Item has been added successfully');
     }
 
     /**

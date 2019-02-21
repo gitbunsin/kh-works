@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class License extends Model
 {
     //
-    protected $table = 'tbl_hr_license';
+    protected $table = 'tbl_hr_emp_license';
 //    protected $primaryKey = 'emp_id';
     protected $fillable = [
         'id',
-        'emp_number',
+        'employee_id',
+        'company_id',
         'licenseType_id',
         'license_number',
         'issued_date',

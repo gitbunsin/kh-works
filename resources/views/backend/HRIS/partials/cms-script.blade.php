@@ -1,5 +1,15 @@
 
-<script src="{{ asset('js/jquery/jquery.min.js')}}"></script>
+
+
+<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script>
+	if (!window.jQuery.ui) {
+		document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+	}
+</script>
+{{--<script src="{{ asset('js/jquery/jquery.min.js')}}"></script>--}}
 <script data-pace-options='{ "restartOnRequestAfter": true }' src="{{ asset('js/plugin/pace/pace.min.js')}}"></script>
 
 		<!-- IMPORTANT: APP CONFIG -->
@@ -346,22 +356,22 @@
 				// DO NOT REMOVE : GLOBAL FUNCTIONS!
 				pageSetUp();
 				// START AND FINISH DATE
-				$('#startdate').datepicker({
-					dateFormat: 'dd.mm.yy',
-					prevText: '<i class="fa fa-chevron-left"></i>',
-					nextText: '<i class="fa fa-chevron-right"></i>',
-					onSelect: function (selectedDate) {
-						$('#finishdate').datepicker('option', 'minDate', selectedDate);
-					}
-				});
-				$('#finishdate').datepicker({
-					dateFormat: 'dd.mm.yy',
-					prevText: '<i class="fa fa-chevron-left"></i>',
-					nextText: '<i class="fa fa-chevron-right"></i>',
-					onSelect: function (selectedDate) {
-						$('#startdate').datepicker('option', 'maxDate', selectedDate);
-					}
-				});
+				// $('#startdate').datepicker({
+				// 	dateFormat: 'dd.mm.yy',
+				// 	prevText: '<i class="fa fa-chevron-left"></i>',
+				// 	nextText: '<i class="fa fa-chevron-right"></i>',
+				// 	onSelect: function (selectedDate) {
+				// 		$('#finishdate').datepicker('option', 'minDate', selectedDate);
+				// 	}
+				// });
+				// $('#finishdate').datepicker({
+				// 	dateFormat: 'dd.mm.yy',
+				// 	prevText: '<i class="fa fa-chevron-left"></i>',
+				// 	nextText: '<i class="fa fa-chevron-right"></i>',
+				// 	onSelect: function (selectedDate) {
+				// 		$('#startdate').datepicker('option', 'maxDate', selectedDate);
+				// 	}
+				// });
 
 				/*
 				 * PAGE RELATED SCRIPTS
@@ -653,12 +663,6 @@
 				// 	scrollTop : $.chat_body[0].scrollHeight
 				// }, 500);
 
-			});
-
-			$('.datepicker').datepicker({
-				dateFormat : 'dd.mm.yy',
-				prevText : '<i class="fa fa-chevron-left"></i>',
-				nextText : '<i class="fa fa-chevron-right"></i>'
 			});
 
 		</script>

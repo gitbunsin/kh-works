@@ -9,12 +9,6 @@
         @endphp
 
         @endif
-
-
-
-
-
-
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -26,17 +20,14 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Work Experience </h2>
-
+                        <h2> Work Experience  </h2>
                     </header>
 
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <header>
                             {{--<h4> Personal Details </h4>--}}
@@ -44,7 +35,6 @@
                         <br/>
                         <!-- widget div-->
                         <div>
-
                             <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
                                 <!-- This area used as dropdown edit box -->
@@ -56,14 +46,23 @@
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <button id="show" type="button" class="btn btn-info">
-                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
-                                            </button>
+                                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-work-experience/create')}}" role="button">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                                         </div>
                                     </div>
-
                                 </div>
                                 <br/>
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12 margin-tb">--}}
+                                        {{--<div class="pull-right">--}}
+                                            {{--<button id="show" type="button" class="btn btn-info">--}}
+                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+
+                                {{--</div>--}}
+                                {{--<br/>--}}
                                 <div id="demo-experience">
                                     <form id="frmExperience"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,7 +106,7 @@
                                             </section>
                                         </fieldset>
                                         <footer>
-                                            <input type="submit" class="btn btn-primary" id="btn-save_experience" value="add">
+                                            <input type="submit" class="btn btn-primary" id="btn-save_experience" value="Save">
                                             <input type="hidden" id="product_id" name="product_id" value="0">
                                             <button data-toggle="collapse" data-target="#demo-experience" type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
                                         </footer>
@@ -128,7 +127,7 @@
                                     @foreach($employee_experience as $employee_experiences)
                                         <tr id="work_experience_id{{$employee_experiences->id}}">
                                             <td>
-                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="open_modal_experience">
+                                                <a data-id="" href="{{url('/administration/employee-work-experience/'.$employee_experiences->id.'/edit')}}" style="text-decoration:none;" class="">
                                                     {{$employee_experiences->eexp_employer}}
                                                 </a>
                                             </td>
@@ -175,7 +174,6 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <header>
                             {{--<h4> Personal Details </h4>--}}
@@ -192,85 +190,28 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12 margin-tb">--}}
+                                        {{--<div class="pull-right">--}}
+                                            {{--<button id="btn_education" type="button" class="btn btn-info">--}}
+                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<br/>--}}
+
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <button id="btn_education" type="button" class="btn btn-info">
-                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
-                                            </button>
+                                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-education/create')}}" role="button">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                                         </div>
                                     </div>
                                 </div>
                                 <br/>
                                 <div id="demo_Education">
-                                    <form id="frmEducation"  class="smart-form">
-                                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-4">
-                                                    <label class="label">Level</label>
-                                                    <label class="select">
-                                                        <select name="level_id" id="level_id">
-                                                            <option value="">-- Level --</option>
-                                                            @php $e = \App\Education::all(); @endphp
-                                                            @foreach($e as $es)
-                                                                  <option value="{{$es->id}}">{{$es->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-4">
-                                                    <label class="label">Institute *</label>
-                                                    <label class="input">
-                                                        <input type="text" name="institute_id" id="institute_id">
-                                                    </label>
-                                                </section>
-                                                <section class="col col-4">
-                                                    <label class="label">Major/Specialization *</label>
-                                                    <label class="input">
-                                                        <input type="text" name="major" id="major">
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div>
-                                                <div class="row">
-                                                    <section class="col col-4">
-                                                        <label class="label"> Year </label>
-                                                        <label class="input">
-                                                            <input value="" type="text" id="year" name="year" class="year">
-                                                        </label>
-                                                    </section>
-                                                    <section class="col col-4">
-                                                        <label class="label"> GPA/Score </label>
-                                                        <label class="input">
-                                                            <input  value="" type="text" id="gpa_id" name="year" class="gpa_id">
-                                                        </label>
-                                                    </section>
-                                                    <section class="col col-4">
-                                                        <label class="label"> Start Date </label>
-                                                        <label class="input">
-                                                            <i class="icon-append fa fa-calendar"></i>
-                                                            <input value="" type="text" id="start_date" name="start_date" class="datepicker">
-                                                        </label>
-                                                    </section>
-                                                </div>
-                                                <section>
-                                                    <label class="label"> End Date </label>
-                                                    <label class="input">
-                                                        <i class="icon-append fa fa-calendar"></i>
-                                                        <input value="" type="text" id="end_date" name="end_date" class="datepicker">
-                                                    </label>
-                                                </section>
 
-                                            </div>
-                                        </fieldset>
-                                        <footer>
-                                            <input type="submit" class="btn btn-primary" id="btn_save_education" value="">
-                                            <input type="hidden" id="education_id" name="product_id" value="0">
-                                            <button data-toggle="collapse" data-target="#demo-experience" type="button" class="btn btn-default" id="btnclose_education" data-dismiss="modal">Close</button>
-                                        </footer>
-                                    </form>
                                 </div>
                                 <table id="dt_basic" class="display_education table table-striped table-bordered table-hover" width="100%">
                                     <thead>
@@ -284,10 +225,12 @@
                                     <tbody id="list-education" name="list-education">
                                      @foreach($employee_education as $es)
                                         <tr id="education_id{{$es->id}}">
-                                           <td> <a data-id="{{$es->id}}" href="#" class="btn-detail education_edit">
-                                                       {{$es->name}}
-                                                    </a>
-                                                </td>
+                                            <td>
+                                                <a href="{{url('/administration/employee-education/'.$es->id.'/edit')}}" style="text-decoration:none;" class="">
+                                                    {{$es->name}}
+                                                </a>
+                                            </td>
+
                                             <td>{{$es->year}}</td>
                                             <td>{{$es->score}}</td>
                                             <td>
@@ -342,55 +285,29 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12 margin-tb">--}}
+                                        {{--<div class="pull-right">--}}
+                                            {{--<button id="show_skill"  type="button" class="btn btn-info">--}}
+                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+
+                                {{--</div>--}}
+                                {{--<br/>--}}
+
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <button id="show_skill"  type="button" class="btn btn-info">
-                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
-                                            </button>
+                                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-work-skills/create')}}" role="button">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                                         </div>
                                     </div>
-
                                 </div>
                                 <br/>
                                 <div id="demo_skill">
-                                    <form id="frmProducts_skill"  class="smart-form">
-                                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                                        <fieldset>
-                                            <section>
-                                                @php $skill = \App\Skill::all(); @endphp
-                                                <label class="label"> Skills</label>
-                                                <label class="select">
-                                                    <select name="skills" id="skills">
-                                                        <option value="0"> -- Select skills -- </option>
-                                                        @foreach($skill as $skills)
-                                                            <option value="{{$skills->id}}">{{$skills->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label class="label"> Years of Experience *</label>
-                                                    <label class="input">
-                                                        <input type="number" name="year_of_experience" id="year_of_experience">
-                                                    </label>
-                                                </section>
-                                                <section class="col col-6">
-                                                    <label class="label"> comments *</label>
-                                                    <label class="input">
-                                                        <input type="text" name="comments" id="comments">
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <footer>
-                                            <input type="button" class="btn btn-primary" id="btn_add_skills" value="add">
-                                            <input type="hidden" id="skill_id" name="skill_id" value="0">
-                                            <button  type="button" class="btn btn-default" id="btnclose_skill" data-dismiss="modal">Close</button>
-                                        </footer>
-                                    </form>
+
                                 </div>
                                 <table id="dt_basic" class="display table table-striped table-bordered table-hover" width="100%">
                                     <thead>
@@ -404,7 +321,7 @@
                                         <tbody id="products-list-skill" name="products-list-skill">
                                         @foreach($employee_skill as $employee_skills)
                                             <tr id="employee_skills_id{{$employee_skills->id}}">
-                                                <td><a data-id="{{$employee_skills->employee_skill_id}}" href="#" class="btn-detail edit_skill">
+                                                <td><a  href="{{url('/administration/employee-work-skills/'.$employee_skills->id.'/edit')}}" class="btn-detail">
                                                        {{$employee_skills->name}}
                                                     </a>
                                                 </td>
@@ -529,76 +446,27 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12 margin-tb">--}}
+                                        {{--<div class="pull-right">--}}
+                                            {{--<button id="btn_language" type="button" class="btn btn-info">--}}
+                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<br/>--}}
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <button id="btn_language" type="button" class="btn btn-info">
-                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
-                                            </button>
+                                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-language/create')}}" role="button">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                                         </div>
                                     </div>
                                 </div>
                                 <br/>
                                 <div id="demo_Language">
-                                    <form id="frmLanguage"  class="smart-form">
-                                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label class="label">Language</label>
-                                                    <label class="select">
-                                                        <select name="lang_id" id="lang_id">
-                                                            <option value="">-- select --</option>
-                                                            @php $l = \App\language::all(); @endphp
-                                                            @foreach($l as $ls)
-                                                                <option value="{{$ls->id}}">{{$ls->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-6">
-                                                    <label class="label">Fluency</label>
-                                                    <label class="select">
-                                                        <select name="fluency_id" id="fluency_id">
-                                                            <option value="">-- select --</option>
-                                                            @php $p = array('Poor','Basic','Good','Mother Tough'); @endphp
-                                                            @foreach($p as $ps)
-                                                                <option value="{{$ps}}">{{$ps}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <i></i>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label class="label"> Competency *</label>
-                                                    <label class="select">
-                                                        <select name="competency_id" id="competency_id">
-                                                            <option value="">-- select --</option>
-                                                            @php $f = array('writing','speaking','reading'); @endphp
-                                                            @foreach($f as $fs)
-                                                                <option value="{{$fs}}">{{$fs}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-6">
-                                                    <label class="label">comments *</label>
-                                                    <label class="input">
-                                                        <input name="comments_id" id="comments_id" type="text"/>
-                                                    </label>
-                                                </section>
-                                            </div>
-                                            <footer>
-                                                <input type="button" class="btn btn-primary" id="btn_add_language" value="add">
-                                                <input type="hidden" id="product_id" name="product_id" value="0">
-                                                <button type="button" class="btn btn-default" id="btnclose_language" data-dismiss="modal">Close</button>
-                                            </footer>
-                                        </fieldset>
-                                    </form>
+
                                 </div>
                                 <table id="dt_basic" class="display_language table table-striped table-bordered table-hover" width="100%">
                                     <thead>
@@ -613,7 +481,8 @@
                                     <tbody id="list-language" name="list-language">
                                     @foreach($language as $languages)
                                         <tr id="language_id{{$languages->id}}">
-                                            <td> <a data-id="{{$languages->id}}" href="#" class="btn-detail open_modal_skills">
+                                            <td>
+                                                <a href="{{url('administration/employee-language/'.$languages->id.'/edit')}}" class="btn-detail">
                                                     {{$languages->name}}
                                                 </a>
                                             </td>
@@ -668,66 +537,26 @@
                                 <!-- This area used as dropdown edit box -->
                             </div>
                             <div class="widget-body">
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-12 margin-tb">--}}
+                                        {{--<div class="pull-right">--}}
+                                            {{--<button id="btn_license"  type="button" class="btn btn-info">--}}
+                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
+                                            {{--</button>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+
+                                {{--</div>--}}
+                                {{--<br/>--}}
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
-                                            <button id="btn_license"  type="button" class="btn btn-info">
-                                                <i class="glyphicon glyphicon-plus-sign "></i> Add
-                                            </button>
+                                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee-license/create')}}" role="button">
+                                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                                         </div>
                                     </div>
-
                                 </div>
                                 <br/>
-                                <div id="demo_license">
-                                    <form id="frmProducts_license"  class="smart-form">
-                                        <meta name="csrf-token" content="{{ csrf_token() }}">
-                                        <fieldset>
-                                            <div class="row">
-                                            <section class="col col-6">
-                                                @php $l = \App\LicenseType::all(); @endphp
-                                                <label class="label"> License Type</label>
-                                                <label class="select">
-                                                    <select name="license_type_id" id="license_type_id">
-                                                        <option value=""> -- Select license -- </option>
-                                                        @foreach($l as $ls)
-                                                            <option value="{{$ls->id}}">{{$ls->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label class="label"> License Number *</label>
-                                                <label class="input">
-                                                    <input  type="number" name="license_number" id="license_number">
-                                                </label>
-                                            </section>
-                                        </div>
-                                            <div class="row">
-                                                <section class="col col-6">
-                                                    <label class="label"> Issued Date *</label>
-                                                    <label class="input">
-                                                        <i class="icon-append fa fa-calendar"></i>
-                                                        <input class="datepicker" type="text" name="issued_date" id="issued_date">
-                                                    </label>
-                                                </section>
-                                                <section class="col col-6">
-                                                    <label class="label"> Expiry Date *</label>
-                                                    <label class="input">
-                                                        <i class="icon-append fa fa-calendar"></i>
-                                                        <input class="datepicker" type="text" name="expiry_date" id="expiry_date">
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <footer>
-                                            <input type="button" class="btn btn-primary" id="btn_save_license" value="add">
-                                            <input type="hidden" id="product_id" name="product_id" value="0">
-                                            <button  type="button" class="btn btn-default" id="btnclose_license" data-dismiss="modal">Close</button>
-                                        </footer>
-                                    </form>
-                                </div>
                                 <table id="dt_basic" class="display_license table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                     <tr>
@@ -741,7 +570,7 @@
                                     @foreach($license as $licenses)
                                         <tr id="license_id{{$licenses->id}}">
                                             <td>
-                                                <a data-id="{{$licenses->id}}" href="#" class="btn-detail open_modal_skills">
+                                                <a href="{{url('/administration/employee-license/'.$licenses->id.'/edit')}}" class="btn-detail">
                                                     {{$licenses->license_number}}
                                                 </a>
                                             </td>

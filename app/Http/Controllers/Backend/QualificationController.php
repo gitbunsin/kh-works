@@ -24,7 +24,7 @@ class QualificationController extends Controller
             ->join('tbl_skill as s','es.skill_id','=','s.id')
             ->get();
 //        dd($employee_skill);\
-        $employee_education = DB::table('tbl_hr_education as e')
+        $employee_education = DB::table('tbl_hr_emp_education as e')
                                 ->join('tbl_education as ed','e.education_id','=','ed.id')
                                 ->get();
 //        dd($e);

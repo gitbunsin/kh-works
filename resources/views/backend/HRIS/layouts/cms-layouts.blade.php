@@ -13,7 +13,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-		<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 		<!-- <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"> -->
 		<link href="{{ asset('css/smartadmin-production-plugins.min.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/smartadmin-production.min.css') }}" rel="stylesheet">
@@ -25,20 +25,18 @@
 
 		<!-- FAVICONS -->
 		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
-		<link  href="{{ asset('img/favicon/favicon.ico') }}" rel="icon">
 		<link rel="apple-touch-icon" href=" {{asset('img/splash/sptouch-icon-iphone.png')}}">
 		<link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/splash/touch-icon-ipad.png')}}">
 		<link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/splash/touch-icon-iphone-retina.png')}}">
 		<link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/splash/touch-icon-ipad-retina.png')}}">
-		
+
 		<!-- Startup image for web apps -->
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-landscape.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-portrait.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}" media="screen and (max-device-width: 320px)">
-		
+
 		<!-- Custom Own Style -->
 		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
-		{{--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">--}}
 
 	</head>
 <body class="">

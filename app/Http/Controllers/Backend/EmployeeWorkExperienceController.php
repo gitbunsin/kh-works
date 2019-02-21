@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\EmployeeWorkExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeWorkExperienceController extends Controller
 {
@@ -17,9 +18,14 @@ class EmployeeWorkExperienceController extends Controller
     public function index()
     {
         //
-        $employeeExperience = EmployeeWorkExperience::all();
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
+        $employeeExperience = EmployeeWorkExperience::where('id',$company_id);
 //        dd($employeeExperience);
-        return view('backend.HRIS.PIM.Employee.details',compact('employeeExperience'));
+        return view('backend.HRIS.PIM.Employee.qualification',compact('employeeExperience'));
 
     }
 
@@ -31,6 +37,8 @@ class EmployeeWorkExperienceController extends Controller
     public function create()
     {
         //
+        return view('backend.HRIS.PIM.Employee.WorkExperiense.create');
+
     }
 
     /**
@@ -42,16 +50,23 @@ class EmployeeWorkExperienceController extends Controller
     public function store(Request $request)
     {
         //
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
         $emp_experience = new EmployeeWorkExperience();
-        $emp_experience->eexp_employer = $request->eexp_employer;
-        $emp_experience->eexp_jobtit = $request->eexp_jobtit;
-        $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->eexp_from_date)->format('Y-m-d');
-        $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->eexp_to_date)->format('Y-m-d');
-        $emp_experience->eexp_comments = $request->eexp_comments;
+        $emp_experience->eexp_employer = $request->company;
+        $emp_experience->company_id = $company_id;
+        $emp_experience->eexp_jobtit = $request->job_title;
+        $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
+        $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
+        $emp_experience->eexp_comments = $request->comment;
 
         $emp_experience->save();
+        return redirect('/administration/employee-qualification')->with('success','Item has been added successfully');
 
-        return response()->json($emp_experience);
+//        return response()->json($emp_experience);
     }
 
     /**
@@ -76,6 +91,8 @@ class EmployeeWorkExperienceController extends Controller
     public function edit($id)
     {
         //
+        $w = EmployeeWorkExperience::findOrFail($id);
+        return view('backend.HRIS.PIM.Employee.WorkExperiense.edit',compact('w'));
     }
 
     /**
@@ -85,21 +102,25 @@ class EmployeeWorkExperienceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $emp_work_id)
+    public function update(Request $request, $id)
     {
-        //
-//        dd($request->all());
-        $emp_experience = EmployeeWorkExperience::findOrFail($emp_work_id);
-        $emp_experience->eexp_employer = $request->eexp_employer;
-        $emp_experience->eexp_jobtit = $request->eexp_jobtit;
-        $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->eexp_from_date);
-        $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->eexp_to_date);
-
-        $emp_experience->eexp_comments = $request->eexp_comments;
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
+        $emp_experience = EmployeeWorkExperience::findOrFail($id);
+        $emp_experience->eexp_employer = $request->company;
+        $emp_experience->company_id = $company_id;
+        $emp_experience->eexp_jobtit = $request->job_title;
+        $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
+        $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
+        $emp_experience->eexp_comments = $request->comment;
 
         $emp_experience->save();
+        return redirect('/administration/employee-qualification')->with('success','Item has been edited successfully');
 
-        return response()->json($emp_experience);
+        //return response()->json($emp_experience);
 
     }
 

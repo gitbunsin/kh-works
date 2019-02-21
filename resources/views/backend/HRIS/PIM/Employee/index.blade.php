@@ -39,9 +39,9 @@
                                     <th data-hide="phone"> Employee id </th>
                                     <th data-class="expand"> Name</th>
                                     <th data-hide="phone"> Job Title</th>
-                                    {{--<th data-hide="phone"> Employee Status</th>--}}
-                                    {{--<th data-hide="posting-date"> Location</th>--}}
-                                    {{--<th data-hide="closing-date"> Supervisor</th>--}}
+                                    <th data-hide="phone"> Employee Status</th>
+                                    <th data-hide="posting-date"> Location</th>
+                                    <th data-hide="closing-date"> Supervisor</th>
                                     <th> Action </th>
                                 </tr>
                                 </thead>
@@ -50,7 +50,10 @@
                                     <tr id="employee_id{{$employees->emp_id}}">
                                         <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
-                                        <td>{{$employees->emp_lastname}} {{$employees->emp_firstname}} </td>
+                                        <td> <a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_lastname}} {{$employees->emp_firstname}}  </a></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td>
                                             <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->emp_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">

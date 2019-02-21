@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeEducation extends Model
 {
     //
-    protected $table = 'tbl_hr_education';
+    protected $table = 'tbl_hr_emp_education';
 //    protected $primaryKey = 'emp_id';
     protected $fillable = [
         'id',
-        'emp_number',
+        'employee_id',
+        'company_id',
         'institute',
         'major',
         'year',

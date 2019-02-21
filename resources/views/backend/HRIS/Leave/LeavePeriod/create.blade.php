@@ -1,6 +1,5 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -10,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>  Leave Period </h2>
+                        <h2> Leave Period</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -19,59 +18,39 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <!-- end widget edit box -->
-                        {{--@php dd(date('2019 1 1 (Y-m-d)', strtotime(' 5 days'))); @endphp--}}
                         <!-- widget content -->
-                        @php
-                           // dd(date("Y-m-d", strtotime("2019-02-16 + 365 days"))) @endphp
                         <div class="widget-body no-padding">
-                            <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
+                            <form id="frmLeavePeriod" method="POST" enctype="multipart/form-data" action="{{url('administration/define-leave-period')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
                                 <fieldset>
                                     <div class="row">
-                                    {{--<section class="col col-4">--}}
-                                        {{--<label class="label"> Current Years</label>--}}
-                                        {{--<label class="select">--}}
-                                            {{--<select id="byear" name="byear" required>--}}
-                                                {{--<option value="">Select Year</option>--}}
-                                                {{--<option value="{{date('Y')}}">{{date('Y')}}</option>--}}
-                                            {{--</select>--}}
-                                            {{--<i></i>--}}
-                                        {{--</label>--}}
-                                    {{--</section>--}}
                                         <section class="col col-6">
-                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date" class="hasDatepicker">
-                                            </label>
-                                        </section>
-                                    <section class="col col-4">
-                                        <label class="label"> Start Date</label>
-                                        <label class="select">
-                                            <select id="bday" name="bday" required disabled>
-                                                <option value="">Select Day</option>
-                                            </select>
-                                            <i></i>
-                                        </label>
-                                    </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label">End Date</label>
-                                            <label class="input">
-                                                <span><strong> {{ date("Y-m-d", strtotime( "2019-02-16 + 365 days"))}} </strong></span>
+                                            <label class="label"> Month </label>
+                                            <label class="select">
+                                                <select id="bmonth" name="bmonth" required>
+                                                    <option value="">Select Month</option>
+                                                </select>
+                                                <i></i>
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">Current Leave Period</label>
-                                            <label class="input">
-                                                <span><strong>2019-01-01 to 2020-01-31</strong></span>
+                                            <label class="label"> Day </label>
+                                            <label class="select">
+                                                <select id="bday" name="bday" required>
+                                                    <option value="">Select Day</option>
+                                                </select>
+                                                <i></i>
                                             </label>
                                         </section>
                                     </div>
-
+                                    <div>
+                                        <p>Current Leave Period: </p>
+                                        <p id="resultEndDate"></p>
+                                    </div>
                                 </fieldset>
                                 <footer>
-                                    <input  type="button" value="" id="btn_save_leave" name="btn_save" class="btn_save btn btn-primary" />
+                                    {{--<button type="button" id="btnSaveDate" class="btn btn-primary">Save</button>--}}
+                                    <button class="btn btn-primary">Save</button>
                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                         Back
                                     </button>
@@ -88,117 +67,86 @@
 
 @endsection
 @section('script')
-    {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
     <script type="text/javascript">
-        // START AND FINISH DATE
-        $('#startdate').datepicker({
-            dateFormat : 'dd.mm.yy',
-            prevText : '<i class="fa fa-chevron-left"></i>',
-            nextText : '<i class="fa fa-chevron-right"></i>'
-        });
+        var monthLists = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-        {{--function daysInMonth(month, year) {--}}
-            {{--return new Date(year, month, 0).getDate();--}}
-        {{--}--}}
-        {{--$('#byear, #bmonth').change(function() {--}}
+        showDayAndMonthFromBO();
 
-            {{--if ($('#byear').val().length > 0 && $('#bmonth').val().length > 0) {--}}
-                {{--$('#bday').prop('disabled', false);--}}
-                {{--$('#bday').find('option').remove();--}}
-                {{--var EndDate = year.concat(month,day);--}}
-                {{----}}
-                {{--var daysInSelectedMonth = daysInMonth($('#bmonth').val(), $('#byear').val());--}}
-
-                {{--for (var i = 1; i <= daysInSelectedMonth; i++) {--}}
-                    {{--$('#bday').append($("<option></option>").attr("value", i).text(i));--}}
-                {{--}--}}
-            {{--} else {--}}
-                {{--$('#bday').prop('disabled', true);--}}
-            {{--}--}}
-
-        {{--});--}}
-        {{--function GetValue()--}}
-        {{--{--}}
-
-
-        {{--}--}}
-
-
-        {{--function daysInMonth(month, year) {--}}
-            {{--return new Date(year, month, 0).getDate();--}}
-        {{--}--}}
-        {{--$('#byear, #bmonth').change(function() {--}}
-
-            {{--if ($('#byear').val().length > 0 && $('#bmonth').val().length > 0) {--}}
-                {{--$('#bday').prop('disabled', false);--}}
-                {{--$('#bmonth').prop('disabled', false);--}}
-                {{--$('#bday').find('option').remove();--}}
-
-
-                {{--var daysInSelectedMonth = daysInMonth($('#bmonth').val(), $('#byear').val());--}}
-
-                {{--for (var i = 1; i <= daysInSelectedMonth; i++) {--}}
-                    {{--$('#bday').append($("<option></option>").attr("value", i).text(i));--}}
-                {{--}--}}
-
-            {{--} else {--}}
-                {{--//alert('ok');--}}
-                {{--$('#bday').prop('disabled', true);--}}
-            {{--}--}}
-        {{--});--}}
-        {{--$('#btn_save_leave').val('Edit');--}}
-        {{--$('#bmonth').prop('disabled',true);--}}
-        {{--$('#bday').prop('disabled',true);--}}
-        {{--$('#byear').prop('disabled',true);--}}
-
-        {{--let baseURL = "{{URL::to('/')}}/";--}}
-        {{--$('#btn_save_leave').click(function () {--}}
-            {{--var IsEdit = $('#btn_save_leave').val();--}}
-            {{--if (IsEdit == "Edit") {--}}
-                {{--$('#byear').prop('disabled',false);--}}
-                {{--$('#btn_save_leave').val('Save');--}}
-            {{--} else {--}}
-                {{--var Save = $('#btn_save_leave').val();--}}
-                {{--if (Save == "Save") {--}}
-                    {{--$.ajaxSetup({--}}
-                        {{--headers: {--}}
-                            {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-                        {{--}--}}
-                    {{--});--}}
-                    {{--var formData = {--}}
-                        {{--start_month : $('#leaveperiod_cmbStartMonth').val(),--}}
-                        {{--start_date  :  $('#leaveperiod_cmbStartDate').val(),--}}
-                    {{--}--}}
-                    {{--$.ajax({--}}
-                        {{--url: baseURL + "administration/define-leave-period",--}}
-                        {{--method: "POST",--}}
-                        {{--type: "json",--}}
-                        {{--data: formData,--}}
-                        {{--success: function (respond) {--}}
-                            {{--//console.log(respond);--}}
-                            {{--$('#leaveperiod_cmbStartMonth').prop('disabled',true);--}}
-                            {{--$('#leaveperiod_cmbStartDate').prop('disabled',true);--}}
-                            {{--$('#btn_save_leave').val('Edit');--}}
-                        {{--},--}}
-                        {{--error: function (err) {--}}
-                            {{--console.log(err)--}}
-                        {{--}--}}
-                    {{--});--}}
-                {{--}--}}
-            {{--}--}}
-        {{--});--}}
-        var $loginForm = $("#frmLeavetype").validate({
-            // Rules for form validation
-            rules : {
-                name : {
-                    required : true
-                },
-            },
-            // Do not change code below
-            errorPlacement : function(error, element) {
-                error.insertAfter(element.parent());
+        function showDayAndMonthFromBO(){
+            var statusLeavePeriod = "{{$status}}";
+            if(statusLeavePeriod=="true"){
+                var lastDayBO = "{{$getLastPeriod['leave_period_start_day']}}";
+                var lastMonthBO = "{{$getLastPeriod['leave_period_start_month']}}";
+                for (var i = 0; i < monthLists.length; i++) {
+                    factLength = i + 1;
+                    if(lastMonthBO== factLength){
+                        $('#bmonth').append($("<option selected></option>").attr("value", factLength).text(monthLists[i]));
+                    }
+                    else{
+                        $('#bmonth').append($("<option></option>").attr("value", factLength).text(monthLists[i]));
+                    }
+                }
+                var daysInSelectedMonth = daysInMonth(lastMonthBO, {{date('Y')}});
+                for (var i = 1; i <= daysInSelectedMonth; i++) {
+                    if(lastDayBO==i){
+                        $('#bday').append($("<option selected></option>").attr("value", i).text(i));
+                    }
+                    else{
+                        $('#bday').append($("<option></option>").attr("value", i).text(i));
+                    }
+                }
+                calculatePeriod();
             }
+            else{
+                for (var i = 0; i < monthLists.length; i++) {
+                    factLength = i + 1;
+                    $('#bmonth').append($("<option></option>").attr("value", factLength).text(monthLists[i]));
+                }
+            }
+
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        $('#byear, #bmonth').change(function() {
+
+            if ($('#bmonth').val().length > 0) {
+                $('#bday').prop('disabled', false);
+                $('#bday').find('option').remove();
+
+                var daysInSelectedMonth = daysInMonth($('#bmonth').val(), {{date('Y')}});
+
+                for (var i = 1; i <= daysInSelectedMonth; i++) {
+                    $('#bday').append($("<option></option>").attr("value", i).text(i));
+                }
+
+            } else {
+                $('#bday').prop('disabled', true);
+            }
+
         });
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        $(document).ready(function() {
+            $("#bmonth, #bday").on('change',function(){
+                calculatePeriod();
+            });
+        });
+
+        function calculatePeriod() {
+            var dayValue = $('#bday').val();
+            var monthValue = $('#bmonth').val();
+            var yearValue = {{date('Y')}};
+            if(dayValue>0 && monthValue>0 && yearValue>0){
+                var resultStartDate = new Date(yearValue, monthValue-1, dayValue);
+                var resultEndDate = new Date(yearValue + 1, monthValue-1, dayValue-1);
+                var concatResultStartDate = resultStartDate.getFullYear() + "/" + (resultStartDate.getMonth() + 1).toString().padStart(2,'0') + "/" + resultStartDate.getDate().toString().padStart(2,'0');
+                var concatResultEndDate = resultEndDate.getFullYear() + "/" + (resultEndDate.getMonth() + 1).toString().padStart(2,'0') + "/" + resultEndDate.getDate().toString().padStart(2,'0');
+                document.getElementById("resultEndDate").innerHTML=concatResultStartDate + ' to ' + concatResultEndDate;
+            }
+        }
 
     </script>
 @endsection

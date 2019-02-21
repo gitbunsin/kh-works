@@ -77,11 +77,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('education','EducationController');
         Route::resource('employee-education','EmployeeEducationController');
         Route::resource('license-types','LicenseTypeController');
-        Route::resource('license','LicenseController');
+        Route::resource('employee-license','EmployeeLicenseController');
         Route::resource('membership','MembershipController');
         Route::resource('employee-qualification','QualificationController');
         Route::resource('language','LanguageController');
-        Route::post('/employee-language','LanguageController@addLanguage');
+        Route::resource('employee-language','EmployeeLanguageController');
         Route::resource('nationality','NationalityController');
         Route::resource('locations','LocationController');
         Route::resource('termination-reason','TerminationReasonController');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\Leave;
 use App\LeaveRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,13 +80,45 @@ class LeaveController extends Controller
     }
     public function leaveRequest(Request $request){
 
-        $r = new LeaveRequest();
-        $r->company_id = Auth::guard('admins')->user()->id;
-        $r->employee_id = 1 ;
-        $r->leave_type_id = $request->leave_type;
-        $r->comments = $request->comment;
-        $r->date_applied = \Carbon\Carbon::now();
-        $r->save();
+        dd($request->all());
+        $leave_request = new LeaveRequest();
+        $leave_request->company_id = Auth::guard('admins')->user()->id;
+        $leave_request->employee_id = 1 ;
+        $leave_request->leave_type_id = $request->leave_type;
+        $leave_request->comments = $request->comment;
+        $leave_request->date_applied = \Carbon\Carbon::now();
+        $leave_request->save();
+        $leave_request_id  = $leave_request->id;
+        $leave = new Leave();
+        $firstDate  = $request->startdate;
+        $toDate = $request->finishdate;
+        if($firstDate){
+            $leave->date = $firstDate;
+            $leave->length_hours = 8;
+            $leave->length_days = 1;
+            $leave->status = 1;
+            $leave->comments = $request->comments;
+            $leave->leave_request_id = $request->$leave_request_id;
+            $leave->employee_id = 1;
+//            $leave->start_time  = $request->start_time ;
+//            $leave->end_time = $request->end_time;
+            $leave->duration_type = $request->duration_type ;
+            $leave->save();
+        }
+        if($toDate){
+            $leave->date = $toDate;
+            $leave->length_hours = 8;
+            $leave->length_days = 1;
+            $leave->status = 1;
+            $leave->comments = $request->comments;
+            $leave->leave_request_id = $request->$leave_request_id;
+            $leave->employee_id = 1;
+//            $leave->start_time  = $request->start_time ;
+//            $leave->end_time = $request->end_time;
+            $leave->duration_type = $request->duration_type ;
+            $leave->save();
+        }
+
 
         return redirect('/administration/get-applyLeave')->with('success','Leave has been requested');
 

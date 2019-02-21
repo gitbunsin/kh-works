@@ -10,7 +10,8 @@ class EmployeeLanguage extends Model
     protected $table = 'tbl_hr_emp_language';
     protected $fillable = [
         'id',
-        'emp_number',
+        'employee_id',
+        'company_id',
         'lang_id',
         'fluency',
         'competency',

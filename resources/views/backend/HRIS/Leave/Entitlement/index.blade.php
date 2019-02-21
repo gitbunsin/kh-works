@@ -2,6 +2,11 @@
 @section('content')
     <section id="widget-grid" class="" xmlns="http://www.w3.org/1999/html">
         <!-- row -->
+        <style>
+            li ul.treeview-menu{
+                padding: 10px;
+            }
+        </style>
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -39,7 +44,10 @@
                                         <section>
                                             <label class="label"></label>
                                             <label class="input">
-                                                <span class="emp_number"> <strong></strong></span>
+                                                <div class="employee">
+                                                    <h6 class="emp_number"> <strong></strong></h6>
+                                                </div>
+
                                             </label>
                                         </section>
                                         <section class="col col-6">
@@ -61,14 +69,42 @@
                                                 <select name="location" id="location">
                                                     <option value="">-- select location --</option>
                                                     @foreach($categories as $category)
-                                                       <option value="">{{ $category->title }}&nbsp;&nbsp;&nbsp;&nbsp;
                                                            @if(count($category->childs))
-                                                               @include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])
-                                                           @endif
-
-                                                       </option>
-                                                        @endforeach
-
+                                                            <li class="treeview">
+                                                                <a href="#"><i class="fa fa-link"></i>
+                                                                    <span>
+                                                                        <option value="">{{ $category->title }}&nbsp;</option>
+                                                                    </span>
+                                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                                </a>
+                                                                <ul class="treeview-menu">
+                                                                    <option value="">@include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])&nbsp;</option>
+                                                                </ul>
+                                                            </li>
+                                                        @else
+                                                            <li><a href="#"><i class="fa fa-link"></i> <span>
+                                                                         <option value="">{{ $category->title }}&nbsp;</option>
+                                                                    </span></a></li>
+                                                        @endif
+                                                    @endforeach
+                                                           {{--@endif--}}
+                                                       {{----}}
+                                                        {{--@endforeach--}}
+                                                    {{--@foreach($categories as $category)--}}
+                                                        {{--@if($category->has('allCategories'))--}}
+                                                            {{--<li class="treeview">--}}
+                                                                {{--<a href="#"><i class="fa fa-link"></i> <span>{{ $category->title }}</span>--}}
+                                                                    {{--<i class="fa fa-angle-left pull-right"></i></a>--}}
+                                                                {{--<ul class="treeview-menu">--}}
+                                                                    {{--@foreach($category->allCategories as $subcategory)--}}
+                                                                        {{--<li class=""><a href="#">{{$subcategory->childs}}</a></li>--}}
+                                                                    {{--@endforeach--}}
+                                                                {{--</ul>--}}
+                                                            {{--</li>--}}
+                                                        {{--@else--}}
+                                                            {{--<li><a href="#"><i class="fa fa-link"></i> <span>{{ $category->title }}</span></a></li>--}}
+                                                        {{--@endif--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -169,9 +205,9 @@
                 type: "json",
                 data: formData,
                 success: function (respond) {
-
-                    alert(JSON.stringify(respond));
+                    //alert(JSON.stringify(respond));
                     $('.emp_number').text("( Matches "  + respond + " Employees )");
+                    $('.emp_number').css({"margin-left":"600px","margin-top":"-43px"});
                 },
                 error: function (err) {
                     console.log(err)

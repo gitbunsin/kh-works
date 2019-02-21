@@ -11,7 +11,8 @@ class EmployeeSkills extends Model
 //    protected $primaryKey = 'emp_id';
     protected $fillable = [
         'id',
-        'emp_number',
+        'company_id',
+        'employee_id',
         'skill_id',
         'years_of_exp',
         'comment',

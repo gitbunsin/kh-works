@@ -51,18 +51,7 @@ class LanguageController extends Controller
     }
     public function addLanguage(Request $request)
     {
-        $l = new EmployeeLanguage();
-        $l->emp_number = Auth::guard('employee')->user()->id;
-        $l->lang_id = $request->lang_id;
-        $l->fluency = $request->fluency_id;
-        $l->competency = $request->competency_id;
-        $l->comments = $request->comments;
-        $l->save();
-        $l = DB::table('tbl_hr_emp_language as es')
-            ->join('tbl_language as s','es.lang_id','=','s.id')
-            ->where('s.id',$request->lang_id)
-            ->first();
-        return response()->json($l);
+
     }
 
     /**

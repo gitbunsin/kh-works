@@ -52,21 +52,17 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label"> From Date * </label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="from_date" name="from_date" class="datepicker">
+                                            <label class="label"> From Date</label>
+                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date">
                                             </label>
                                         </section>
-
                                         <section class="col col-6">
-                                            <label class="label"> To Date * </label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="to_date" name="to_date" class="datepicker">
+                                            <label class="label"> To Date</label>
+                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="finishdate" id="finishdate" placeholder="Expected finish date">
                                             </label>
                                         </section>
-
                                     </div>
                                     <section>
                                         <label class="label"> Partial Days</label>
@@ -257,6 +253,24 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
+        // START AND FINISH DATE
+        $('#startdate').datepicker({
+        	dateFormat: 'dd.mm.yy',
+        	prevText: '<i class="fa fa-chevron-left"></i>',
+        	nextText: '<i class="fa fa-chevron-right"></i>',
+        	onSelect: function (selectedDate) {
+        		$('#finishdate').datepicker('option', 'minDate', selectedDate);
+        	}
+        });
+        $('#finishdate').datepicker({
+        	dateFormat: 'dd.mm.yy',
+        	prevText: '<i class="fa fa-chevron-left"></i>',
+        	nextText: '<i class="fa fa-chevron-right"></i>',
+        	onSelect: function (selectedDate) {
+        		$('#startdate').datepicker('option', 'maxDate', selectedDate);
+        	}
+        });
 
         let baseURL = "{{URL::to('/')}}/";
         $("#leave_type").on('change', function () {
