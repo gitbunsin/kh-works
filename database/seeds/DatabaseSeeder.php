@@ -11,9 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RoleTableSeeder::class);
+        // $this->call(RoleTableSeeder::class);
         // User seeder will use the roles above created.
-        $this->call(UserTableSeeder::class);
+        //$this->call(UserTableSeeder::class);
+
+        $this->call(MenuTableSeeder::class);
         // Ask for db migration refresh, default is no
         if ($this->command->confirm('Do you wish to refresh migration before seeding, it will clear all old data ?')) {
             // Call the php artisan migrate:refresh

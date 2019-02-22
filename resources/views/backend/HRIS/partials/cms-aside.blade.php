@@ -98,11 +98,11 @@
                         <li>
                             <a href="#">Configuration<span class="badge pull-right inbox-badge bg-color-yellow"></span></a>
                             <ul>
-                                <li>
-                                    <a href=""> Email Configuration</a>
+                                <li class="{{ Request::segment(2) == "list-Mail-Configuration" ? "active" : " " }}">
+                                    <a href="{{ url('administration/list-Mail-Configuration') }}">Email Configuration</a>
                                 </li>
-                                <li>
-                                    <a href=""> Email Subscription</a>
+                                <li class="{{ Request::segment(2) == "view-Email-Notification" ? "active" : " " }}">
+                                    <a href="{{ url('administration/view-Email-Notification') }}">Email Notification</a>
                                 </li>
                                 <li>
                                     <a href=""> Localization </a>
@@ -110,11 +110,11 @@
                                 <li class="{{ Request::segment(2) == "view-module" ? "active" : " " }}">
                                     <a href="{{ url('administration/view-module') }}">Module</a>
                                 </li>
-                                <li>
-                                    <a href=""><i class=""></i>Socia Media Authentication</a>
+                                <li class="{{ Request::segment(2) == "open-id-provider" ? "active" : " " }}">
+                                    <a href="{{ url('administration/open-id-provider') }}"> Media Authentication</a>
                                 </li>
-                                <li>
-                                    <a href="">Register OAuth Client</a>
+                                <li class="{{ Request::segment(2) == "register-auth-client" ? "active" : " " }}">
+                                    <a href="{{ url('administration/register-auth-client') }}"> Register OAuth Client</a>
                                 </li>
                             </ul>
                         </li>
@@ -126,6 +126,12 @@
                         <li>
                             <a href="#">Configuration</a>
                             <ul>
+                                <li class="{{ Request::segment(2) == "configurePim" ? "active" : " " }}">
+                                    <a href="{{url('/administration/configurePim')}}">Optional Fields</a>
+                                </li>
+                                <li class="{{ Request::segment(2) == "list-CustomFields" ? "active" : " " }}">
+                                    <a href="{{url('administration/list-CustomFields')}}">Custom Fields</a>
+                                </li>
                                 <li class="{{ Request::segment(2) == "view-reporting-methods" ? "active" : " " }}">
                                     <a href="{{url('administration/view-reporting-methods')}}">Reporting Methods</a>
                                 </li>
@@ -164,6 +170,47 @@
                         {{--<li class="{{ Request::segment(2) == "vacancy" ? "active" : " " }}">--}}
                         {{--<a href="{{url('administration/vacancy')}}">Vacancy</a>--}}
                         {{--</li>--}}
+                    </ul>
+                </li>
+
+                <li class="{{ Request::segment(2) == "employee-info" ? "active" : " " }}">
+                <li>
+
+                    <a href="#">
+                        <i class="fa fa-lg fa-fw fa-table"></i>
+                        <span class="menu-item-parent">My Info </span>
+                    </a>
+                    <ul>
+                        <li class="{{ Request::segment(2) == "employee-personal-details" ? "active" : " " }}">
+                            <a href="{{ url('/administration/employee-personal-details') }}"> Personal Details</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "employee-contact-details" ? "active" : " " }}">
+                            <a href="{{ url('administration/employee-contact-details') }}"> Contact Details</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "employee-emergency-contact" ? "active" : " " }}">
+                            <a href="{{ url('administration/employee-emergency-contact') }}">Emergency Contacts</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "view-dependents" ? "active" : " " }}">
+                            <a href="{{url('administration/view-dependents')}}">Dependents</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "view-immigration" ? "active" : " " }}">
+                            <a href="{{url('administration/view-immigration')}}">Immigration</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "employee-job" ? "active" : " " }}">
+                            <a href="{{url('administration/employee-job')}}">Job</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "employee-salary" ? "active" : " " }}">
+                            <a href="{{url('administration/employee-salary')}}">Salary</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "view-ReportTo-details" ? "active" : " " }}">
+                            <a href="{{url('administration/view-ReportTo-details')}}">Report-to</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "employee-qualification" ? "active" : " " }}">
+                            <a href="{{url('administration/employee-qualification')}}">Qualifications</a>
+                        </li>
+                        <li class="{{ Request::segment(2) == "view-membership" ? "active" : " " }}">
+                            <a href="{{url('administration/view-membership')}}">Memberships</a>
+                        </li>
                     </ul>
                 </li>
                 @php $module = \App\Module::all(); @endphp
@@ -392,8 +439,8 @@
                                 <li class="{{ Request::segment(2) == "view-dependents" ? "active" : " " }}">
                                     <a href="{{url('administration/view-dependents')}}">Dependents</a>
                                 </li>
-                                <li class="{{ Request::segment(2) == "candidate" ? "active" : " " }}">
-                                    <a href="{{url('administration/candidate')}}">Immigration</a>
+                                <li class="{{ Request::segment(2) == "view-immigration" ? "active" : " " }}">
+                                    <a href="{{url('administration/view-immigration')}}">Immigration</a>
                                 </li>
                                 <li class="{{ Request::segment(2) == "employee-job" ? "active" : " " }}">
                                     <a href="{{url('administration/employee-job')}}">Job</a>
@@ -407,8 +454,8 @@
                                 <li class="{{ Request::segment(2) == "employee-qualification" ? "active" : " " }}">
                                     <a href="{{url('administration/employee-qualification')}}">Qualifications</a>
                                 </li>
-                                <li class="{{ Request::segment(2) == "" ? "active" : " " }}">
-                                    <a href="{{url('administration/candidate')}}">Memberships</a>
+                                <li class="{{ Request::segment(2) == "view-membership" ? "active" : " " }}">
+                                    <a href="{{url('administration/view-membership')}}">Memberships</a>
                                 </li>
                             </ul>
                         </li>

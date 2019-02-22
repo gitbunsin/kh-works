@@ -124,6 +124,14 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('add-leave-entitlement','LeaveEntitlementController');
 
 
+        //PIM
+        Route::resource('list-CustomFields','CustomFieldController');
+        Route::get('configurePim','CustomFieldController@ConfigurePim');
+        Route::resource('list-Mail-Configuration','MailConfigurationController');
+        Route::resource('view-Email-Notification','EmailNotificationController');
+        Route::resource('register-auth-client','AuthClientController');
+
+
 
 
         //Employee
@@ -147,6 +155,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         //Admin
         Route::resource('view-module','ModuleController');
         Route::post('view-module-update','ModuleController@ModuleUpdate');
+
+        Route::resource('open-id-provider','OpenIdProviderController');
 
 
         Route::resource('view-company-structure','SubUnitController');

@@ -20,14 +20,14 @@ class EmployeeMembershipController extends Controller
     {
         //
         if(Auth::guard('admins')->user()){
-            $comployee_log = Auth::guard('admins')->user()->id;
+            $employee_log = Auth::guard('admins')->user()->id;
         }else{
             $employee_log = Auth::guard('employee')->user()->id;
         }
         $m = DB::table('tbl_hr_emp_memeber_detail as m')
                         ->join('tbl_membership as c','m.membership_code','=','c.id')
                         ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
-                        ->where('m.id',$comployee_log)
+                        ->where('m.id',$employee_log)
                         ->get();
 //        dd($m);
         return view('backend.HRIS.PIM.Employee.Membership.index',compact('m'));

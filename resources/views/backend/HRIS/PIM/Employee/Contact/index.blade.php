@@ -1,6 +1,13 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+    @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
+
+        @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+    @else
+
+        @php $employee = \App\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+
+    @endif
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">

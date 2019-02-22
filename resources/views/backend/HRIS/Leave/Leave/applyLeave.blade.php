@@ -54,13 +54,13 @@
                                         <section class="col col-6">
                                             <label class="label"> From Date</label>
                                             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="startdate" id="startdate" placeholder="Expected start date">
+                                                <input type="text" name="startdate" id="startdate" placeholder="">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> To Date</label>
                                             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="finishdate" id="finishdate" placeholder="Expected finish date">
+                                                <input type="text" name="finishdate" id="finishdate" placeholder="">
                                             </label>
                                         </section>
                                     </div>
@@ -225,7 +225,7 @@
                                     <section>
                                         <label class="label">Comment *</label>
                                         <label class="input">
-                                            <textarea id="comment" name="comment" rows="10" cols="164"></textarea>
+                                            <textarea id="comments" name="comments" rows="10" cols="164"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -256,7 +256,7 @@
 
         // START AND FINISH DATE
         $('#startdate').datepicker({
-        	dateFormat: 'dd.mm.yy',
+        	dateFormat: 'yy-mm-dd',
         	prevText: '<i class="fa fa-chevron-left"></i>',
         	nextText: '<i class="fa fa-chevron-right"></i>',
         	onSelect: function (selectedDate) {
@@ -264,7 +264,7 @@
         	}
         });
         $('#finishdate').datepicker({
-        	dateFormat: 'dd.mm.yy',
+        	dateFormat: 'yy-mm-dd',
         	prevText: '<i class="fa fa-chevron-left"></i>',
         	nextText: '<i class="fa fa-chevron-right"></i>',
         	onSelect: function (selectedDate) {
