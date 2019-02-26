@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\JobCategory;
+use App\Model\Backend\JobCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobCategoryController extends Controller
 {
@@ -38,7 +39,14 @@ class JobCategoryController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+        if(Auth::guard('admins')->user()){
+
+                $company_id =Auth::guard('admins')->user()->id;
+        }else{
+            $company_id =Auth::guard('employee')->user()->company_id;
+        }
         $job_category = new JobCategory();
+        $job_category->company_id = $company_id;
         $job_category->name = $request->name;
         $job_category->description = $request->description;
         $job_category->save();
@@ -67,18 +75,25 @@ class JobCategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(Auth::guard('admins')->user()){
+
+            $company_id =Auth::guard('admins')->user()->id;
+            }else{
+                $company_id =Auth::guard('employee')->user()->company_id;
+            }
         $JobCategory = JobCategory::findOrFail($id);
         $JobCategory->name = $request->name;
+        $jobCategory->company_id = $company_id;
         $JobCategory->description = $request->description;
         $JobCategory->save();
         return redirect('/administration/jobs-category')->with('success','Item edited successfully!');
     }
-
-
-
     public function destroy($id)
     {
-        $JobCategory = JobCategory::destroy($id);
-        return response()->json($JobCategory);
+
+        $job_title = JobCategory::findOrFail( $id );
+        $job_title->delete();
+        return  redirect('/administration/jobs-category')->with('success','Item success successfully!');
+
     }
 }

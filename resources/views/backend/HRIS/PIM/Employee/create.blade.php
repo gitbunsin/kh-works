@@ -56,24 +56,8 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">Role</label>
-                                            <label class="select">
-                                                @php $role = \App\UserRole::all(); @endphp
-                                                <select name="role" id="role">
-                                                    <option value="0">-- Role --</option>
-                                                    @foreach($role as $roles)
-                                                        <option value="{{$roles->id}}">{{$roles->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <i></i>
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
                                             <label class="label"> Employee Photo</label>
-                                            {{--<div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">--}}
-                                            {{--<img width="100%" height="100%" id="preview_image" src="{{asset('img/noimage.png')}}"/>--}}
-                                            {{--<i id="loading" class="fa fa-spinner fa-spin fa-3x fa-fw" style="position: absolute;left: 40%;top: 40%;display: none"></i>--}}
-                                            {{--</div>--}}
+                            
                                             <img id="preview" src="{{asset('img/noimage.jpg')}}" width="200px" height="200px"/><br/>
                                             <input name="photo" type="file" id="image" style="display: none;"/>
                                             <!--<input type="hidden" style="display: none" value="0" name="remove" id="remove">-->
@@ -121,21 +105,20 @@
                                                     <input type="password" id="emp_confimpassword" name="emp_confimpassword">
                                                 </label>
                                             </section>
+                                            <section class="col col-6">
+                                                <label class="label">Status</label>
+                                                <label class="select">
+                                                    <select name="role" id="role">
+                                                            <option value="enable">enable</option>
+                                                            <option value="disabled">disabled</option>
+                                                    
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
                                         </div>
+                                        
                                     </div>
-                                    <section>
-                                        <label class="label">Active</label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input  type="checkbox"  name="checkbox-inline" checked>
-                                                <i></i>
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="checkbox-inline" checked>
-                                                <i></i>Publish in RSS feed(1) and web page(2)
-                                            </label>
-                                        </div>
-                                    </section>
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -161,7 +144,6 @@
                     $('#checkbox-login').val("1");
                     $('#div_login').fadeIn('slow');
                 }
-
                 else {
                     $('#div_login').fadeOut('slow')
                     $('#checkbox-login').val("0");
@@ -185,22 +167,7 @@
                     },
                     employee_id :{
                         required:true
-                    }
-                },
-                // Messages for form validation
-                messages : {
-                    emp_firstname : {
-                        required : 'filed is requried !'
                     },
-                    emp_middle_name : {
-                        required: 'field is required !'
-                    },
-                    emp_lastname:{
-                        required:'field is required !'
-                    },
-                    employee_id : {
-                        required:'field is required !'
-                    }
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {
@@ -208,9 +175,7 @@
                 }
             });
         });
-    </script>
-
-    <script>
+    
         function changeProfile() {
             $('#image').click();
         }
@@ -236,4 +201,5 @@
             $('#preview').attr('src', '{{asset('img/noimage.jpg')}}');
 //      $("#remove").val(1);
         }
+    </script>
 @endsection

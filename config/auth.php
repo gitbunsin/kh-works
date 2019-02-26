@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -12,7 +11,6 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
 //    'defaults' => [
 //        'guard' => 'web',
 //        'passwords' => 'users',
@@ -28,7 +26,7 @@ return [
     ],
     'admins' => [
         'driver' => 'eloquent',
-        'model' => App\Organization::class,
+        'model' => App\OrganizationGenInfo::class,
     ],
     'employee' => [
         'driver' => 'eloquent',
@@ -96,7 +94,7 @@ return [
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model'  => App\Organization::class,
+            'model'  => App\OrganizationGenInfo::class,
         ],
         'employee' => [
             'driver' => 'eloquent',

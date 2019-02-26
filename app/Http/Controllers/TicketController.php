@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\JobCategory;
+use App\Mdoel\Backend\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 

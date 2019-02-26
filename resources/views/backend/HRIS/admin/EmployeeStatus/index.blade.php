@@ -36,7 +36,8 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone"><i class="hidden-xs"></i>Name</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -44,13 +45,23 @@
                                 @foreach($employee_status as $status)
                                     <tr id="job_id{{$status->id}}">
                                         <td>{{$status->name}}</td>
+                                        <td>{{$status->description}}
                                         <td>
                                             <a href="{{url('administration/employment-status/'.$status->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$status->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            {{-- <a data-id="{{$status->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
+                                            </a> --}}
+
+                                            <form action="{{ url('/administration/employment-status', ['id' => $status->id]) }}" style="display:inline" method="post">
+                                                <input type="hidden" name="_method" value="delete" />
+                                                {!! csrf_field() !!}
+                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="btn">
+                                    
+                                                        <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </form>      
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,5 +73,17 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.alert-success').fadeOut(5000);
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.closest('form').submit();
+            }
+        });   
+    });
+</script>
 @endsection

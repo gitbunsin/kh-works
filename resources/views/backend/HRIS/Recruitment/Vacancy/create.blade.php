@@ -1,10 +1,8 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
     <section id="widget-grid" class="">
-
         <!-- row -->
         <div class="row">
-
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
@@ -13,22 +11,16 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Add Job Vacancy</h2>
-
                     </header>
-
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
-
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-
                             <form id="validate_vacancy" method="POST" enctype="multipart/form-data" action="{{url('administration/vacancy ')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>

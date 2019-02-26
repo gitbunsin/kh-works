@@ -22,9 +22,9 @@
                                         <label class="label"> Job Title</label>
                                         <label class="select">
                                             @php
-                                                $company_id = Auth::guard('admins')->user()->id;
-                                                use App\JobTitle;use Illuminate\Support\Facades\Auth;
-                                                $Job_Title= JobTitle::where('company_id',$company_id)->get();
+        $company_id = Auth::guard('admins')->user()->id;
+        use App\Model\Backend\JobTitle;use Illuminate\Support\Facades\Auth;
+        $Job_Title= JobTitle::where('company_id',$company_id)->get();
                                             @endphp
                                             <select name="job_title_code" id="job_title_code" class="required">
                                                 <option value="">Choose Manager</option>
@@ -35,7 +35,7 @@
                                             <i></i>
                                         </label>
                                     </section>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Location</label>
                                             <label class="select">
@@ -51,8 +51,8 @@
                                                 </select>
                                                 <i></i>
                                             </label>
-                                        </section>
-                                        <section class="col col-4">
+                                        </section> --}}
+                                        {{-- <section class="col col-4">
                                             <label class="label">Job Types</label>
                                             <div class="inline-group">
                                                 <label class="radio">
@@ -64,10 +64,9 @@
                                                     <i></i>Part Time
                                                 </label>
                                             </div>
-                                        </section>
-
-                                    </div>
-                                    <div class="row">
+                                        </section> --}}
+                                    {{-- </div> --}}
+                                    {{-- <div class="row">
                                         <section class="col col-4">
                                             <label class="label"> Salary*</label>
                                             <label class="input">
@@ -82,95 +81,107 @@
                                             <label class="input">
                                                 <input type="number" id="max" name="max" placeholder="max ($)">
                                             </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="label">Hiring Manager</label>
-                                            <label class="select">
-                                                @php
-                                                    $company_id = Auth::guard('admins')->user()->id;
-                                                    $emp = \App\Employee::where('company_id',$company_id)->get();
-                                                @endphp
-                                                <select name="manager" id="manager" class="required">
-                                                    <option value=""> Select Manager </option>
-                                                    @foreach($emp as $managers)
-                                                        <option value="{{$managers->emp_id}}"> {{$managers->emp_lastname}} {{$managers->emp_firstname}}</option>
-                                                        @endforeach
-                                                </select>
-                                                <i></i>
-                                            </label>
-                                        </section>
-                                    </div>
-                                    <div class="row">
-                                        <section class="col col-6">
-                                            <label class="label"> Upload Job </label>
+                                        </section> --}}
+                            <div class="row">
+                                <section class="col col-6">
+                                            <label class="label"> Vacancy Name </label>
                                             <label class="input">
-                                                <input type="file" id="resume" name="resume">
+                                                <input type="text" id="resume" name="resume">
                                             </label>
                                         </section>
-                                        <section class="col col-6">
-                                            <label class="label"> Closing Date </label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="closing_date" name="closing_date" class="datepicker">
-                                            </label>
-                                        </section>
-                                        <span id="lblErrorresume" style="color: red;"></span>
+                    <section class="col col-6">
+                            <label class="label"> Hiring Manager </label>
+                            <div class="form-group">
+                                <select name="employee_tracker"
+                                        id="employee_tracker"
+                                        style="width:100%" class="select2 select2-hidden-accessible"
+                                        tabindex="-1" aria-hidden="true">
+                                    <optgroup label="">
+                                        <option value="">-- select Employee --</option>
+                                        @php $tracker = \App\Employee::all(); @endphp
+                                        @foreach($tracker as $trackers)
+                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                <div class="note">
+                                    <strong>Usage:</strong> Employee performance tracker
+                                </div>
+                            </div>
+                        </section>
+                            </div>
+                        {{-- </div> --}}
+                        <div class="row">
+                            <section class="col col-6">
+                                <label class="label"> Upload Job </label>
+                                <label class="input">
+                                    <input type="file" id="resume" name="resume">
+                                </label>
+                            </section>
+                            <section class="col col-6">
+                                <label class="label"> Closing Date </label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" id="closing_date" name="closing_date" class="datepicker">
+                                </label>
+                            </section>
+                            <span id="lblErrorresume" style="color: red;"></span>
 
-                                    </div>
-                                </fieldset>
-                           </div>
                         </div>
-                        <!-- end widget content -->
-                    </div>
+                    </fieldset>
                 </div>
-            </article>
+            </div>
+            <!-- end widget content -->
         </div>
-    </section>
-    <section id="widget-grid" class="">
-        <!-- row -->
-        <div class="row">
+    </div>
+</article>
+</div>
+</section>
+<section id="widget-grid" class="">
+<!-- row -->
+<div class="row">
 
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
-                        <h2> Job Description </h2>
-                    </header>
-                    <div>
-                        <div class="jarviswidget-editbox">
-                        </div>
-                        <div class="widget-body no-padding">
-                            <textarea name="description" id="description" required>
+<!-- NEW WIDGET START -->
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <!-- Widget ID (each widget will need unique ID)-->
+    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
+            <h2> Job Description </h2>
+        </header>
+        <div>
+            <div class="jarviswidget-editbox">
+            </div>
+            <div class="widget-body no-padding">
+                <textarea name="description" id="description" required>
 
-                            </textarea>
+                </textarea>
 
-                        </div>
-                    </div>
-                </div>
-            </article>
+            </div>
         </div>
-    </section>
-    <section id="widget-grid" class="">
-        <div class="row">
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
-                    <header>
-                        <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
-                        <h2> Job Requirement </h2>
+    </div>
+</article>
+</div>
+</section>
+<section id="widget-grid" class="">
+<div class="row">
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-sortable="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
+            <h2> Job Requirement </h2>
 
-                    </header>
-                    <div>
-                        <div class="jarviswidget-editbox">
+        </header>
+        <div>
+            <div class="jarviswidget-editbox">
 
-                        </div>
-                        <div class="widget-body no-padding">
-                            <textarea name="requirement" id="message" type="text" value=""  dir="ltr" required>
+            </div>
+            <div class="widget-body no-padding">
+                <textarea name="requirement" id="message" type="text" value=""  dir="ltr" required>
 
-                            </textarea>
-                            <br>
-                        </div>
+                </textarea>
+                <br>
+            </div>
                     </div>
                 </div>
             </article>
@@ -186,7 +197,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Add Job title</h2>
+                        <h2>Company Profiles</h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -200,7 +211,6 @@
                             <div class="smart-form">
                                 <fieldset>
                                     <section>
-                                        <h5><strong>Company Profiles</strong></h5>
                                         <div class="row">
                                             <section class="col col-6">
                                                 <label class="label">Company Name*</label>

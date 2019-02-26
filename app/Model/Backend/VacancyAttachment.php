@@ -8,7 +8,6 @@ class VacancyAttachment extends Model
 {
     protected $table = 'tbl_job_vacancy_attachment';
     protected $fillable = [
-        'id',
         'vacancy_id',
         'file_name',
         'file_types',

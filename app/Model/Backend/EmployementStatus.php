@@ -1,17 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeStatus extends Model
+class EmployementStatus extends Model
 {
-    //
-    protected $table = 'tbl_employment_status';
+    protected $table = 'employment_statuses';
     protected $fillable = [
         'id',
         'company_id',
         'name',
+        'description'
     ];
-    public $timestamps = false;
 }

@@ -1,7 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
     <section id="widget-grid" class="">
-
         <!-- row -->
         <div class="row">
 
@@ -52,9 +51,14 @@
                                             <a href="{{url('/administration/jobs-category/'.$JobCategorys->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$JobCategorys->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
+                                            <form action="{{ url('/administration/jobs-category', ['id' => $JobCategorys->id]) }}" style="display:inline" method="post">
+                                                <input type="hidden" name="_method" value="delete" />
+                                                {!! csrf_field() !!}
+                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="btn">
+                                    
+                                                        <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </form>      
                                         </td>
                                     </tr>
                                 @endforeach
@@ -66,6 +70,18 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hr/jobcategory.js') }}"></script>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.alert-success').fadeOut(5000);
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.closest('form').submit();
+
+            }
+        });   
+    });
+</script>
 @endsection

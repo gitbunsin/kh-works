@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Organization;
+use App\OrganizationGenInfo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -31,7 +31,7 @@ class AdminLoginController extends Controller
     }
     protected  function login(Request $request)
     {
-
+        //dd('hello');
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -39,6 +39,7 @@ class AdminLoginController extends Controller
 
         $email = Input::get('email');
         $password = Input::get('password');
+        //dd($email,$password);
 
         $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password,'verified'=> 1]);
 
@@ -60,43 +61,4 @@ class AdminLoginController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-//    protected function create(array $data)
-//    {
-////        dd($data);
-//        return Organization::create([
-//            'name' => $data['emp_name'],
-//            'email' => $data['email'],
-//            'password' => Hash::make($data['password']),
-//        ]);
-//    }
-
-
-//    public function  HrRegister()
-//    {
-//            $this->validate(request(), [
-//                'com_name' => 'required',
-//                'com_email' => 'required|email',
-//                'com_password' => 'required|min:3|max:20',
-//                'password_confirmation' => 'required|min:3|max:20|same:com_password',
-//            ]);
-//            $Hr = new Organization();
-//            $company = new Company();
-//            $Hr->name = input::get('com_name');
-//            $Hr->email = input::get('com_email');
-//            $Hr->password = Hash::make(input::get('com_password'));
-//            $company->name = input::get('com_name');
-//            $company->email = input::get('com_email');
-//            $company->password = Hash::make(input::get('com_password'));
-//            $company->save();
-//            $Hr->save();
-//            Session::put('user_register', $Hr);
-//            return redirect('administration/companyProfile');
-//    }
-//    public function loginAdmin()
-//    {
-//        $email = Input::get('email');
-//        $password = Input::get('password');
-//        $authAdmin = Auth::guard('admins')->attempt(['email' => $email, 'password' => $password]);
-//        dd($authAdmin);
-//    }
 }

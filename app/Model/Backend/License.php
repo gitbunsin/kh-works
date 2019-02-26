@@ -1,22 +1,20 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
-class License extends Model
+class license extends Model
 {
     //
-    protected $table = 'tbl_hr_emp_license';
+    protected $table = 'licenses';
 //    protected $primaryKey = 'emp_id';
     protected $fillable = [
         'id',
-        'employee_id',
         'company_id',
-        'licenseType_id',
-        'license_number',
-        'issued_date',
-        'expiry_date',
+        'name',
+        'description',
+        'created_at',
+        'update_at',
     ];
-    public $timestamps = false;
 }

@@ -3,7 +3,7 @@
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\Education;
+use App\Model\Backend\Education;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,6 +100,10 @@ class EducationController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $education= Education::findOrFail( $id );
+        $education->delete();
+        return  redirect('/administration/education')->with('success','Item success successfully!');
+
     }
 }

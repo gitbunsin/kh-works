@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\Skill;
+use App\Model\Backend\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,6 +103,9 @@ class SkillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $skill = Skill::findOrFail( $id );
+        $skill->delete();
+        return  redirect('/administration/skills')->with('success','Item success successfully!');
+
     }
 }

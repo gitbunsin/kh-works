@@ -41,7 +41,7 @@
                 <div class="dropdown category-dropdown" >
                 <select name="" id=""  class="" style="width:160px; " title="">
                     <option value="">-- Job Categories --</option>
-                    @php  use App\JobCategory;
+                    @php  use App\Model\Backend\JobCategory;
                               $jobCategories = JobCategory::all();
                     @endphp
                     @foreach($jobCategories as $jobCategory)

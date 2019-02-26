@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
+
 
 class BackendController extends Controller
 {
@@ -18,13 +20,19 @@ class BackendController extends Controller
 
    public function __construct()
    {
+       
        $this->middleware('isAdmin');
+       //parent::__construct();
 //       $this->middleware('isEmployee');
    }
 
     public function index()
     {
+       //dd(Auth::guard('admins'));
 //        dd(Auth::guard('employee')->user()->email);
+       // $authObj = AppHelper::getInstance()->getAuth();
+       // $menus = MenuHelper::getInstance()->getsidebarMenu($authObj->user()->id, $authObj->user()->role_id);
+       //  return view('Backend.HRIS.layouts.cms-layouts',compact('menus'));
         return view('Backend.HRIS.layouts.cms-layouts');
     }
 }

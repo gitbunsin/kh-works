@@ -31,6 +31,15 @@
                                             <input value="{{$employeeStatus->name}}" type="text" name="name" id="name">
                                         </label>
                                     </section>
+                                    <section>
+                                            <label class="label"> description</label>
+                                            <label class="textarea">
+                                                <textarea name="description" id="description" rows="5" cols="5">{{$employeeStatus->description}}</textarea>
+                                            </label>
+                                            <div class="note">
+                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
+                                            </div>
+                                        </section>
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>

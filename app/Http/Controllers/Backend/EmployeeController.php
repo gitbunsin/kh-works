@@ -25,8 +25,12 @@ use Psy\Util\Json;
 
 class EmployeeController extends Controller
 {
-
-
+    public function __construct()
+    {
+    
+        $this->middleware('isAdmin');
+    
+    }
     protected $redirectTo = '/administration/employee-personal-details';
     public function index()
     {
@@ -36,7 +40,6 @@ class EmployeeController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-
         $employee = DB::table('tbl1_hr_employee as e')
             ->select('e.*')
             ->where('e.company_id',$company_id)
@@ -45,7 +48,6 @@ class EmployeeController extends Controller
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
-
     public function EmployeeInfo(){
 
         $employee_experience = EmployeeWorkExperience::all();
@@ -55,19 +57,15 @@ class EmployeeController extends Controller
 //        $employee_skill = EmployeeSkills::all();
         return view('backend.HRIS.PIM.Employee.Details.index',compact('employee_experience','employee_skill'));
     }
-    
     public function create()
     {
         return view('backend.HRIS.PIM.Employee.create');
     }
-
     public function edit($id)
     {
         $employee = Employee::where('id',$id);
         return view('backend.HRIS.PIM.Employee.edit');
     }
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -78,25 +76,32 @@ class EmployeeController extends Controller
     {
         //dd('hello');
 //        dd($request->all());
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+
+        }
         $employee = new Employee();
         $employee->emp_firstname = $request->emp_firstname;
         $employee->emp_lastname = $request->emp_lastname;
         $employee->emp_middle_name = $request->emp_middle_name;
+        $employee->company_id = $company_id;
         $employee->job_title_code = $request->job_title;
         $employee->employee_id = $request->employee_id;
         $employee->company_id = $request->company_id;
-        if ($request->hasFile('photo'))
-        {
-            $image = $request->file('photo');
-            $mytime = \Carbon\Carbon::now()->toDateTimeString();
-            $name = $image->getClientOriginalName();
-            $size = $image->getClientSize();
-            $type = $image->getMimeType();
-            $destinationPath = public_path('/uploaded/EmpPhoto/');
-            $image->move($destinationPath,$name);
-            $employee->photo = $name;
+        // if ($request->hasFile('photo'))
+        // {
+        //     $image = $request->file('photo');
+        //     $mytime = \Carbon\Carbon::now()->toDateTimeString();
+        //     $name = $image->getClientOriginalName();
+        //     $size = $image->getClientSize();
+        //     $type = $image->getMimeType();
+        //     $destinationPath = public_path('/uploaded/EmpPhoto/');
+        //     $image->move($destinationPath,$name);
+        //     $employee->photo = $name;
 
-        }
+        // }
         $employee->save();
         $employee_id = $employee->emp_id;
 //        dd($employee_id);
@@ -116,25 +121,23 @@ class EmployeeController extends Controller
             dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
             return view('verification');
         }
-
         return redirect('/administration/employee')->with('success','Item created successfully!');
     }
 
-    public  function  getJob()
-    {
+    // public  function  getJob()
+    // {
+    //     return view('backend.HRIS.PIM.Employee.Job.index');
+    // }
+    // public function  getSalary()
+    // {
 
-        return view('backend.HRIS.PIM.Employee.Job.index');
-    }
-    public function  getSalary()
-    {
 
-
-        return view('backend.HRIS.PIM.Employee.Salary.index');
-    }
-    public function getReport()
-    {
-        return view('backend.HRIS.PIM.Employee.report');
-    }
+    //     return view('backend.HRIS.PIM.Employee.Salary.index');
+    // }
+    // public function getReport()
+    // {
+    //     return view('backend.HRIS.PIM.Employee.report');
+    // }
     /**
      * Handle a registration request for the application.
      *

@@ -14,7 +14,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        // $use = Role::apll();
         return view('backend.HRIS.Time.Attendance.index');
     }
     public function AttendanceConfigure(){

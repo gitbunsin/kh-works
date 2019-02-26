@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobCategory;
-use App\JobTitle;
+use App\Model\Backend\JobTitle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -23,8 +23,8 @@ class JobTitleController extends Controller
     }
     public function index()
     {
-        $JobTitle = JobTitle::orderBy('id', 'DESC')->where('is_deleted',0)->get();
-        return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
+    $JobTitle = JobTitle::orderBy('id', 'DESC')->where('is_deleted',0)->get();
+    return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
 
     public function edit($id)
@@ -37,8 +37,7 @@ class JobTitleController extends Controller
 
     public function update(Request $request,$id)
     {
-//        dd($request->all());
-
+        
         $job_title = JobTitle::findOrFail($id);
         $job_title->job_title = $request->job_title;
         $job_title->job_description = $request->job_description;
@@ -76,10 +75,7 @@ class JobTitleController extends Controller
         $j->job_description = input::get('job_description');
         $j->note = input::get('note');
         $j->is_deleted = 0;
-        $j->created_by = $user_id;
         $j->company_id = Auth::guard('admins')->user()->id;
-        $j->fd = \Carbon\Carbon::now();
-        $j->td = \Carbon\Carbon::now();
         $j->save();
         session()->flash('success', 'Task was successful!');
         return redirect('/administration/jobs-title')->with('success','Item created successfully!');
@@ -109,10 +105,11 @@ class JobTitleController extends Controller
 //        return response()->json($JobTitle);
 //    }
 
-//      public function destroy($id)
-//        {
-//            $job_title = JobTitle::destroy($id);
-//            return response()->json($job_title);
-//        }
+    public function destroy( $id, Request $request )
+    {
+        $job_title = JobTitle::findOrFail( $id );
+        $job_title->delete();
+        return  redirect('/administration/jobs-title')->with('success','Item success successfully!');
+    }
 
 }

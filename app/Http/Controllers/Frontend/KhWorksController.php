@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Candidate;
 use App\CandidateAttachment;
 use App\CandidateVacancy;
-use App\JobCategory;
+use App\Model\Backend\JobCategory;
 use App\Vacancy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

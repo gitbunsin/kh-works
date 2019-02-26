@@ -1,22 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
 class JobTitle extends Model
 {
-    protected $connection = 'mysql';
-    protected $table = 'tbl_job_title';
-    protected $fillable =
-        ['id',
-            'job_title',
-            'job_description',
-            'note',
-            'createy_by',
-            'fd',
-            'td',
-        ];
-    public $timestamps = false;
     //
+    protected $table = 'job_titles';
+    protected $fillable = [
+        'job_title',
+        'company_id',
+        'description',
+        'note',
+        'is_deleted',
+    ];
 }

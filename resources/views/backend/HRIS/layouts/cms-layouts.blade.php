@@ -37,6 +37,16 @@
 
 		<!-- Custom Own Style -->
 		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
+		<style>
+			div.popover-content  .btn-default{
+				margin: 5px;
+			}
+			div.popover{
+				top: 59px;
+				left: 990.609px !important;
+				display: block;
+			}
+		</style>
 
 	</head>
 <body class="">

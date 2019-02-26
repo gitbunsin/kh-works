@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblMenuListTable extends Migration
+class CreateLicensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTblMenuListTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_menu_list', function (Blueprint $table) {
+        Schema::create('licenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('action_url');
-            $table->string('status');
-            $table->integer('role_id')->nullable()->unsigned();
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->integer('company_id');
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('is_deleted')->unsigned()->nullable()->comment('1 is active & 0 is diactive');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTblMenuListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_menu_list');
+        Schema::dropIfExists('licenses');
     }
 }

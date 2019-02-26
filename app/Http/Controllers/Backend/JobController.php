@@ -6,7 +6,7 @@ use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobDescription;
-use App\JobTitle;
+use App\Model\Backend\JobTitle;
 use App\Organization;
 use App\Vacancy;
 use App\VacancyAttachment;
@@ -23,10 +23,10 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    public function __construct()
-//    {
-//        $this->middleware('isAdmin');
-//    }
+   public function __construct()
+   {
+       $this->middleware('isAdmin');
+   }
     public function index()
     {
 //        $job = Job::orderBy('id','DESC')->get();
@@ -53,45 +53,15 @@ class JobController extends Controller
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-//    public function show($id)
-//    {
-//        $isApply = false;
-//        if (Auth::user()) {
-//            $user_id = Auth::user()->id;
-//            $canVaObj = new CandidateVacancy();
-//            $isApply = $canVaObj->user_apply($id,$user_id);
-//        }
-//        $job_title = DB::table('kh_job_vacancy as v')
-//            ->select('v.*','t.*','v.id as job_id')
-//            ->join('tbl_job_title as t','v.job_title_code',"=",'t.id')
-//            ->first();
-////        $company = Organization::where('id',$job_title->company_id)->first();
-////        dd($company);
-//        return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
-//    }
         public  function displayJob($job_id , $company_id){
             $isApply = false;
             if(auth::user()){
                 $user_id  = auth::user()->id;
-
-                //dd($user_id);
-//                $result = DB::table('tbl_job_candidate as c')
-//                    ->select('c.id')
-//                    ->where('c.user_id',$user_id)->get()->groupBy('c.user_id');
-//
-//                $job = array();
-//                foreach ($result as $job_ids){
-//                    $job[]= $job_ids->id;
-//                }
-//                $candidate_id = implode(',',$job);
-//                dd($candidate_id);
-//                $canVaObj = new CandidateVacancy();
-//                $isApply = $canVaObj->user_apply($job_id,$candidate_id[0]);
-                $isApply = DB::table('tbl_job_candidate as c')
-                    ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
-                    ->where('cv.vacancy_id',$job_id)
-                    ->where('c.user_id',$user_id)
-                    ->get();
+            $isApply = DB::table('tbl_job_candidate as c')
+                ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+                ->where('cv.vacancy_id',$job_id)
+                ->where('c.user_id',$user_id)
+                ->get();
             }
         $job_title = DB::table('kh_job_vacancy as v')
             ->select('v.*','t.*','v.id as job_id','p.*')
@@ -102,19 +72,7 @@ class JobController extends Controller
 
         $company = Organization::where('id',$company_id)->first();
         return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
-
         }
-
-//    public function update(Request $request, $job_id)
-//    {
-//        $job = Job::findOrFail($job_id);
-//        $job->job_title = $request->job_title;
-//        $job->job_description = $request->job_description;
-//        $job->note = $request->note;
-//        $job->save();
-//        return response()->json($job);
-//    }
-
     public function destroy($id)
     {
         $job = Job::destroy($id);

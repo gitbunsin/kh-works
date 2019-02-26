@@ -1,13 +1,15 @@
 
 <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+{{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
+<script src="{{ asset('js/jquery/jquery.min.js')}}"></script>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script>
 	if (!window.jQuery.ui) {
 		document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
 	}
 </script>
-{{--<script src="{{ asset('js/jquery/jquery.min.js')}}"></script>--}}
+
 <script data-pace-options='{ "restartOnRequestAfter": true }' src="{{ asset('js/plugin/pace/pace.min.js')}}"></script>
 
 		<!-- IMPORTANT: APP CONFIG -->
@@ -51,6 +53,7 @@
 
 <script src="{{ asset('js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
 
 
 		<!--[if IE 8]>

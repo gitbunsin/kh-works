@@ -1,18 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeEducation extends Model
 {
     //
-    protected $table = 'tbl_hr_emp_education';
+    protected $table = 'employee_educations';
 //    protected $primaryKey = 'emp_id';
     protected $fillable = [
         'id',
-        'employee_id',
-        'company_id',
+        'emp_number',
+        'education_id',
         'institute',
         'major',
         'year',
@@ -20,5 +20,4 @@ class EmployeeEducation extends Model
         'start_date',
         'end_date',
     ];
-    public $timestamps = false;
 }

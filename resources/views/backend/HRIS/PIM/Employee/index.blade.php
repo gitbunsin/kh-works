@@ -35,30 +35,32 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th></th>
-                                    <th data-hide="phone"> Employee id </th>
-                                    <th data-class="expand"> Name</th>
-                                    <th data-hide="phone"> Job Title</th>
-                                    <th data-hide="phone"> Employee Status</th>
-                                    <th data-hide="posting-date"> Location</th>
-                                    <th data-hide="closing-date"> Supervisor</th>
+                                    <th> id </th>
+                                    <th> First (& Middle) Name</th>
+                                    <th> Last Name</th>
+                                    <th> Job Title</th>
+                                    <th> Employee Status</th>
+                                    <th> Sub Unit</th>
+                                    <th> Supervisor</th>
                                     <th> Action </th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                 @foreach($employee as $employees)
                                     <tr id="employee_id{{$employees->emp_id}}">
-                                        <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
+                                        {{-- <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td> --}}
                                         <td>{{$employees->employee_id}}</td>
-                                        <td> <a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_lastname}} {{$employees->emp_firstname}}  </a></td>
+                                        <td> <a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_firstname}}  {{$employees->emp_middle_name}}</a>
+                                            <td><a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_lastname}}</a> </td>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->emp_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
+            <a data-id="{{$employees->emp_id}}" href="{{url('/administration/employee-personal-details')}}" style="text-decoration:none;" class="btn-detail">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
                                             <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
@@ -125,18 +127,18 @@
                                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                                     </div>
                                                 </section>
-                                                <section class="col col-4">
-                                                    <label class="label">Job Title</label>
-                                                    <label class="select">
-                                                        @php $job_title = \App\JobTitle::all(); @endphp
-                                                        <select name="job_title" id="Job_title">
-                                                            @foreach($job_title as $job_titles)
-                                                                <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <i></i>
-                                                    </label>
-                                                </section>
+            <section class="col col-4">
+                <label class="label">Job Title</label>
+                <label class="select">
+                    @php $job_title = \App\Model\Backend\JobTitle::all(); @endphp
+                    <select name="job_title" id="Job_title">
+                        @foreach($job_title as $job_titles)
+                            <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                        @endforeach
+                    </select>
+                    <i></i>
+                </label>
+            </section>
                                                 <section class="col col-4">
                                                     <label class="label"> Employee Photo</label>
                                                     <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">
@@ -226,6 +228,10 @@
         </div>
     </section>
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hr/employee.js') }}"></script>
+
+@endsection
+@section('script')
+    <script>
+          <script src="{{ asset('/js/hr/employee.js') }}"></script>
+    </script>
 @endsection

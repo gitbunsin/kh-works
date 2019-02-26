@@ -11,7 +11,7 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 /**
  * @property  attributes
  */
-class Organization extends Authenticatable
+class OrganizationGenInfo extends Authenticatable
 {
     use Notifiable;
     use EntityTrait;
@@ -22,7 +22,7 @@ class Organization extends Authenticatable
      */
     //The authentication guard for admin
     protected $guard = 'admins';
-    protected $table = 'tbl_organization_gen_info';
+    protected $table = 'organization_gen_infos';
     protected $fillable = [
         'name',
         'email',

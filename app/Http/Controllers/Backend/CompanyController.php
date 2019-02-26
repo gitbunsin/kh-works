@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\Organization;
+use App\OrganizationGenInfo;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -63,8 +63,9 @@ class CompanyController extends Controller
     public function update(Request $request , $id)
     {
 
-        $company = Organization::findOrFail($id);
+        $company = OrganizationGenInfo::findOrFail($id);
         $company->name = $request->name;
+        $company->role_id = 1;
         $company->tax_id = $request->tax_id;
         $company->registration_number = $request->registration_number;
         $company->phone = $request->phone;

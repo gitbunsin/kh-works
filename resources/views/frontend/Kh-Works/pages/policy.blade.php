@@ -230,16 +230,19 @@
 					</div>				
 				</div><!-- educational-background -->
 
-				<div class="buttons">
+				{{-- <div class="buttons">
 					<a href="https://demo.themeregion.com/jobs-updated/resume.html#" class="btn">Send Email</a>
-				</div>
-				<div class="download-button">
+				</div> --}}
+				{{-- <div class="download-button">
 					<a href="https://demo.themeregion.com/jobs-updated/resume.html#" class="btn">Download Resume as doc</a>
-				</div>
+				</div> --}}
 			</div><!-- resume-content -->						
 		</div><!-- container -->
 	</section><!-- ad-profile-page -->
 	<!--/Preset Style Chooser-->
+	<!--/End:Preset Style Chooser-->
+	<!-- footer -->
+	@include('frontend.Kh-Works.partials.ui-footer')
 	<!--/End:Preset Style Chooser-->
 	
     <!-- JS -->

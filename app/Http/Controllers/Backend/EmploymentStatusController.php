@@ -4,6 +4,7 @@ use App\EmployeeStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Backend\EmployementStatus;
 
 class EmploymentStatusController extends Controller
 {
@@ -19,7 +20,7 @@ class EmploymentStatusController extends Controller
     public function index()
     {
         //
-        $employee_status = EmployeeStatus::all();
+        $employee_status = EmployementStatus::all();
 //        dd($employee_status);
         return view('backend.HRIS.admin.EmployeeStatus.index',compact('employee_status'));
     }
@@ -42,8 +43,9 @@ class EmploymentStatusController extends Controller
      */
     public function store(Request $request)
     {
-        $EmployeeStatus = new EmployeeStatus();
+        $EmployeeStatus = new EmployementStatus();
         $EmployeeStatus->name = $request->name;
+        $EmployeeStatus->description = $request->description;
         $EmployeeStatus->company_id = Auth::guard('admins')->user()->id;
         $EmployeeStatus->save();
         return redirect('/administration/employment-status/')->with('success','Item created successfully!');
@@ -69,7 +71,7 @@ class EmploymentStatusController extends Controller
     public function edit($id)
     {
         //
-        $employeeStatus = EmployeeStatus::where('id',$id)->first();
+        $employeeStatus = EmployementStatus::where('id',$id)->first();
         return view('backend.HRIS.admin.EmployeeStatus.edit',compact('employeeStatus'));
     }
 
@@ -83,8 +85,9 @@ class EmploymentStatusController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $employeeStatus = EmployeeStatus::findOrFail($id);
+        $employeeStatus = EmployementStatus::findOrFail($id);
         $employeeStatus->name = $request->name;
+        $employeeStatus->description=$request->description;
         $employeeStatus->company_id = Auth::guard('admins')->user()->id;
         $employeeStatus->save();
         return redirect('/administration/employment-status/')->with('success','Item Edited successfully!');
@@ -99,6 +102,10 @@ class EmploymentStatusController extends Controller
      */
     public function destroy($id)
     {
+        $EmployementStatus= EmployementStatus::findOrFail( $id );
+        $EmployementStatus->delete();
+        return  redirect('/administration/employment-status')->with('success','Item success successfully!');
+
         //
     }
 }

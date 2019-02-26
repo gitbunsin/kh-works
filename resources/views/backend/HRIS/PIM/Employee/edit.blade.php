@@ -61,7 +61,7 @@
                                         <section class="col col-4">
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                @php $job_title = \App\JobTitle::all(); @endphp
+                                                @php $job_title = \App\Model\Backend\JobTitle::all(); @endphp
                                                 <select name="job_title" id="Job_title">
                                                     <option value="0">-- job title --</option>
                                                     @foreach($job_title as $job_titles)
@@ -128,21 +128,20 @@
                                                     <input type="password" id="emp_confimpassword" name="emp_confimpassword">
                                                 </label>
                                             </section>
+                                            <section class="col col-6">
+                                                <label class="label">Status</label>
+                                                <label class="select">
+                                                    <select name="role" id="role">
+                                                            <option value="enable">enable</option>
+                                                            <option value="disabled">disabled</option>
+                                                    
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
                                         </div>
                                     </div>
-                                    <section>
-                                        <label class="label">Active</label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input  type="checkbox"  name="checkbox-inline" checked>
-                                                <i></i>
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="checkbox-inline" checked>
-                                                <i></i>Publish in RSS feed(1) and web page(2)
-                                            </label>
-                                        </div>
-                                    </section>
+                            
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -158,142 +157,127 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        if (!window.jQuery) {
-            document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
-        }
-    </script>
+@endsection
+@section('script')
+<script>
+    $( document ).ready(function() {
+        $("#div_login").hide();
+        $('#checkbox-login').change(function () {
+            if (this.checked)
+                $('#div_login').fadeIn('slow');
+            else
+                $('#div_login').fadeOut('slow');
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script>
-        if (!window.jQuery.ui) {
-            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-        }
-    </script>
-    <script>
-        $( document ).ready(function() {
-            $("#div_login").hide();
-            $('#checkbox-login').change(function () {
-                if (this.checked)
-                    $('#div_login').fadeIn('slow');
-                else
-                    $('#div_login').fadeOut('slow');
-
-            });
         });
-        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    });
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            pageSetUp();
-            $('#startdate').datepicker({
-                // format: 'DD - dd MM yyyy'
-            });
-            var $loginForm = $("#validate_employee").validate({
-                // Rules for form validation
-                rules : {
-                    first_name : {
-                        required : true
-                    },
-                    last_name : {
-                        required : true
-                    },
-                    middle_name:{
-                        required:true
-                    },
-                    emp_id :{
-                        required:true
-                    }
+        pageSetUp();
+        $('#startdate').datepicker({
+            // format: 'DD - dd MM yyyy'
+        });
+        var $loginForm = $("#validate_employee").validate({
+            // Rules for form validation
+            rules : {
+                first_name : {
+                    required : true
                 },
-
-                // Messages for form validation
-                messages : {
-                    first_name : {
-                        required : 'Please enter first name'
-                    },
-                    last_name : {
-                        required: 'Please enter your last_name'
-                    },
-                    middle_name:{
-                        required:'please enter middle name'
-                    },
-                    emp_id : {
-                        required:'please enter employee id'
-                    }
+                last_name : {
+                    required : true
                 },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
+                middle_name:{
+                    required:true
+                },
+                emp_id :{
+                    required:true
                 }
-            });
-        });
+            },
 
-    </script>
-    <script>
-        function changeProfile() {
-            $('#file').click();
-        }
-        $('#file').change(function () {
-            if ($(this).val() != '') {
-                upload(this);
+            // Messages for form validation
+            messages : {
+                first_name : {
+                    required : 'Please enter first name'
+                },
+                last_name : {
+                    required: 'Please enter your last_name'
+                },
+                middle_name:{
+                    required:'please enter middle name'
+                },
+                emp_id : {
+                    required:'please enter employee id'
+                }
+            },
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
             }
         });
-        function upload(img) {
-            var form_data = new FormData();
-            form_data.append('file', img.files[0]);
-            form_data.append('_token', '{{csrf_token()}}');
-            $('#loading').css('display', 'block');
-            $.ajax({
-                url: "{{url('administration/ajax-image-upload')}}",
-                data: form_data,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    if (data.fail) {
-                        $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
-                        alert(data.errors['file']);
-                    }
-                    else {
-                        $('#file_name').val(data);
-                        $('#preview_image').attr('src', '{{asset('uploads')}}/' + data);
-                    }
-                    $('#loading').css('display', 'none');
-                },
-                error: function (xhr, status, error) {
-                    alert(xhr.responseText);
+    });
+    function changeProfile() {
+        $('#file').click();
+    }
+    $('#file').change(function () {
+        if ($(this).val() != '') {
+            upload(this);
+        }
+    });
+    function upload(img) {
+        var form_data = new FormData();
+        form_data.append('file', img.files[0]);
+        form_data.append('_token', '{{csrf_token()}}');
+        $('#loading').css('display', 'block');
+        $.ajax({
+            url: "{{url('administration/ajax-image-upload')}}",
+            data: form_data,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.fail) {
                     $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
+                    alert(data.errors['file']);
                 }
-            });
-        }
-        function removeFile() {
-            if ($('#file_name').val() != '')
-                if (confirm('Are you sure want to remove profile picture?')) {
-                    $('#loading').css('display', 'block');
-                    var form_data = new FormData();
-                    form_data.append('_method', 'DELETE');
-                    form_data.append('_token', '{{csrf_token()}}');
-                    var filename = $('#file_name').val();
-                    alert(filename);
-                    $.ajax({
-                        url: "ajax-remove-image/"+ filename ,
-                        data: form_data,
-                        type: 'POST',
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
-                            $('#file_name').val('');
-                            $('#loading').css('display', 'none');
-                        },
-                        error: function (xhr, status, error) {
-                            alert(xhr.responseText);
-                            //alert(JSON.stringify(error));
-                        }
-                    });
+                else {
+                    $('#file_name').val(data);
+                    $('#preview_image').attr('src', '{{asset('uploads')}}/' + data);
                 }
-        }
-    </script>
-
+                $('#loading').css('display', 'none');
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+                $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
+            }
+        });
+    }
+    function removeFile() {
+        if ($('#file_name').val() != '')
+            if (confirm('Are you sure want to remove profile picture?')) {
+                $('#loading').css('display', 'block');
+                var form_data = new FormData();
+                form_data.append('_method', 'DELETE');
+                form_data.append('_token', '{{csrf_token()}}');
+                var filename = $('#file_name').val();
+                alert(filename);
+                $.ajax({
+                    url: "ajax-remove-image/"+ filename ,
+                    data: form_data,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        $('#preview_image').attr('src', '{{asset('images/noimage.jpg')}}');
+                        $('#file_name').val('');
+                        $('#loading').css('display', 'none');
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
+                        //alert(JSON.stringify(error));
+                    }
+                });
+            }
+    }
+</script>
 @endsection

@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\Jobs\SendVerificationAdminEmail;
 use App\Jobs\SendVerificationEmail;
-use App\Organization;
+use App\OrganizationGenInfo;
 use App\Http\Requests\AuthAmdinRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -65,8 +65,9 @@ class AdminRegister extends Controller
         //dd($request);
         $validator = Validator::make($request->all(), $this->rule->registerAdminRules());
         $validator->validate();
-        $organizeModel = new Organization();
+        $organizeModel = new OrganizationGenInfo();
         $organizeModel->email = $request['com_email'];
+        $OrganizeModel->role_id = 1;
         $organizeModel->name = $request['com_name'];
         $organizeModel->password = Hash::make($request['com_password']);
         $organizeModel->email_token =  base64_encode($request['com_email']);
@@ -100,7 +101,7 @@ class AdminRegister extends Controller
      */
     public function verify($token)
     {
-        $organization = Organization::where('email_token', $token)->first();
+        $organization = OrganizationGenInfo::where('email_token', $token)->first();
         $organization->verified = 1;
 
         if($organization->save()){

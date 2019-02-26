@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblSkillTable extends Migration
+class CreateWorkShiftsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateTblSkillTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_skill', function (Blueprint $table) {
+        Schema::create('work_shifts', function (Blueprint $table) {
+            
             $table->increments('id');
-            $table->integer('company_id');
-            $table->string('name');
-            $table->string('description');
+            $table->string('name')->nullable();
+            $table->decimal('hours_per_day')->unsigend()->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->timestamps();
+
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -29,6 +31,7 @@ class CreateTblSkillTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_skill');
+        Schema::dropIfExists('work_shifts');
     }
+
 }

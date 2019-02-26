@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Model\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeWorkShift extends Model
 {
     //
-    protected $table = 'tbl_employee_work_shift';
+    protected $table = 'employee_work_shifts';
     protected $fillable = [
-        'id',
         'work_shift_id',
-        'emp_id',
+        'employee_id',
+        'company_id',
     ];
-    public $timestamps = false;
+
 }
