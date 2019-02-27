@@ -124,20 +124,20 @@ class EmployeeController extends Controller
         return redirect('/administration/employee')->with('success','Item created successfully!');
     }
 
-    // public  function  getJob()
-    // {
-    //     return view('backend.HRIS.PIM.Employee.Job.index');
-    // }
-    // public function  getSalary()
-    // {
+    public  function  getJob()
+    {
+        return view('backend.HRIS.PIM.Employee.Job.index');
+    }
+    public function  getSalary()
+    {
 
 
-    //     return view('backend.HRIS.PIM.Employee.Salary.index');
-    // }
-    // public function getReport()
-    // {
-    //     return view('backend.HRIS.PIM.Employee.report');
-    // }
+        return view('backend.HRIS.PIM.Employee.Salary.index');
+    }
+    public function getReport()
+    {
+        return view('backend.HRIS.PIM.Employee.report');
+    }
     /**
      * Handle a registration request for the application.
      *

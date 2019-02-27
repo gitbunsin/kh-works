@@ -365,7 +365,7 @@
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
                                             <section>
-                                                @php $skill = \App\Skill::all(); @endphp
+                                                @php $skill = \App\Model\Backend\Skill::all(); @endphp
                                                 <label class="label"> Skills</label>
                                                 <label class="select">
                                                     <select name="skills" id="skills">

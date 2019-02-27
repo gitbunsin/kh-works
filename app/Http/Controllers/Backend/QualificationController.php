@@ -6,7 +6,8 @@ use App\EmployeeEducation;
 use App\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
-use App\License;
+use App\Model\Backend\License;
+use App\Model\Backend\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

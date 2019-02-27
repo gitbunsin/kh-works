@@ -1,20 +1,14 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
 
-    {{-- @if(\Illuminate\Support\Facades\Auth::guard('admins')->user()) --}}
-        {{-- @php
-            $company_id = Auth::guard('admins')->user()->id;
-            use App\Model\Backend\Employee;use Illuminate\Support\Facades\Auth;
-            $employee= Employee::where('company_id',$company_id)->first();
-        @endphp --}}
-    {{-- @else --}}
-            {{-- @php
-            $company_id = Auth::guard('admins')->user()->id;
-            use App\Model\Backend\Employee;use Illuminate\Support\Facades\Auth;
-            $employee= Employee::where('company_id',$company_id)->first();
-        @endphp --}}
-    {{-- @endif --}}
+        @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
 
+        @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+        @else
+
+        @php $employee = \App\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+
+@endif
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -56,19 +50,19 @@
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input">
-                                                <input  value="" type="text" name="emp_firstname" id="emp_firstname">
+                                                <input  value="{{$employee->emp_firstname}}" type="text" name="emp_firstname" id="emp_firstname">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Middle Name</label>
                                             <label class="input">
-                                                <input value=""  type="text" name="emp_middle_name" id="emp_middle_name">
+                                                <input value="{{$employee->emp_middle_name}}"  type="text" name="emp_middle_name" id="emp_middle_name">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Last Name</label>
                                             <label class="input">
-                                                <input value="" type="text" name="emp_lastname" id="emp_lastname" >
+                                                <input value="{{$employee->emp_lastname}}" type="text" name="emp_lastname" id="emp_lastname" >
                                             </label>
                                         </section>
                                     </div>

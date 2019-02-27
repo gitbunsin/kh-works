@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobDescription;
 use App\Model\Backend\JobTitle;
-use App\Organization;
+use App\OrganizationGenInfo;
 use App\Vacancy;
 use App\VacancyAttachment;
 use Carbon\Carbon;
@@ -25,7 +25,7 @@ class JobController extends Controller
      */
    public function __construct()
    {
-       $this->middleware('isAdmin');
+      // $this->middleware('isAdmin');
    }
     public function index()
     {
@@ -54,6 +54,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
         public  function displayJob($job_id , $company_id){
+           // dd('hello');
             $isApply = false;
             if(auth::user()){
                 $user_id  = auth::user()->id;
@@ -69,8 +70,9 @@ class JobController extends Controller
             ->join('tbl_province as p','v.location','=','p.id')
             ->where('v.company_id',$company_id)
             ->first();
+            //dd($job_Title);
 
-        $company = Organization::where('id',$company_id)->first();
+        $company = OrganizationGenInfo::where('id',$company_id)->first();
         return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
         }
     public function destroy($id)
@@ -107,7 +109,7 @@ class JobController extends Controller
         $job->max_salary = $request->max;
         $job->job_type = $request->job_type;
         $job->company_id = $request->company_id;
-        $job->hiring_manager_id = $request->manager;
+        $job->hiring_manager_id = 1;
         $job->negotiable = 1;
 //        dd($request->city);
         $job->location = $request->city;

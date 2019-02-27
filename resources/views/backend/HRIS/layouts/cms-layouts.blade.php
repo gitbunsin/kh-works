@@ -41,11 +41,11 @@
 			div.popover-content  .btn-default{
 				margin: 5px;
 			}
-			div.popover{
+			/* div.popover{
 				top: 59px;
 				left: 990.609px !important;
 				display: block;
-			}
+			} */
 		</style>
 
 	</head>

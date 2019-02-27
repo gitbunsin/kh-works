@@ -35,12 +35,12 @@
                                             <i></i>
                                         </label>
                                     </section>
-                                    {{-- <div class="row">
+                                    <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Location</label>
                                             <label class="select">
                                                 @php
-                                                    //$company_id = Auth::guard('admins')->user()->id;
+                                                    $company_id = Auth::guard('admins')->user()->id;
                                                     $location = \App\Provinces::all();
                                                 @endphp
                                                 <select  name="city" id="city" class="required">
@@ -51,8 +51,8 @@
                                                 </select>
                                                 <i></i>
                                             </label>
-                                        </section> --}}
-                                        {{-- <section class="col col-4">
+                                        </section> 
+                                        <section class="col col-4">
                                             <label class="label">Job Types</label>
                                             <div class="inline-group">
                                                 <label class="radio">
@@ -64,9 +64,24 @@
                                                     <i></i>Part Time
                                                 </label>
                                             </div>
-                                        </section> --}}
-                                    {{-- </div> --}}
-                                    {{-- <div class="row">
+                                            {{-- <section class="col col-4">
+                                                    <label class="label">Employee</label>
+                                                    <label class="select">
+                                                        {{-- @php
+                                                            $company_id = Auth::guard('admins')->user()->id;
+                                                            $location = \App\Model\Backend\Employee::all();
+                                                        @endphp --}}
+                                                        {{-- <select  name="city" id="city" class="required">
+                                                            <option value="">-- Select  -- </option>
+                                                                <option value="1">Bunsin<option>
+                                                            
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>  --}}
+                                        {{-- </section> --}}
+                                    </div>
+                                   <div class="row">
                                         <section class="col col-4">
                                             <label class="label"> Salary*</label>
                                             <label class="input">
@@ -81,36 +96,8 @@
                                             <label class="input">
                                                 <input type="number" id="max" name="max" placeholder="max ($)">
                                             </label>
-                                        </section> --}}
-                            <div class="row">
-                                <section class="col col-6">
-                                            <label class="label"> Vacancy Name </label>
-                                            <label class="input">
-                                                <input type="text" id="resume" name="resume">
-                                            </label>
                                         </section>
-                    <section class="col col-6">
-                            <label class="label"> Hiring Manager </label>
-                            <div class="form-group">
-                                <select name="employee_tracker"
-                                        id="employee_tracker"
-                                        style="width:100%" class="select2 select2-hidden-accessible"
-                                        tabindex="-1" aria-hidden="true">
-                                    <optgroup label="">
-                                        <option value="">-- select Employee --</option>
-                                        @php $tracker = \App\Employee::all(); @endphp
-                                        @foreach($tracker as $trackers)
-                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
-                                        @endforeach
-                                    </optgroup>
-                                </select>
-                                <div class="note">
-                                    <strong>Usage:</strong> Employee performance tracker
-                                </div>
-                            </div>
-                        </section>
-                            </div>
-                        {{-- </div> --}}
+                        </div>
                         <div class="row">
                             <section class="col col-6">
                                 <label class="label"> Upload Job </label>
@@ -154,9 +141,7 @@
             </div>
             <div class="widget-body no-padding">
                 <textarea name="description" id="description" required>
-
                 </textarea>
-
             </div>
         </div>
     </div>
@@ -170,15 +155,12 @@
         <header>
             <span class="widget-icon"> <i class="fa fa-pencil"></i> </span>
             <h2> Job Requirement </h2>
-
         </header>
         <div>
             <div class="jarviswidget-editbox">
-
             </div>
             <div class="widget-body no-padding">
                 <textarea name="requirement" id="message" type="text" value=""  dir="ltr" required>
-
                 </textarea>
                 <br>
             </div>

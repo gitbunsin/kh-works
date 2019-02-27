@@ -38,6 +38,7 @@ class CandidateController extends Controller
                         ->where('v.company_id',$company_id)
                         ->where('cv.status',2)
                         ->get();
+                        
         return view('backend.HRIS.Recruitment.Candidate.index',compact('candidate'));
     }
 

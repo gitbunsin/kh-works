@@ -3,12 +3,13 @@
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\LicenseType;
+use App\Model\Backend\License;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LicenseTypeController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +17,9 @@ class LicenseTypeController extends Controller
      */
     public function index()
     {
-        $l = LicenseType::all();
+        $l = license::all();
         return view('backend.HRIS.admin.Qualifications.LicenseType.index',compact('l'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +29,6 @@ class LicenseTypeController extends Controller
     {
         return view('backend.HRIS.admin.Qualifications.LicenseType.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,7 +39,7 @@ class LicenseTypeController extends Controller
     {
         //
 //        dd($request->all());
-        $l = new LicenseType();
+        $l = new license();
         $l->company_id = Auth::guard('admins')->user()->id;
         $l->name = $request->name;
         $l->description = $request->description;
@@ -69,7 +68,7 @@ class LicenseTypeController extends Controller
     public function edit($id)
     {
         //
-        $l = LicenseType::where('id',$id)->first();
+        $l = license::where('id',$id)->first();
 //        dd($skills);
         return view('backend.HRIS.admin.Qualifications.LicenseType.edit',compact('l'));
     }
@@ -84,14 +83,13 @@ class LicenseTypeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $l = LicenseType::findOrFail($id);
+        $l = license::findOrFail($id);
         $l->company_id = Auth::guard('admins')->user()->id;
         $l->name = $request->name;
         $l->description = $request->description;
         $l->save();
         return redirect('/administration/license-types')->with('success','Item edited successfully!');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -100,6 +98,8 @@ class LicenseTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $license = license::findOrFail( $id );
+        $license->delete();
+        return  redirect('/administration/license-types')->with('success','Item success successfully!'); 
     }
 }

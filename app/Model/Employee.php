@@ -18,7 +18,7 @@ class Employee extends Authenticatable
      */
     //The authentication guard for admin
     protected $guard = 'employee';
-    protected $table = 'employees';
+    protected $table = 'tbl1_hr_employee';
     protected $primaryKey = 'emp_number';
     protected $fillable = [
         'emp_number',
