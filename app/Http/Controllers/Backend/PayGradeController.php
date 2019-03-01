@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Currency;
 use App\Http\Controllers\Controller;
-use App\Model\Backend\Paygrade;
+use App\Model\PayGrade;
 use App\PayGradeCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

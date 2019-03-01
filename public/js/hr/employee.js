@@ -320,7 +320,7 @@ $(document).on('click','.delete-item',function(){
     var confirmation = confirm("are you sure you want to remove the item?");
     if(confirmation) {
         var employee_id = $(this).attr('data-id');
-//            alert(job_title_id);
+//            alert(job_titles_id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -391,7 +391,7 @@ $(document).on('click','.open_modal_experience',function(e){
             });//you can list several class names
             $('#product_id').val(data.id);
             $('#company').val(data.eexp_employer);
-            $('#job_title').val(data.eexp_jobtit);
+            $('#job_titles').val(data.eexp_jobtit);
             $('#from_date').val(data.eexp_from_date);
             $('#btn-save_experience').val("update");
             $('#to_date').val(data.eexp_to_date);
@@ -418,7 +418,7 @@ $("#btn-save_experience").click(function (e) {
     var formData =
     {
         eexp_employer: $('#company').val(),
-        eexp_jobtit: $('#job_title').val(),
+        eexp_jobtit: $('#job_titles').val(),
         eexp_from_date: $('#from_date').val(),
         eexp_to_date: $('#to_date').val(),
         eexp_comments: $('#comment').val(),

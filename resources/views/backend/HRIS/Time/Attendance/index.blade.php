@@ -38,7 +38,7 @@
                                                     tabindex="-1" aria-hidden="true">
                                                 <optgroup label="Performance Employee Trackers">
                                                     <option value="0">-- select trackers --</option>
-                                                    @php $tracker = \App\Employee::all(); @endphp
+                                                    @php $tracker = \App\Model\Employee::all(); @endphp
                                                     @foreach($tracker as $trackers)
                                                         <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                     @endforeach

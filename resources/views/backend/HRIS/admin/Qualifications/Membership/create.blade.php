@@ -31,7 +31,7 @@
                                         </label>
                                     </section>
                                     <section>
-                                        <label class="label">description</label>
+                                        <label class="label">Description</label>
                                         <label class="textarea">
                                             <textarea rows="8" id="description" name="description" class="custom-scroll"></textarea>
                                         </label>

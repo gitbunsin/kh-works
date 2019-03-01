@@ -42,7 +42,7 @@
                                     </fieldset>
                                 </div>
                                 -@php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
-                                                $e = DB::table('tbl1_hr_employee')
+                                                $e = DB::table('employees')
                                                 ->where('company_id',Auth::guard('admins')->user()->id)
                                                 ->where('status',0)
                                                 ->get();

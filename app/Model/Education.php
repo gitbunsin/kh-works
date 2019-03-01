@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Education extends Model
 {
-    //
+
     protected $table = 'education';
     protected $fillable = [
         'id',
@@ -15,4 +15,5 @@ class Education extends Model
         'description',
         'is_deleted',
     ];
+    //
 }

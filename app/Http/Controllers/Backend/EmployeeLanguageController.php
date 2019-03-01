@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\EmployeeLanguage;
+use \App\Model\EmployeeLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

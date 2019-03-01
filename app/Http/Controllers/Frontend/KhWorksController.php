@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-use App\Employee;
+use \App\Model\Employee;
 use App\Exports\UsersExport;
 use App\Job;
 use App\User;
@@ -33,15 +33,15 @@ class KhWorksController extends Controller
     public function index(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
-        $Job = DB::table('kh_job_vacancy as v')
-            ->select('v.*','t.*','v.id as job_id','com.*','p.*')
-            ->join('tbl_job_title as t','v.job_title_code','=','t.id')
-            ->join('organization_gen_infos as com','v.company_id','=','com.id')
-            ->join('tbl_province as p', 'v.location', '=' ,'p.id')
-            ->orWhere('description', 'like', '%' .$searchTerm. '%')
-            ->paginate(10);
+//        $Job = DB::table('kh_job_vacancy as v')
+//            ->select('v.*','t.*','v.id as job_id','com.*','p.*')
+//            ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
+//            ->join('organization_gen_infos as com','v.company_id','=','com.id')
+//            ->join('tbl_province as p', 'v.location', '=' ,'p.id')
+//            ->orWhere('description', 'like', '%' .$searchTerm. '%')
+//            ->paginate(10);
      // dd($Job);
-        return view('frontend.Kh-Works.layouts.ui-main',compact('Job'));
+        return view('frontend.Kh-Works.layouts.ui-main');
 
 //        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));
     }

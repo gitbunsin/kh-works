@@ -111,7 +111,7 @@
                 var $loginForm = $("#frmKpi").validate({
                     // Rules for form validation
                     rules : {
-                        job_title_code : {
+                        job_titles_code : {
                             required : true
                         },
                         performance : {

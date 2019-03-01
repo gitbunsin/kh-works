@@ -41,7 +41,7 @@
                 <div class="dropdown category-dropdown" >
                 <select name="" id=""  class="" style="width:160px; " title="">
                     <option value="">-- Job Categories --</option>
-                    @php  use App\Model\Backend\JobCategory;
+                    @php  use App\Model\JobCategory;
                               $jobCategories = JobCategory::all();
                     @endphp
                     @foreach($jobCategories as $jobCategory)
@@ -86,37 +86,41 @@
             @php
                 $i=1;
             @endphp
-            @foreach($Job as $Jobs)
+            {{--@foreach($Job as $Jobs)--}}
                 <div role="tabpanel" class="tab-pane fade in active" id="popular-jobs">
                     <div class="job-ad-item">
                         <div class="item-info">
                             <div class="item-image-box">
                                 <div class="item-image">
                                     <a href="#">
-                                        @if($Jobs->company_logo)
-                                            <img src="{{asset('/uploaded/companyLogo/'.$Jobs->company_logo)}}" alt="Image" class="img-responsive">
-                                        @else
-                                            <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">
-                                        @endif
+                                        {{--@if($Jobs->company_logo)--}}
+                                            {{--<img src="{{asset('/uploaded/companyLogo/'.$Jobs->company_logo)}}" alt="Image" class="img-responsive">--}}
+                                        {{--@else--}}
+                                            {{--<img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">--}}
+                                        {{--@endif--}}
                                     </a>
                                 </div><!-- item-image -->
                             </div>
                             <div class="ad-info">
-                                <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$Jobs->job_id.'/'.$Jobs->company_id)}}" class="title">{{$Jobs->job_title}}</a></span>
+                                {{--<span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$Jobs->job_id.'/'.$Jobs->company_id)}}" class="title">{{$Jobs->job_titles}}</a></span>--}}
+                                <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/')}}" class="title"></a></span>
                                 <div class="ad-meta">
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$Jobs->NameEn}}</a></li>
-                                        <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>{{$Jobs->job_type}}</a></li>
-                                        <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>${{$Jobs->min_salary}} - ${{$Jobs->max_salary}}</a></li>
-                                        <li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>
+                                        <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i></a></li>
+                                        {{--<li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>  <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$Jobs->NameEn}}</a></li>--}}
+                                        {{--<li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>{{$Jobs->job_type}}</a></li>--}}
+                                        {{--<li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>${{$Jobs->min_salary}} - ${{$Jobs->max_salary}}</a></li>--}}
+                                        {{--<li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>--}}
                                     </ul>
                                 </div><!-- ad-meta -->
                             </div><!-- ad-info -->
                         </div><!-- item-info -->
                     </div><!-- ad-item -->
                 </div><!-- tab-pane -->
-                @php $i++;@endphp
-            @endforeach
+                {{--@php $i++;@endphp--}}
+            {{--@endforeach--}}
 
         <div class="col-md-12">
             {{--<div class="showing pull-left">--}}
@@ -124,7 +128,7 @@
                 {{--<a href="#">Showing <span>6-10</span> Of 24 Jobs</a>--}}
             {{--</div>--}}
             <ul class="pull-right">
-                 {{ $Job->appends(request()->query())->links() }}
+                 {{--{{ $Job->appends(request()->query())->links() }}--}}
             </ul>
         </div>
     </div><!-- job-ad-item -->

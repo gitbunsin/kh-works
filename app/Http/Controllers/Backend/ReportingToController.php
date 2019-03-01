@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\ReportingMethods;
+use App\Model\ReportingMethods;
 use App\ReportingTo;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -23,8 +23,8 @@ class ReportingToController extends Controller
         //
         $reporting = DB::table('tbl_hr_emp_reportto as r')
                     ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id','m.id as method_id')
-                    ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-                    ->join('tbl1_hr_employee as e','r.erep_sup_emp_number','=','e.emp_id')
+                    ->join('reporting_methods as m','r.erep_reporting_method','=','m.id')
+                    ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
                     ->get();
                     //dd($reporting);
         return view('backend.HRIS.PIM.Employee.ReportingTo.index',compact('reporting'));
@@ -62,7 +62,7 @@ class ReportingToController extends Controller
 //        $Reporting = DB::table('tbl_hr_emp_reportto as r')
 //            ->select('r.*','m.*','e.*','r.id as reporting_id')
 //            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-//            ->join('tbl1_hr_employee as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
 //            ->where('m.id',$request->reporting_id)
 //            ->where('e.emp_id',$request->supervisor_id)
 //            ->first();
@@ -82,7 +82,7 @@ class ReportingToController extends Controller
 
 
         $data['all_report'] = DB::table('tbl_hr_emp_reportto as r')
-            ->join('tbl1_hr_employee as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
             ->where('r.id',$reporting_id)
             ->where('e.emp_id',$employee_id)
             ->get();
@@ -103,7 +103,7 @@ class ReportingToController extends Controller
 //        $Reporting = DB::table('tbl_hr_emp_reportto as r')
 //            ->select('r.*','m.*','e.*','r.id as reporting_id')
 //            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-//            ->join('tbl1_hr_employee as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
 //            ->where('r.id',$reporting_id)
 //            ->where('e.emp_id',$request->supervisor_id)
 //            ->first();
@@ -122,7 +122,7 @@ class ReportingToController extends Controller
         $r = DB::table('tbl_hr_emp_reportto as r')
             ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id')
             ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-            ->join('tbl1_hr_employee as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
             ->where('r.id',$id)
             ->first();
         //dd($r);

@@ -51,7 +51,7 @@
                                         <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_lastname}} {{$employees->emp_firstname}} </td>
-                                        <td>{{$employees->job_title}}</td>
+                                        <td>{{$employees->job_titles}}</td>
                                         <td>
                                             <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
@@ -125,10 +125,10 @@
                                                 <section class="col col-4">
                                                     <label class="label">Job Title</label>
                                                     <label class="select">
-                                                        @php $job_title = \App\JobTitle::all(); @endphp
-                                                        <select name="job_title" id="Job_title">
-                                                            @foreach($job_title as $job_titles)
-                                                                <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                        @php $job_titles = \App\JobTitle::all(); @endphp
+                                                        <select name="job_titles" id="Job_title">
+                                                            @foreach($job_titles as $job_title)
+                                                                <option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>
                                                             @endforeach
                                                         </select>
                                                         <i></i>

@@ -22,7 +22,7 @@ class PerformanceReviewController extends Controller
         //$p = PerformanceReview::all();
         $p = DB::table('tbl_hr_performance_review as p')
             ->select('p.*','e.*')
-            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
+            ->join('employees as e','p.employee_id','=','e.emp_id')
             ->get();
 //        dd($p);
         return view('backend.HRIS.performance.ManageReview.index',compact('p'));

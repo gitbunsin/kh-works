@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\ReportingMethods;
+use App\Model\ReportingMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +16,7 @@ class ReportingMethodsController extends Controller
     public function index()
     {
         //
-        $r = ReportingMethods::all();
+        $r = ReportingMethod::all();
         return view('backend.HRIS.PIM.Configuration.ReportingMethods.index',compact('r'));
 
     }
@@ -42,7 +41,7 @@ class ReportingMethodsController extends Controller
     public function store(Request $request)
     {
         //
-        $r = new ReportingMethods();
+        $r = new ReportingMethod();
         $r->company_id = Auth::guard('admins')->user()->id;
         $r->name = $request->name;
         $r->description = $request->description;
@@ -71,7 +70,7 @@ class ReportingMethodsController extends Controller
     public function edit($id)
     {
         //
-        $r = ReportingMethods::findOrFail($id);
+        $r = ReportingMethod::findOrFail($id);
         return view('backend.HRIS.PIM.Configuration.ReportingMethods.edit',compact('r'));
     }
 
@@ -85,7 +84,7 @@ class ReportingMethodsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $r = ReportingMethods::findOrFail($id);
+        $r = ReportingMethod::findOrFail($id);
         $r->employee_id = Auth::guard('employee')->user()->id;
         $r->name = $request->name;
         $r->description = $request->description;

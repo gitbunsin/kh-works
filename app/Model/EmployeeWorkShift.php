@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeWorkShift extends Model
+class EmployeeWorkshift extends Model
 {
     //
     protected $table = 'employee_work_shifts';
@@ -13,5 +13,4 @@ class EmployeeWorkShift extends Model
         'employee_id',
         'company_id',
     ];
-
 }

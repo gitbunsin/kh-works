@@ -26,10 +26,10 @@
         use App\Model\Backend\JobTitle;use Illuminate\Support\Facades\Auth;
         $Job_Title= JobTitle::where('company_id',$company_id)->get();
                                             @endphp
-                                            <select name="job_title_code" id="job_title_code" class="required">
+                                            <select name="job_titles_code" id="job_titles_code" class="required">
                                                 <option value="">Choose Manager</option>
                                                 @foreach($Job_Title as $Job_Titles)
-                                                    <option value="{{$Job_Titles->id}}">{{$Job_Titles->job_title}}</option>
+                                                    <option value="{{$Job_Titles->id}}">{{$Job_Titles->job_titles}}</option>
                                                 @endforeach
                                             </select>
                                             <i></i>
@@ -273,7 +273,7 @@
                         city : {
                             required : true
                         },
-                        job_title_code:{
+                        job_titles_code:{
                             required: true
                         },
                         manager:{

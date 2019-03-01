@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Backend;
 use App\Customer;
 use App\CustomField;
-use App\EmailNotification;
 use App\Http\Controllers\Controller;
 
+use App\Model\EmailNotification;
 use Illuminate\Http\Request;
 
 class EmailNotificationController extends Controller

@@ -27,22 +27,13 @@
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" name="job_title" id="job_title">
+                                            <input type="text" name="job_titles" id="job_titles">
                                         </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
                                             <textarea rows="8" id="job_description" name="job_description" class="custom-scroll"></textarea>
-                                        </label>
-                                        <div class="note">
-                                            <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                        </div>
-                                    </section>
-                                    <section>
-                                        <label class="label">note</label>
-                                        <label class="textarea">
-                                            <textarea rows="8" id="note" name="note" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -71,7 +62,7 @@
             var $loginForm = $("#frmJobTitle").validate({
                 // Rules for form validation
                 rules : {
-                    job_title : {
+                    job_titles : {
                         required : true
                     },
                 },

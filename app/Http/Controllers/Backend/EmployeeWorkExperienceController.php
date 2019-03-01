@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\EmployeeWorkExperience;
+use \App\Model\EmployeeWorkExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +58,7 @@ class EmployeeWorkExperienceController extends Controller
         $emp_experience = new EmployeeWorkExperience();
         $emp_experience->eexp_employer = $request->company;
         $emp_experience->company_id = $company_id;
-        $emp_experience->eexp_jobtit = $request->job_title;
+        $emp_experience->eexp_jobtit = $request->job_titles;
         $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
         $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
         $emp_experience->eexp_comments = $request->comment;
@@ -112,7 +112,7 @@ class EmployeeWorkExperienceController extends Controller
         $emp_experience = EmployeeWorkExperience::findOrFail($id);
         $emp_experience->eexp_employer = $request->company;
         $emp_experience->company_id = $company_id;
-        $emp_experience->eexp_jobtit = $request->job_title;
+        $emp_experience->eexp_jobtit = $request->job_titles;
         $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
         $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
         $emp_experience->eexp_comments = $request->comment;

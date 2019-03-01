@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
+
+
     protected $table = 'skills';
-    protected $fillable = [
-        'id',
-        'company_id',
-        'name',
-        'description',
-        'is_deleted',
-    ];
-    //
+    protected $fillable = ['id','company_id', 'name','description'];
+    public $timestamps = false;
+
+
 }

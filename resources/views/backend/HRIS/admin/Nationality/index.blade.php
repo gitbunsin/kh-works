@@ -38,22 +38,24 @@
                                 <thead>
                                 <tr>
                                     <th> Name </th>
-                                    <th> Description</th>
                                     <th> Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($n as $ns)
-                                    <tr id="job_id{{$ns->id}}">
-                                        <td>{{$ns->name}}</td>
-                                        <td>{{$ns->description}}</td>
+                                @foreach($n as $nationalities)
+                                    <tr id="job_id{{$nationalities->id}}">
+                                        <td>{{$nationalities->name}}</td>
                                         <td>
-                                            <a  href="{{url('administration/nationality/'.$ns->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/nationality/'.$nationalities->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$ns->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
+                                            <form action="{{ url('/administration/nationality', ['$nationalities' => $nationalities->id]) }}" style="display:inline" method="post">
+                                                <input type="hidden" name="_method" value="delete" />
+                                                {!! csrf_field() !!}
+                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="btn">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -65,6 +67,17 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    {{--<script src="{{ asset('currenccurrency.js</script>--}}
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.alert-success').fadeOut(5000);
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                onConfirm: function (event, element) {
+                    element.closest('form').submit();
+                }
+            });
+        });
+    </script>
 @endsection

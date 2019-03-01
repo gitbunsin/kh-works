@@ -64,7 +64,7 @@ $("#btn-save").click(function (e) {
         keywords : $('#keywords').val(),
         comment : $('#comment').val(),
         date_of_application :date,
-        // job_title :$('#job_title').val(),
+        // job_titles :$('#job_titles').val(),
     }
     alert(JSON.stringify(formData));
     var state = $('#btn-save').val();
@@ -114,7 +114,7 @@ $("#btn-save").click(function (e) {
 //     if(confirmation) {
 //         var candidate_id = $(this).attr('data-id');
 //         var resposne = $(this).attr('id');
-// //            alert(job_title_id);
+// //            alert(job_titles_id);
 //         $.ajaxSetup({
 //             headers: {
 //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -144,7 +144,7 @@ $("#btn-save").click(function (e) {
 //     if(confirmation) {
 //         var accept_id = $(this).attr('data-id');
 //         var response = $(this).attr('id');
-// //            alert(job_title_id);
+// //            alert(job_titles_id);
 //         if(response == "approved") {
 //             $.ajaxSetup({
 //                 headers: {

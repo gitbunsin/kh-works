@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Education;
-use App\EmployeeEducation;
-use App\EmployeeWorkExperience;
+use \App\Model\EmployeeEducation;
+use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
 use App\Model\Backend\License;
-use App\Model\Backend\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

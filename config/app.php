@@ -159,7 +159,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,

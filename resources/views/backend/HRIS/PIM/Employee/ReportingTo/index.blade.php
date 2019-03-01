@@ -85,7 +85,7 @@
                                             <label class="select">
                                                 <select name="supervisor_id" id="supervisor_id">
                                                     <option value="">-- select employee --</option>
-                                                   @php $tracker = \App\Employee::all(); @endphp
+                                                   @php $tracker = \App\Model\Employee::all(); @endphp
                                                 @foreach($tracker as $trackers)
                                                     <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                 @endforeach

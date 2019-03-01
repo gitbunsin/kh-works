@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\TerminationReason;
+use App\Model\TerminationReason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +18,7 @@ class TerminationReasonController extends Controller
     {
         //
        // dd('hello');
-        $t = TerminationReason::where('company_id', Auth::guard('admins')->user()->id)->get();
+        $t = TerminationReason::all();
         return view('backend.HRIS.PIM.Configuration.TerminationReason.index',compact('t'));
     }
 

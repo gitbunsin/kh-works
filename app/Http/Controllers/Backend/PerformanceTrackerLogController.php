@@ -21,7 +21,7 @@ class PerformanceTrackerLogController extends Controller
         $t = PerformanceTrackerLog::all();
 //        $t = DB::table('tbl_performance_tracker_log as p')
 //            ->select('p.*','e.*')
-//            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
+//            ->join('employees as e','p.employee_id','=','e.emp_id')
 //            ->get();
 //        dd($t);
         //dd($t);

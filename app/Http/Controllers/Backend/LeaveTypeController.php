@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\LeaveType;
+use App\Model\LeaveType;
 use Illuminate\Http\Request;
 
 class LeaveTypeController extends Controller

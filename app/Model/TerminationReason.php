@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class TerminationReason extends Model
 {
-    //
-    protected $table = 'tbl_termination_reason';
-    protected $fillable = ['id', 'name','company_id','description'];
+    protected $table = 'terminations';
+    protected $fillable = ['id','company_id', 'name','description','is_deleted'];
     public $timestamps = false;
+
 }

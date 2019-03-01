@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Model\Backend\JobCategory;
+use App\Model\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +82,7 @@ class JobCategoryController extends Controller
             }
         $JobCategory = JobCategory::findOrFail($id);
         $JobCategory->name = $request->name;
-        $jobCategory->company_id = $company_id;
+        $JobCategory->company_id = $company_id;
         $JobCategory->description = $request->description;
         $JobCategory->save();
         return redirect('/administration/jobs-category')->with('success','Item edited successfully!');
@@ -91,8 +90,8 @@ class JobCategoryController extends Controller
     public function destroy($id)
     {
 
-        $job_title = JobCategory::findOrFail( $id );
-        $job_title->delete();
+        $job_titles = JobCategory::findOrFail( $id );
+        $job_titles->delete();
         return  redirect('/administration/jobs-category')->with('success','Item success successfully!');
 
     }

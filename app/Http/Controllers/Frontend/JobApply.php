@@ -43,7 +43,7 @@ class JobApply extends Controller
                 $candidate->email = $user_candidate->email;
                 $candidate->mode_of_application = 1;
                 $candidate->company_id = $request->company_id;
-                $candidate->job_title_code = $request->job_title_code;
+                $candidate->job_titles_code = $request->job_titles_code;
                 $candidate->status = 1;
                 $candidate->user_id = $user_id;
                 $candidate->save();
@@ -60,7 +60,7 @@ class JobApply extends Controller
                 $vacancy_candidate->save();
 //                dd($id,$company_id);
 //                $user = User::where('id', $user_id)->select('name', 'email')->get();
-//                $job = Job::where('id', $id)->select('company_id', 'job_title_code')->get();
+//                $job = Job::where('id', $id)->select('company_id', 'job_titles_code')->get();
 //                Excel::create('User', function ($excel) use ($user, $job) {
 //                    $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
 //                        foreach ($user as $key => $value) {
@@ -71,7 +71,7 @@ class JobApply extends Controller
 //                        foreach ($job as $key => $values) {
 //                            $is = $key + 2;
 //                            $sheet->cell('C' . $is, $values['company_id']);
-//                            $sheet->cell('D' . $is, $values['job_title_code']);
+//                            $sheet->cell('D' . $is, $values['job_titles_code']);
 //                        }
 //                    });
 //                })->download();

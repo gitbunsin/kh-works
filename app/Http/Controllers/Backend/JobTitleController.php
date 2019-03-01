@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobCategory;
-use App\Model\Backend\JobTitle;
+use App\Model\JobTitle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -23,28 +23,29 @@ class JobTitleController extends Controller
     }
     public function index()
     {
-    $JobTitle = JobTitle::orderBy('id', 'DESC')->where('is_deleted',0)->get();
+    $JobTitle = JobTitle::all();
     return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
 
     public function edit($id)
     {
 
-        $job_title = JobTitle::findOrFail($id);
-//        dd($job_title);
-        return view('backend.HRIS.admin.JobTitle.edit',compact('job_title'));
+        $job_titles = JobTitle::findOrFail($id);
+//        dd($job_titles);
+        return view('backend.HRIS.admin.JobTitle.edit',compact('job_titles'));
     }
 
     public function update(Request $request,$id)
     {
         
-        $job_title = JobTitle::findOrFail($id);
-        $job_title->job_title = $request->job_title;
-        $job_title->job_description = $request->job_description;
-        $job_title->note = $request->note;
-        $job_title->is_deleted = 0;
-        $job_title->save();
-//        dd($job_title);
+        $job_titles = JobTitle::findOrFail($id);
+        $job_titles->name = $request->job_titles;
+        $job_titles->description = $request->job_description;
+        $job_titles->is_deleted = 0;
+        $job_titles->save();
+
+
+        // dd($job_titles);
         return  redirect('/administration/jobs-title')->with('success','Item Edited successfully!');
     }
 
@@ -71,9 +72,8 @@ class JobTitleController extends Controller
         //$JobTitle = JobTitle::create($request->all());
         $j = new JobTitle();
         $user_id = input::get('user_id');
-        $j->job_title = input::get('job_title');
-        $j->job_description = input::get('job_description');
-        $j->note = input::get('note');
+        $j->name = input::get('job_titles');
+        $j->description = input::get('job_description');
         $j->is_deleted = 0;
         $j->company_id = Auth::guard('admins')->user()->id;
         $j->save();
@@ -98,7 +98,7 @@ class JobTitleController extends Controller
 //    public function update(Request $request, $Job_id)
 //    {
 //        $JobTitle = JobTitle::findOrFail($Job_id);
-//        $JobTitle->job_title = $request->job_title;
+//        $JobTitle->job_titles = $request->job_titles;
 //        $JobTitle->job_description = $request->job_description;
 //        $JobTitle->note = $request->note;
 //        $JobTitle->save();
@@ -107,8 +107,8 @@ class JobTitleController extends Controller
 
     public function destroy( $id, Request $request )
     {
-        $job_title = JobTitle::findOrFail( $id );
-        $job_title->delete();
+        $job_titles = JobTitle::findOrFail( $id );
+        $job_titles->delete();
         return  redirect('/administration/jobs-title')->with('success','Item success successfully!');
     }
 

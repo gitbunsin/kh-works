@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\Model\Backend\Menu;
 use App\Module;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ModuleController extends Controller
     public function index()
     {
         //
-        $m = Module::all();
+        $m = Menu::all();
         return view('backend.HRIS.admin.Configuration.index',compact('m'));
 
     }

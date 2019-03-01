@@ -63,7 +63,7 @@
                                 <tbody id="products-list" name="products-list">
                                  @foreach($candidate as $candidates)
                                     <tr id="candidate_id{{$candidates->candidate_id}}">
-                                        <td>{{$candidates->job_title}}</td>
+                                        <td>{{$candidates->job_titles}}</td>
                                         <td>{{$candidates->name}}</td>
                                         <td>{{$candidates->email}}</td>
                                         <td>{{$candidates->applied_date}}</td>

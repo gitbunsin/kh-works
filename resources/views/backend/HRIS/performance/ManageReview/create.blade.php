@@ -27,7 +27,7 @@
                                                 <select name="employee" id="review_id" style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="">-- select trackers --</option>
-                                                        @php $tracker = \App\Employee::all(); @endphp
+                                                        @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
                                                             <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach

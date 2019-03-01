@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeEmergencyContacts;
+use \App\Model\EmployeeEmergencyContacts;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class EmployeeEmergencyContactController extends Controller
 
         $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
                         ->select('c.*','e.*','r.*','c.id as emergency_id')
-                        ->join('tbl1_hr_employee as e','c.emp_number','=','e.emp_id')
+                        ->join('employees as e','c.emp_number','=','e.emp_id')
                         ->join('tbl_relationship as r','c.relationship_id','=','r.id')
                         ->get();
         return view('backend.HRIS.PIM.Employee.Emergency.index',compact('EmergencyContact'));

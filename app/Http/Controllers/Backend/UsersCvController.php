@@ -2,8 +2,6 @@
 
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use App\CandidateAttachment;
-use App\UserCv;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
@@ -28,10 +26,10 @@ class UsersCvController extends Controller
                         'cv.user_id as user_cv_id',
                         's.photo as user_photo'
                     )
-                    ->join('tbl_cvs as cv','c.user_id','=','cv.user_id')
+                    ->join('user_attachments as cv','c.user_id','=','cv.user_id')
                     ->join('tbl_job_candidate_vacancy as jcv','c.id','=','jcv.candidate_id')
                     ->join('kh_job_vacancy as v','jcv.vacancy_id','=','v.id')
-                    ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+                    ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
                     ->join('users as s','c.user_id','=','s.id')
                     ->where('v.company_id',$company_id)
                     ->get();
@@ -40,7 +38,7 @@ class UsersCvController extends Controller
     public function getDownload($user_id)
     {
 //        dd('hello');
-        $entry = UserCv::where('user_id',$user_id)->firstOrFail();
+        $entry = UserAttchment::where('user_id',$user_id)->firstOrFail();
 //        dd($entry);
         $pathToFile = public_path()."/uploaded/UserCv/".$entry->name;
         return response()->download($pathToFile);

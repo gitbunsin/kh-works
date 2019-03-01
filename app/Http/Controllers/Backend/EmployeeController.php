@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Employee;
-use App\EmployeeEmergencyContacts;
-use App\EmployeeSkills;
-use App\EmployeeWorkExperience;
+use \App\Model\EmployeeEmergencyContacts;
+use \App\Model\EmployeeSkills;
+use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
 use App\Jobs\SendVerificationEmployeeEmail;
 use App\Mail\VerifyEmployeeMail;
+use App\Model\Employee;
 use App\Organization;
 use App\User;
 use App\UserEmployee;
@@ -40,10 +40,10 @@ class EmployeeController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-        $employee = DB::table('tbl1_hr_employee as e')
+        $employee = DB::table('employees as e')
             ->select('e.*')
             ->where('e.company_id',$company_id)
-            ->orderBy('e.emp_id','DESC')
+            ->orderBy('e.emp_number','DESC')
             ->get();
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
@@ -87,7 +87,7 @@ class EmployeeController extends Controller
         $employee->emp_lastname = $request->emp_lastname;
         $employee->emp_middle_name = $request->emp_middle_name;
         $employee->company_id = $company_id;
-        $employee->job_title_code = $request->job_title;
+        $employee->job_titles_code = $request->job_titles;
         $employee->employee_id = $request->employee_id;
         $employee->company_id = $request->company_id;
         // if ($request->hasFile('photo'))
@@ -103,7 +103,7 @@ class EmployeeController extends Controller
 
         // }
         $employee->save();
-        $employee_id = $employee->emp_id;
+        $employee_id = $employee->emp_number;
 //        dd($employee_id);
         $check = $request->user_check;
         if ($check == 1) {
@@ -179,9 +179,11 @@ class EmployeeController extends Controller
     public function show($employee_id)
     {
         //
-        $employee = Employee::where('emp_id',$employee_id)->first();
+        $employee = Employee::where('emp_number',$employee_id)->first();
         return response()->json($employee);
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -197,7 +199,7 @@ class EmployeeController extends Controller
 //        dd($employee);
         $check = $request->isPersonalDeatils;
 //        dd($check);
-        if($check == "1") {
+        if($check == 1) {
             $employee->emp_lastname = $request->emp_lastname;
             $employee->emp_lastname = $request->emp_lastname;
             $employee->emp_firstname = $request->emp_firstname;
@@ -216,7 +218,7 @@ class EmployeeController extends Controller
             $employee->save();
         }
         $isContactDetials = $request->isContactDetails;
-        if($isContactDetials == "1"){
+        if($isContactDetials == 1){
             $employee->emp_street1 = $request->emp_street1;
             $employee->emp_street2 = $request->emp_street2;
             $employee->city_code = $request->city_code;
@@ -253,7 +255,7 @@ class EmployeeController extends Controller
 
     public function destroy($employee_id)
     {
-        $employee = Employee::where('emp_id',$employee_id)->delete();
+        $employee = Employee::where('em_number',$employee_id)->delete();
         return response()->json($employee);
     }
 

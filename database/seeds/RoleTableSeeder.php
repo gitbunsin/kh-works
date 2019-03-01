@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Database\Seeder;
 
 class RoleTableSeeder extends Seeder
@@ -12,12 +13,12 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         $role_employee = new Role();
-        $role_employee->name = 'employee';
-        $role_employee->description = 'A Employee User';
+        $role_employee->name = 'Admin';
+        $role_employee->description = 'A Manager User';
         $role_employee->save();
         $role_manager = new Role();
-        $role_manager->name = 'manager';
-        $role_manager->description = 'A Manager User';
+        $role_manager->name = 'Ess';
+        $role_manager->description = 'A Employee User';
         $role_manager->save();
   }
 }

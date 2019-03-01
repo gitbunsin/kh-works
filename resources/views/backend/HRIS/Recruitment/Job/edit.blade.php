@@ -27,11 +27,11 @@
                                                     use App\JobTitle;use Illuminate\Support\Facades\Auth;
                                                     $t= JobTitle::where('company_id',$company_id)->get();
                                                 @endphp
-                                                <select name="job_title_code" id="job_title_code" class="required">
+                                                <select name="job_titles_code" id="job_titles_code" class="required">
                                                     <option value="">Choose Manager</option>
                                                     @foreach($t as $ts)
-                                                        <option value="{{$ts->id}}" {{$ts->id ==$job->job_title_code ? 'selected="selected"':''}}>
-                                                            {{$ts->job_title}}
+                                                        <option value="{{$ts->id}}" {{$ts->id ==$job->job_titles_code ? 'selected="selected"':''}}>
+                                                            {{$ts->job_titles}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -107,7 +107,7 @@
                                                 <label class="select">
                                                     @php
                                                         $company_id = Auth::guard('admins')->user()->id;
-                                                        $e = \App\Employee::where('company_id',$company_id)->get();
+                                                        $e = \App\Model\Employee::where('company_id',$company_id)->get();
                                                     @endphp
                                                     <select name="manager" id="manager" class="required">
                                                         <option value=""> Select Manager </option>
@@ -294,7 +294,7 @@
                     city : {
                         required : true
                     },
-                    job_title_code:{
+                    job_titles_code:{
                         required: true
                     },
                     manager:{

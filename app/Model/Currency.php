@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Currency extends Model
+class currency extends Model
 {
     //
-    protected $table = "currencies";
-
-    public function paygrades() {
-        return $this->belongsToMany(Paygrade::class);
-    }
 }

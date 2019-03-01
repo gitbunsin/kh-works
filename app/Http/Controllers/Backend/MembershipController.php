@@ -2,8 +2,7 @@
 
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Membership;
+use App\Model\Membership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +39,7 @@ class MembershipController extends Controller
         $l->name = $request->name;
         $l->description = $request->description;
         $l->save();
-        return redirect('/administration/membership');
+        return redirect('/administration/membership')->with('success','Item has been added successfully');;
 
     }
 
@@ -84,7 +83,7 @@ class MembershipController extends Controller
         $l->name = $request->name;
         $l->description = $request->description;
         $l->save();
-        return redirect('/administration/membership');
+        return redirect('/administration/membership')->with('success','Item has been added successfully');
     }
 
     /**
@@ -96,5 +95,8 @@ class MembershipController extends Controller
     public function destroy($id)
     {
         //
+        $license = Membership::findOrFail( $id );
+        $license->delete();
+        return  redirect('/administration/membership')->with('success','Item success successfully!');
     }
 }

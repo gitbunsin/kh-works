@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Customer;
 use App\Http\Controllers\Controller;
 
+use App\Model\Customer;
 use DemeterChain\C;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -1,18 +1,10 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class JobCategory extends Model
 {
     //
-    protected $table = 'job_categories';
-    protected $fillable = [
-        'id',
-        'company_id',
-        'name',
-        'description',
-    ];
-    
 }

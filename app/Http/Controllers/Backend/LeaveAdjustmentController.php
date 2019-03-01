@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeMembership;
+use employeesMembership;
 use App\Http\Controllers\Controller;
 
 use App\Subunit;
@@ -24,7 +24,7 @@ class LeaveAdjustmentController extends Controller
     public function viewMatchEmployee()
     {
 
-        $e = DB::table('tbl1_hr_employee')->count(DB::raw('DISTINCT emp_id'));
+        $e = DB::table('employees')->count(DB::raw('DISTINCT emp_id'));
         return Response()->json($e);
 
     }

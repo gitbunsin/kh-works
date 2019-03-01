@@ -2,8 +2,7 @@
 
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Model\Backend\Education;
+use App\Model\Education;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +44,7 @@ class EducationController extends Controller
         $e->name = $request->name;
         $e->description = $request->description;
         $e->save();
-        return redirect('/administration/education');
+        return redirect('/administration/education')->with('success','Item has been added successfully');
 
     }
 
@@ -89,7 +88,7 @@ class EducationController extends Controller
         $e->name = $request->name;
         $e->description = $request->description;
         $e->save();
-        return redirect('/administration/education');
+        return redirect('/administration/education')->with('success','Item has been Edited successfully');
     }
 
     /**

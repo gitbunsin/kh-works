@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 
 use App\nation;
+use App\Model\Nationality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class NationalityController extends Controller
     {
         //
 
-        $n = nation::where('company_id',Auth::guard('admins')->user()->id)->get();
+        $n = nationality::where('company_id',Auth::guard('admins')->user()->id)->get();
         return view('backend.HRIS.admin.Nationality.index',compact('n'));
     }
 
@@ -43,9 +44,8 @@ class NationalityController extends Controller
     public function store(Request $request)
     {
         //
-        $n = new nation();
+        $n = new nationality();
         $n->name = $request->name;
-        $n->description = $request->description;
         $n->company_id = Auth::guard('admins')->user()->id;
         $n->save();
         return redirect('/administration/nationality')->with('success','Item created successfully!');
@@ -72,7 +72,7 @@ class NationalityController extends Controller
     public function edit($id)
     {
         //
-        $n = nation::findOrFail($id);
+        $n = nationality::findOrFail($id);
         return view('backend.HRIS.admin.Nationality.edit',compact('n'));
     }
 
@@ -86,9 +86,8 @@ class NationalityController extends Controller
     public function update(Request $request, $id)
     {
 //        dd($request->all());
-        $n = nation::findOrFail($id);
+        $n = nationality::findOrFail($id);
         $n->name = $request->name;
-        $n->description = $request->description;
         $n->company_id = Auth::guard('admins')->user()->id;
         $n->save();
         return redirect('/administration/nationality')->with('success','Item edited successfully!');
@@ -104,5 +103,8 @@ class NationalityController extends Controller
     public function destroy($id)
     {
         //
+        $license = nationality::findOrFail( $id );
+        $license->delete();
+        return  redirect('/administration/nationality')->with('success','Item success successfully!');
     }
 }

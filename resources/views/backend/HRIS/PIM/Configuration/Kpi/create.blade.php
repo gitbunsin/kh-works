@@ -27,11 +27,11 @@
                                         <section class="col col-6">
                                             <label class="label"> Job Title</label>
                                             <label class="select state-success">
-                                                <select name="job_title_code" id="job_title_code" class="valid">
+                                                <select name="job_titles_code" id="job_titles_code" class="valid">
                                                     @php $c = \App\JobTitle::all(); @endphp
                                                     <option value="">-- select --</option>
                                                     @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}">{{$cs->job_title}}</option>
+                                                        <option value="{{$cs->id}}">{{$cs->job_titles}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -112,7 +112,7 @@
                 var $loginForm = $("#frmKpi").validate({
                     // Rules for form validation
                     rules : {
-                        job_title_code : {
+                        job_titles_code : {
                             required : true
                         },
                         performance : {

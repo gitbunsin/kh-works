@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\LeavePeriod;
+use App\Model\LeavePeriodHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ class LeavePeriodController extends Controller
     }
 
     public function listLeavePeriod(){
-        $p = DB::table('tbl_hr_leave_period_history')->get();
+        $p = DB::table('leave_period_histories')->get();
         $userId = Auth::guard('admins')->user()->id;
-        $FindLeavePeriod = LeavePeriod::where('company_id', '=', $userId)->orderBy('id', 'desc')->first();
+        $FindLeavePeriod = LeavePeriodHistory::where('company_id', '=', $userId)->orderBy('id', 'desc')->first();
         $checkStatusLeavePeriod = '';
         if($FindLeavePeriod){
             $checkStatusLeavePeriod = "true";
@@ -54,7 +55,7 @@ class LeavePeriodController extends Controller
     public function store(Request $request)
     {
         //
-        $p = new LeavePeriod();
+        $p = new LeavePeriodHistory();
         $p->leave_period_start_month = $request->bmonth;
         $p->leave_period_start_day = $request->bday;
         $p->company_id = Auth::guard('admins')->user()->id;

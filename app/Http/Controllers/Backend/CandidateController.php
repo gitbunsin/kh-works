@@ -34,7 +34,7 @@ class CandidateController extends Controller
 //                        ->select('cv.*','c.*','jt.*','cv.id as apply_id')
                         ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
                         ->join('tbl_job_candidate as c','c.id','=','cv.candidate_id')
-                        ->join('tbl_job_title as jt','c.job_title_code','=','jt.id')
+                        ->join('tbl_job_titles as jt','c.job_titles_code','=','jt.id')
                         ->where('v.company_id',$company_id)
                         ->where('cv.status',2)
                         ->get();
@@ -97,7 +97,7 @@ class CandidateController extends Controller
         $c->email = Input::get('email');
         $c->keywords = Input::get('keyword');
         $c->status = 1;
-        $c->job_title_code = $request->job_title;
+        $c->job_titles_code = $request->job_titles;
         $c->mode_of_application = 1;
         $c->company_id = Auth::guard('admins')->user()->id;
         $c->cv_file_id = 1;

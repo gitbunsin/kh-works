@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\CandiateHistory;
 use App\Candidate;
-use App\Employee;
+use \App\Model\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Interview;

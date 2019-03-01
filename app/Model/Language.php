@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Model\Backend;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
-    //
-    protected $table = 'language';
+    protected $table = 'languages';
     protected $fillable = [
         'id',
+        'company_id',
         'name',
-        'create_at',
-        'update_at',
+        'description',
+        'is_deleted',
     ];
+    public $timestamps = false;
+    //
 }

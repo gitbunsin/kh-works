@@ -67,7 +67,7 @@ class AdminRegister extends Controller
         $validator->validate();
         $organizeModel = new OrganizationGenInfo();
         $organizeModel->email = $request['com_email'];
-        $OrganizeModel->role_id = 1;
+        $organizeModel->role_id = 1;
         $organizeModel->name = $request['com_name'];
         $organizeModel->password = Hash::make($request['com_password']);
         $organizeModel->email_token =  base64_encode($request['com_email']);

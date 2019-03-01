@@ -1,24 +1,14 @@
 <?php
-namespace App;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
-/**
- * @property  attributes
- */
-class Employee extends Authenticatable
+namespace App\Model;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Employee extends Model
 {
-    use Notifiable;
-    use EntityTrait;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    //The authentication guard for admin
+
     protected $guard = 'employee';
-    protected $table = 'tbl1_hr_employee';
+    protected $table = 'employees';
     protected $primaryKey = 'emp_number';
     protected $fillable = [
         'emp_number',
@@ -40,7 +30,7 @@ class Employee extends Authenticatable
         'emp_dri_lice_exp_date',
         'emp_military_service',
         'emp_status',
-        'job_title_code',
+        'job_titles_code',
         'emp_gender',
         'eeo_cat_code',
         'work_station',
@@ -69,4 +59,6 @@ class Employee extends Authenticatable
         'custom9',
         'custom10',
     ];
+
+    //
 }

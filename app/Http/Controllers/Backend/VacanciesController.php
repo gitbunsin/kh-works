@@ -6,7 +6,7 @@ use App\Job;
 use Illuminate\Http\Request;
 use App\Vacancy;
 use App\JobTitle;
-use App\Employee;
+use \App\Model\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
@@ -25,9 +25,9 @@ class VacanciesController extends Controller
     public function index()
     {
         $vacancy = DB::table('tbl_job_vacancy')
-            ->join('tbl_job_title', 'job_title_code', '=', 'tbl_job_title.id')
-            ->join('tbl1_hr_employee','tbl_job_vacancy.hiring_manager_id','=','tbl1_hr_employee.emp_id')
-            ->select('tbl_job_vacancy.*', 'tbl_job_title.job_title','tbl1_hr_employee.*')
+            ->join('tbl_job_titles', 'job_titles_code', '=', 'tbl_job_titles.id')
+            ->join('employees','tbl_job_vacancy.hiring_manager_id','=','employees.emp_id')
+            ->select('tbl_job_vacancy.*', 'tbl_job_titles.job_titles','employees.*')
             ->OrderBy('tbl_job_vacancy.id','DESC')
             ->get();
         //dd($vacancy);
@@ -49,7 +49,7 @@ class VacanciesController extends Controller
     {
             //dd($request->all());
             $vacancy = new Vacancy();
-            $vacancy->job_title_code = $request->Job_title;
+            $vacancy->job_titles_code = $request->Job_title;
             $vacancy->name = $request->name;
             $vacancy->hiring_manager_id = $request->hiring_manager_id;
             $vacancy->description = $request->description;
@@ -80,7 +80,7 @@ class VacanciesController extends Controller
     {
         $vacancy = Vacancy::findOrFail($vacancy_id);
         $vacancy->name = $request->name;
-        $vacancy->job_title_code = $request->job_title_code;
+        $vacancy->job_titles_code = $request->job_titles_code;
         $vacancy->description = $request->job_description;
         $vacancy->hiring_manager_id = $request->hiring_manager_id;
         $vacancy->save();
@@ -89,8 +89,8 @@ class VacanciesController extends Controller
 
     public function destroy($vacancy_id)
     {
-        $job_title = Vacancy::destroy($vacancy_id);
-        return response()->json($job_title);
+        $job_titles = Vacancy::destroy($vacancy_id);
+        return response()->json($job_titles);
     }
 
     /**
@@ -102,7 +102,7 @@ class VacanciesController extends Controller
 //    public function store(Request $request)
 //    {
 //        $vacancy = new Vacancy();
-//        $vacancy->job_title_code = 1;
+//        $vacancy->job_titles_code = 1;
 //        $vacancy->hiring_manager_id = 1;
 //        $vacancy->name=Input::get('name');
 //        $vacancy->description=Input::get('description');

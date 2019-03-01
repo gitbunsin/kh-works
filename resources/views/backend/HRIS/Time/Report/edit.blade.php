@@ -44,7 +44,7 @@
                                     </section>
                                     <div class="form-group">
                                         <label> Project Admin</label>
-                                        @php $p = \App\Employee::all(); @endphp
+                                        @php $p = \employees::all(); @endphp
                                         <select multiple style="width:100%" class="select2">
                                             @foreach($p as $ps)
                                                 <option value="{{$ps->emp_id}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>

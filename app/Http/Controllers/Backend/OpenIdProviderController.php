@@ -5,7 +5,7 @@ use App\Customer;
 use App\CustomField;
 use App\Http\Controllers\Controller;
 
-use App\OpenIdProvider;
+use App\Model\OpenidProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

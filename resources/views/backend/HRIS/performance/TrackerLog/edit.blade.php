@@ -34,7 +34,7 @@
                                                 <select style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="0">-- select trackers --</option>
-                                                        @php $tracker = \App\Employee::all(); @endphp
+                                                        @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
                                                             <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
@@ -48,7 +48,7 @@
                                     </fieldset>
                                 </div>
                                 @php  use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
-                                                $e = DB::table('tbl1_hr_employee')->get();
+                                                $e = DB::table('employees')->get();
                                 @endphp
                                 <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
                                     @foreach($e as $es)

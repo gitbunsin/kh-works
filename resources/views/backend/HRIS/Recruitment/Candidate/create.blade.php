@@ -43,16 +43,16 @@
                                                 use Illuminate\Support\Facades\DB;$c_id = Auth::guard('admins')->user()->id;
                                                 $j = DB::table('kh_job_vacancy as v')
                                                         ->select('v.*','t.*','v.id as j_id')
-                                                        ->join('tbl_job_title as t','v.job_title_code','=','t.id')
+                                                        ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
                                                         ->get();
                                             @endphp
 
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                <select name="job_title" id="job_title" class="required">
+                                                <select name="job_titles" id="job_titles" class="required">
                                                     <option value="">-- select --</option>
                                                     @foreach($j as $js)
-                                                        <option value="{{$js->id}}">{{$js->job_title}}</option>
+                                                        <option value="{{$js->id}}">{{$js->job_titles}}</option>
                                                         <input type="hidden" id="vacancy_id" name="vacancy_id" value="{{$js->j_id}}"/>
                                                     @endforeach
                                                 </select>
@@ -130,7 +130,7 @@
                     full_name : {
                         required : true
                     },
-                    job_title : {
+                    job_titles : {
                         required : true,
                         maxlength : 20
                     },

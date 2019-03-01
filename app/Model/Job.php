@@ -8,7 +8,7 @@ class Job extends Model
     //
     protected $table = 'kh_job_vacancy';
     protected $fillable = [
-        'job_title',
+        'job_titles',
         'company_id',
         'description',
         'requirement',

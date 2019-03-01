@@ -48,7 +48,7 @@ class UserController extends Controller
         $u->email_token = base64_encode($request->user_email);
         $u->password = Hash::make($request->password);
         $u->company_id = Auth::guard('admins')->user()->id;
-        if($request->status == "1"){
+        if($request->status == "" ){
             $u->verified = 1;
         }else{
             $u->verified = 0;
@@ -102,7 +102,7 @@ class UserController extends Controller
         $u->email_token = base64_encode($request->user_email);
         $u->password = Hash::make($request->password);
         $u->company_id = Auth::guard('admins')->user()->id;
-        if($request->status == "1"){
+        if($request->status == "" ){
             $u->verified = 1;
         }else{
             $u->verified = 0;

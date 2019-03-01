@@ -4,8 +4,8 @@ namespace  App\Http\Controllers\Frontend;
 use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
 
+use App\Model\UserAttachment;
 use App\User;
-use App\UserCv;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class ResumeController extends Controller
     {
 
         $user_cv_id = Auth::user()->cv_file_id;
-        $user_cv = UserCv::where('id',$user_cv_id)->first();
+        $user_cv = UserAttachment::where('id',$user_cv_id)->first();
         return view('frontend.Kh-Works.pages.user_resume',compact('user_cv'));
 
     }

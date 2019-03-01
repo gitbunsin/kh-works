@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeLanguage;
-use App\EmployeeWorkExperience;
+use employeesWorkExperience;
 use App\Http\Controllers\Controller;
-use App\language;
+use App\Model\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +17,9 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $language = language::all();
+        $language = Language::all();
         return view('backend.HRIS.admin.Qualifications.Language.index',compact('language'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +40,7 @@ class LanguageController extends Controller
     public function store(Request $request)
     {
         //
-        $language = new language();
+        $language = new Language();
         $language->name = $request->name;
         $language->description = $request->description;
         $language->company_id = Auth::guard('admins')->user()->id;
@@ -74,7 +72,7 @@ class LanguageController extends Controller
     public function edit($id)
     {
 
-        $language = language::where('id',$id)->first();
+        $language = Language::where('id',$id)->first();
         return view('backend.HRIS.admin.Qualifications.Language.edit',compact('language'));
 
     }
@@ -89,7 +87,7 @@ class LanguageController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $language = language::findorFail($id);
+        $language = Language::findorFail($id);
         $language->name = $request->name;
         $language->description = $request->description;
         $language->company_id = Auth::guard('admins')->user()->id;
@@ -107,5 +105,8 @@ class LanguageController extends Controller
     public function destroy($id)
     {
         //
+        $language = \App\Model\Language::findOrFail( $id );
+        $language->delete();
+        return  redirect('/administration/language')->with('success','Item success successfully!');
     }
 }

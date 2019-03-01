@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,15 +8,13 @@ class Customer extends Model
 {
     //
     protected $connection = 'mysql';
-    protected $table = 'tbl_hr_customer';
+    protected $table = 'customers';
     protected $fillable =
         ['id',
-            'employee_id',
+            'company_id',
             'name',
             'description',
             'is_deleted',
         ];
     public $timestamps = false;
-
-
 }

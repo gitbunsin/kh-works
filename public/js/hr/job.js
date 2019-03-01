@@ -24,7 +24,7 @@ $(document).on('click','.open_modal',function(){
             $('#name').val(data.name),
             $('#description').val(data.description),
             $('#hiring_manager_id').append('<option value="'+ data.hiring_manager_id +'">'+ data.hiring_manager_id +'</option>');
-            $('#job_title_code').append('<option value="'+ data.job_title_code +'">'+ data.job_title_code +'</option>');
+            $('#job_titles_code').append('<option value="'+ data.job_titles_code +'">'+ data.job_titles_code +'</option>');
             $('#btn-save').val("update");
             $('#myModal').modal('show');
             $(".modal-backdrop.in").hide();
@@ -47,7 +47,7 @@ $("#btn-save").click(function (e) {
         name : $('#name').val(),
         description: $('#description').val(),
         hiring_manager_id : $('#hiring_manager_id').val(),
-        job_title_code : $( "#job_title_code" ).val(),
+        job_titles_code : $( "#job_titles_code" ).val(),
         city : $("#city").val(),
         job_type : $("[name=radio-inline]:checked").val(),
         CompanyName  : $("#CompanyName").val(),
@@ -77,7 +77,7 @@ $("#btn-save").click(function (e) {
             var table =
                 '<tr id="vacancy_id'+data.id +'">' +
                 '<td class="sorting_1">' + data.name + '</td>'+
-                '<td class="sorting_1">' + data.job_title + '</td>'+
+                '<td class="sorting_1">' + data.job_titles + '</td>'+
                 '<td class="sorting_1">' + data.hiring_manager_id + '</td>'+
                 '<td class="sorting_1">' + data.description	+ '</td>'+
                 '<td class="sorting_1">' + data.description	+ '</td>';
@@ -102,7 +102,7 @@ $(document).on('click','.delete-item',function(){
     var confirmation = confirm("are you sure you want to remove the item?");
     if(confirmation) {
         var job_id = $(this).attr('data-id');
-//            alert(job_title_id);
+//            alert(job_titles_id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

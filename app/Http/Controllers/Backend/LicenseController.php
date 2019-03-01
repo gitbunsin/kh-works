@@ -1,15 +1,14 @@
 <?php
 
-namespace  App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Model\Backend\License;
+use App\Model\license;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LicenseTypeController extends Controller
+class LicenseController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -100,6 +99,6 @@ class LicenseTypeController extends Controller
     {
         $license = license::findOrFail( $id );
         $license->delete();
-        return  redirect('/administration/license-types')->with('success','Item success successfully!'); 
+        return  redirect('/administration/license-types')->with('success','Item success successfully!');
     }
 }

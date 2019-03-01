@@ -1,5 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
+
     <section id="widget-grid" class="">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -40,9 +41,13 @@
                                             <a  href="{{url('administration/language/'.$languages->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
+                                            <form action="{{ url('/administration/language', ['id' => $languages->id]) }}" style="display:inline" method="post">
+                                                <input type="hidden" name="_method" value="delete" />
+                                                {!! csrf_field() !!}
+                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?"  class="btn">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </form>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -54,4 +59,17 @@
             </article>
         </div>
     </section>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.alert-success').fadeOut(5000);
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                onConfirm: function (event, element) {
+                    element.closest('form').submit();
+                }
+            });
+        });
+    </script>
 @endsection

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\CandidateVacancy;
-use App\Employee;
+use \App\Model\Employee;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobDescription;
@@ -33,8 +33,8 @@ class JobController extends Controller
         $company_id = Auth::guard('admins')->user()->id;
         $job = DB::table('kh_job_vacancy as v')
             ->select('v.*','t.*','v.id as job_id','e.*')
-            ->join('tbl_job_title as t','v.job_title_code',"=",'t.id')
-            ->join('tbl1_hr_employee as e','v.hiring_manager_id','=','e.emp_id')
+            ->join('tbl_job_titles as t','v.job_titles_code',"=",'t.id')
+            ->join('employees as e','v.hiring_manager_id','=','e.emp_id')
             ->where('v.company_id',$company_id)
             ->get();
 //        dd($job);
@@ -64,16 +64,16 @@ class JobController extends Controller
                 ->where('c.user_id',$user_id)
                 ->get();
             }
-        $job_title = DB::table('kh_job_vacancy as v')
+        $job_titles = DB::table('kh_job_vacancy as v')
             ->select('v.*','t.*','v.id as job_id','p.*')
-            ->join('tbl_job_title as t','v.job_title_code',"=",'t.id')
+            ->join('tbl_job_titles as t','v.job_titles_code',"=",'t.id')
             ->join('tbl_province as p','v.location','=','p.id')
             ->where('v.company_id',$company_id)
             ->first();
             //dd($job_Title);
 
         $company = OrganizationGenInfo::where('id',$company_id)->first();
-        return view('backend.HRIS.Recruitment.Job.show',compact('job_title','company','isApply'));
+        return view('backend.HRIS.Recruitment.Job.show',compact('job_titles','company','isApply'));
         }
     public function destroy($id)
     {
@@ -102,7 +102,7 @@ class JobController extends Controller
     {
 //        dd($request->all());
         $job = new Job();
-        $job->job_title_code = $request->job_title_code;
+        $job->job_titles_code = $request->job_titles_code;
         $job->description = $request->description;
         $job->requirement = $request->requirement;
         $job->min_salary = $request->min;
@@ -155,7 +155,7 @@ class JobController extends Controller
 //        dd($request->all());
 
         $job = Job::findOrFail($id);
-        $job->job_title_code = $request->job_title_code;
+        $job->job_titles_code = $request->job_titles_code;
         $job->description = $request->description;
         $job->requirement = $request->requirement;
         $job->min_salary = $request->min;

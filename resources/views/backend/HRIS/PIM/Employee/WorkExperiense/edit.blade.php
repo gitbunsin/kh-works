@@ -38,7 +38,7 @@
                                         <section class="col col-6">
                                             <label class="label">Job Title *</label>
                                             <label class="input">
-                                                <input type="text" value="{{$w->eexp_jobtit}}" name="job_title" id="job_title">
+                                                <input type="text" value="{{$w->eexp_jobtit}}" name="job_titles" id="job_titles">
                                             </label>
                                         </section>
                                     </div>
@@ -105,7 +105,7 @@
                     company : {
                         required : true
                     },
-                    job_title : {
+                    job_titles : {
                         required : true
                     }
                 },

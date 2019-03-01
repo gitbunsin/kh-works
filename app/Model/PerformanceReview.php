@@ -15,7 +15,7 @@ class PerformanceReview extends Model
             'status_id',
             'work_period_start',
             'work_period_end',
-            'job_title_code',
+            'job_titles_code',
             'department_id',
             'due_date',
             'completed_date',

@@ -117,7 +117,7 @@
                     company : {
                         required : true
                     },
-                    job_title : {
+                    job_titles : {
                         required : true
                     }
                 },

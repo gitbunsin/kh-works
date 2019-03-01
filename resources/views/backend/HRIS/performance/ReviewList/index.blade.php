@@ -52,7 +52,7 @@
                                 {{--@foreach($k as $ks)--}}
                                 {{--<tr id="termination-reason{{$ks->kpi_id}}">--}}
                                 {{--<td>{{$ks->kpi_indicators}}</td>--}}
-                                {{--<td>{{$ks->job_title}}</td>--}}
+                                {{--<td>{{$ks->job_titles}}</td>--}}
                                 {{--<td>{{$ks->min_rating}}</td>--}}
                                 {{--<td>{{$ks->max_rating}}</td>--}}
                                 {{--@if($ks->default_kpi)--}}

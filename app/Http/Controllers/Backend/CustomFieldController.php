@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Customer;
-use App\CustomField;
 use App\Http\Controllers\Controller;
-
+use App\Model\CustomField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

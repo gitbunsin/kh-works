@@ -2,7 +2,6 @@
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
 /**
  * @property  attributes
@@ -10,7 +9,7 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 class UserEmployee extends Authenticatable
 {
     use Notifiable;
-    use EntityTrait;
+
     protected $table = 'tbl_user_employee';
     protected $fillable = [
         'id',

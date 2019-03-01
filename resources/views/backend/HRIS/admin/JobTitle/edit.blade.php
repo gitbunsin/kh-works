@@ -20,20 +20,20 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="validate_job_title" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title/'.$job_title->id)}}" class="smart-form">
+                            <form id="validate_job_titles" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title/'.$job_titles->id)}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" value="{{$job_title->job_title}}" name="job_title" id="job_title">
+                                            <input type="text" value="{{$job_titles->job_titles}}" name="job_titles" id="job_titles">
                                         </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
-                                            <textarea rows="8" id="job_description" name="job_description" class="custom-scroll">{{$job_title->job_description}}</textarea>
+                                            <textarea rows="8" id="job_description" name="job_description" class="custom-scroll">{{$job_titles->job_description}}</textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -42,7 +42,7 @@
                                     <section>
                                         <label class="label">note</label>
                                         <label class="textarea">
-                                            <textarea rows="8" id="note" name="note" class="custom-scroll">{{$job_title->note}}</textarea>
+                                            <textarea rows="8" id="note" name="note" class="custom-scroll">{{$job_titles->note}}</textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -88,16 +88,16 @@
             $('#startdate').datepicker({
                 // format: 'DD - dd MM yyyy'
             });
-            var $loginForm = $("#validate_job_title").validate({
+            var $loginForm = $("#validate_job_titles").validate({
                 // Rules for form validation
                 rules : {
-                    job_title : {
+                    job_titles : {
                         required : true
                     },
                 },
                 // Messages for form validation
                 messages : {
-                    job_title : {
+                    job_titles : {
                         required : 'field is required !'
                     },
                 },

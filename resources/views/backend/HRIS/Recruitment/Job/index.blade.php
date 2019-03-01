@@ -41,7 +41,7 @@
                                     <tr id="job_id{{$jobs->job_id}}">
                                         <td>{{Auth::guard('admins')->user()->name}}</td>
                                         <td>{{$jobs->emp_lastname}} {{$jobs->emp_firstname}}</td>
-                                        <td>{{$jobs->job_title}}</td>
+                                        <td>{{$jobs->job_titles}}</td>
                                         <td>{{date('d-m-Y', strtotime($jobs->closing_date))}}</td>
                                         <td>
                                             <a href="{{url('administration/post-jobs/'.$jobs->job_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">

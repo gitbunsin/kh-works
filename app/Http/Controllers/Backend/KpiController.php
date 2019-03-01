@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Kpi;
+use App\Model\Kpi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,12 +23,11 @@ class KpiController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         //
-        $k = DB::table('tbl_kpi as k')
-                ->select('k.*','j.*','k.id as kpi_id')
-                ->join('tbl_job_title as j','k.job_title_code','=','j.id')
-                ->where('k.company_id',$company_id)
-                ->get();
-//        $k = Kpi::all();
+//        $k = DB::table('kpis as k')
+//                ->select('k.*','j.*','k.id as kpi_id')
+//                ->join('job_titles as j','k.job_titles_code','=','j.id')
+//                ->get();
+        $k = Kpi::all();
        // dd($k);
         return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k'));
     }
@@ -55,7 +53,7 @@ class KpiController extends Controller
     {
         //
         $k = new Kpi();
-        $k->job_title_code = $request->job_title_code;
+        $k->job_titles_code = $request->job_titles_code;
         $k->employee_id = Auth::guard('employee')->user()->id;
         $k->kpi_indicators = $request->performance;
         $k->min_rating	= $request->min_id;
@@ -107,7 +105,7 @@ class KpiController extends Controller
         //
         //dd($request->IsDefault_yes);
         $k =  Kpi::findOrFail($id);
-        $k->job_title_code = $request->job_title_code;
+        $k->job_titles_code = $request->job_titles_code;
         $k->employee_id = Auth::guard('employee')->user()->id;
         $k->kpi_indicators = $request->performance;
         $k->min_rating	= $request->min_id;

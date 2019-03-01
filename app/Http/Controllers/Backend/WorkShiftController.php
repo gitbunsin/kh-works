@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Employee;
-use App\EmployeeWorkShift;
+use \App\Model\Employee;
+use \App\Model\EmployeeWorkShift;
 use App\Http\Controllers\Controller;
-use App\WorkShift;
+use App\Model\WorkShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;

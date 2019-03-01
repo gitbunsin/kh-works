@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\AuthClicent;
-use App\Customer;
-use App\CustomField;
 use App\Http\Controllers\Controller;
 
+use App\Model\OauthClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +22,7 @@ class AuthClientController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $Aclient = AuthClicent::where('company_id',$company_id)->get();
+        $Aclient = OauthClient::where('company_id',$company_id)->get();
         //dd($Aclient);
         return view('backend.HRIS.admin.Configuration.AuthClient.index',compact('Aclient'));
     }
@@ -54,7 +52,7 @@ class AuthClientController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $AClient = new AuthClicent();
+        $AClient = new oauth_clients();
         $AClient->company_id = $company_id;
         $AClient->client_id = $request->ID;
         $AClient->client_secret = $request->Secret;
@@ -85,7 +83,7 @@ class AuthClientController extends Controller
     public function edit($id)
     {
         //
-        $AClient = AuthClicent::findOrFail($id);
+        $AClient = oauth_clients::findOrFail($id);
         return view('backend.HRIS.admin.Configuration.AuthClient.edit',compact('AClient'));
     }
 
@@ -104,7 +102,7 @@ class AuthClientController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $AClient = AuthClicent::findOrFail($id);
+        $AClient = oauth_clients::findOrFail($id);
         $AClient->company_id = $company_id;
         $AClient->client_id = $request->ID;
         $AClient->client_secret = $request->Secret;

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Model\Backend\Skill;
+use App\Model\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

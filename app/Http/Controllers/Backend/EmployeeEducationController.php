@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeEducation;
+use \App\Model\EmployeeEducation;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;

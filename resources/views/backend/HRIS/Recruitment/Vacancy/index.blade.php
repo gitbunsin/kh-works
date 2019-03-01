@@ -49,7 +49,7 @@
                                 @foreach($vacancy as $vacancies)
                                         <tr id="vacancy_id{{$vacancies->id}}">
                                         <td>{{$vacancies->name}}</td>
-                                        <td>{{$vacancies->job_title}}</td>
+                                        <td>{{$vacancies->job_titles}}</td>
                                         <td>{{$vacancies->emp_lastname}}</td>
                                         <td>{{$vacancies->description}}</td>
                                         <td>
@@ -96,11 +96,11 @@
                                                 {{--<section class="col col-6">--}}
                                                     {{--<label class="label">Job Title</label>--}}
                                                     {{--<label class="select">--}}
-                                                        {{--@php $job_title = \App\JobTitle::all(); @endphp--}}
-                                                        {{--<select name="job_title_code" id="job_title_code">--}}
+                                                        {{--@php $job_titles = \App\JobTitle::all(); @endphp--}}
+                                                        {{--<select name="job_titles_code" id="job_titles_code">--}}
                                                             {{--<option value="0">Choose JobTitle</option>--}}
-                                                            {{--@foreach ($job_title as $job_titles)--}}
-                                                                {{--<option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>--}}
+                                                            {{--@foreach ($job_titles as $job_title)--}}
+                                                                {{--<option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>--}}
                                                             {{--@endforeach--}}
                                                         {{--</select>--}}
                                                         {{--<i></i>--}}
@@ -117,7 +117,7 @@
                                             {{--<section>--}}
                                                 {{--<label class="label">Hiring Manager</label>--}}
                                                 {{--<label class="select">--}}
-                                                    {{--@php use App\Employee;$employee= Employee::all(); @endphp--}}
+                                                    {{--@php use \App\Model\Employee;$employee= Employee::all(); @endphp--}}
                                                     {{--<select name="hiring_manager_id" id="hiring_manager_id">--}}
                                                         {{--<option value="0">Choose Manager</option>--}}
                                                         {{--@foreach($employee as $employees)--}}

@@ -42,16 +42,14 @@
                                 <tr>
                                     <th> Job Title</th>
                                     <th> Job Description</th>
-                                    <th> Note</th>
                                     <th> Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                 @foreach($JobTitle as $JobTitles)
                                     <tr id="job_id{{$JobTitles->id}}">
-                                        <td>{{$JobTitles->job_title}}</td>
-                                        <td>{{$JobTitles->job_description}}</td>
-                                        <td>{{$JobTitles->note}}</td>
+                                        <td>{{$JobTitles->name}}</td>
+                                        <td>{{$JobTitles->description}}</td>
                                         <td>
                                             <a  href="{{url('administration/jobs-title/'.$JobTitles->id.'/edit')}}" style="text-decoration:none;" class="">
                                                 <i class="glyphicon glyphicon-edit"></i>

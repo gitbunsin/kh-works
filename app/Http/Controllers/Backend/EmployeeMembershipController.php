@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\EmployeeMembership;
+use \App\Model\EmployeeMembership;
 use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;

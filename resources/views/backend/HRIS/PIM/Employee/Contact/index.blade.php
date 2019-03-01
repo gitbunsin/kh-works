@@ -2,10 +2,10 @@
 @section('content')
     @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
 
-        @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
     @else
 
-        @php $employee = \App\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
 
     @endif
     <section id="widget-grid" class="">

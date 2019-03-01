@@ -38,7 +38,7 @@
                                 <section class="col col-4">
                                     <label class="label">Job Title</label>
                                     <label class="input">
-                                        <input value="" type="text" name="job_title_code" id="job_title_code">
+                                        <input value="" type="text" name="job_titles_code" id="job_titles_code">
                                     </label>
                                 </section>
                                 <section class="col col-4">

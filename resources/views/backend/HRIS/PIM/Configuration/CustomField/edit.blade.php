@@ -40,7 +40,7 @@
                                                     @php $c = \App\JobTitle::all(); @endphp
                                                     <option value="">-- select --</option>
                                                     @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}">{{$cs->job_title}}</option>
+                                                        <option value="{{$cs->id}}">{{$cs->job_titles}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>

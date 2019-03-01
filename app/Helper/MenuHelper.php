@@ -30,9 +30,9 @@ class MenuHelper
     public function getSidebarMenu($roleID ,$companyID )
     {
         //dd(Auth::guard('admins'));
-            // $companyID = Auth::guard('admins')->user()->id;
+//             $companyID = Auth::guard('admins')->user()->id;
             //dd(Auth::guard('admins'));
-            //$roleID =  Auth::guard('admins')->user()->role_id;
+//            $roleID =  Auth::guard('admins')->user()->role_id;
         $menu = DB::table('role_company_menus as rcm')
             ->join('menus as m', 'm.id', '=', 'rcm.menu_id')
             ->join('roles as r', 'r.id', '=', 'rcm.role_id')

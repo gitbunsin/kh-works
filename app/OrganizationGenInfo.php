@@ -6,7 +6,6 @@
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
 /**
  * @property  attributes
@@ -14,7 +13,6 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 class OrganizationGenInfo extends Authenticatable
 {
     use Notifiable;
-    use EntityTrait;
     /**
      * The attributes that are mass assignable.
      *

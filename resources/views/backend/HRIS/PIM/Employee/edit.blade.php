@@ -61,11 +61,11 @@
                                         <section class="col col-4">
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                @php $job_title = \App\Model\Backend\JobTitle::all(); @endphp
-                                                <select name="job_title" id="Job_title">
+                                                @php $job_titles = \App\Model\Backend\JobTitle::all(); @endphp
+                                                <select name="job_titles" id="Job_title">
                                                     <option value="0">-- job title --</option>
-                                                    @foreach($job_title as $job_titles)
-                                                        <option value="{{$job_titles->id}}">{{$job_titles->job_title}}</option>
+                                                    @foreach($job_titles as $job_title)
+                                                        <option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>

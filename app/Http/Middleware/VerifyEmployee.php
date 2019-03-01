@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Employee;
+use App\Model\Employee;
 use App\UserEmployee;
 use Illuminate\Support\Facades\Auth;
 

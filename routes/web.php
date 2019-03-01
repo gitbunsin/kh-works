@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('skills','SkillController');
         Route::resource('education','EducationController');
         Route::resource('employee-education','EmployeeEducationController');
-        Route::resource('license-types','LicenseTypeController');
+        Route::resource('license-types','LicenseController');
         Route::resource('employee-license','EmployeeLicenseController');
         Route::resource('membership','MembershipController');
         Route::resource('employee-qualification','QualificationController');

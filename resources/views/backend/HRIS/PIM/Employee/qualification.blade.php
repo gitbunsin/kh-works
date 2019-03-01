@@ -3,10 +3,10 @@
 
     @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
 
-        @php $employee = \App\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
+        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
     @else
 
-        @php $employee = \App\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
 
     @endif
     <section id="widget-grid" class="">
@@ -78,7 +78,7 @@
                                                 <section class="col col-6">
                                                     <label class="label">Job Title *</label>
                                                     <label class="input">
-                                                        <input type="text" name="job_title" id="job_title">
+                                                        <input type="text" name="job_titles" id="job_titles">
                                                     </label>
                                                 </section>
                                             </div>
@@ -605,7 +605,7 @@
                     company: {
                         required: true,
                     },
-                    job_title : {
+                    job_titles : {
                         required: true,
                     },
                     from_date : {

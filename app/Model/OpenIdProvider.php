@@ -1,19 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OpenIdProvider extends Model
+class OpenidProvider extends Model
 {
     //
-    protected $table = 'tbl_hr_openid_provider';
+    protected $table = 'openid_providers';
     protected $fillable = [
         'id',
         'company_id',
-        'provider_name',
-        'provider_url',
-        'status',
+        'name',
     ];
-    public $timestamps = false;
 }

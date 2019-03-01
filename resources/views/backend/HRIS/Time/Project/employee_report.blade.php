@@ -47,7 +47,7 @@
                                                     tabindex="-1" aria-hidden="true">
                                                 <optgroup label="Performance Employee Trackers">
                                                     <option value="0">-- select trackers --</option>
-                                                    @php $tracker = \App\Employee::all(); @endphp
+                                                    @php $tracker = \App\Model\Employee::all(); @endphp
                                                     @foreach($tracker as $trackers)
                                                         <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                     @endforeach
@@ -64,10 +64,10 @@
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select location --</option>
-                                                    @php $location = \App\Location::all(); @endphp
-                                                    @foreach($location as $locations)
-                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                    {{--@foreach($location as $locations)--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -77,10 +77,10 @@
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select location --</option>
-                                                    @php $location = \App\Location::all(); @endphp
-                                                    @foreach($location as $locations)
-                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                    {{--@foreach($location as $locations)--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>

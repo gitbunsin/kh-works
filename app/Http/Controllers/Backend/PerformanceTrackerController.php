@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Employee;
+use App\Model\Employee;
 use App\Http\Controllers\Controller;
 
 use App\PerformanceTrack;
@@ -23,7 +23,7 @@ class PerformanceTrackerController extends Controller
         //
         $p = DB::table('tbl_hr_performance_track as p')
             ->select('p.*','e.*')
-            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
+            ->join('employees as e','p.employee_id','=','e.emp_id')
             ->get();
 
         return view('backend.HRIS.performance.trackers.index',compact('p'));
@@ -54,7 +54,7 @@ class PerformanceTrackerController extends Controller
 
         $p = DB::table('tbl_hr_performance_track as p')
             ->select('p.*','e.*')
-            ->join('tbl1_hr_employee as e','p.employee_id','=','e.emp_id')
+            ->join('employees as e','p.employee_id','=','e.emp_id')
             ->get();
         //dd($p);
         return view('backend.HRIS.performance.EmployeeTracker.index',compact('p'));
