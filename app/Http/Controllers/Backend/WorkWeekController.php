@@ -7,7 +7,7 @@ use App\WorkWeek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class WorkWeekController extends Controller
+class WorkWeekController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +17,7 @@ class WorkWeekController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.Leave.WorkWeek.index');
 
     }

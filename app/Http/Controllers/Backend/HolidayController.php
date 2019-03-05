@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class HolidayController extends Controller
+class HolidayController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,10 @@ class HolidayController extends Controller
     public function index()
     {
         //
-        $h = Holiday::all();
-        return view('backend.HRIS.Leave.Holiday.index',compact('h'));
+        $this->shareMenu();
+        //$h = Holiday::all();
+       // $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.Holiday.index');
     }
 
     /**

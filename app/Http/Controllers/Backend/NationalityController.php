@@ -4,12 +4,12 @@ namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 
-use App\nation;
+use App\Model\nation;
 use App\Model\Nationality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class NationalityController extends Controller
+class NationalityController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class NationalityController extends Controller
     public function index()
     {
         //
-
+        $this->shareMenu();
         $n = nationality::where('company_id',Auth::guard('admins')->user()->id)->get();
         return view('backend.HRIS.admin.Nationality.index',compact('n'));
     }
@@ -32,6 +32,7 @@ class NationalityController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Nationality.create');
     }
 
@@ -72,6 +73,7 @@ class NationalityController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $n = nationality::findOrFail($id);
         return view('backend.HRIS.admin.Nationality.edit',compact('n'));
     }

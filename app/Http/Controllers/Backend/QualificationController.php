@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Education;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use \App\Model\EmployeeEducation;
 use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
-use App\Model\Backend\License;
+use App\Model\License;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,24 +20,18 @@ class QualificationController extends Controller
      */
     public function index()
     {
-        $employee_skill = DB::table('tbl_hr_emp_skill as es')
+        $employee_skill = DB::table('employee_skills as es')
             ->select('es.*','s.*','es.id as employee_skill_id')
-            ->join('tbl_skill as s','es.skill_id','=','s.id')
+            ->join('skills as s','es.skill_id','=','s.id')
             ->get();
 //        dd($employee_skill);\
-        $employee_education = DB::table('tbl_hr_emp_education as e')
-                                ->join('tbl_education as ed','e.education_id','=','ed.id')
+        $employee_education = DB::table('employee_educations as e')
+                                ->join('education as ed','e.education_id','=','ed.id')
                                 ->get();
 //        dd($e);
         $employee_experience = EmployeeWorkExperience::all();
-        return view('backend.HRIS.PIM.Employee.qualification'
-                ,["employee_skill"=>$employee_skill,"employee_experience"=>$employee_experience
-                ,"employee_education"=>$employee_education
-                ,"license"=>License::all(),
-                "language"=>DB::table('tbl_hr_emp_language as l')->join('tbl_language as lg','l.lang_id',"=","lg.id")->get(),
-            ]
-
-        );
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.qualification',compact('menus'));
 
     }
 

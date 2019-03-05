@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Model\Customer;
@@ -8,7 +9,7 @@ use DemeterChain\C;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerController extends Controller
+class CustomerController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-
+        $this->shareMenu();
         $l = Customer::all();
         return view('backend.HRIS.Time.Customer.index',compact('l'));
 

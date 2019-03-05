@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Http\Controllers;
 use App\Customer;
 use App\CustomField;
-use App\Http\Controllers\Controller;
+
 
 use App\Model\EmailNotification;
 use Illuminate\Http\Request;
 
-class EmailNotificationController extends Controller
+class EmailNotificationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,6 +20,7 @@ class EmailNotificationController extends Controller
     {
         //
         $ESubscription = EmailNotification::all();
+        $this->shareMenu();
         return view('backend.HRIS.admin.Configuration.EmailNotification.index',compact('ESubscription'));
 
     }

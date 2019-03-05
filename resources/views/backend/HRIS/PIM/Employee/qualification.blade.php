@@ -1,14 +1,14 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
 
-    @if(\Illuminate\Support\Facades\Auth::guard('admins')->user())
+    {{--@if(\Illuminate\Support\Facades\Auth::guard('admins')->user())--}}
 
-        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp
-    @else
+        {{--@php $employee = \App\Model\Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp--}}
+    {{--@else--}}
 
-        @php $employee = \App\Model\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp
+        {{--@php $employee = \App\Model\Employee::where('company_id',Auth::guard('employee')->user()->id)->first(); @endphp--}}
 
-    @endif
+    {{--@endif--}}
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -124,24 +124,24 @@
                                     </tr>
                                     </thead>
                                     <tbody id="products-list" name="products-list">
-                                    @foreach($employee_experience as $employee_experiences)
-                                        <tr id="work_experience_id{{$employee_experiences->id}}">
-                                            <td>
-                                                <a data-id="" href="{{url('/administration/employee-work-experience/'.$employee_experiences->id.'/edit')}}" style="text-decoration:none;" class="">
-                                                    {{$employee_experiences->eexp_employer}}
-                                                </a>
-                                            </td>
-                                            <td>{{$employee_experiences->eexp_jobtit}}</td>
-                                            <td>{{$employee_experiences->eexp_from_date}}</td>
-                                            <td>{{$employee_experiences->eexp_to_date}}</td>
-                                            <td>{{$employee_experiences->eexp_comments}}</td>
-                                            <td>
-                                                <a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    {{--@foreach($employee_experience as $employee_experiences)--}}
+                                        {{--<tr id="work_experience_id{{$employee_experiences->id}}">--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="" href="{{url('/administration/employee-work-experience/'.$employee_experiences->id.'/edit')}}" style="text-decoration:none;" class="">--}}
+                                                    {{--{{$employee_experiences->eexp_employer}}--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                            {{--<td>{{$employee_experiences->eexp_jobtit}}</td>--}}
+                                            {{--<td>{{$employee_experiences->eexp_from_date}}</td>--}}
+                                            {{--<td>{{$employee_experiences->eexp_to_date}}</td>--}}
+                                            {{--<td>{{$employee_experiences->eexp_comments}}</td>--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="{{$employee_experiences->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                        {{--</tr>--}}
+                                    {{--@endforeach--}}
                                     </tbody>
                                 </table>
                             </div>
@@ -223,23 +223,23 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-education" name="list-education">
-                                     @foreach($employee_education as $es)
-                                        <tr id="education_id{{$es->id}}">
-                                            <td>
-                                                <a href="{{url('/administration/employee-education/'.$es->id.'/edit')}}" style="text-decoration:none;" class="">
-                                                    {{$es->name}}
-                                                </a>
-                                            </td>
+                                     {{--@foreach($employee_education as $es)--}}
+                                        {{--<tr id="education_id{{$es->id}}">--}}
+                                            {{--<td>--}}
+                                                {{--<a href="{{url('/administration/employee-education/'.$es->id.'/edit')}}" style="text-decoration:none;" class="">--}}
+                                                    {{--{{$es->name}}--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
 
-                                            <td>{{$es->year}}</td>
-                                            <td>{{$es->score}}</td>
-                                            <td>
-                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                     @endforeach
+                                            {{--<td>{{$es->year}}</td>--}}
+                                            {{--<td>{{$es->score}}</td>--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                        {{--</tr>--}}
+                                     {{--@endforeach--}}
                                     </tbody>
                                 </table>
 
@@ -319,21 +319,21 @@
                                     </tr>
                                     </thead>
                                         <tbody id="products-list-skill" name="products-list-skill">
-                                        @foreach($employee_skill as $employee_skills)
-                                            <tr id="employee_skills_id{{$employee_skills->id}}">
-                                                <td><a  href="{{url('/administration/employee-work-skills/'.$employee_skills->id.'/edit')}}" class="btn-detail">
-                                                       {{$employee_skills->name}}
-                                                    </a>
-                                                </td>
-                                                <td>{{$employee_skills->years_of_exp}}</td>
-                                                <td>{{$employee_skills->comments}}</td>
-                                                <td>
-                                                    <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                        <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        {{--@foreach($employee_skill as $employee_skills)--}}
+                                            {{--<tr id="employee_skills_id{{$employee_skills->id}}">--}}
+                                                {{--<td><a  href="{{url('/administration/employee-work-skills/'.$employee_skills->id.'/edit')}}" class="btn-detail">--}}
+                                                       {{--{{$employee_skills->name}}--}}
+                                                    {{--</a>--}}
+                                                {{--</td>--}}
+                                                {{--<td>{{$employee_skills->years_of_exp}}</td>--}}
+                                                {{--<td>{{$employee_skills->comments}}</td>--}}
+                                                {{--<td>--}}
+                                                    {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                        {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                    {{--</a>--}}
+                                                {{--</td>--}}
+                                            {{--</tr>--}}
+                                        {{--@endforeach--}}
                                         </tbody>
                                 </table>
                             </div>
@@ -364,19 +364,19 @@
                                     <form id="frmProducts"  class="smart-form">
                                         <meta name="csrf-token" content="{{ csrf_token() }}">
                                         <fieldset>
-                                            <section>
-                                                @php $skill = \App\Model\Backend\Skill::all(); @endphp
-                                                <label class="label"> Skills</label>
-                                                <label class="select">
-                                                    <select name="skills" id="skills">
-                                                        <option value="0"> -- Select skills -- </option>
-                                                        @foreach($skill as $skills)
-                                                            <option value="{{$skills->id}}">{{$skills->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
+                                            {{--<section>--}}
+                                                {{--@php $skill = \App\Model\Backend\Skill::all(); @endphp--}}
+                                                {{--<label class="label"> Skills</label>--}}
+                                                {{--<label class="select">--}}
+                                                    {{--<select name="skills" id="skills">--}}
+                                                        {{--<option value="0"> -- Select skills -- </option>--}}
+                                                        {{--@foreach($skill as $skills)--}}
+                                                            {{--<option value="{{$skills->id}}">{{$skills->name}}</option>--}}
+                                                        {{--@endforeach--}}
+                                                    {{--</select>--}}
+                                                    {{--<i></i>--}}
+                                                {{--</label>--}}
+                                            {{--</section>--}}
                                             <div class="row">
                                                 <section class="col col-6">
                                                     <label class="label"> Years of Experience *</label>
@@ -479,23 +479,23 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-language" name="list-language">
-                                    @foreach($language as $languages)
-                                        <tr id="language_id{{$languages->id}}">
-                                            <td>
-                                                <a href="{{url('administration/employee-language/'.$languages->id.'/edit')}}" class="btn-detail">
-                                                    {{$languages->name}}
-                                                </a>
-                                            </td>
-                                            <td>{{$languages->fluency}}</td>
-                                            <td>{{$languages->competency}}</td>
-                                            <td>{{$languages->comments}}</td>
-                                            <td>
-                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    {{--@foreach($language as $languages)--}}
+                                        {{--<tr id="language_id{{$languages->id}}">--}}
+                                            {{--<td>--}}
+                                                {{--<a href="{{url('administration/employee-language/'.$languages->id.'/edit')}}" class="btn-detail">--}}
+                                                    {{--{{$languages->name}}--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                            {{--<td>{{$languages->fluency}}</td>--}}
+                                            {{--<td>{{$languages->competency}}</td>--}}
+                                            {{--<td>{{$languages->comments}}</td>--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                        {{--</tr>--}}
+                                    {{--@endforeach--}}
                                     </tbody>
                                 </table>
 
@@ -567,22 +567,22 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-license" name="list-license">
-                                    @foreach($license as $licenses)
-                                        <tr id="license_id{{$licenses->id}}">
-                                            <td>
-                                                <a href="{{url('/administration/employee-license/'.$licenses->id.'/edit')}}" class="btn-detail">
-                                                    {{$licenses->license_number}}
-                                                </a>
-                                            </td>
-                                            <td>{{$licenses->issued_date}}</td>
-                                            <td>{{$licenses->expiry_date}}</td>
-                                            <td>
-                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    {{--@foreach($license as $licenses)--}}
+                                        {{--<tr id="license_id{{$licenses->id}}">--}}
+                                            {{--<td>--}}
+                                                {{--<a href="{{url('/administration/employee-license/'.$licenses->id.'/edit')}}" class="btn-detail">--}}
+                                                    {{--{{$licenses->license_number}}--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                            {{--<td>{{$licenses->issued_date}}</td>--}}
+                                            {{--<td>{{$licenses->expiry_date}}</td>--}}
+                                            {{--<td>--}}
+                                                {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
+                                        {{--</tr>--}}
+                                    {{--@endforeach--}}
                                     </tbody>
                                 </table>
                             </div>

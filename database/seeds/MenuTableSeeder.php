@@ -697,7 +697,7 @@ class MenuTableSeeder extends Seeder
         $menu1 = new Menu();
         //$menu1->id = 90;
         $menu1->name = "Qualification";
-        $menu1->link="administration/employee-qualification'";
+        $menu1->link="administration/employee-qualification";
         $menu1->parent_id = 84;
         $menu1->save();
 

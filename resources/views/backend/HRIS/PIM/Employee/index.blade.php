@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                 @foreach($employee as $employees)
-                                    <tr id="employee_id{{$employees->emp_id}}">
+                                    <tr id="employee_id{{$employees->emp_number}}">
                                         {{-- <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td> --}}
                                         <td>{{$employees->employee_id}}</td>
                                         <td> <a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_firstname}}  {{$employees->emp_middle_name}}</a>
@@ -58,10 +58,10 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-            <a data-id="{{$employees->emp_id}}" href="{{url('/administration/employee-personal-details')}}" style="text-decoration:none;" class="btn-detail">
+            <a data-id="{{$employees->emp_number}}" href="{{url('/administration/employee-personal-details')}}" style="text-decoration:none;" class="btn-detail">
                 <i class="glyphicon glyphicon-edit"></i>
             </a>
-                                            <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$employees->emp_number}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -231,7 +231,4 @@
 
 @endsection
 @section('script')
-    <script>
-          <script src="{{ asset('/js/hr/employee.js') }}"></script>
-    </script>
 @endsection

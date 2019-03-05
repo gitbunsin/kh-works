@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UsersCvController extends Controller
+class UsersCvController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -20,20 +20,21 @@ class UsersCvController extends Controller
     }
     public function index()
     {
+        $this->shareMenu();
         $company_id = Auth::guard('admins')->user()->id;
-        $user_cv = DB::table('tbl_job_candidate as c')
-                    ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name',
-                        'cv.user_id as user_cv_id',
-                        's.photo as user_photo'
-                    )
-                    ->join('user_attachments as cv','c.user_id','=','cv.user_id')
-                    ->join('tbl_job_candidate_vacancy as jcv','c.id','=','jcv.candidate_id')
-                    ->join('kh_job_vacancy as v','jcv.vacancy_id','=','v.id')
-                    ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
-                    ->join('users as s','c.user_id','=','s.id')
-                    ->where('v.company_id',$company_id)
-                    ->get();
-        return view('backend.HRIS.Recruitment.Cv.index',compact('user_cv'));
+//        $user_cv = DB::table('tbl_job_candidate as c')
+//                    ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name',
+//                        'cv.user_id as user_cv_id',
+//                        's.photo as user_photo'
+//                    )
+//                    ->join('user_attachments as cv','c.user_id','=','cv.user_id')
+//                    ->join('tbl_job_candidate_vacancy as jcv','c.id','=','jcv.candidate_id')
+//                    ->join('kh_job_vacancy as v','jcv.vacancy_id','=','v.id')
+//                    ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
+//                    ->join('users as s','c.user_id','=','s.id')
+//                    ->where('v.company_id',$company_id)
+//                    ->get();
+        return view('backend.HRIS.Recruitment.Cv.index');
     }
     public function getDownload($user_id)
     {

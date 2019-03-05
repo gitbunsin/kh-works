@@ -36,20 +36,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($user_cv as $user_cvs)
+                                {{--@foreach($user_cv as $user_cvs)--}}
                                     {{--{{dd()}}--}}
-                                    <tr>
-                                        <td>{{$user_cvs->candidate_id}}</td>
-                                        <td>{{$user_cvs->candidate_name}}</td>
-                                        <td><img class="img-circle" width="90px;" height="70px;" src="{{asset('uploaded/UserPhoto/'.$user_cvs->user_photo)}}"></td>
-                                        <td><a href="{{url('administration/download/'.$user_cvs->user_cv_id)}}">{{$user_cvs->cv_name}} </a></td>
-                                        <td style="text-align: center;">
-                                            <a data-id="{{$user_cvs->user_cv_id}}" href="{{url('administration/download/'.$user_cvs->user_cv_id)}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-download"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    {{--<tr>--}}
+                                        {{--<td>{{$user_cvs->candidate_id}}</td>--}}
+                                        {{--<td>{{$user_cvs->candidate_name}}</td>--}}
+                                        {{--<td><img class="img-circle" width="90px;" height="70px;" src="{{asset('uploaded/UserPhoto/'.$user_cvs->user_photo)}}"></td>--}}
+                                        {{--<td><a href="{{url('administration/download/'.$user_cvs->user_cv_id)}}">{{$user_cvs->cv_name}} </a></td>--}}
+                                        {{--<td style="text-align: center;">--}}
+                                            {{--<a data-id="{{$user_cvs->user_cv_id}}" href="{{url('administration/download/'.$user_cvs->user_cv_id)}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
+                                                {{--<i class="glyphicon glyphicon-download"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

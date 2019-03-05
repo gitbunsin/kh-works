@@ -34,48 +34,69 @@
                 <div class="item-info">
                     <div class="item-image-box">
                         <div class="item-image">
-                            @if($company->company_logo)
-                            <img src="{{asset('/uploaded/companyLogo/'.$company->company_logo)}}" alt="Image" class="img-responsive">
-                                @else
+                            {{--@if($company->company_logo)--}}
+                            {{--<img src="{{asset('/uploaded/companyLogo/'.$company->company_logo)}}" alt="Image" class="img-responsive">--}}
+                                {{--@else--}}
                                 <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">
-                            @endif
+                            {{--@endif--}}
                         </div><!-- item-image -->
                     </div>
 
                     <div class="ad-info">
-                        <span style="font-size: 20px;" class="title">{{$job_titles->job_titles}}</span>
+                        <span style="font-size: 20px;" class="title"></span>
+                        <span style="font-size: 20px;" class="title">{{$jobVacancy->name}}</span>
 
                         {{--<a id="btn{{$JobDetail->id}}"  href="{{$id}}"  data-id="{{$JobDetail->id}}" class="btn btn-primary">Apply Now</a>--}}
-                        {{ Form::close() }}
+                        {{--{{ Form::close() }}--}}
                         <div class="ad-meta">
 
                             <ul>
-                                <li><a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>{{$job_titles->NameEn}}</a></li>
-                                <li><a href="#"><i class="fa fa-clock-o " aria-hidden="true"></i>{{$job_titles->job_type}}</a></li>
-                                <li><a href="#"><i class="fa fa-money " aria-hidden="true"></i>$ {{$job_titles->min_salary}} - $ {{$job_titles->max_salary}}</a></li>
+                                <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>full time</a></li>
+                                <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>$500 - $600</a></li>
+                                <li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>
 
                                 {{--<li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>--}}
-                                <li><i class="fa fa-dashcube " aria-hidden="true"></i>Application Deadline : {{$job_titles->closing_date}}</li>
+                                <li><i class="fa fa-dashcube " aria-hidden="true"></i>Application Deadline :</li>
                                 <li>
-                                    {{Form::open(array("url"=>"kh-works/apply-job/".$job_titles->job_id, "class"=>"smart-form"))}}
+                                    {{--{{Form::open(array("url"=>"kh-works/apply-job/".$job_titles->job_id, "class"=>"smart-form"))}}--}}
+                                            {{--<meta name="csrf-token" content="{{ csrf_token() }}">--}}
+                                            {{--<input type="hidden" name="company_id" value="{{$company->id}}"/>--}}
+                                            {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
+                                            {{--<input type="hidden" value="{{$job_titles->job_id}}" name="job_id"/>--}}
+                                            {{--<input type="hidden" value="{{$job_titles->job_titles_code}}" name="job_titles_code"/>  --}}
+
+
+                                    {{Form::open(array("url"=>"", "class"=>"smart-form"))}}
                                             <meta name="csrf-token" content="{{ csrf_token() }}">
-                                            <input type="hidden" name="company_id" value="{{$company->id}}"/>
+                                            <input type="hidden" name="company_id" value=""/>
                                             <input id="url" type="hidden" value="{{ \Request::url() }}">
-                                            <input type="hidden" value="{{$job_titles->job_id}}" name="job_id"/>
-                                            <input type="hidden" value="{{$job_titles->job_titles_code}}" name="job_titles_code"/>
+                                            <input type="hidden" value="" name="job_id"/>
+                                            <input type="hidden" value="" name="job_titles_code"/>
                                     {{--{{dd($isApply)}}--}}
-                                    @if(Auth::check())
-                                    @if($isApply->isEmpty())
+                                    {{--@if(Auth::check())--}}
+                                    {{--@if($isApply->isEmpty())--}}
+                                            {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
+                                        {{--@else--}}
+                                            {{--<button disabled style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Applied</button>--}}
+                                    {{--@endif--}}
+                                    {{--{{ Form::close() }}--}}
+                                        {{--@else--}}
+
+                                        {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
+
+                                    {{--@endif--}}
+                                    {{--@if(Auth::check())--}}
+                                    {{--@if($isApply->isEmpty())--}}
                                             <button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>
-                                        @else
-                                            <button disabled style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Applied</button>
-                                    @endif
+                                        {{--@else--}}
+                                    {{--@endif--}}
                                     {{ Form::close() }}
-                                        @else
+                                        {{--@else--}}
 
-                                        <button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>
+                                        {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
 
-                                    @endif
+                                    {{--@endif--}}
                                 </li>
                                 {{--{{date('d-m-Y', strtotime())}}--}}
                             </ul>
@@ -90,13 +111,11 @@
                         <div class="section job-description">
                             <div class="description-info">
                                 <h1>Job Description</h1>
-                                <p> {!! $job_titles->description !!} </p>
+                                <p> {!! $jobVacancy->job_description !!} </p>
                             </div>
                             <div class="requirements">
                                 <h1>Job Requirements</h1>
-                                <ul>
-                                    <li>{!! $job_titles->requirement !!}</li>
-                                </ul>
+                                <p> {!! $jobVacancy->job_requirements !!} </p>
                             </div>
                         </div>
                     </div>
@@ -105,8 +124,8 @@
                             <h1>Short Info</h1>
                             <ul>
 
-                                <li> closing Date: {{$job_titles->closing_date}}</li>
-                                <li> Job poster: <strong>{{$company->name}}</strong></li>
+                                <li> closing Date: </li>
+                                <li> Job poster: <strong></strong></li>
                                 <li> Experience: <a href="#">Entry level</a></li>
                                 <li> Job function: Advertising </li>
 
@@ -118,14 +137,14 @@
                             <ul>
                                 <li>Company Name:<a href="">
                                         <strong>
-                                            {{$company->name}}
+                                            {{--{{$company->name}}--}}
                                         </strong></a></li>
-                                <li>Address: {{$company->postal_address}}</li>
+                                <li>Address: </li>
                                 <li>company SIze:  2k Employee</li>
                                 <li>Industry: <a href="#">Technology</a></li>
-                                <li>Phone: {{$company->phone}}</li>
-                                <li>Email: <a href="#"></a>{{$company->email}}</li>
-                                <li>Website: <a href="{{$company->website}}"><strong>{{$company->website}}</strong></a></li>
+                                <li>Phone: </li>
+                                <li>Email: <a href="#"></a></li>
+                                <li>Website: <a href=""><strong>}</strong></a></li>
 
                             </ul>
                             <ul class="share-social">

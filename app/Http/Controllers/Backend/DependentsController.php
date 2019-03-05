@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Dependents;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -19,10 +21,9 @@ class DependentsController extends Controller
     public function index()
     {
         //
-        $d = DB::table('tbl_hr_emp_dependents as d')
-                ->join('tbl_relationship as r','d.relationship_id','=','r.id')
-                ->get();
-        return view('backend.HRIS.PIM.Employee.dependents.index',compact('d'));
+        $d = DB::table('employee_dependents as d')->get();
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.dependents.index',compact('d','menus'));
 
     }
 

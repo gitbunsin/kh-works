@@ -40,7 +40,7 @@
                                         </section>
 
                                     </div>
-                                    <div class="row" id="div_show">
+                                    <div class="row" id="DivShow">
                                         <section>
                                             <label class="label"></label>
                                             <label class="input">
@@ -54,11 +54,11 @@
                                             <label class="label"> Location * </label>
                                             <label class="select">
                                                 <select name="location" id="location">
-                                                    <option value="">-- select location --</option>
-                                                    @php $location = \App\Location::all(); @endphp
-                                                    @foreach($location as $locations)
-                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
-                                                    @endforeach
+                                                    <option value="">-- All --</option>
+                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                    {{--@foreach($location as $locations)--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -67,51 +67,15 @@
                                             <label class="label"> Sub Unit * </label>
                                             <label class="select">
                                                 <select name="location" id="location">
-                                                    <option value="">-- select location --</option>
-                                                    @foreach($categories as $category)
-                                                           @if(count($category->childs))
-                                                            <li class="treeview">
-                                                                <a href="#"><i class="fa fa-link"></i>
-                                                                    <span>
-                                                                        <option value="">{{ $category->title }}&nbsp;</option>
-                                                                    </span>
-                                                                    <i class="fa fa-angle-left pull-right"></i>
-                                                                </a>
-                                                                <ul class="treeview-menu">
-                                                                    <option value="">@include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])&nbsp;</option>
-                                                                </ul>
-                                                            </li>
-                                                        @else
-                                                            <li><a href="#"><i class="fa fa-link"></i> <span>
-                                                                         <option value="">{{ $category->title }}&nbsp;</option>
-                                                                    </span></a></li>
-                                                        @endif
-                                                    @endforeach
-                                                           {{--@endif--}}
-                                                       {{----}}
-                                                        {{--@endforeach--}}
-                                                    {{--@foreach($categories as $category)--}}
-                                                        {{--@if($category->has('allCategories'))--}}
-                                                            {{--<li class="treeview">--}}
-                                                                {{--<a href="#"><i class="fa fa-link"></i> <span>{{ $category->title }}</span>--}}
-                                                                    {{--<i class="fa fa-angle-left pull-right"></i></a>--}}
-                                                                {{--<ul class="treeview-menu">--}}
-                                                                    {{--@foreach($category->allCategories as $subcategory)--}}
-                                                                        {{--<li class=""><a href="#">{{$subcategory->childs}}</a></li>--}}
-                                                                    {{--@endforeach--}}
-                                                                {{--</ul>--}}
-                                                            {{--</li>--}}
-                                                        {{--@else--}}
-                                                            {{--<li><a href="#"><i class="fa fa-link"></i> <span>{{ $category->title }}</span></a></li>--}}
-                                                        {{--@endif--}}
-                                                    {{--@endforeach--}}
+                                                    <option value="">-- All  --</option>
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
                                     </div>
                                             <br/>
-                                        <section>
+                                    <div class="ShowEmployee">
+                                        <section class="">
                                             <label class="label">Employee Name</label>
                                             <div class="form-group">
                                                 <select name="employee_entitlement"
@@ -120,7 +84,7 @@
                                                         tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="">-- select employee --</option>
-                                                        @php $tracker = \employees::all(); @endphp
+                                                        @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
                                                             <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
@@ -131,13 +95,14 @@
                                                 </div>
                                             </div>
                                         </section>
+                                    </div>
                                         <div class="row">
                                             <section class="col col-6">
                                                 <label class="label"> Leave Type * </label>
                                                 <label class="select">
                                                     <select name="leave_type" id="leave_type">
                                                         <option value="">-- select leave type --</option>
-                                                        @php $leave_period = \App\LeaveType::all(); @endphp
+                                                        @php $leave_period = \App\Model\LeaveType::all(); @endphp
                                                         @foreach($leave_period as $leave_periods)
                                                             <option value="{{$leave_periods->id}}"> {{$leave_periods->name}}</option>
                                                         @endforeach
@@ -185,12 +150,11 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-    $('#div_show').hide();
+    $('#DivShow').hide();
     let baseURL = "{{URL::to('/')}}/";
     function checkval() {
-
         if ($('#myCheck').is(':checked')) {
-            $('#div_show').show({
+            $('#DivShow').show({
                 duration: 800,
             });
             $.ajaxSetup({
@@ -200,14 +164,15 @@
             });
             var formData = {}
             $.ajax({
-                url: baseURL + "administration/viewMatchEmployee",
+                url: baseURL + "administration/addLeaveEntitlement",
                 method: "GET",
                 type: "json",
                 data: formData,
                 success: function (respond) {
+                    console.log('Success',respond);
                     //alert(JSON.stringify(respond));
-                    $('.emp_number').text("( Matches "  + respond + " Employees )");
-                    $('.emp_number').css({"margin-left":"600px","margin-top":"-43px"});
+                   // $('.emp_number').text("( Matches "  + respond + " Employees )");
+                    //$('.emp_number').css({"margin-left":"600px","margin-top":"-43px"});
                 },
                 error: function (err) {
                     console.log(err)
@@ -216,18 +181,19 @@
             });
 
     } else {
-            $('#div_show').hide({
+            $('#DivShow').hide({
                 duration: 800,
             });
-        }
 
+            $('.ShowEmployee').show();
+        }
     }
 
     $(function () {
         checkval(); // this is launched on load
         $('#myCheck').click(function () {
              checkval();
-            $('#employee_id').show();
+            $('.ShowEmployee').hide();
         });
 
     });

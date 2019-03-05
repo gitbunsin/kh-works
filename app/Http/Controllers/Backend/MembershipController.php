@@ -1,15 +1,18 @@
 <?php
 
 namespace  App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Membership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MembershipController extends Controller
+class MembershipController extends BackendController
 {
     public function index()
     {
+        $this->shareMenu();
         $m = Membership::all();
         return view('backend.HRIS.admin.Qualifications.Membership.index',compact('m'));
     }
@@ -21,6 +24,7 @@ class MembershipController extends Controller
      */
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.admin.Qualifications.Membership.create');
     }
 
@@ -63,6 +67,7 @@ class MembershipController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $m = Membership::where('id',$id)->first();
 //        dd($skills);
         return view('backend.HRIS.admin.Qualifications.Membership.edit',compact('m'));

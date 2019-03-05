@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeMembership extends Model
+class EmployeeMemberDetail extends Model
 {
     //
-    protected $table = 'tbl_hr_emp_memeber_detail';
+    protected $table = 'employee_member_details';
     protected $fillable = [
         'id',
         'employee_id',

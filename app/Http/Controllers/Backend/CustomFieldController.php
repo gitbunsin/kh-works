@@ -7,7 +7,7 @@ use App\Model\CustomField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CustomFieldController extends Controller
+class CustomFieldController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -23,6 +23,7 @@ class CustomFieldController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         $CField = CustomField::where('company_id',$company_id)->get();
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Configuration.CustomField.index',compact('CField'));
     }
     public function ConfigurePim()
@@ -39,6 +40,7 @@ class CustomFieldController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Configuration.CustomField.create');
     }
 
@@ -73,6 +75,7 @@ class CustomFieldController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $CField = CustomField::findOrFail($id);
         return view('backend.HRIS.PIM.Configuration.CustomField.edit',compact('CField'));
     }

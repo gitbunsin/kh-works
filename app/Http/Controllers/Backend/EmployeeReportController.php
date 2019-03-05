@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -15,12 +17,14 @@ class EmployeeReportController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.Time.Project.employee_report');
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Time.Project.employee_report',compact('menus'));
     }
     public function displayAttendanceSummaryReport(){
 
 
-        return view('backend.HRIS.Time.Project.summary_report');
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Time.Project.summary_report',compact('menus'));
     }
 
     /**

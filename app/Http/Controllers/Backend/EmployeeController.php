@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
+use App\Model\Employee;
 use \App\Model\EmployeeEmergencyContacts;
 use \App\Model\EmployeeSkills;
 use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
-
 use App\Jobs\SendVerificationEmployeeEmail;
-use App\Mail\VerifyEmployeeMail;
-use App\Model\Employee;
-use App\Organization;
-use App\User;
-use App\UserEmployee;
+use App\Model\UserEmployee;
+use App\OrganizationGenInfo;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,20 +20,22 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
-use Psy\Util\Json;
 
-class EmployeeController extends Controller
+class EmployeeController extends BackendController
 {
+    protected $redirectTo = '/administration/employee-personal-details';
+
     public function __construct()
     {
-    
-        $this->middleware('isAdmin');
+        $this->middleware('isEmployee')->only('loginEmployee');
+        $this->middleware('isAdmin')->except(['loginEmployee','EmployeeLogin']);
+//        $this->middleware('isAdmin');
     
     }
-    protected $redirectTo = '/administration/employee-personal-details';
+
     public function index()
     {
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
         }else{
@@ -48,21 +50,30 @@ class EmployeeController extends Controller
 //        $employee = Employee::all();
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
-    public function EmployeeInfo(){
 
+    public function EmployeeInfo(){
+        $this->shareMenu();
         $employee_experience = EmployeeWorkExperience::all();
-        $employee_skill = DB::table('tbl_hr_emp_skill as es')
-            ->join('tbl_skill as s','es.skill_id','=','s.id')
+        $employee_skill = DB::table('employee_skills as es')
+            ->join('skills as s','es.skill_id','=','s.id')
             ->get();
-//        $employee_skill = EmployeeSkills::all();
-        return view('backend.HRIS.PIM.Employee.Details.index',compact('employee_experience','employee_skill'));
+        $EmployeeID = Auth::guard('admins')->user()->id;
+        $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
+        return view('backend.HRIS.PIM.Employee.Details.index',
+            compact('employee_experience',
+                'employee_skill',
+                'EmployeeDetailsInfo'));
     }
+
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.create');
     }
+
     public function edit($id)
     {
+        $this->shareMenu();
         $employee = Employee::where('id',$id);
         return view('backend.HRIS.PIM.Employee.edit');
     }
@@ -74,20 +85,21 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         //dd('hello');
 //        dd($request->all());
-        if(Auth::guard('admins')->user()){
-            $company_id = Auth::guard('admins')->user()->id;
-        }else{
-            $company_id = Auth::guard('employee')->user()->company_id;
-
-        }
+//        if(Auth::guard('admins')->user()){
+//            $company_id = Auth::guard('admins')->user()->id;
+//        }else{
+//            $company_id = Auth::guard('employee')->user()->company_id;
+//
+//        }
         $employee = new Employee();
         $employee->emp_firstname = $request->emp_firstname;
         $employee->emp_lastname = $request->emp_lastname;
         $employee->emp_middle_name = $request->emp_middle_name;
-        $employee->company_id = $company_id;
-        $employee->job_titles_code = $request->job_titles;
+        $employee->company_id = Auth::guard('admins')->user()->id;
+//        $employee->job_titles_code = $request->job_titles;
         $employee->employee_id = $request->employee_id;
         $employee->company_id = $request->company_id;
         // if ($request->hasFile('photo'))
@@ -107,16 +119,20 @@ class EmployeeController extends Controller
 //        dd($employee_id);
         $check = $request->user_check;
         if ($check == 1) {
+            //dd('hello');
 //            $emp_log = Employee::findOrFail($employee_id);
             $emp_log  = new UserEmployee();
             $emp_log->email = $request->user_email;
-            $emp_log->role_id = $request->role;
-            $emp_log->company_id = $request->company_id;
-            $emp_log->employee_id = $employee_id;
+            $emp_log->role_id = 2;
+            $emp_log->company_id = Auth::guard('admins')->user()->id;
+//            $emp_log->employee_id = $employee_id;
             $emp_log->email_token = base64_encode($request->user_email);
             $emp_log->password = Hash::make($request->user_password);
             $emp_log->save();
-            $company = Organization::findOrFail($request->company_id)->first();
+           // dd($emp_log);
+            //dd($emp_log->company_id);
+            $company = OrganizationGenInfo::findOrFail($emp_log->company_id)->first();
+           // dd($company);
             event(new Registered($emp_log));
             dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
             return view('verification');
@@ -126,16 +142,18 @@ class EmployeeController extends Controller
 
     public  function  getJob()
     {
+
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.Job.index');
     }
     public function  getSalary()
     {
-
-
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.Salary.index');
     }
     public function getReport()
     {
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.report');
     }
     /**
@@ -148,17 +166,20 @@ class EmployeeController extends Controller
         public function loginEmployee(Request $request,$company_name,$token)
         {
 
+//            $this->shareMenu();
             return view('backend.HRIS.PIM.Employee.login',compact('company_name'));
         }
 
         public function EmployeeLogin(Request $request)
         {
 
+            //dd("hello");
+
             $email = Input::get('email');
             $password = Input::get('password');
-
+           // dd($email);
             $authAdmin = Auth::guard('employee')->attempt(['email' => $email, 'password' => $password]);
-
+//            dd($authAdmin);
             if (!$authAdmin) {
                 return Redirect::route('login')->with('global', 'You do not confirm your email yet.');
             }
@@ -182,24 +203,18 @@ class EmployeeController extends Controller
         $employee = Employee::where('emp_number',$employee_id)->first();
         return response()->json($employee);
     }
-
-
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $emp_id)
+    public function update(Request $request, $id)
     {
 
 //        dd($request->all());
-        $employee = Employee::findOrFail($emp_id);
-//        dd($employee);
-        $check = $request->isPersonalDeatils;
-//        dd($check);
-        if($check == 1) {
+        //dd($request->gender);
+            $employee = Employee::findOrFail($id);
             $employee->emp_lastname = $request->emp_lastname;
             $employee->emp_lastname = $request->emp_lastname;
             $employee->emp_firstname = $request->emp_firstname;
@@ -208,32 +223,20 @@ class EmployeeController extends Controller
             $employee->emp_dri_lice_num = $request->driver_license_number;
             $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
             $employee->emp_marital_status = $request->emp_marital_status;
-            $employee->nation_code = $request->nationality;
-            $employee->nickname = $request->nickname;
+               $gender = (int) $request->gender;
+              // dd($gender);
+            $employee->emp_gender = 1;
+           // $employee->nation_code = $request->nationality;
+            $employee->emp_nick_name = $request->nickname;
             $employee->emp_military_service = $request->military_service;
-            $employee->driver_license = $request->driver_license;
+            $employee->emp_dri_lice_num = $request->driver_license;
             $employee->emp_gender = $request->emp_gender;
-            $employee->smoker = $request->smoker;
+            $employee->emp_smoker = $request->smoker;
             $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
             $employee->save();
-        }
-        $isContactDetials = $request->isContactDetails;
-        if($isContactDetials == 1){
-            $employee->emp_street1 = $request->emp_street1;
-            $employee->emp_street2 = $request->emp_street2;
-            $employee->city_code = $request->city_code;
-            $employee->provin_code = $request->provin_code;
-            $employee->emp_zipcode = $request->emp_zipcode;
-            $employee->coun_code = $request->coun_code;
-            $employee->emp_hm_telephone = $request->emp_hm_telephone;
-            $employee->emp_mobile = $request->emp_mobile;
-            $employee->emp_work_telephone = $request->emp_work_telephone;
-            $employee->emp_work_email = $request->emp_work_email;
-            $employee->emp_oth_email = $request->emp_oth_email;
-            $employee->save();
-        }
+        return redirect('/administration/employee-personal-details')->with('success','Item has been edit successfully');
 
-        return response()->json($employee);
+       // return response()->json($employee);
 
     }
 //    =======================

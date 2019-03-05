@@ -5,7 +5,7 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
-                        <span>{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->email}}</span>
+                        {{--<span>{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->email}}</span>--}}
                         <i class="fa fa-angle-down"></i>
 					</a>
 				</span>

@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 use App\CandidateVacancy;
-use \App\Model\Employee;
-use App\Http\Controllers\Controller;
-use App\Job;
 use App\JobDescription;
-use App\Model\Backend\JobTitle;
-use App\OrganizationGenInfo;
-use App\Vacancy;
-use App\VacancyAttachment;
+use App\Model\JobVacancy;
+use App\Model\JobVacancyAttachment;
+use App\Model\OrganizationGenInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 
-class JobController extends Controller
+class JobController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -29,16 +24,15 @@ class JobController extends Controller
    }
     public function index()
     {
+        $this->shareMenu();
 //        $job = Job::orderBy('id','DESC')->get();
         $company_id = Auth::guard('admins')->user()->id;
-        $job = DB::table('kh_job_vacancy as v')
-            ->select('v.*','t.*','v.id as job_id','e.*')
-            ->join('tbl_job_titles as t','v.job_titles_code',"=",'t.id')
-            ->join('employees as e','v.hiring_manager_id','=','e.emp_id')
-            ->where('v.company_id',$company_id)
-            ->get();
-//        dd($job);
-        return view('backend.HRIS.Recruitment.Job.index',compact('job'));
+        $jobVacancy = DB::table('job_vacancies as v')
+                            ->join('job_titles as t','v.job_title_code','=','t.id')
+                            ->join('employees as e','v.hiring_manager_id','=','e.emp_number')
+                            ->get();
+//        dd($jobVacancy);
+        return view('backend.HRIS.Recruitment.Job.index',compact('jobVacancy'));
         //
     }
 //    public function store(Request $request)
@@ -54,30 +48,33 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
         public  function displayJob($job_id , $company_id){
+            $jobVacancy = JobVacancy::where('id',$job_id)->first();
+           // dd($jobVacancy);
            // dd('hello');
-            $isApply = false;
-            if(auth::user()){
-                $user_id  = auth::user()->id;
-            $isApply = DB::table('tbl_job_candidate as c')
-                ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
-                ->where('cv.vacancy_id',$job_id)
-                ->where('c.user_id',$user_id)
-                ->get();
-            }
-        $job_titles = DB::table('kh_job_vacancy as v')
-            ->select('v.*','t.*','v.id as job_id','p.*')
-            ->join('tbl_job_titles as t','v.job_titles_code',"=",'t.id')
-            ->join('tbl_province as p','v.location','=','p.id')
-            ->where('v.company_id',$company_id)
-            ->first();
+//            $isApply = false;
+//            if(auth::user()){
+//                $user_id  = auth::user()->id;
+//            $isApply = DB::table('tbl_job_candidate as c')
+//                ->join('tbl_job_candidate_vacancy as cv','cv.candidate_id','=','c.id')
+//                ->where('cv.vacancy_id',$job_id)
+//                ->where('c.user_id',$user_id)
+//                ->get();
+//            }
+//        $job_titles = DB::table('kh_job_vacancy as v')
+//            ->select('v.*','t.*','v.id as job_id','p.*')
+//            ->join('tbl_job_titles as t','v.job_titles_code',"=",'t.id')
+//            ->join('tbl_province as p','v.location','=','p.id')
+//            ->where('v.company_id',$company_id)
+//            ->first();
             //dd($job_Title);
 
-        $company = OrganizationGenInfo::where('id',$company_id)->first();
-        return view('backend.HRIS.Recruitment.Job.show',compact('job_titles','company','isApply'));
+//        $company = OrganizationGenInfo::where('id',$company_id)->first();
+        return view('backend.HRIS.Recruitment.Job.show',compact('jobVacancy'));
+//        return view('backend.HRIS.Recruitment.Job.show',compact('job_titles','company','isApply'));
         }
     public function destroy($id)
     {
-        $job = Job::destroy($id);
+        $job = JobVacancyAttachment::destroy($id);
         return response()->json($job);
     }
 
@@ -89,6 +86,7 @@ class JobController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.Recruitment.Job.create');
     }
 
@@ -100,22 +98,18 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-        $job = new Job();
-        $job->job_titles_code = $request->job_titles_code;
-        $job->description = $request->description;
-        $job->requirement = $request->requirement;
-        $job->min_salary = $request->min;
-        $job->max_salary = $request->max;
-        $job->job_type = $request->job_type;
-        $job->company_id = $request->company_id;
-        $job->hiring_manager_id = 1;
-        $job->negotiable = 1;
-//        dd($request->city);
-        $job->location = $request->city;
-        $job->closing_date = Carbon::parse($request->closing_date)->format('Y-m-d');
-        $job->save();
-        $job_id = $job->id;
+       // dd(input::get('job_requirements'));
+        $jobVacancy = new JobVacancy();
+        $jobVacancy->job_title_code = $request->job_titles_code;
+        $jobVacancy->name = $request->vacancy_name;
+        $jobVacancy->job_description = $request->job_description;
+        $jobVacancy->job_requirements = $request->job_requirements;
+        $jobVacancy->company_id = Auth::guard('admins')->user()->id;
+        $jobVacancy->hiring_manager_id = $request->hiring_manager;
+        $jobVacancy->status = 1;
+        $jobVacancy->no_of_position = $request->no_of_position;
+        $jobVacancy->save();
+        $jobVacancyID = $jobVacancy->id;
         $file = $request->file('resume');
 //        dd($request->hasFile('cv_file_id'));
         if ($request->hasFile('resume')) {
@@ -124,14 +118,13 @@ class JobController extends Controller
             $mytime = \Carbon\Carbon::now()->toDateTimeString();
             $name = $image->getClientOriginalName();
             $size = $image->getClientSize();
-//
             $type = $image->getMimeType();
             $destinationPath = public_path('/uploaded/CompanyJd/');
             $image->move($destinationPath, $name);
-            $jd = new JobDescription();
+            $jd = new JobVacancyAttachment();
             $jd->file_name = $name;
             $jd->file_size = $size;
-            $jd->job_vacancy_id =$job_id;
+            $jd->vacancy_id =$jobVacancyID;
             $jd->save();
         }
         return redirect('/administration/post-jobs')->with('success','Item created successfully!');
@@ -139,8 +132,9 @@ class JobController extends Controller
 
     public function edit($id)
     {
-        $job = Job::where('id',$id)->first();
-        return view('backend.HRIS.Recruitment.Job.edit',compact('job'));
+        $this->shareMenu();
+        $jobVacancy = JobVacancy::where('id',$id)->first();
+        return view('backend.HRIS.Recruitment.Job.edit');
     }
 
     /**
@@ -152,23 +146,17 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        dd($request->all());
-
-        $job = Job::findOrFail($id);
-        $job->job_titles_code = $request->job_titles_code;
-        $job->description = $request->description;
-        $job->requirement = $request->requirement;
-        $job->min_salary = $request->min;
-        $job->max_salary = $request->max;
-        $job->job_type = $request->job_type;
-        $job->company_id = $request->company_id;
-        $job->hiring_manager_id = $request->manager;
-        $job->negotiable = 1;
-//        dd($request->city);
-        $job->location = $request->city;
-        $job->closing_date = Carbon::parse($request->closing_date)->format('Y-m-d');
-        $job->save();
-        $job_id = $job->id;
+        $jobVacancy = JobVacancy::findOrFail($id);
+        $jobVacancy->job_title_code = $request->job_titles_code;
+        $jobVacancy->name = $request->vacancy_name;
+        $jobVacancy->job_description = $request->job_description;
+        $jobVacancy->job_requirements = $request->job_requirements;
+        $jobVacancy->company_id = Auth::guard('admins')->user()->id;
+        $jobVacancy->hiring_manager_id = $request->hiring_manager;
+        $jobVacancy->status = 1;
+        $jobVacancy->no_of_position = $request->no_of_position;
+        $jobVacancy->save();
+        $jobVacancyID = $jobVacancy->id;
         $file = $request->file('resume');
 //        dd($request->hasFile('cv_file_id'));
         if ($request->hasFile('resume')) {
@@ -177,17 +165,16 @@ class JobController extends Controller
             $mytime = \Carbon\Carbon::now()->toDateTimeString();
             $name = $image->getClientOriginalName();
             $size = $image->getClientSize();
-//
             $type = $image->getMimeType();
             $destinationPath = public_path('/uploaded/CompanyJd/');
             $image->move($destinationPath, $name);
-            $jd = new JobDescription();
+            $jd = new JobVacancyAttachment();
             $jd->file_name = $name;
             $jd->file_size = $size;
-            $jd->job_vacancy_id =$job_id;
+            $jd->vacancy_id =$jobVacancyID;
             $jd->save();
         }
-        return redirect('/administration/post-jobs')->with('success','Item edited successfully!');
+        return redirect('/administration/post-jobs')->with('success','Item created successfully!');
     }
 //
 //    /**

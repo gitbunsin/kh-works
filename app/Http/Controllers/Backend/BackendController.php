@@ -2,37 +2,38 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
+use Illuminate\Support\Facades\View;
 
 
+/**
+ * Class BackendController
+ * @package App\Http\Controllers\Backend
+ */
 class BackendController extends Controller
 {
 
+
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * BackendController constructor.
      */
-//    protected  $redirectTo ="/login";
-
-   public function __construct()
+    public function __construct()
    {
-       
        $this->middleware('isAdmin');
-       //parent::__construct();
-//       $this->middleware('isEmployee');
    }
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-       //dd(Auth::guard('admins'));
-//        dd(Auth::guard('employee')->user()->email);
-       // $authObj = AppHelper::getInstance()->getAuth();
-       // $menus = MenuHelper::getInstance()->getsidebarMenu($authObj->user()->id, $authObj->user()->role_id);
-       //  return view('Backend.HRIS.layouts.cms-layouts',compact('menus'));
+        $this->shareMenu();
         return view('Backend.HRIS.layouts.cms-layouts');
+    }
+
+    public function shareMenu() {
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        View::share('menus', $menus);
     }
 }

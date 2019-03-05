@@ -2,10 +2,11 @@
 
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
+use App\Model\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class EmployeeContactController extends Controller
+class EmployeeContactController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,9 @@ class EmployeeContactController extends Controller
     public function index()
     {
         //
-        return view('backend.HRIS.PIM.Employee.Contact.index');
+        $this->shareMenu();
+        $EmployeeContactDetails = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+        return view('backend.HRIS.PIM.Employee.Contact.index',compact('EmployeeContactDetails'));
 
     }
 
@@ -71,6 +74,24 @@ class EmployeeContactController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
+
+        $employee = Employee::findOrFail($id);
+        $employee->emp_street1 = $request->emp_street1;
+        $employee->emp_street2 = $request->emp_street2;
+        $employee->city_code = $request->city_code;
+        $employee->provin_code = $request->provin_code;
+        $employee->emp_zipcode = $request->emp_zipcode;
+        $employee->coun_code = $request->coun_code;
+        $employee->emp_hm_telephone = $request->emp_hm_telephone;
+        $employee->emp_mobile = $request->emp_mobile;
+        $employee->emp_work_telephone = $request->emp_work_telephone;
+        $employee->emp_work_email = $request->emp_work_email;
+        $employee->emp_oth_email = $request->emp_oth_email;
+        $employee->save();
+        return redirect('/administration/employee-contact-details')->with('success','Item has been edit successfully');
+
         //
     }
 

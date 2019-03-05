@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\LeaveEntitlement;
@@ -8,7 +10,7 @@ use App\Model\SubUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LeaveEntitlementController extends Controller
+class LeaveEntitlementController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +21,23 @@ class LeaveEntitlementController extends Controller
     {
         //
 
-        $categories = Subunit::where('parent_id', '=', 0)->get();
-        $allCategories = Subunit::pluck('title','id')->all();
-        return view('backend.HRIS.Leave.Entitlement.index',compact('allCategories','categories'));
+        $this->shareMenu();
+//        $categories = Subunit::where('parent_id', '=', 0)->get();
+//        $allCategories = Subunit::pluck('title','id')->all();
+
+        return view('backend.HRIS.Leave.Entitlement.index');
+
+
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * Step to apply leave
+     * 1 . Add Entitlement for leave
+     */
+    public function addLeaveEntitlement(){
+
+        return response()->json(['Data'=>'successfully']);
 
     }
 

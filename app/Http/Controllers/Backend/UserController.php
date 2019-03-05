@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserController extends BackendController
 {
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        parent::shareMenu();
         $company_id = Auth::guard('admins')->user()->id;
         $u = User::where('company_id',$company_id)->get();
         return view('backend.HRIS.admin.UserManagement.User.index',compact('u'));
@@ -31,6 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        parent::shareMenu();
         return view('backend.HRIS.admin.UserManagement.User.create');
     }
 

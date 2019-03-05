@@ -34,13 +34,12 @@
                                         <section class="col col-6">
                                             <label class="label"> Monday </label>
                                             <label class="select">
-                                                @php $w = \App\WorkWeek::all();@endphp
+                                                {{--@php $w = \App\WorkWeek::all();@endphp--}}
                                                 <select name="mon" id="mon">
-                                                    @foreach($w as $ws)
-                                                            <option value="0" {{"8" == $ws->mon ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                            <option value="8" {{"0" == $ws->mon ? "selected == 'selected'" :''}}> Full Day</option>
-                                                            <option value="4" {{"4" == $ws->mon ? "selected == 'selected'" :''}}> Half Day</option>
-                                                     @endforeach
+
+                                                            <option value="0"> Non Working day </option>
+                                                            <option value="8"> Full Day</option>
+                                                            <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -49,9 +48,9 @@
                                             <label class="label"> Tuesday </label>
                                             <label class="select">
                                                 <select name="tue" id="tue">
-                                                    <option value="0" {{"8" == $ws->tue ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                    <option value="8" {{"0" == $ws->tue ? "selected == 'selected'" :''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $ws->tue ? "selected == 'selected'" :''}}> Half Day</option>
+                                                    <option value="0"> Non Working day </option>
+                                                    <option value="8"> Full Day</option>
+                                                    <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -62,9 +61,9 @@
                                             <label class="label"> Wednesday </label>
                                             <label class="select">
                                                 <select name="wed" id="wed">
-                                                    <option value="0" {{"8" == $ws->wed ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                    <option value="8" {{"0" == $ws->wed ? "selected == 'selected'" :''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $ws->wed ? "selected == 'selected'" :''}}> Half Day</option>
+                                                    <option value="0"> Non Working day </option>
+                                                    <option value="8"> Full Day</option>
+                                                    <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -73,9 +72,9 @@
                                             <label class="label"> Thursday </label>
                                             <label class="select">
                                                 <select name="thu" id="thu">
-                                                    <option value="0" {{"8" == $ws->thu ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                    <option value="8" {{"0" == $ws->thu ? "selected == 'selected'" :''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $ws->thu ? "selected == 'selected'" :''}}> Half Day</option>
+                                                    <option value="0"> Non Working day </option>
+                                                    <option value="8"> Full Day</option>
+                                                    <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -86,9 +85,9 @@
                                             <label class="label"> friday </label>
                                             <label class="select">
                                                 <select name="fri" id="fri">
-                                                    <option value="0" {{"8" == $ws->fri ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                    <option value="8" {{"0" == $ws->fri ? "selected == 'selected'" :''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $ws->fri ? "selected == 'selected'" :''}}> Half Day</option>
+                                                    <option value="0"> Non Working day </option>
+                                                    <option value="8"> Full Day</option>
+                                                    <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -97,9 +96,9 @@
                                             <label class="label"> Saturday </label>
                                             <label class="select">
                                                 <select name="sat" id="sat">
-                                                    <option value="0" {{"8" == $ws->sat ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                    <option value="8" {{"0" == $ws->sat ? "selected == 'selected'" :''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $ws->sat ? "selected == 'selected'" :''}}> Half Day</option>
+                                                    <option value="0"> Non Working day </option>
+                                                    <option value="8"> Full Day</option>
+                                                    <option value="4"> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -109,9 +108,9 @@
                                         <label class="label"> Sunday </label>
                                         <label class="select">
                                             <select name="sun" id="sun">
-                                                <option value="0" {{"8" == $ws->sun ? "selected == 'selected'" :''}}> Non Working day </option>
-                                                <option value="8" {{"0" == $ws->sun ? "selected == 'selected'" :''}}> Full Day</option>
-                                                <option value="4" {{"4" == $ws->sun ? "selected == 'selected'" :''}}> Half Day</option>
+                                                <option value="0" > Non Working day </option>
+                                                <option value="8"> Full Day</option>
+                                                <option value="4"> Half Day</option>
                                             </select>
                                             <i></i>
                                         </label>

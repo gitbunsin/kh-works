@@ -86,10 +86,10 @@
                                             <label class="select">
                                                 <select name="Issued_By" id="Issued_By">
                                                     <option value="">-- select --</option>
-                                                    @php $nationality = \App\nation::all(); @endphp
-                                                    @foreach($nationality as $nationalities)
-                                                        <option value="{{$nationalities->id}}" {{$nationalities->id == $m->ep_passport_type_flg ? 'selected == "selected"': ''}}>{{$nationalities->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $nationality = \App\nation::all(); @endphp--}}
+                                                    {{--@foreach($nationality as $nationalities)--}}
+                                                        {{--<option value="{{$nationalities->id}}" {{$nationalities->id == $m->ep_passport_type_flg ? 'selected == "selected"': ''}}>{{$nationalities->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>

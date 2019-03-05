@@ -7,7 +7,7 @@ use App\Model\TerminationReason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TerminationReasonController extends Controller
+class TerminationReasonController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +18,7 @@ class TerminationReasonController extends Controller
     {
         //
        // dd('hello');
+        $this->shareMenu();
         $t = TerminationReason::all();
         return view('backend.HRIS.PIM.Configuration.TerminationReason.index',compact('t'));
     }
@@ -30,6 +31,7 @@ class TerminationReasonController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Configuration.TerminationReason.create');
     }
 
@@ -70,6 +72,7 @@ class TerminationReasonController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $t = TerminationReason::findOrFail($id);
         return view('backend.HRIS.PIM.Configuration.TerminationReason.edit',compact('t'));
     }

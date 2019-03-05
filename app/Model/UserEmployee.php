@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -10,14 +10,16 @@ class UserEmployee extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'tbl_user_employee';
+    protected $table = 'user_employees';
     protected $fillable = [
         'id',
         'emp_id',
         'company_id',
         'role_id',
+
         'email',
         'password',
+        'verified',
         'email_token',
         'update_at'
     ];

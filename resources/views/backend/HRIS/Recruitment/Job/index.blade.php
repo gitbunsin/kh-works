@@ -29,25 +29,25 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Company Name</th>
+                                    <th>Vacancy Name</th>
                                     <th>Hiring Manager</th>
                                     <th>Job title</th>
-                                    <th>Closing Date</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($job as $jobs)
-                                    <tr id="job_id{{$jobs->job_id}}">
-                                        <td>{{Auth::guard('admins')->user()->name}}</td>
-                                        <td>{{$jobs->emp_lastname}} {{$jobs->emp_firstname}}</td>
-                                        <td>{{$jobs->job_titles}}</td>
-                                        <td>{{date('d-m-Y', strtotime($jobs->closing_date))}}</td>
+                                @foreach($jobVacancy as $jobVacancys)
+                                    <tr id="">
+                                        <td>{{$jobVacancys->name}}</td>
+                                        <td>{{$jobVacancys->emp_lastname}}{{$jobVacancys->emp_firstname}}</td>
+                                        <td>{{$jobVacancys->name}}</td>
+                                        <td>Active</td>
                                         <td>
-                                            <a href="{{url('administration/post-jobs/'.$jobs->job_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                            <a href="{{url('administration/post-jobs/'.$jobVacancys->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$jobs->job_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$jobVacancys->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -61,7 +61,7 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@endsection
+@section('script')
     <script src="https://cdn.rawgit.com/JDMcKinstry/JavaScriptDateFormat/master/Date.format.min.js"></script>
 @endsection

@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class ProjectReportController extends Controller
+class ProjectReportController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +15,7 @@ class ProjectReportController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
 
         return view('backend.HRIS.Time.Project.index');
     }
@@ -27,6 +28,7 @@ class ProjectReportController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
     }
 
     /**

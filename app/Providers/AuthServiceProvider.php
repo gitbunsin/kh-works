@@ -1,10 +1,6 @@
 <?php
 
 namespace App\Providers;
-
-use App\Policies\UserPolicy;
-use App\User;
-use App\UserEmployee;
 use Illuminate\Support\Facades\Schema; //Import Schema
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

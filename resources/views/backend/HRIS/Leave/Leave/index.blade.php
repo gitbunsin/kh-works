@@ -109,10 +109,10 @@
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select Sub Unit --</option>
-                                                    @php $location = \App\Location::all(); @endphp
-                                                    @foreach($location as $locations)
-                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                    {{--@foreach($location as $locations)--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -122,10 +122,10 @@
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select Employee Status --</option>
-                                                    @php $location = \App\Location::all(); @endphp
-                                                    @foreach($location as $locations)
-                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                    {{--@foreach($location as $locations)--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>

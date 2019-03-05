@@ -21,7 +21,6 @@ class Employee extends Model
         'ethnic_race_code',
         'emp_birthday',
         'nation_code',
-        'emp_gender',
         'emp_marital_status',
         'emp_ssn_num',
         'emp_sin_num',

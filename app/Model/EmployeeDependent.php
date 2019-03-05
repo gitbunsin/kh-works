@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Dependents extends Model
+class EmployeeDependent extends Model
 {
     //
-    protected $table = 'tbl_hr_emp_dependents';
+    protected $table = 'employee_dependents';
     protected $fillable = ['id',
         'emp_number',
         'relationship_id',
@@ -17,6 +17,4 @@ class Dependents extends Model
         'ed_date_of_birth',
     ];
     public $timestamps = false;
-
-
 }

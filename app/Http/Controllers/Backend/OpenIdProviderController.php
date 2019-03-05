@@ -9,7 +9,7 @@ use App\Model\OpenidProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OpenIdProviderController extends Controller
+class OpenIdProviderController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +19,12 @@ class OpenIdProviderController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-
         $OProvoider = OpenIdProvider::where('company_id',$company_id)->get();
         return view('backend.HRIS.admin.Configuration.OpenIDProvider.index',compact('OProvoider'));
     }
@@ -37,6 +37,7 @@ class OpenIdProviderController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Configuration.OpenIDProvider.create');
 
     }
@@ -86,7 +87,7 @@ class OpenIdProviderController extends Controller
     public function edit($id)
     {
         //
-
+        $this->shareMenu();
         $OpenIDProvider = OpenIdProvider::findOrFail($id);
         return view('backend.HRIS.admin.Configuration.OpenIDProvider.edit',compact('OpenIDProvider'));
 

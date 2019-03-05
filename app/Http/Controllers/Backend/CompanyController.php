@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\OrganizationGenInfo;
 use App\User;
@@ -9,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
-class CompanyController extends Controller
+class CompanyController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +24,7 @@ class CompanyController extends Controller
     }
     public function index()
     {
-//      $CompanyProfiles = DB::table('tbl_organization_gen_info')->get()->first();
-
-//        dd(Gate::allows('admin-only'));
+        $this->shareMenu();
         return view('backend.HRIS.admin.Company.index');
     }
 

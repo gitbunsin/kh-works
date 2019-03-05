@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class LeaveEntitlement extends Model
 {
     //
-    protected $table = 'tbl_hr_leave_entitlement';
+
+    protected $table = 'leave_entitlements';
     protected $fillable = [
         'id',
         'employee_id',
@@ -21,4 +22,6 @@ class LeaveEntitlement extends Model
         'deleted',
         'created_by_name'
     ];
+
+
 }

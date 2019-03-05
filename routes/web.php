@@ -45,10 +45,10 @@ Route::get('/administration' ,'Backend\BackendController@index')->name('admin');
 Route::post('/register/admin', 'Auth\AdminRegister@create')->name('register.admin');
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function ($request) {
-        Route::get('/login/{company_name}/{token}','EmployeeController@loginEmployee')->middleware('isEmployee');
-        Route::post('/employee-login','EmployeeController@EmployeeLogin');
+        Route::get('/login/{company_name}/{token}','EmployeeController@loginEmployee')->name('employee.login.view');
+        Route::post('/employee-login','EmployeeController@EmployeeLogin')->name('employee.login');
         Route::resource('user', 'UserController');
-        Route::resource('userRole', 'UserRoleController');
+        //Route::resource('userRole', 'UserRoleController');
         Route::resource('candidate', 'CandidateController');
         Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
         Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
@@ -109,6 +109,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
         Route::resource('define-workweek','WorkWeekController');
         Route::resource('define-leave-list','LeaveController');
+
+
         Route::get('get-applyLeave','LeaveController@applyLeave');
         Route::post('leave-request','LeaveController@leaveRequest');
 
@@ -122,7 +124,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('view-leave-my-entitlements','LeaveController@viewMyLeaveEntitlements');
         Route::get('view-my-leave-list','LeaveController@viewMyLeaveList');
         Route::resource('add-leave-entitlement','LeaveEntitlementController');
-
+        Route::get('addLeaveEntitlement','LeaveEntitlementController@addLeaveEntitlement');
 
         //PIM
         Route::resource('list-CustomFields','CustomFieldController');
@@ -140,7 +142,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('employee/report/{report_id}/{method_id}/{employee_id}','ReportingToController@ShowEmployeeReport');
         Route::resource('view-immigration','ImmigrationController');
         Route::resource('view-membership','EmployeeMembershipController');
-        Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');
+       // Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');
 
 
         //Time
@@ -165,6 +167,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('view-reporting-methods','ReportingMethodsController');
 
 
+
+        //PayRoll
+         Route::resource('view-payroll','PayrollController');
 
 
 //        Route::resource('employee-skills',)

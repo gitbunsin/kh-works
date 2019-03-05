@@ -7,7 +7,7 @@ use App\Model\OauthClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthClientController extends Controller
+class AuthClientController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +16,7 @@ class AuthClientController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         //
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
@@ -35,6 +36,7 @@ class AuthClientController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Configuration.AuthClient.create');
     }
 
@@ -83,6 +85,7 @@ class AuthClientController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $AClient = oauth_clients::findOrFail($id);
         return view('backend.HRIS.admin.Configuration.AuthClient.edit',compact('AClient'));
     }

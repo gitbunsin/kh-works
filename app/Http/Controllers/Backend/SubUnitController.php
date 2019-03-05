@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-
-use App\Subunit;
+use App\Model\SubUnit;
 use Illuminate\Http\Request;
 
-class SubUnitController extends Controller
+class SubUnitController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +14,13 @@ class SubUnitController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         $categories = Subunit::where('parent_id', '=', 0)->get();
         $allCategories = Subunit::pluck('title','id')->all();
 //        return view('categoryTreeview');
         return view('backend.HRIS.admin.Company.structure.index',compact('categories','allCategories'))->with('success','Item has been added');
 
     }
-
 
     /**
      * Show the application dashboard.

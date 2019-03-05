@@ -7,12 +7,13 @@ use \App\Model\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Interview;
+use App\Model\JobInterview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class InterviewController extends Controller
+class InterviewController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -27,14 +28,16 @@ class InterviewController extends Controller
     }
     public function index()
     {
-        $interview = DB::table('tbl_job_interview as v')
-            ->select('v.*','c.*','v.id as interview_id','c.id as candidate_id')
-            ->join('tbl_job_candidate as c','c.id','=','v.candidate_id')
-            ->where('v.status',0)
-            ->get();
+//        $interview = DB::table('tbl_job_interview as v')
+//            ->select('v.*','c.*','v.id as interview_id','c.id as candidate_id')
+//            ->join('tbl_job_candidate as c','c.id','=','v.candidate_id')
+//            ->where('v.status',0)
+//            ->get();
 //        //
 //        dd($interview);
-        return view('backend.HRIS.Recruitment.Interview.index',compact('interview'));
+        $this->shareMenu();
+        $Interview = JobInterview::all();
+        return view('backend.HRIS.Recruitment.Interview.index',compact('Interview'));
     }
     public function updateUser(Request $request)
 

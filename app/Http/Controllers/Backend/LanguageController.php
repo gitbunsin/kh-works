@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LanguageController extends Controller
+class LanguageController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,11 @@ class LanguageController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         $language = Language::all();
+
         return view('backend.HRIS.admin.Qualifications.Language.index',compact('language'));
+
     }
     /**
      * Show the form for creating a new resource.
@@ -28,6 +31,7 @@ class LanguageController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Qualifications.Language.create');
     }
 
@@ -72,6 +76,7 @@ class LanguageController extends Controller
     public function edit($id)
     {
 
+        $this->shareMenu();
         $language = Language::where('id',$id)->first();
         return view('backend.HRIS.admin.Qualifications.Language.edit',compact('language'));
 

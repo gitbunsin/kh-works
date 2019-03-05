@@ -1,15 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class LeaveAdjustment extends Model
 {
     //
-
     protected $connection = 'mysql';
-    protected $table = 'tbl_leave_adjustment';
+    protected $table = 'leave_adjustments';
     protected $fillable =
         ['id',
             'employee_id',

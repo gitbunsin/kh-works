@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Leave extends Model
 {
     //
-    protected $table = 'tbl_hr_leave';
+    protected $table = 'leaves';
     protected $fillable = [
         'id',
         'employee_id',

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use \App\Model\EmployeeEmergencyContacts;
 use App\Http\Controllers\Controller;
 
@@ -18,12 +20,9 @@ class EmployeeEmergencyContactController extends Controller
     public function index()
     {
 
-        $EmergencyContact = DB::table('tbl_hr_emp_emergency_contacts as c')
-                        ->select('c.*','e.*','r.*','c.id as emergency_id')
-                        ->join('employees as e','c.emp_number','=','e.emp_id')
-                        ->join('tbl_relationship as r','c.relationship_id','=','r.id')
-                        ->get();
-        return view('backend.HRIS.PIM.Employee.Emergency.index',compact('EmergencyContact'));
+        $EmergencyContact = DB::table('employee_emergency_contacts as c')->get();
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.Emergency.index',compact('EmergencyContact','menus'));
     }
 
     /**

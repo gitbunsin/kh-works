@@ -4,9 +4,9 @@ use \App\Model\EmployeeStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Backend\EmployementStatus;
+use App\Model\EmployementStatus;
 
-class EmploymentStatusController extends Controller
+class EmploymentStatusController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,9 @@ class EmploymentStatusController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         $employee_status = EmployementStatus::all();
-//        dd($employee_status);
+
         return view('backend.HRIS.admin.EmployeeStatus.index',compact('employee_status'));
     }
 
@@ -32,6 +33,7 @@ class EmploymentStatusController extends Controller
      */
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.admin.EmployeeStatus.create');
     }
 
@@ -71,6 +73,7 @@ class EmploymentStatusController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $employeeStatus = EmployementStatus::where('id',$id)->first();
         return view('backend.HRIS.admin.EmployeeStatus.edit',compact('employeeStatus'));
     }

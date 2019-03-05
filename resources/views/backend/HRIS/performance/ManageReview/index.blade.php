@@ -47,24 +47,24 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($p as $ps)
-                                    <tr id="termination-reason{{$ps->id}}">
-                                        <td>{{$ps->emp_firstname}}{{$ps->emp_lastname}}</td>
-                                        <td>{{$ps->due_date}}</td>
-                                        <td>{{$ps->work_period_start}}</td>
-                                        <td></td>
-                                        <td></td>
+                                {{--@foreach($p as $ps)--}}
+                                    {{--<tr id="termination-reason{{$ps->id}}">--}}
+                                        {{--<td>{{$ps->emp_firstname}}{{$ps->emp_lastname}}</td>--}}
+                                        {{--<td>{{$ps->due_date}}</td>--}}
+                                        {{--<td>{{$ps->work_period_start}}</td>--}}
+                                        {{--<td></td>--}}
+                                        {{--<td></td>--}}
 
-                                        <td>
-                                            <a  href="{{url('/administration/employee-performance-review/'.$ps->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="{{$ps->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        {{--<td>--}}
+                                            {{--<a  href="{{url('/administration/employee-performance-review/'.$ps->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="{{$ps->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

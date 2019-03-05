@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeMembershipController extends Controller
+class EmployeeMembershipController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,17 +19,19 @@ class EmployeeMembershipController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $employee_log = Auth::guard('admins')->user()->id;
         }else{
             $employee_log = Auth::guard('employee')->user()->id;
         }
-        $m = DB::table('tbl_hr_emp_memeber_detail as m')
-                        ->join('tbl_membership as c','m.membership_code','=','c.id')
-                        ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
-                        ->where('m.id',$employee_log)
-                        ->get();
+        $m = DB::table('employee_member_details as m')->get();
+//                        ->join('tbl_membership as c','m.membership_code','=','c.id')
+//                        ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
+//                        ->where('m.id',$employee_log)
+//                        ->get();
 //        dd($m);
+
         return view('backend.HRIS.PIM.Employee.Membership.index',compact('m'));
 
     }
@@ -42,6 +44,7 @@ class EmployeeMembershipController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.Membership.create');
     }
 
@@ -86,6 +89,7 @@ class EmployeeMembershipController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $comployee_log = Auth::guard('admins')->user()->id;
         }else{

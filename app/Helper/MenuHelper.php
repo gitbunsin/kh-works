@@ -2,8 +2,6 @@
 
 
 namespace App\Helper;
-
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -91,6 +89,9 @@ class MenuHelper
                 $parentMenu[$k1]->sub_menu[$k2]->sub_menu = $second_sub_menu;
             }
         }
+
+       // dd($parentMenu);
+
         return $parentMenu;
     }
     public function removeArray($origin, $arr_remove) {

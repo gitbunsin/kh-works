@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Kpi;
 use Illuminate\Http\Request;
@@ -29,7 +31,8 @@ class KpiController extends Controller
 //                ->get();
         $k = Kpi::all();
        // dd($k);
-        return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k'));
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k','menus'));
     }
 
     /**

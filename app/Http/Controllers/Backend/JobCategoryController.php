@@ -6,7 +6,7 @@ use App\Model\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class JobCategoryController extends Controller
+class JobCategoryController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,6 +19,7 @@ class JobCategoryController extends Controller
     }
     public function index()
     {
+        $this->shareMenu();
         $JobCategory = JobCategory::all();
         return view('backend.HRIS.admin.JobCategory.index',compact('JobCategory'));
     }
@@ -30,6 +31,7 @@ class JobCategoryController extends Controller
      */
     public function create(Request $request)
     {
+        $this->shareMenu();
         return view('backend.HRIS.admin.JobCategory.create');
 //        $JobCategory = JobCategory::create($request->all());
 //        return response()->json($JobCategory);
@@ -66,6 +68,7 @@ class JobCategoryController extends Controller
     public function edit($id)
     {
 //        dd('hello');
+        $this->shareMenu();
         $job_category = JobCategory::findorFail($id);
         return view('backend.HRIS.admin.JobCategory.edit',compact('job_category'));
 //        $JobCategory = JobCategory::create($request->all());

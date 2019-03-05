@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
         // dd(Auth::guard('admins'));
         // if (Auth::guard('admins')->user() != null || Auth::guard('employee')->user() != null) {
-            $menus = MenuHelper::getInstance()->getSidebarMenu(1,1);
-            View::share('menus', $menus);
+//            $menus = MenuHelper::getInstance()->getSidebarMenu(1,1);
+//            View::share('menus', $menus);
         // }
 
 

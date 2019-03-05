@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\Model\LeaveType;
 use Illuminate\Http\Request;
 
-class LeaveTypeController extends Controller
+class LeaveTypeController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +18,7 @@ class LeaveTypeController extends Controller
     {
         //
         $l = LeaveType::all();
+        $this->shareMenu();
         return view('backend.HRIS.Leave.leaveTypes.index',compact('l'));
 
     }
@@ -28,6 +31,7 @@ class LeaveTypeController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.Leave.leaveTypes.create');
 
     }
@@ -68,6 +72,7 @@ class LeaveTypeController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $l = LeaveType::findOrFail($id);
         return view('backend.HRIS.Leave.leaveTypes.edit',compact('l'));
     }

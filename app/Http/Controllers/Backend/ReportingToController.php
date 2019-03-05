@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Model\ReportingMethods;
@@ -21,13 +23,14 @@ class ReportingToController extends Controller
     public function index()
     {
         //
-        $reporting = DB::table('tbl_hr_emp_reportto as r')
-                    ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id','m.id as method_id')
-                    ->join('reporting_methods as m','r.erep_reporting_method','=','m.id')
-                    ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
-                    ->get();
+        $reporting = DB::table('employee_reporttos as r')->get();
+//                    ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id','m.id as method_id')
+//                    ->join('reporting_methods as m','r.erep_reporting_method','=','m.id')
+//                    ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+//                    ->get();
                     //dd($reporting);
-        return view('backend.HRIS.PIM.Employee.ReportingTo.index',compact('reporting'));
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.ReportingTo.index',compact('reporting','menus'));
     }
 
     /**

@@ -1,12 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Immigration extends Model
+class EmployeePassport extends Model
 {
-    protected $table = 'tbl_hr_emp_passport';
+    //
+    protected $table = 'employee_passports';
     protected $fillable = [
         'id',
         'emp_number',
@@ -21,5 +22,4 @@ class Immigration extends Model
         'cou_code',
     ];
     public $timestamps = false;
-    //
 }

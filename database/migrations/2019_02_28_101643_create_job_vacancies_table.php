@@ -27,7 +27,8 @@ class CreateJobVacanciesTable extends Migration
             $table->foreign('job_titles_code')->references('id')->on('job_title')->onDelete('cascade');
 
             $table->string('name')->nullable();
-            $table->string('description')->nullable();
+            $table->string('job_description')->nullable();
+            $table->string('job_description')->nullable();
             $table->integer('no_of_position')->nullable();
             $table->integer('status')->nullable();
             $table->integer('public_in_feed')->nullable();

@@ -19,60 +19,60 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <!-- end widget edit box -->
-
                         <!-- widget content -->
                         <div class="widget-body no-padding">
                             <form id="frmCandidate" method="POST" action="{{ url('administration/candidate') }}" class="smart-form" enctype="multipart/form-data" >
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-4">
-                                            <label class="label">Full Name</label>
-                                            <label class="input">
-                                                <input type="text" maxlength="20" id="full_name" name="full_name">
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="label">Email</label>
-                                            <label class="input">
-                                                <input type="text" id="email" name="email">
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            @php
-                                                use Illuminate\Support\Facades\DB;$c_id = Auth::guard('admins')->user()->id;
-                                                $j = DB::table('kh_job_vacancy as v')
-                                                        ->select('v.*','t.*','v.id as j_id')
-                                                        ->join('tbl_job_titles as t','v.job_titles_code','=','t.id')
-                                                        ->get();
-                                            @endphp
+                                            <section class="col col-4">
+                                                <label class="label">First Name</label>
+                                                <label class="input">
+                                                    <input type="text" name="emp_firstname" id="emp_firstname">
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label class="label">Middle Name</label>
+                                                <label class="input">
+                                                    <input type="text" name="emp_middle_name" id="emp_middle_name">
+                                                </label>
+                                            </section>
+                                            <section class="col col-4">
+                                                <label class="label">Last Name</label>
+                                                <label class="input">
+                                                    <input type="text" name="emp_lastname" id="emp_lastname" >
+                                                </label>
+                                            </section>
+                                        </div>
 
-                                            <label class="label">Job Title</label>
-                                            <label class="select">
-                                                <select name="job_titles" id="job_titles" class="required">
-                                                    <option value="">-- select --</option>
-                                                    @foreach($j as $js)
-                                                        <option value="{{$js->id}}">{{$js->job_titles}}</option>
-                                                        <input type="hidden" id="vacancy_id" name="vacancy_id" value="{{$js->j_id}}"/>
-                                                    @endforeach
-                                                </select>
-                                                <i></i>
-                                            </label>
-                                        </section>
+                                      <div class="row">
+                                          <section class="col col-4">
+                                              <label class="label">Job Vacancy</label>
+                                              <label class="select">
+                                                  <select name="vacancy_name" id="vacancy_name" class="required">
+                                                      @php $JobVacancy = \App\Model\JobVacancy::all(); @endphp
+                                                      <option value="">-- select --</option>
+                                                      @foreach($JobVacancy as $JobVacancys)
+                                                      <option value="{{$JobVacancys->id}}">{{$JobVacancys->name}}</option>
+                                                      @endforeach
+                                                  </select>
+                                                  <i></i>
+                                              </label>
+                                          </section>
+                                          <section class="col col-4">
+                                              <label class="label">Contact No</label>
+                                              <label class="input">
+                                                  <input name="contact_number" id="contact_number" type="text" list="list">
+                                              </label>
+                                          </section>
+                                          <section class="col col-4">
+                                              <label class="label">Email</label>
+                                              <label class="input">
+                                                  <input name="email" id="email" placeholder="Enter comma separated words..." type="email">
+                                              </label>
+                                          </section>
                                     </div>
                                     <div class="row">
-                                        <section class="col col-4">
-                                            <label class="label">Contact Number</label>
-                                            <label class="input">
-                                                <input name="contact_number" id="contact_number" type="text" list="list">
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="label">Key Words</label>
-                                            <label class="input">
-                                                <input name="keyword" id="keyword" placeholder="Enter comma separated words..." type="text" maxlength="10">
-                                            </label>
-                                        </section>
                                         <section class="col col-4">
                                             <label class="label"> Date </label>
                                             <label class="input">
@@ -80,9 +80,7 @@
                                                 <input type="text" name="date-of-application" placeholder="Request activation on" class="datepicker">
                                             </label>
                                         </section>
-                                    </div>
-                                    <div>
-                                        <section>
+                                        <section class="col col-4">
                                             <label class="label">Resume</label>
                                             <div class="input input-file">
                                                 <span class="button">
@@ -93,11 +91,10 @@
                                             </div>
                                         </section>
                                     </div>
-
                                     <section>
                                         <label class="label">Comment</label>
                                         <label class="textarea">
-                                            <textarea rows="6" class="custom-scroll"></textarea>
+                                            <textarea name="comment" rows="6" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.

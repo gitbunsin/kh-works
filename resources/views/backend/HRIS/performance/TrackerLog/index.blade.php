@@ -125,28 +125,28 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($t as $ts)
-                                    <tr id="termination-reason">
-                                        <td></td>
-                                        <td>{{$ts->log}}</td>
-                                        <td></td>
-                                        @if($ts->achievement =="1")
-                                        <td> Positive</td>
-                                        @else
-                                            <td>Negative</td>
-                                        @endif
-                                        <td>{{$ts->created_at}}</td>
-                                        <td></td>
-                                        <td>
-                                            <a  href="{{url('/administration/employee-kpi/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                {{--@foreach($t as $ts)--}}
+                                    {{--<tr id="termination-reason">--}}
+                                        {{--<td></td>--}}
+                                        {{--<td>{{$ts->log}}</td>--}}
+                                        {{--<td></td>--}}
+                                        {{--@if($ts->achievement =="1")--}}
+                                        {{--<td> Positive</td>--}}
+                                        {{--@else--}}
+                                            {{--<td>Negative</td>--}}
+                                        {{--@endif--}}
+                                        {{--<td>{{$ts->created_at}}</td>--}}
+                                        {{--<td></td>--}}
+                                        {{--<td>--}}
+                                            {{--<a  href="{{url('/administration/employee-kpi/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

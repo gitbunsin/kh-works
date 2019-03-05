@@ -30,7 +30,7 @@ return [
     ],
     'employee' => [
         'driver' => 'eloquent',
-        'model' => App\UserEmployee::class,
+        'model' => App\Model\UserEmployee::class,
     ],
 
     /*
@@ -98,7 +98,7 @@ return [
         ],
         'employee' => [
             'driver' => 'eloquent',
-            'model'  => App\UserEmployee::class,
+            'model'  => App\Model\UserEmployee::class,
         ],
 
         // 'users' => [

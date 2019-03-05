@@ -46,22 +46,22 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($p as $ps)
-                                    <tr id="termination-reason">
-                                        <td>{{$ps->emp_lastname}}{{$ps->emp_firstname}}</td>
-                                        <td><a href="/administration/performance-tracker-log">{{$ps->tracker_name}}</a> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a  href="{{url('/administration/employee-kpi/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                {{--@foreach($p as $ps)--}}
+                                    {{--<tr id="termination-reason">--}}
+                                        {{--<td>{{$ps->emp_lastname}}{{$ps->emp_firstname}}</td>--}}
+                                        {{--<td><a href="/administration/performance-tracker-log">{{$ps->tracker_name}}</a> </td>--}}
+                                        {{--<td></td>--}}
+                                        {{--<td></td>--}}
+                                        {{--<td>--}}
+                                            {{--<a  href="{{url('/administration/employee-kpi/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    {{--</tr>--}}
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

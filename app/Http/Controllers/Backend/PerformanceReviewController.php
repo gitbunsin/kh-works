@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class PerformanceReviewController extends Controller
+class PerformanceReviewController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +18,16 @@ class PerformanceReviewController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         //
         //$p = PerformanceReview::all();
-        $p = DB::table('tbl_hr_performance_review as p')
-            ->select('p.*','e.*')
-            ->join('employees as e','p.employee_id','=','e.emp_id')
-            ->get();
+//        $p = DB::table('tbl_hr_performance_review as p')
+//            ->select('p.*','e.*')
+//            ->join('employees as e','p.employee_id','=','e.emp_id')
+//            ->get();
 //        dd($p);
-        return view('backend.HRIS.performance.ManageReview.index',compact('p'));
+//        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.performance.ManageReview.index');
     }
 
     /**
@@ -36,6 +38,7 @@ class PerformanceReviewController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.performance.ManageReview.create');
 
     }
@@ -48,10 +51,12 @@ class PerformanceReviewController extends Controller
        public function EvaluatePerformancReview(){
 
 
+           $this->shareMenu();
            return view('backend.HRIS.performance.ReviewList.index');
        }
         public function getMyReviewPerformance()
         {
+            $this->shareMenu();
 
             return view('backend.HRIS.performance.MyReview.index');
 

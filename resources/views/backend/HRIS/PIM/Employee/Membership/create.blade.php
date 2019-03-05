@@ -30,7 +30,7 @@
                                             <label class="select">
                                                 <select name="membership_id" id="membership_id">
                                                     <option value="">-- select --</option>
-                                                    @php $membership = \App\Membership::all(); @endphp
+                                                    @php $membership = \App\Model\Membership::all(); @endphp
                                                          @foreach($membership as $memberships)
                                                             <option value="{{$memberships->id}}">{{$memberships->name}}</option>
                                                         @endforeach
@@ -62,7 +62,7 @@
                                             <label class="select">
                                                 <select name="currency_id" id="currency_id">
                                                     <option value="">-- select --</option>
-                                                    @php $currency = \App\Model\Backend\Currency::all(); @endphp
+                                                    @php use App\Model\currency;$currency = Currency::all(); @endphp
                                                     @foreach($currency as $currencys)
                                                             <option value="{{$currencys->id}}">{{$currencys->name}}</option>
                                                     @endforeach

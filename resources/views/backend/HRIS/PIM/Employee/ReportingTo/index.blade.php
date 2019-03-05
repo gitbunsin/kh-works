@@ -100,13 +100,13 @@
                                         <label class="label col col-2"> Reporting Methods</label>
                                         <div class="from-group col col-10">
                                         <label class="select">
-                                            <select name="reporting_id" id="reporting_id">
-                                                <option value="">-- Reporting --</option>
-                                                @php $reporting = \App\ReportingMethods::all(); @endphp
-                                                @foreach($reporting as $reportings)
-                                                     <option value="{{$reportings->id}}">{{$reportings->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            {{--<select name="reporting_id" id="reporting_id">--}}
+                                                {{--<option value="">-- Reporting --</option>--}}
+                                                {{--@php use App\Model\ReportingMethods;$reporting = ReportingMethods::all(); @endphp--}}
+                                                {{--@foreach($reporting as $reportings)--}}
+                                                     {{--<option value="{{$reportings->id}}">{{$reportings->name}}</option>--}}
+                                                {{--@endforeach--}}
+                                            {{--</select>--}}
                                             <i></i>
                                         </label>
                                         </div>

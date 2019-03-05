@@ -17,6 +17,12 @@ class JobTitle extends Model
     ];
     public $timestamps = false;
 
+    public function company()
+    {
+
+        return $this->belongsTo('App\organization_gen_infos');
+    }
+
 
     //
 }

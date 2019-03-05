@@ -15,13 +15,12 @@ class VerifyAdmin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-//        dd(Auth::guard('employee')->user());
-    if(Auth::guard('admins')->user() == null && Auth::guard('employee')->user()== null)
-        {
-            return redirect()->route('login');
-        }
+    public function handle($request, Closure $next) {
+        //dd("isAdmin", $request);
+        if(Auth::guard('admins')->user() == null && Auth::guard('employee')->user()== null)
+            {
+                return redirect()->route('login');
+            }
         return $next($request);
     }
 }

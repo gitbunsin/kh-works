@@ -28,7 +28,7 @@
                                             <label class="select">
                                                 <select name="leave_type" id="leave_type">
                                                     <option value="">-- select --</option>
-                                                    @php $l = \App\LeaveType::all(); @endphp
+                                                    @php $l = \App\Model\LeaveType::all(); @endphp
                                                     @foreach($l as $ls)
                                                         <option value="{{$ls->id}}">{{$ls->name}}</option>
                                                     @endforeach

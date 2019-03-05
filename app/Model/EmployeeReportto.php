@@ -1,18 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ReportingTo extends Model
+class EmployeeReportto extends Model
 {
     //
     protected $connection = 'mysql';
-    protected $table = 'tbl_hr_emp_reportto';
+    protected $table = 'employee_reporttos';
     protected $fillable =
-        ['id',
+        [
             'erep_sup_emp_number',
-            'erep_sub_emp_number',
             'erep_reporting_method',
         ];
     public $timestamps = false;

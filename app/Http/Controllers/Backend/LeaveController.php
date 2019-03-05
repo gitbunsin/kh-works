@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Leave;
@@ -12,8 +14,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class LeaveController
+ * @package App\Http\Controllers\Backend
+ */
 class LeaveController extends Controller
 {
+    /**
+     * LeaveController constructor.
+     */
+    public function __construct()
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,13 +36,11 @@ class LeaveController extends Controller
     {
 
         //
-
-
-        return view('backend.HRIS.Leave.Leave.index');
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.Leave.index',compact('menus'));
     }
     public function applyLeave()
     {
-
 
         // Specify the start date. This date can be any English textual format
 
@@ -46,25 +57,38 @@ class LeaveController extends Controller
 //            echo $start_date;
 //            $start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
 //        }
+       // $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+
+        return view('backend.HRIS.Leave.Leave.applyLeave',compact('menus'));
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * Step to apply leave
+     * 1 . Add Entitlement for leave
+     */
+    public function addLeaveEntitlement(){
 
 
-        return view('backend.HRIS.Leave.Leave.applyLeave');
+
+        return response()->json(['Data'=>'successfully']);
+
     }
     public function viewMyLeaveEntitlements(){
-        $leave_entitlement = DB::table('tbl_hr_leave_entitlement as e')
-            ->select('e.*','l.*')
-            ->join('tbl_hr_leave_entitlement_type as l','e.adjustment_type','=','l.id')
-            ->get();
+        $leave_entitlement = DB::table('leave_entitlements as e')->get();
+//            ->select('e.*','l.*')
+//            ->join('leave_entitlement_types as l','e.adjustment_type','=','l.id')
+//            ->get();
         return view('backend.HRIS.Leave.Entitlement.my_entitlement',compact('leave_entitlement'));
     }
     public function viewMyLeaveList()
     {
 
-
-        $all_leave = DB::table('tbl_hr_leave_request as l')
-            ->join('tbl_hr_leave_type as lt','l.leave_type_id','=','lt.id')
+        $all_leave = DB::table('leave_requests as l')
+            ->join('leave_types as lt','l.leave_type_id','=','lt.id')
             ->get();
-        return view('backend.HRIS.Leave.Leave.my_leave',compact('all_leave'));
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.Leave.my_leave',compact('all_leave','menus'));
 
 
     }
@@ -82,7 +106,8 @@ class LeaveController extends Controller
     {
 
 
-        return view('backend.HRIS.Leave.Leave.leave_report');
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.Leave.leave_report',compact('menus'));
     }
     /**
      * Show the form for creating a new resource.
@@ -91,16 +116,16 @@ class LeaveController extends Controller
      */
     public function requestLeaveBalance($id)
     {
-        $leave_balance = DB::table('tbl_hr_leave_entitlement as e')
-                 ->join('tbl_hr_leave_type as t','e.leave_type_id','=','t.id')
-                ->where('e.leave_type_id',$id)
-                ->first();
+        $leave_balance = DB::table('leave_entitlements')->get();
+//                 ->join('leave_types as t','e.leave_types_id','=','t.id')
+//                ->where('e.leave_type_id',$id)
+//                ->first();
         return response()->json($leave_balance);
     }
     public function assginLeave()
     {
-
-        return view('backend.HRIS.Leave.Leave.assignLeave');
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.Leave.assignLeave',compact('menus'));
     }
     public function leaveRequest(Request $request){
 

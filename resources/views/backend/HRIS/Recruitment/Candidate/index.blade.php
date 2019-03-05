@@ -53,7 +53,7 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th> Vacany</th>
+                                    <th> Vacancy</th>
                                     <th> Candidate</th>
                                     <th> email </th>
                                     <th> Date-of-Application</th>
@@ -61,19 +61,29 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                 @foreach($candidate as $candidates)
-                                    <tr id="candidate_id{{$candidates->candidate_id}}">
-                                        <td>{{$candidates->job_titles}}</td>
-                                        <td>{{$candidates->name}}</td>
-                                        <td>{{$candidates->email}}</td>
-                                        <td>{{$candidates->applied_date}}</td>
+                                 @foreach($JobCandidate as $JobCandidates)
+                                    <tr>
+                                        <td></td>
+                                        <td>{{$JobCandidates->first_name}}{{$JobCandidates->middle_name}} {{$JobCandidates->last_name}}</td>
+                                        <td>{{$JobCandidates->email}}</td>
+                                        <td>{{$JobCandidates->date_of_application}}</td>
                                         <td style="text-align: center;">
-                                            <a data-id="{{$candidates->candidate_id}}" id="approved" href="#" style="text-decoration:none;" class="btn-detail approved">
-                                                <i class="glyphicon glyphicon-check "></i>
-                                            </a>
-                                            <a data-id="{{$candidates->candidate_id}}" id="declined" href="#" style="text-decoration:none;" class="btn-detail reject">
-                                                <i class="glyphicon glyphicon-remove-sign"  style="color:red;"></i>
-                                            </a>
+                                            {{--<a data-id="" id="approved" href="#" style="text-decoration:none;" class="btn-detail approved">--}}
+                                                {{--<i class="glyphicon glyphicon-check "></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="" id="declined" href="#" style="text-decoration:none;" class="btn-detail reject">--}}
+                                                {{--<i class="glyphicon glyphicon-remove-sign"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                            <ul class="demo-btns">
+                                                <li>
+                                                    <form  action="{{url('administration/candidate-approved/'.$JobCandidates->id)}}" method="POST" >
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                            <input type="hidden" value="{{$JobCandidates->id}}" name="candidate_id"/>
+                                                            <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-labeled btn-success"> <i class="glyphicon glyphicon-ok"></i></a>
+                                                            <a href="javascript:void(0);" class="btn btn-labeled btn-danger"> <i class="glyphicon glyphicon-remove"></i></a>
+                                                    </form>
+                                                </li>
+                                            </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -85,7 +95,9 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+@endsection
+@section('script')
     <script src="https://cdn.rawgit.com/JDMcKinstry/JavaScriptDateFormat/master/Date.format.min.js"></script>
     {{--<script src="{{ asset('/js/hr/candidate.js') }}"></script>--}}
     <script>
@@ -95,6 +107,7 @@
                 var confirmation = confirm("are you sure you want to approve ?");
                 if (confirmation) {
                     var candidate_id = $(this).attr('data-id');
+                   // alert(candidate_id);
                     $.ajax({
                         type: "POST",
                         cache: false,
@@ -109,7 +122,7 @@
                             $("tbody>tr>td.dataTables_empty").show();
                         },
                         error: function (data) {
-                          console.log(data);
+                            console.log(data);
                         }
                     });
                 }
@@ -143,4 +156,6 @@
             });
         });
     </script>
+
+
 @endsection

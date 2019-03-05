@@ -1,14 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeWorkExperience extends Model
 {
-    //
-//    protected $guard = 'employee';
-    protected $table = 'tbl_hr_emp_work_experience';
+
+    protected $table = 'employee_work_experiences';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
@@ -22,4 +21,5 @@ class EmployeeWorkExperience extends Model
         'eexp_internal'
     ];
     public $timestamps = false;
+
 }

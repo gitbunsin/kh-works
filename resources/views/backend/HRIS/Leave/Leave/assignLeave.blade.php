@@ -49,7 +49,7 @@
                                             <label class="select">
                                                 <select name="achievement" id="achievement">
                                                     <option value="">-- select --</option>
-                                                    @php $l = \App\LeaveType::all(); @endphp
+                                                    @php $l = \App\Model\LeaveType::all(); @endphp
                                                     @foreach($l as $ls)
                                                         <option value="{{$ls->id}}">{{$ls->name}}</option>
                                                     @endforeach

@@ -1,12 +1,14 @@
 <?php
 
 namespace  App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Education;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EducationController extends Controller
+class EducationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +17,7 @@ class EducationController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         $e = Education::all();
         return view('backend.HRIS.admin.Qualifications.Education.index',compact('e'));
     }
@@ -26,6 +29,7 @@ class EducationController extends Controller
      */
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.admin.Qualifications.Education.create');
     }
 
@@ -68,6 +72,7 @@ class EducationController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $e = Education::where('id',$id)->first();
 //        dd($skills);
         return view('backend.HRIS.admin.Qualifications.Education.edit',compact('e'));

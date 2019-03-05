@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LocationController extends Controller
+class LocationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,11 @@ class LocationController extends Controller
      */
     public function index()
     {
-        //
-        $l = DB::table('tbl_location as s')
-                ->select('s.*','c.*','c.name as country_name','s.name as location_name')
-                ->join('tbl_country as c','s.country_code','=','c.id')->get();
-        return view('backend.HRIS.admin.Company.Locations.index',compact('l'));
+       // $l = DB::table('tbl_location as s')->get();
+//                ->select('s.*','c.*','c.name as country_name','s.name as location_name')
+//                ->join('tbl_country as c','s.country_code','=','c.id')->get();
+        $this->shareMenu();
+        return view('backend.HRIS.admin.Company.Locations.index');
     }
 
     /**
@@ -32,6 +32,7 @@ class LocationController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Company.Locations.create');
     }
 
@@ -80,6 +81,7 @@ class LocationController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $l = DB::table('tbl_location as s')
             ->select('s.*','c.*','c.name as country_name','s.name as location_name')
             ->join('tbl_country as c','s.country_code','=','c.id')

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
-class WorkShiftController extends Controller
+class WorkShiftController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -23,6 +23,7 @@ class WorkShiftController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         $WorkShift = WorkShift::all();
         return view('backend.HRIS.admin.WorkShift.index',compact('WorkShift'));
     }
@@ -35,6 +36,7 @@ class WorkShiftController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.WorkShift.create');
     }
 
@@ -85,6 +87,7 @@ class WorkShiftController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $work_shift = WorkShift::where("id",$id)->first();
 //        dd($work_shift);
         return view('backend.HRIS.admin.WorkShift.edit',compact('work_shift'));

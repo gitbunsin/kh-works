@@ -10,8 +10,9 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
-class PerformanceTrackerController extends Controller
+class PerformanceTrackerController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -21,20 +22,22 @@ class PerformanceTrackerController extends Controller
     public function index()
     {
         //
-        $p = DB::table('tbl_hr_performance_track as p')
-            ->select('p.*','e.*')
-            ->join('employees as e','p.employee_id','=','e.emp_id')
-            ->get();
+        $this->shareMenu();
+//        $p = DB::table('tbl_hr_performance_track as p')
+//            ->select('p.*','e.*')
+//            ->join('employees as e','p.employee_id','=','e.emp_id')
+//            ->get();
 
-        return view('backend.HRIS.performance.trackers.index',compact('p'));
+
+        return view('backend.HRIS.performance.trackers.index');
     }
 
         public function addPerformanceTrackerLog()
         {
-
-            $t = PerformanceTrackerLog::all();
+            $this->shareMenu();
+           // $t = PerformanceTrackerLog::all();
             //dd($t);
-            return view('backend.HRIS.performance.TrackerLog.index',compact('t'));
+            return view('backend.HRIS.performance.TrackerLog.index');
 
         }
 
@@ -51,16 +54,18 @@ class PerformanceTrackerController extends Controller
 
     }
     public function employeeTracker(){
+        $this->shareMenu();
 
-        $p = DB::table('tbl_hr_performance_track as p')
-            ->select('p.*','e.*')
-            ->join('employees as e','p.employee_id','=','e.emp_id')
-            ->get();
+//        $p = DB::table('tbl_hr_performance_track as p')
+//            ->select('p.*','e.*')
+//            ->join('employees as e','p.employee_id','=','e.emp_id')
+//            ->get();
         //dd($p);
-        return view('backend.HRIS.performance.EmployeeTracker.index',compact('p'));
+        return view('backend.HRIS.performance.EmployeeTracker.index');
 
     }
     public function viewMyPerformanceTrackerList(){
+        $this->shareMenu();
         return view('backend.HRIS.performance.MyTracker.index');
     }
 

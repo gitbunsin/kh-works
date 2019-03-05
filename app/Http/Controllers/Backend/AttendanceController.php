@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class AttendanceController extends Controller
+class AttendanceController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,13 @@ class AttendanceController extends Controller
     public function index()
     {
         // $use = Role::apll();
+        $this->shareMenu();
         return view('backend.HRIS.Time.Attendance.index');
     }
     public function AttendanceConfigure(){
 
 
+        $this->shareMenu();
         return view('backend.HRIS.Time.Attendance.create');
 
     }

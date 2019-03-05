@@ -6,7 +6,7 @@ use App\Model\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SkillController extends Controller
+class SkillController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +15,7 @@ class SkillController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         //
         $skill = Skill::all();
         return view('backend.HRIS.admin.Qualifications.Skills.index',compact('skill'));
@@ -28,6 +29,7 @@ class SkillController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.Qualifications.Skills.create');
     }
 
@@ -70,6 +72,7 @@ class SkillController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $skills = Skill::where('id',$id)->first();
 //        dd($skills);
         return view('backend.HRIS.admin.Qualifications.Skills.edit',compact('skills'));

@@ -46,48 +46,20 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($h as $hs)
-                                    <tr id="job_id{{$hs->id}}">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
                                         <td>
-                                            <a  href="{{url('administration/define-holiday/'.$hs->id.'/edit')}}">
-                                                {{$hs->name}}</a>
-
-                                        </td>
-                                        <td>{{date('d-m-Y', strtotime($hs->date))}}</td>
-
-                                        @if($hs->length == 0)
-                                            <td>
-                                                Full DAy
-
-                                            </td>
-                                        @else
-                                            <td>
-                                                Half Day
-                                            </td>
-
-                                        @endif
-                                        @if($hs->recurring =="1")
-                                            <td>
-                                               <strong> Yes</strong>
-
-                                            </td>
-                                        @else
-                                            <td>
-                                                <strong> No</strong>
-
-                                            </td>
-
-                                        @endif
-                                        <td>
-                                            <a  href="{{url('administration/define-holiday/'.$hs->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/define-holiday/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$hs->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach
                                 </tbody>
                             </table>
                         </div>

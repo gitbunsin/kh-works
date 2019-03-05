@@ -49,7 +49,7 @@
                                             <label class="select">
                                                 <select name="leave_type" id="leave_type">
                                                     <option value="">-- select leave type --</option>
-                                                    @php $leave_period = \App\LeaveType::all(); @endphp
+                                                    @php $leave_period = \App\Model\LeaveType::all(); @endphp
                                                     @foreach($leave_period as $leave_periods)
                                                         <option value="{{$leave_periods->id}}"> {{$leave_periods->name}}</option>
                                                     @endforeach
@@ -62,7 +62,7 @@
                                             <label class="select">
                                                 <select name="leave_period" id="leave_period">
                                                     <option value="">-- select leave periods --</option>
-                                                    @php $leave_period = \App\LeavePeriod::all(); @endphp
+                                                    @php $leave_period = \App\Model\LeavePeriodHistory::all(); @endphp
                                                     @foreach($leave_period as $leave_periods)
                                                         <option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}}</option>
                                                     @endforeach

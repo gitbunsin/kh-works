@@ -75,10 +75,10 @@
                                             <label class="select">
                                                 <select name="Issued_By" id="Issued_By">
                                                     <option value="">-- select --</option>
-                                                    @php $nationality = \App\nation::all(); @endphp
-                                                    @foreach($nationality as $nationalities)
-                                                         <option value="{{$nationalities->id}}">{{$nationalities->name}}</option>
-                                                    @endforeach
+                                                    {{--@php $nationality = \App\nation::all(); @endphp--}}
+                                                    {{--@foreach($nationality as $nationalities)--}}
+                                                         {{--<option value="{{$nationalities->id}}">{{$nationalities->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>

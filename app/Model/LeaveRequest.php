@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,7 +8,7 @@ class LeaveRequest extends Model
 {
     //
 
-    protected $table = 'tbl_hr_leave_request';
+    protected $table = 'leave_requests';
     protected $fillable = [
         'id',
         'employee_id',

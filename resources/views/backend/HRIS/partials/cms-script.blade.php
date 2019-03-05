@@ -90,7 +90,7 @@
 		<script src="{{ asset('js/plugin/vectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
 
 		<!--ck editor-->
-		<script src="{{ asset('js/plugin/ckeditor/ckeditor.js')}}"></script>
+		{{--<script src="{{ asset('js/plugin/ckeditor/ckeditor.js')}}"></script>--}}
 
        <script src="{{asset('js/plugin/summernote/summernote.min.js')}}"></script>
 		<!-- Full Calendar -->

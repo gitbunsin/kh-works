@@ -35,11 +35,11 @@
                                             <label class="label">Country</label>
                                             <label class="select state-success">
                                                 <select name="country_code" id="country_code" class="valid">
-                                                    @php use Illuminate\Support\Facades\DB;$c = DB::table('tbl_country')->get(); @endphp
-                                                    <option value="">-- country --</option>
-                                                    @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}">{{$cs->name}}</option>
-                                                    @endforeach
+                                                    {{--@php use Illuminate\Support\Facades\DB;$c = DB::table('tbl_country')->get(); @endphp--}}
+                                                    {{--<option value="">-- country --</option>--}}
+                                                    {{--@foreach($c as $cs)--}}
+                                                        {{--<option value="{{$cs->id}}">{{$cs->name}}</option>--}}
+                                                    {{--@endforeach--}}
                                                 </select>
                                                 <i></i>
                                             </label>

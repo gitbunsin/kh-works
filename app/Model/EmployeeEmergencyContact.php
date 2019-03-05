@@ -1,12 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeEmergencyContacts extends Model
+class EmployeeEmergencyContact extends Model
 {
-    protected $table = 'tbl_hr_emp_emergency_contacts';
+    //
+
+    protected $table = 'employee_emergency_contacts';
     protected $fillable = [
         'id',
         'emp_number',
@@ -21,5 +23,4 @@ class EmployeeEmergencyContacts extends Model
         'updated_at',
     ];
     public $timestamps = false;
-    //
 }

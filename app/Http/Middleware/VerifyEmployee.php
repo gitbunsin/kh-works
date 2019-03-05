@@ -2,10 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Model\Employee;
-use App\UserEmployee;
-use Illuminate\Support\Facades\Auth;
-
+use App\Model\UserEmployee;
 use Closure;
 
 class VerifyEmployee
@@ -19,6 +16,7 @@ class VerifyEmployee
      */
     public function handle($request, Closure $next)
     {
+       // dd("is Employee", $request);
 
         $token = $request->route('token');
         $employee = UserEmployee::where('email_token',$token)->first();

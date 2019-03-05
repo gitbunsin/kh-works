@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use \App\Model\EmployeeWorkExperience;
@@ -25,7 +27,8 @@ class EmployeeWorkExperienceController extends Controller
         }
         $employeeExperience = EmployeeWorkExperience::where('id',$company_id);
 //        dd($employeeExperience);
-        return view('backend.HRIS.PIM.Employee.qualification',compact('employeeExperience'));
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.qualification',compact('employeeExperience','menus'));
 
     }
 

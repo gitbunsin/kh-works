@@ -35,17 +35,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($interview as $interviews)
-                                    <tr id="candidate_id{{$interviews->candidate_id}}">
-                                        <td>{{$interviews->name}}</td>
+                                @foreach($Interview as $Interviews)
+                                    <tr id="candidate_id{{$Interviews->candidate_id}}">
+                                        <td>{{$Interviews->name}}</td>
                                         <td>
                                             <a href="#" id="combodate1"
                                                class="update" data-name="interview_date"
                                                data-type="combodate"
                                                data-roundTime=false
-                                               data-pk="{{ $interviews->interview_id }}"
+                                               data-pk=""
                                                data-title="Select date">
-                                                {{$interviews->interview_date}}
+                                                {{--{{$Interviews->interview_date}}--}}
                                             </a>
                                         </td>
                                         <td>
@@ -53,26 +53,26 @@
                                                class="update" data-name="interview_time"
                                                data-type="combodate"
                                                data-roundTime=false
-                                               data-pk="{{ $interviews->interview_id }}"
+                                               data-pk=""
                                                data-title="Select date">
-                                              {{date('h:i A', strtotime($interviews->interview_time))}}
+                                              {{--{{date('h:i A', strtotime($Interviews->interview_time))}}--}}
                                             </a>
                                         </td>
                                         <td>
                                             <a href="" class="update"
                                                data-name="note"
                                                data-type="text"
-                                               data-pk="{{ $interviews->interview_id }}"
-                                               data-title="Enter note">{{$interviews->note}}
+                                               data-pk=""
+                                               data-title="Enter note">
                                             </a>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a  href="#" data-id="{{$interviews->candidate_id}}" style="text-decoration:none;" class="btn-detail pass">
-                                                {{--<i class="glyphicon glyphicon-align-center "></i>--}}
+                                            <a  href="#" data-id="" style="text-decoration:none;" class="btn-detail pass">
+                                                <i class="glyphicon glyphicon-align-center "></i>
                                                 Pass ||
                                             </a>
-                                            <a data-id="{{$interviews->candidate_id}}"  href="#" style="text-decoration:none;" class="btn-detail fail">
-                                                {{--<i class="glyphicon glyphicon-calendar "></i>--}}
+                                            <a data-id=""  href="#" style="text-decoration:none;" class="btn-detail fail">
+                                                <i class="glyphicon glyphicon-calendar "></i>
                                                 Fail
                                             </a>
                                         </td>

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
-
-use App\LeavePeriod;
 use App\Model\LeavePeriodHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +33,8 @@ class LeavePeriodController extends Controller
         else{
             $checkStatusLeavePeriod = "false";
         }
-        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['menus'=>$menus ,'getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
     }
 
     /**

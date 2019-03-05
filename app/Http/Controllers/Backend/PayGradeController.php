@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
-use App\Currency;
 use App\Http\Controllers\Controller;
+use App\Model\currency;
 use App\Model\PayGrade;
 use App\PayGradeCurrency;
 use Illuminate\Http\Request;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 
-class PayGradeController extends Controller
+class PayGradeController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -25,6 +24,7 @@ class PayGradeController extends Controller
 
     public function index()
     {
+        $this->shareMenu();
         $pay_grade = PayGrade::where(['company_id' => Auth::guard('admins')->user()->id])->get();
         $data = [];
         foreach ($pay_grade as $item) {
@@ -54,6 +54,7 @@ class PayGradeController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.admin.PayGrade.create');
     }
 
@@ -80,7 +81,7 @@ class PayGradeController extends Controller
     public function AddPayGradeCurrency(Request $request)
     {
 
-        $currency = \App\Model\Backend\Currency::findOrFail($request->currency_id);
+        $currency = \App\Model\Currency::findOrFail($request->currency_id);
         $paygrade = Paygrade::findOrFail($request->pay_grade_id);
         $arrPovit = [
             'min_salary' => $request->min_salary,
@@ -98,7 +99,7 @@ class PayGradeController extends Controller
     function destroyPaygradeCurrency(Request $request) {
         $currency_id = $request->currency_id;
         $paygrade_id = $request->paygrade_id;
-        $currency = \App\Model\Backend\Currency::findOrFail($currency_id);
+        $currency = Currency::findOrFail($currency_id);
         $currency->paygrades()->detach([$paygrade_id]);
 
         return response()->json($currency);
@@ -125,6 +126,7 @@ class PayGradeController extends Controller
      */
     public function edit($id)
     {
+        $this->shareMenu();
         $pay_grade = Paygrade::with('currencies')->where('id', $id)->first();
         // return response()->json($pay_grade);
         return view('backend.HRIS.admin.PayGrade.edit', compact('pay_grade'));

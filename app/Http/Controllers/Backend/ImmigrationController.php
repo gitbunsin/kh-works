@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Backend;
+use App\Helper\AppHelper;
+use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Immigration;
@@ -19,12 +21,10 @@ class ImmigrationController extends Controller
     {
         //
 
-        $m = DB::table('tbl_hr_emp_passport as p')
-                ->select('p.*','n.*','p.id as passport_id')
-                ->join('tbl_nationality as n','p.ep_passport_type_flg','=','n.id')
-                ->get();
+        $m = DB::table('employee_passports')->get();
         //dd($m);
-        return view('backend.HRIS.PIM.Employee.immigration.index',compact('m'));
+        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.PIM.Employee.immigration.index',compact('m','menus'));
     }
 
     /**
@@ -85,11 +85,7 @@ class ImmigrationController extends Controller
     public function edit($id)
     {
         //
-        $m = DB::table('tbl_hr_emp_passport as p')
-            ->select('p.*','n.*','p.id as passport_id')
-            ->join('tbl_nationality as n','p.ep_passport_type_flg','=','n.id')
-            ->where('p.id',$id)
-            ->first();
+        $m = DB::table('employee_passports as p')->get();
         return view('backend.HRIS.PIM.Employee.immigration.edit',compact('m'));
     }
 

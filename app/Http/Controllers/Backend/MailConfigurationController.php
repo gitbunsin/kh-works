@@ -6,7 +6,7 @@ use App\CustomField;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MailConfigurationController extends Controller
+class MailConfigurationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class MailConfigurationController extends Controller
     public function index()
     {
 
-
+        $this->shareMenu();
         return view('backend.HRIS.admin.Configuration.EmailConfiguration.index');
         //
     }

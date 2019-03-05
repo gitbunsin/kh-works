@@ -6,7 +6,7 @@ use App\Model\ReportingMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ReportingMethodsController extends Controller
+class ReportingMethodsController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +16,7 @@ class ReportingMethodsController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         $r = ReportingMethod::all();
         return view('backend.HRIS.PIM.Configuration.ReportingMethods.index',compact('r'));
 
@@ -29,6 +30,7 @@ class ReportingMethodsController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Configuration.ReportingMethods.create');
     }
 
@@ -70,6 +72,7 @@ class ReportingMethodsController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $r = ReportingMethod::findOrFail($id);
         return view('backend.HRIS.PIM.Configuration.ReportingMethods.edit',compact('r'));
     }

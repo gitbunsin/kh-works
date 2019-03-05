@@ -6,7 +6,7 @@ use App\Model\license;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LicenseController extends Controller
+class LicenseController extends BackendController
 {
 
     /**
@@ -16,7 +16,9 @@ class LicenseController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         $l = license::all();
+
         return view('backend.HRIS.admin.Qualifications.LicenseType.index',compact('l'));
     }
     /**
@@ -26,6 +28,7 @@ class LicenseController extends Controller
      */
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.admin.Qualifications.LicenseType.create');
     }
     /**
@@ -67,6 +70,7 @@ class LicenseController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $l = license::where('id',$id)->first();
 //        dd($skills);
         return view('backend.HRIS.admin.Qualifications.LicenseType.edit',compact('l'));

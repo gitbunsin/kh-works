@@ -6,7 +6,7 @@ use App\Model\Backend\Menu;
 use App\Module;
 use Illuminate\Http\Request;
 
-class ModuleController extends Controller
+class ModuleController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +16,7 @@ class ModuleController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         $m = Menu::all();
         return view('backend.HRIS.admin.Configuration.index',compact('m'));
 

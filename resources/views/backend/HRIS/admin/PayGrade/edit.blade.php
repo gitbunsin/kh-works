@@ -101,7 +101,7 @@
                                             <section>
                                                 <label class="label">Currency</label>
                                                 <label class="select state-success">
-                                                    @php $currency = \App\Model\Backend\Currency::all(); @endphp
+                                                    @php $currency = \App\Model\Currency::all(); @endphp
                                                     <select name="currency_id" id="currency_id" class="required">
                                                         <option value="">Choose name</option>
                                                         @foreach($currency as $item)

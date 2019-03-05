@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CandiateHistory extends Model
 {
 
-    protected $table = 'tbl_job_candidate_history';
+    protected $table = 'job_candidate_history';
 
     protected $fillable = [
         'id',
