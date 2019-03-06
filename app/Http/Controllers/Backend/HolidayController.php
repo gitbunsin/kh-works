@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Holiday;
+use App\Model\Holiday;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +18,9 @@ class HolidayController extends BackendController
     {
         //
         $this->shareMenu();
-        //$h = Holiday::all();
+        $Holiday = Holiday::all();
        // $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.Holiday.index');
+        return view('backend.HRIS.Leave.Holiday.index',compact('Holiday'));
     }
 
     /**
@@ -32,6 +31,7 @@ class HolidayController extends BackendController
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.Leave.Holiday.create');
     }
 
@@ -45,15 +45,22 @@ class HolidayController extends BackendController
     {
         //
         //dd($request->all());
-
-        $l = new Holiday();
-        $l->name = $request->name;
-        $l->company_id = Auth::guard('admins')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('employee')->user()->company_id;
+        }
+        $Holiday = new Holiday();
+        $Holiday->name = $request->name;
+        $Holiday->company_id = $company_id;
+        $Holiday->operational_country_id = 1;
         //$l->employee_id = Auth::guard('employee')->user()->id;
-        $l->date = Carbon::parse($request->date);
-        $l->recurring = $request->IsDefault;
-        $l->length = $request->day;
-        $l->save();
+        $Holiday->date = Carbon::parse($request->date);
+        $Holiday->recurring = $request->IsDefault;
+        $Holiday->length = $request->day;
+
+        $Holiday->save();
+
         return redirect('/administration/define-holiday')->with('success','Item Added successfully');
 
 
@@ -79,6 +86,7 @@ class HolidayController extends BackendController
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $h = Holiday::FindOrFail($id);
         return view('backend.HRIS.Leave.Holiday.edit',compact('h'));
     }

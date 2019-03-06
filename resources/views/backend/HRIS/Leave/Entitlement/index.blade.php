@@ -33,7 +33,7 @@
                                             <label class="label"></label>
                                             <div class="inline-group">
                                                 <label class="checkbox">
-                                                    <input type="checkbox" id="myCheck" >Add new item type
+                                                    <input type="checkbox" id="CheckEmployee" >Add new item type
                                                     <i></i> Add to Multiple Employee
                                                 </label>
                                             </div>
@@ -74,19 +74,19 @@
                                         </section>
                                     </div>
                                             <br/>
-                                    <div class="ShowEmployee">
-                                        <section class="">
+                                    <div id="ShowEmployee">
+                                        <section class="" id="ShowEmployee">
                                             <label class="label">Employee Name</label>
                                             <div class="form-group">
-                                                <select name="employee_entitlement"
-                                                        id="employee_entitlement"
+                                                <select name="EmployeeEntitlement"
+                                                        id="EmployeeEntitlement"
                                                         style="width:100%" class="select2 select2-hidden-accessible"
                                                         tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="">-- select employee --</option>
                                                         @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
-                                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                            <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 </select>
@@ -152,11 +152,12 @@
 <script type="text/javascript">
     $('#DivShow').hide();
     let baseURL = "{{URL::to('/')}}/";
-    function checkval() {
-        if ($('#myCheck').is(':checked')) {
+    function CheckEmployeeEntitlement() {
+        if($('#CheckEmployee').is(':checked')) {
             $('#DivShow').show({
                 duration: 800,
             });
+            $('#ShowEmployee').hide();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -181,26 +182,22 @@
             });
 
     } else {
+            $('#ShowEmployee').show();
             $('#DivShow').hide({
                 duration: 800,
             });
 
-            $('.ShowEmployee').show();
         }
     }
 
-    $(function () {
-        checkval(); // this is launched on load
-        $('#myCheck').click(function () {
-             checkval();
-            $('.ShowEmployee').hide();
-        });
-
+    $('#CheckEmployee').on('change',function () {
+        CheckEmployeeEntitlement();
     });
+
             var $loginForm = $("#frmEntitlement").validate({
                 // Rules for form validation
                 rules : {
-                    employee_entitlement : {
+                    EmployeeEntitlement : {
                         required : true
                     },
                     leave_type : {

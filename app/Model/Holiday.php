@@ -1,16 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Holiday extends Model
 {
     //
-    protected $table = '';
+    protected $table = 'holidays';
     protected $fillable = [
         'id',
-        'employee_id',
+        'company_id',
         'name',
         'description',
         'date',

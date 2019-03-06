@@ -342,12 +342,12 @@ class MenuTableSeeder extends Seeder
 
         
 
-        $menu1 = new Menu();
-        //$menu1->id = 44;
-        $menu1->name = "My Leave";
-        $menu1->link="administration/view-my-leave-list";
-        $menu1->parent_id = 43;
-        $menu1->save();
+//        $menu1 = new Menu();
+//        //$menu1->id = 44;
+//        $menu1->name = "My Leave";
+//        $menu1->link="administration/view-my-leave-list";
+//        $menu1->parent_id = 43;
+//        $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 45;

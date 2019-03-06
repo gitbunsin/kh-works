@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\WorkWeek;
+use App\Model\WorkWeek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WorkWeekController extends BackendController
 {
@@ -18,7 +19,8 @@ class WorkWeekController extends BackendController
     {
         //
         $this->shareMenu();
-        return view('backend.HRIS.Leave.WorkWeek.index');
+        $WorkWeek = DB::table('work_weeks')->first();
+        return view('backend.HRIS.Leave.WorkWeek.index',compact('WorkWeek'));
 
     }
 
@@ -41,17 +43,17 @@ class WorkWeekController extends BackendController
     public function store(Request $request)
     {
 
-        $w = new WorkWeek();
-        $w->mon = $request->mon;
-        $w->employee_id = Auth::guard('employee')->user()->id;
-        $w->tue = $request->tue;
-        $w->wed = $request->wed;
-        $w->thu = $request->thu;
-        $w->fri = $request->fri;
-        $w->sat = $request->sat;
-        $w->sun = $request->sun;
-        $w->save();
-        return response()->json($w);
+//        $w = new WorkWeek();
+//        $w->mon = $request->mon;
+//        $w->employee_id = Auth::guard('employee')->user()->id;
+//        $w->tue = $request->tue;
+//        $w->wed = $request->wed;
+//        $w->thu = $request->thu;
+//        $w->fri = $request->fri;
+//        $w->sat = $request->sat;
+//        $w->sun = $request->sun;
+//        $w->save();
+//        return response()->json($w);
     }
 
     /**
@@ -86,11 +88,13 @@ class WorkWeekController extends BackendController
     public function update(Request $request, $id)
     {
 
-       // dd($request->all());
+       // dd('hello');
+        //dd($request->all());
         //dd($id);
         $w = WorkWeek::FindOrFail($id);
         $w->mon = $request->mon;
         $w->company_id = Auth::guard('admins')->user()->id;
+        $w->operational_country_id = 1;
         $w->tue = $request->tue;
         $w->wed = $request->wed;
         $w->thu = $request->thu;
@@ -98,7 +102,8 @@ class WorkWeekController extends BackendController
         $w->sat = $request->sat;
         $w->sun = $request->sun;
         $w->save();
-        return response()->json($w);
+
+        return redirect('administration/define-workweek')->with('success','Item has been edited successfully');
     }
 
     /**

@@ -35,7 +35,7 @@
                                                     <option value="">-- select employee --</option>
                                                     @php $tracker = \App\Model\Employee::all(); @endphp
                                                     @foreach($tracker as $trackers)
-                                                        <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                        <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             </select>
@@ -132,8 +132,8 @@
                                 @foreach($leave_entitlement as $leave_entitlements)
                                     <tr id="job_id{{$leave_entitlements->id}}">
                                         <td>{{$leave_entitlements->name}}</td>
-                                        <td>{{$leave_entitlements->from_date}}</td>
-                                        <td>{{$leave_entitlements->to_date}}</td>
+                                        <td></td>
+                                        <td></td>
                                         <td>{{$leave_entitlements->no_of_day}}</td>
                                         <td>
                                             <a  href="{{url('administration/view-leave-entitlements/'.$leave_entitlements->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">

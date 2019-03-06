@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Backend;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
-
-use App\LeaveEntitlement;
+use App\Model\LeaveEntitlement;
 use App\Model\SubUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LeaveEntitlementController extends BackendController
 {
@@ -24,11 +24,23 @@ class LeaveEntitlementController extends BackendController
         $this->shareMenu();
 //        $categories = Subunit::where('parent_id', '=', 0)->get();
 //        $allCategories = Subunit::pluck('title','id')->all();
-
         return view('backend.HRIS.Leave.Entitlement.index');
 
 
     }
+
+    public function viewLeaveEntitlements()
+    {
+        $this->shareMenu();
+
+        $leave_entitlement = DB::table('leave_entitlements as e')
+            ->select('e.*','l.*')
+            ->join('leave_entitlement_types as l','e.entitlement_type','=','l.id')
+            ->get();
+        return view('backend.HRIS.Leave.Entitlement.employee_entitlement',compact('leave_entitlement'));
+    }
+
+
 
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -59,18 +71,24 @@ class LeaveEntitlementController extends BackendController
      */
     public function store(Request $request)
     {
-        //
-        $e = New LeaveEntitlement();
-        $e->employee_id = $request->employee_entitlement;
-        $e->company_id = Auth::guard('admins')->user()->id;
-        $e->created_by_name = Auth::guard('admins')->user()->name;
-        $e->leave_type_id = $request->leave_type;
-        $e->adjustment_type = 1;
-        $e->no_of_day = $request->entitlements_day;
-        $e->save();
+       // dd('Hello');
+        if(Auth::guard('admins')->user()){
+            $company_id = Auth::guard('admins')->user()->id;
+        }else{
+            $company_id = Auth::guard('admins')->user()->company_id;
+        }
+        $LeaveEntitlement = New LeaveEntitlement();
+        $LeaveEntitlement->emp_number = $request->employee_entitlement;
+        $LeaveEntitlement->company_id = $company_id;
+        $LeaveEntitlement->created_by_name = Auth::guard('admins')->user()->name;
+        $LeaveEntitlement->leave_type_id = $request->leave_type;
+        $LeaveEntitlement->entitlement_type = 1;
+        $LeaveEntitlement->no_of_day = $request->entitlements_day;
+
+        $LeaveEntitlement->save();
+
+
         return redirect('/administration/view-leave-entitlements')->with('success','Item has been added successfully');
-//        $e->employee_id =
-        //dd('hello');
     }
 
     /**

@@ -112,7 +112,7 @@
                                 <tbody id="products-list" name="products-list">
                                 @foreach($leave_entitlement as $leave_entitlements)
                                     <tr id="job_id{{$leave_entitlements->id}}">
-                                        <td>{{$leave_entitlements->name}}</td>
+                                        <td></td>
                                         <td>{{$leave_entitlements->from_date}}</td>
                                         <td>{{$leave_entitlements->to_date}}</td>
                                         <td>{{$leave_entitlements->no_of_day}}</td>

@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Helper\AppHelper;
-use App\Helper\MenuHelper;
-use App\Http\Controllers\Controller;
+
 use App\Model\LeaveType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LeaveTypeController extends BackendController
 {
@@ -17,10 +16,9 @@ class LeaveTypeController extends BackendController
     public function index()
     {
         //
-        $l = LeaveType::all();
         $this->shareMenu();
-        return view('backend.HRIS.Leave.leaveTypes.index',compact('l'));
-
+        $LeaveType = LeaveType::all();
+        return view('backend.HRIS.Leave.LeaveTypes.index',compact('LeaveType'));
     }
 
     /**
@@ -31,9 +29,6 @@ class LeaveTypeController extends BackendController
     public function create()
     {
         //
-        $this->shareMenu();
-        return view('backend.HRIS.Leave.leaveTypes.create');
-
     }
 
     /**
@@ -45,11 +40,6 @@ class LeaveTypeController extends BackendController
     public function store(Request $request)
     {
         //
-        $l = new LeaveType();
-        $l->name = $request->name;
-        $l->description = $request->description;
-        $l->save();
-        return redirect('/administration/leave-type')->with('success','Item added successfully');
     }
 
     /**
@@ -73,8 +63,8 @@ class LeaveTypeController extends BackendController
     {
         //
         $this->shareMenu();
-        $l = LeaveType::findOrFail($id);
-        return view('backend.HRIS.Leave.leaveTypes.edit',compact('l'));
+
+        return view('backend.HRIS.Leave.LeaveTypes.edit');
     }
 
     /**
@@ -87,11 +77,6 @@ class LeaveTypeController extends BackendController
     public function update(Request $request, $id)
     {
         //
-        $l = LeaveType::findOrFail($id);
-        $l->name = $request->name;
-        $l->description = $request->description;
-        $l->save();
-        return redirect('/administration/leave-type')->with('success','Item Edited successfully');
     }
 
     /**

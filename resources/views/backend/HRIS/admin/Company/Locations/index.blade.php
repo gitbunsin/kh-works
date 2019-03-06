@@ -46,22 +46,22 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                {{--@foreach($l  as  $ls )--}}
-                                    {{--<tr>--}}
-                                        {{--<td>{{$ls->location_name}}</td>--}}
-                                        {{--<td>{{$ls->city}}</td>--}}
-                                        {{--<td>{{$ls->country_name}}</td>--}}
-                                        {{--<td>{{$ls->phone}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a data-id="{{$ls->id}}" href="{{url('administration/locations/'.$ls->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="{{$ls->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
+                                @foreach($location  as  $locations )
+                                    <tr>
+                                        <td>{{$locations->name}}</td>
+                                        <td>{{$locations->city}}</td>
+                                        <td>{{$locations->country_code}}</td>
+                                        <td>{{$locations->phone}}</td>
+                                        <td>
+                                            <a data-id="{{$locations->id}}" href="{{url('administration/locations/'.$locations->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$locations->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

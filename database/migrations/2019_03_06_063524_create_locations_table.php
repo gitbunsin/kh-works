@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeavesTable extends Migration
+class CreateLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,20 @@ class CreateLeavesTable extends Migration
      */
     public function up()
     {
-        Schema::create('leaves', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
-            $table->integer('emp_number')->unsigned()->nullable();
-            $table->foreign('emp_number')->references('emp_number')->on('employees')->onDelete('cascade');
-
-            $table->integer('leave_id')->unsigned()->nullable();
-            $table->foreign('leave_id')->references('id')->on('leaves')->onDelete('cascade');
-
-
-            $table->string('created_by_name')->nullable();
-            $table->string('comment')->nullable();
-
-
-
+            $table->string('name')->nullable();
+            $table->string('country_code')->nullable();
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -42,6 +38,6 @@ class CreateLeavesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leaves');
+        Schema::dropIfExists('locations');
     }
 }

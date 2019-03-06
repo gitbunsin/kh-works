@@ -1,6 +1,10 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-
+    <style>
+        .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+            background: #eee !important;
+        }
+    </style>
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -27,19 +31,21 @@
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 Success! message sent successfully.
                             </div>
-                            <form id="frmWorkWeek" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-type')}}" class="smart-form">
+                            @php $id  = 1; @endphp
+                            <form id="frmWorkWeek" method="POST" enctype="multipart/form-data" action="{{url('administration/define-workweek/'.$id)}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input name="_method" type="hidden" value="PATCH">
+
+
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label class="label"> Monday </label>
                                             <label class="select">
-                                                {{--@php $w = \App\WorkWeek::all();@endphp--}}
-                                                <select name="mon" id="mon">
-
-                                                            <option value="0"> Non Working day </option>
-                                                            <option value="8"> Full Day</option>
-                                                            <option value="4"> Half Day</option>
+                                                <select class="form-control" name="mon" id="mon">
+                                                            <option value="8" {{ $WorkWeek->mon == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                            <option value="0" {{ $WorkWeek->mon == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                            <option value="4" {{ $WorkWeek->mon == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -47,10 +53,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Tuesday </label>
                                             <label class="select">
-                                                <select name="tue" id="tue">
-                                                    <option value="0"> Non Working day </option>
-                                                    <option value="8"> Full Day</option>
-                                                    <option value="4"> Half Day</option>
+                                                <select class="form-control" name="tue" id="tue">
+                                                    <option value="8" {{ $WorkWeek->tue == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                    <option value="0" {{ $WorkWeek->tue == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                    <option value="4" {{ $WorkWeek->tue == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -60,10 +66,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Wednesday </label>
                                             <label class="select">
-                                                <select name="wed" id="wed">
-                                                    <option value="0"> Non Working day </option>
-                                                    <option value="8"> Full Day</option>
-                                                    <option value="4"> Half Day</option>
+                                                <select class="form-control" name="wed" id="wed">
+                                                    <option value="8" {{ $WorkWeek->wed == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                    <option value="0" {{ $WorkWeek->wed == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                    <option value="4" {{ $WorkWeek->wed == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -71,10 +77,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Thursday </label>
                                             <label class="select">
-                                                <select name="thu" id="thu">
-                                                    <option value="0"> Non Working day </option>
-                                                    <option value="8"> Full Day</option>
-                                                    <option value="4"> Half Day</option>
+                                                <select class="form-control" name="thu" id="thu">
+                                                    <option value="8" {{ $WorkWeek->thu == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                    <option value="0" {{ $WorkWeek->thu == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                    <option value="4" {{ $WorkWeek->thu == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -84,10 +90,10 @@
                                         <section class="col col-6">
                                             <label class="label"> friday </label>
                                             <label class="select">
-                                                <select name="fri" id="fri">
-                                                    <option value="0"> Non Working day </option>
-                                                    <option value="8"> Full Day</option>
-                                                    <option value="4"> Half Day</option>
+                                                <select class="form-control" name="fri" id="fri">
+                                                    <option value="8" {{ $WorkWeek->fri == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                    <option value="0" {{ $WorkWeek->fri == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                    <option value="4" {{ $WorkWeek->fri == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -95,10 +101,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Saturday </label>
                                             <label class="select">
-                                                <select name="sat" id="sat">
-                                                    <option value="0"> Non Working day </option>
-                                                    <option value="8"> Full Day</option>
-                                                    <option value="4"> Half Day</option>
+                                                <select class="form-control" name="sat" id="sat">
+                                                    <option value="8" {{ $WorkWeek->sat == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                    <option value="0" {{ $WorkWeek->sat == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                    <option value="4" {{ $WorkWeek->sat == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -107,10 +113,10 @@
                                     <section>
                                         <label class="label"> Sunday </label>
                                         <label class="select">
-                                            <select name="sun" id="sun">
-                                                <option value="0" > Non Working day </option>
-                                                <option value="8"> Full Day</option>
-                                                <option value="4"> Half Day</option>
+                                            <select class="form-control" name="sun" id="sun">
+                                                <option value="8" {{ $WorkWeek->sun == 8 ? "selected=='selected' ":''}}> Non Working day </option>
+                                                <option value="0" {{ $WorkWeek->sun == 0 ? "selected=='selected' ":''}}> Full Day</option>
+                                                <option value="4" {{ $WorkWeek->sun == 4 ? "selected=='selected' ":''}}> Half Day</option>
                                             </select>
                                             <i></i>
                                         </label>
@@ -122,7 +128,6 @@
                             </form>
                         </div>
                         <!-- end widget content -->
-
                     </div>
                 </div>
             </article>
@@ -162,35 +167,36 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            var formData = {
-
-                mon : $('#mon').val(),
-                tue : $('#tue').val(),
-                wed : $('#wed').val(),
-                thu : $('#thu').val(),
-                fri : $('#fri').val(),
-                sat : $('#sat').val(),
-                sun : $('#sun').val(),
-            }
+            $('#frmWorkWeek').submit();
+            // var formData = {
+            //
+            //     mon : $('#mon').val(),
+            //     tue : $('#tue').val(),
+            //     wed : $('#wed').val(),
+            //     thu : $('#thu').val(),
+            //     fri : $('#fri').val(),
+            //     sat : $('#sat').val(),
+            //     sun : $('#sun').val(),
+            // }
            // alert(JSON.stringify(formData));
-            var id = 1;
-            //alert(JSON.stringify(formData));
-            $.ajax({
-                url: baseURL+"administration/define-workweek/" + id,
-                method: "PUT",
-                type: "json",
-                data: formData,
-                success: function (respond) {
-                    DisabledForm();
-                    var Save = $('#btn_save_week').val('Edit');
-                    $('.alert').show();
-                    //$('#msg').html("data insert successfully").fadeIn('slow') //also show a success message
-                    $('.alert').delay(5000).fadeOut('slow');
-                },
-                error: function (err) {
-                    console.log(err)
-                }
-            });
+           //  var id = 1;
+           //  //alert(JSON.stringify(formData));
+           //  $.ajax({
+           //      url: baseURL+"administration/define-workweek/" + id,
+           //      method: "PUT",
+           //      type: "json",
+           //      data: formData,
+           //      success: function (respond) {
+           //          DisabledForm();
+           //          var Save = $('#btn_save_week').val('Edit');
+           //          $('.alert').show();
+           //          //$('#msg').html("data insert successfully").fadeIn('slow') //also show a success message
+           //          $('.alert').delay(5000).fadeOut('slow');
+           //      },
+           //      error: function (err) {
+           //          console.log(err)
+           //      }
+           //  });
 
 
                 }

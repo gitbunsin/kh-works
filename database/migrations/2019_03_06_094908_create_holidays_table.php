@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeaveRequestsTable extends Migration
+class CreateHolidaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,23 @@ class CreateLeaveRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leave_requests', function (Blueprint $table) {
+        Schema::create('holidays', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->integer('leave_type_id')->unsigned()->nullable();
-            $table->foreign('leave_type_id')->references('id')->on('leave_types')->onDelete('cascade');
-
 
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
-            $table->integer('emp_number')->unsigned()->nullable();
-            $table->foreign('emp_number')->references('emp_number')->on('employees')->onDelete('cascade');
+            $table->integer('operational_country_id')->unsigned()->nullable();
+            $table->foreign('operational_country_id')->references('id')->on('operational_countries')->onDelete('cascade');
 
-
-
-            $table->date('date_applied')->nullable();
-            $table->string('comment')->nullable();
+            $table->string('name')->nullable();
+            $table->smallInteger('recurring')->nullable();
+            $table->integer('length')->nullable();
+            $table->date('date')->nullable();
 
 
             $table->timestamps();
+
         });
     }
 
@@ -43,6 +40,6 @@ class CreateLeaveRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leave_requests');
+        Schema::dropIfExists('holidays');
     }
 }

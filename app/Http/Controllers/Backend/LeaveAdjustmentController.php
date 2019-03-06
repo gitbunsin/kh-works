@@ -30,17 +30,6 @@ class LeaveAdjustmentController extends Controller
         return Response()->json($e);
 
     }
-    public function viewLeaveEntitlements()
-    {
-
-        $leave_entitlement = DB::table('leave_entitlements as e')->get();
-//            ->select('e.*','l.*')
-//            ->join('leave_entitlement_types as l','e.entitlement_types','=','l.id')
-//            ->get();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-
-        return view('backend.HRIS.Leave.Entitlement.employee_entitlement',compact('leave_entitlement','menus'));
-    }
 
     /**
      * Show the form for creating a new resource.

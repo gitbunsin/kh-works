@@ -45,22 +45,23 @@
                                     <th> Action</th>
                                 </tr>
                                 </thead>
-                                <tbody id="products-list" name="products-list">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-
-                                        <td>
-                                            <a  href="{{url('administration/define-holiday/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                @foreach($Holiday as $Holidays)
+                                    <tbody id="products-list" name="products-list">
+                                    <td>{{$Holidays->name}}</td>
+                                    <td>{{$Holidays->date}}</td>
+                                    <td></td>
+                                    <td></td>
+                                            <td>
+                                                <a  href="{{url('administration/define-holiday/'.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                @endforeach
                             </table>
                         </div>
                     </div>

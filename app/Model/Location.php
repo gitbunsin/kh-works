@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
     //
-    protected $table = 'tbl_location';
+    protected $table = 'locations';
     protected $fillable = [
         'id',
         'company_id',
@@ -19,10 +19,9 @@ class Location extends Model
         'zip_code',
         'phone',
         'fax',
-        'notes',
+        'note',
         'create_at',
         'update_at',
     ];
     public $timestamps = false;
-
 }

@@ -115,15 +115,21 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::post('leave-request','LeaveController@leaveRequest');
 
 
-        Route::get('assign-leave','LeaveController@assginLeave');
+        Route::get('assign-leave','LeaveController@AssignLeave');
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
         Route::resource('leave-adjustment','LeaveAdjustmentController');
 
         Route::get('view-leave-balance-report','LeaveController@viewLeaveBalanceReport');
-        Route::get('view-leave-entitlements','LeaveAdjustmentController@viewLeaveEntitlements');
-        Route::get('view-leave-my-entitlements','LeaveController@viewMyLeaveEntitlements');
+
+
         Route::get('view-my-leave-list','LeaveController@viewMyLeaveList');
         Route::resource('add-leave-entitlement','LeaveEntitlementController');
+
+
+
+
+        Route::get('view-leave-my-entitlements','LeaveController@viewMyLeaveEntitlements');
+        Route::get('view-leave-entitlements','LeaveEntitlementController@viewLeaveEntitlements');
         Route::get('addLeaveEntitlement','LeaveEntitlementController@addLeaveEntitlement');
 
         //PIM

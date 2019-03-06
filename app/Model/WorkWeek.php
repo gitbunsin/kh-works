@@ -1,17 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class WorkWeek extends Model
 {
     //
-    protected $table = '';
+    protected $table = 'work_weeks';
     protected $fillable = [
         'id',
         'company_id',
-        'employee_id',
         'operational_country_id',
         'mon',
         'tue',

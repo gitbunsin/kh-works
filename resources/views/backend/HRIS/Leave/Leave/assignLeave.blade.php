@@ -71,7 +71,7 @@
                                             <label class="label"> From Date * </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="StartDate" name="StartDate" class="StartDate">
                                             </label>
                                         </section>
 
@@ -79,7 +79,7 @@
                                             <label class="label"> To Date * </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="EndDate" name="EndDate" class="EndDate">
                                             </label>
                                         </section>
 
@@ -115,6 +115,24 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+
+        // START AND FINISH DATE
+        $('#StartDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#EndDate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+        $('#EndDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#StartDate').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
         let baseURL = "{{URL::to('/')}}/";
         var $loginForm = $("#frmLeavetype").validate({
             // Rules for form validation

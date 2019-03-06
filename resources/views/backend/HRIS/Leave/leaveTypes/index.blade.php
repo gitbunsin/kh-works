@@ -44,15 +44,15 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($l as $ls)
-                                    <tr id="job_id{{$ls->id}}">
-                                        <td>{{$ls->name}}</td>
-                                        <td>{{$ls->description}}</td>
+                                @foreach($LeaveType as $leaveTypes)
+                                    <tr id="job_id{{$leaveTypes->id}}">
+                                        <td>{{$leaveTypes->name}}</td>
+                                        <td>{{$leaveTypes->description}}</td>
                                         <td>
-                                            <a  href="{{url('administration/leave-type/'.$ls->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('/administration/leave-type/'.$leaveTypes->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$ls->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>

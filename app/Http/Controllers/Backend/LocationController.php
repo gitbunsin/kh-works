@@ -3,7 +3,7 @@
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
-use App\Location;
+use App\Model\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,8 @@ class LocationController extends BackendController
 //                ->select('s.*','c.*','c.name as country_name','s.name as location_name')
 //                ->join('tbl_country as c','s.country_code','=','c.id')->get();
         $this->shareMenu();
-        return view('backend.HRIS.admin.Company.Locations.index');
+        $location = Location::all();
+        return view('backend.HRIS.admin.Company.Locations.index',compact('location'));
     }
 
     /**
@@ -56,7 +57,7 @@ class LocationController extends BackendController
         $l->zip_code = $request->zip_code;
         $l->phone = $request->phone;
         $l->fax = $request->fax;
-        $l->notes = $request->notes;
+        $l->note = $request->notes;
         $l->save();
         return redirect('/administration/locations')->with('success','Item created successfully!');
     }
@@ -111,7 +112,7 @@ class LocationController extends BackendController
         $l->zip_code = $request->zip_code;
         $l->phone = $request->phone;
         $l->fax = $request->fax;
-        $l->notes = $request->notes;
+        $l->note = $request->notes;
         $l->save();
         return redirect('/administration/locations')->with('success','Item edited successfully!');
     }

@@ -199,22 +199,29 @@
                                     <th> Actions </th>
                                 </tr>
                                 </thead>
-                                {{--<tbody id="products-list" name="products-list">--}}
-                                {{--@foreach($l as $ls)--}}
-                                    {{--<tr id="job_id{{$ls->id}}">--}}
-                                        {{--<td>{{$ls->name}}</td>--}}
-                                        {{--<td>{{$ls->description}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a  href="{{url('administration/leave-type/'.$ls->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="{{$ls->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
-                                {{--</tbody>--}}
+                                <tbody id="products-list" name="produc
+                                ts-list">
+                                @foreach($ListAllLeave as $ListAllLeaves)
+                                    <tr id="">
+                                        <td>{{$ListAllLeaves->name}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{$ListAllLeaves->no_of_day}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="form-x-editable.html#"
+                                               id="sex" data-type="select"
+                                               data-pk="1" data-value=""
+                                               data-original-title="Select sex"
+                                               class="editable editable-click editable-unsaved"
+                                               style="color: rgb(128, 128, 128); background-color: rgba(0, 0, 0, 0);">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -222,4 +229,34 @@
             </article>
         </div>
     </section>
+@endsection
+@section('script')
+    <script>
+        $('#sex').editable({
+            prepend: " Select Action",
+            source: [{
+                value: 1,
+                text: 'Cancel'
+            }, {
+                value: 2,
+                text: 'Approve'
+            }],
+            display: function (value, sourceData) {
+                var colors = {
+                    "": "gray",
+                    1: "green",
+                    2: "blue"
+                }, elem = $.grep(sourceData, function (o) {
+                    return o.value == value;
+                });
+
+                if (elem.length) {
+                    $(this).text(elem[0].text).css("color", colors[value]);
+                } else {
+                    $(this).empty();
+                }
+            }
+        });
+    </script>
+
 @endsection

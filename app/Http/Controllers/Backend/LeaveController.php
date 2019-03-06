@@ -5,8 +5,9 @@ use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
-use App\Leave;
-use App\LeaveRequest;
+use App\Model\Leave;
+use App\Model\LeaveEntitlement;
+use App\Model\LeaveRequest;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\DB;
  * Class LeaveController
  * @package App\Http\Controllers\Backend
  */
-class LeaveController extends Controller
+class LeaveController extends BackendController
 {
     /**
      * LeaveController constructor.
@@ -35,31 +36,33 @@ class LeaveController extends Controller
     public function index()
     {
 
+        $this->shareMenu();
         //
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.Leave.index',compact('menus'));
+        $ListAllLeave = LeaveEntitlement::all();
+        return view('backend.HRIS.Leave.Leave.index',compact('ListAllLeave'));
     }
     public function applyLeave()
     {
+        $this->shareMenu();
 
         // Specify the start date. This date can be any English textual format
 
-//        $startTime = strtotime( '2010-05-01 12:00' );
-//        $endTime = strtotime( '2010-05-10 12:00' );
-//        dd($startTime, $endTime);
+        $startTime = strtotime( '2010-05-01 12:00' );
+        $endTime = strtotime( '2010-05-10 12:00' );
+        //dd($startTime, $endTime);
 
-//        date_default_timezone_set('UTC');
-//
-//        $start_date = '2019-02-21';
-//        $end_date = '2019-03-23';
-//
-//        while (strtotime($start_date) <= strtotime($end_date)) {
+        //date_default_timezone_set('UTC');
+
+        $start_date = '2019-02-21';
+        $end_date = '2019-03-23';
+
+        while (strtotime($start_date) <= strtotime($end_date)) {
 //            echo $start_date;
-//            $start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
-//        }
+            $start_date = date ("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+        }
        // $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
 
-        return view('backend.HRIS.Leave.Leave.applyLeave',compact('menus'));
+        return view('backend.HRIS.Leave.Leave.applyLeave');
     }
 
     /**
@@ -75,6 +78,7 @@ class LeaveController extends Controller
 
     }
     public function viewMyLeaveEntitlements(){
+        $this->shareMenu();
         $leave_entitlement = DB::table('leave_entitlements as e')->get();
 //            ->select('e.*','l.*')
 //            ->join('leave_entitlement_types as l','e.adjustment_type','=','l.id')
@@ -83,12 +87,12 @@ class LeaveController extends Controller
     }
     public function viewMyLeaveList()
     {
+        $this->shareMenu();
 
         $all_leave = DB::table('leave_requests as l')
             ->join('leave_types as lt','l.leave_type_id','=','lt.id')
             ->get();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.Leave.my_leave',compact('all_leave','menus'));
+        return view('backend.HRIS.Leave.Leave.my_leave',compact('all_leave'));
 
 
     }
@@ -106,8 +110,7 @@ class LeaveController extends Controller
     {
 
 
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.Leave.leave_report',compact('menus'));
+        return view('backend.HRIS.Leave.Leave.leave_report');
     }
     /**
      * Show the form for creating a new resource.
@@ -122,13 +125,13 @@ class LeaveController extends Controller
 //                ->first();
         return response()->json($leave_balance);
     }
-    public function assginLeave()
+    public function AssignLeave()
     {
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.Leave.assignLeave',compact('menus'));
+        $this->shareMenu();
+
+        return view('backend.HRIS.Leave.Leave.assignLeave');
     }
     public function leaveRequest(Request $request){
-
 
 
        // dd($request->all());
@@ -148,9 +151,9 @@ class LeaveController extends Controller
 
             $leave_request = new LeaveRequest();
             $leave_request->company_id = $company_id;
-            $leave_request->employee_id = 1 ;
+            $leave_request->emp_number = 1 ;
             $leave_request->leave_type_id = $request->leave_type;
-            $leave_request->comments = $request->comment;
+            $leave_request->comment = $request->comment;
             $leave_request->date_applied = \Carbon\Carbon::now();
             $leave_request->save();
             $leave_request_id = $leave_request->id;
@@ -160,7 +163,7 @@ class LeaveController extends Controller
             $leave->length_hours = 8;
             $leave->length_days = 1;
             $leave->status = 1;
-            $leave->comments = $request->comments;
+            $leave->comment = $request->comments;
             $leave->date = date( 'Y-m-d', $i );
             $leave->save();
 

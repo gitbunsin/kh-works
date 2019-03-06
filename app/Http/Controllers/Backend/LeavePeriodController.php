@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function Sodium\compare;
 
-class LeavePeriodController extends Controller
+class LeavePeriodController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,6 +19,7 @@ class LeavePeriodController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         return $this->listLeavePeriod();
     }
 
@@ -33,8 +34,7 @@ class LeavePeriodController extends Controller
         else{
             $checkStatusLeavePeriod = "false";
         }
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['menus'=>$menus ,'getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
+        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
     }
 
     /**
