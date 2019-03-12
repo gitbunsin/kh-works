@@ -1,10 +1,59 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
+    <style>
+        .modal-backdrop.in{
+
+            opacity: 0 !important;
+        }
+    </style>
+
     <section id="widget-grid" class="">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Leave Balance Details</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="" class="smart-form">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            As of Date: 2019-03-11
+                            <table class="table table-responsive table-condensed">
+                                <thead>
+                                        <tr>
+                                            <th>Entitled</th>
+                                            <th>Taken</th>
+                                            <th>Scheduled</th>
+                                            <th>Pending Approval</th>
+                                            <th>Leave Balance</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td> 0.0</td>
+                                            <td> 0.0</td>
+                                            <td> 0.0</td>
+                                            <td> 0.0</td>
+                                            <td> 18 </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- row -->
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <input id="url" type="hidden" value="{{ \Request::url() }}">
+                <!-- Modal -->
+
                 <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
@@ -28,9 +77,9 @@
                                             <label class="select">
                                                 <select name="leave_type" id="leave_type">
                                                     <option value="">-- select --</option>
-                                                    @php $l = \App\Model\LeaveType::all(); @endphp
-                                                    @foreach($l as $ls)
-                                                        <option value="{{$ls->id}}">{{$ls->name}}</option>
+                                                    @php $LeaveType = \App\Model\LeaveType::all(); @endphp
+                                                    @foreach($LeaveType as $LeaveTypes)
+                                                        <option value="{{$LeaveTypes->id}}">{{$LeaveTypes->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -44,7 +93,10 @@
                                                 <h3 id="leave_balance_id" style="color:red;"> </h3>
                                             </label>
                                                 <label class="input col col-2">
-                                                   <h5><a id="leave_balance_id" href="#"> View Details </a></h5>
+                                                    <button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#exampleModal">
+                                                        View Leave Details
+                                                    </button>
+                                                    {{--<button  id="leave_balance_id" type="button" class="btn btn-danger form-control">View Leave Details</button>--}}
                                                 </label>
 
                                             </div>
@@ -272,9 +324,36 @@
         	}
         });
 
+        //alert(url);
+        //Display Leave Details
+        $(document).on('click','#leave_balance_id',function(){
+            //var url = $('#url').val();
+           //alert(url);
+           // var emergency_id = $(this).attr('data-id');
+            // alert(emergency_id);
+            // Populate Data in Edit Modal Form
+            //('administration/job/' . $jobs->id . '/edit')
+            $.ajax({
+                type: "GET",
+                url: '/administration/display-leave-details',
+                success: function (data) {
+                    //console.log(data);
+                    // alert(JSON.stringify(data.eec_name));
+                    $('#exampleModal').modal('show');
+                    $(".modal-backdrop.in").hide();
+
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data));
+                    console.log('Error:', data);
+                }
+            });
+        });
+
         let baseURL = "{{URL::to('/')}}/";
         $("#leave_type").on('change', function () {
             let leave_id = this.value;
+          //  console.log("Data",leave_id);
             //alert(employeeID);
             if (leave_id != 0) {
                // console.log("Leave ID = ", leave_id);
@@ -288,6 +367,7 @@
                     method: "GET",
                     type: "json",
                     success: function (respond) {
+                       // console.log('Data',respond);
                         $("#div_balance").show();
                         $("#leave_balance_id").text(respond.no_of_day);
                         //console.log("Leave balance = ", respond);

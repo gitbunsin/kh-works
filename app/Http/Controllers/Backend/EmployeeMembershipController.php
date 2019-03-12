@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use \App\Model\EmployeeMembership;
 use App\Http\Controllers\Controller;
 
+use App\Model\Employee;
+use App\Model\EmployeeMemberDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,10 @@ class EmployeeMembershipController extends BackendController
         }else{
             $employee_log = Auth::guard('employee')->user()->id;
         }
-        $m = DB::table('employee_member_details as m')->get();
-//                        ->join('tbl_membership as c','m.membership_code','=','c.id')
+        $m = DB::table('employee_member_details as m')
+                        ->join('memberships as c','m.membership_code','=','c.id')
+                        ->select('m.*','c.*','m.id as member_id')
+                        ->get();
 //                        ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
 //                        ->where('m.id',$employee_log)
 //                        ->get();
@@ -57,11 +60,11 @@ class EmployeeMembershipController extends BackendController
     public function store(Request $request)
     {
        // dd($request->all());
-        $m = new EmployeeMembership();
-        $m->company_id = Auth::guard('admins')->user()->id;
+        $m = new EmployeeMemberDetail();
+//        $m->company_id = Auth::guard('admins')->user()->id;
         $m->membership_code = $request->membership_id;
         $m->ememb_subscript_amount = $request->sub_amount;
-        $m->ememb_subs_crrency = $request->currency_id;
+        $m->ememb_subs_currency = $request->currency_id;
         $m->ememb_commence_date =  Carbon::parse($request->ememb_commence_date);
         $m->ememb_renewal_date = Carbon::parse($request->ememb_renewal_date);
         $m->save();
@@ -95,13 +98,9 @@ class EmployeeMembershipController extends BackendController
         }else{
             $employee_log = Auth::guard('employee')->user()->id;
         }
-        $m = DB::table('tbl_hr_emp_memeber_detail as m')
-            ->join('tbl_membership as c','m.membership_code','=','c.id')
-            ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
-            ->where('m.id',$comployee_log)
-            ->where('m.id',$id)
-            ->first();
-        return view('backend.HRIS.PIM.Employee.Membership.edit',compact('m'));
+        $emp_membership = EmployeeMemberDetail::find($id);
+        //dd($emp_membership);
+        return view('backend.HRIS.PIM.Employee.Membership.edit',compact('emp_membership'));
     }
 
     /**
@@ -114,11 +113,15 @@ class EmployeeMembershipController extends BackendController
     public function update(Request $request, $id)
     {
         //
-        $m = EmployeeMembership::findOrFail($id);
-        $m->company_id = Auth::guard('admins')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $emp_number = Employee::where('company_id',Auth::guard('admins')->user()->id)->first();
+        }else{
+            $emp_number = Auth::guard('employee')->user()->id;
+        }
+        $m = EmployeeMemberDetail::findOrFail($id);
         $m->membership_code = $request->membership_id;
         $m->ememb_subscript_amount = $request->sub_amount;
-        $m->ememb_subs_crrency = $request->currency_id;
+        $m->ememb_subs_currency = $request->currency_id;
         $m->ememb_commence_date =  Carbon::parse($request->ememb_commence_date);
         $m->ememb_renewal_date = Carbon::parse($request->ememb_renewal_date);
         $m->save();

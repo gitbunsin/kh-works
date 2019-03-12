@@ -22,72 +22,137 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <!-- end widget edit box -->
-
                         <!-- widget content -->
                         <div class="widget-body">
-                            <div class="row">
-                            <div class="tree smart-form col col-6">
+                            <div class="tree smart-form">
                                 <ul>
                                     <li>
                                         <span><i class="fa fa-lg fa-folder-open"></i> Parent</span>
                                         <ul>
-                                            @foreach($categories as $category)
                                             <li>
-                                                <span><i class="fa fa-lg fa-plus-circle"></i>  {{ $category->title }}</span>
+                                                <span><i class="fa fa-lg fa-plus-circle"></i> Administrators</span>
                                                 <ul>
-                                                    <li>
-                                                       @if(count($category->childs))
-                                                            @include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])
-                                                        @endif
-                                                        </label> </span>
-
+                                                    <li style="display:none">
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" name="checkbox-inline">
+																			<i></i>Michael.Jackson</label> </span>
                                                     </li>
-
+                                                    <li style="display:none">
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" checked="checked" name="checkbox-inline">
+																			<i></i>Sunny.Ahmed</label> </span>
+                                                    </li>
+                                                    <li style="display:none">
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" checked="checked" name="checkbox-inline">
+																			<i></i>Jackie.Chan</label> </span>
+                                                    </li>
                                                 </ul>
                                             </li>
-                                            @endforeach
+                                            <li>
+                                                <span><i class="fa fa-lg fa-minus-circle"></i> Child</span>
+                                                <ul>
+                                                    <li>
+                                                        <span><i class="icon-leaf"></i> Grand Child</span>
+                                                    </li>
+                                                    <li>
+                                                        <span><i class="icon-leaf"></i> Grand Child</span>
+                                                    </li>
+                                                    <li>
+                                                        <span><i class="fa fa-lg fa-plus-circle"></i> Grand Child</span>
+                                                        <ul>
+                                                            <li style="display:none">
+                                                                <span><i class="fa fa-lg fa-plus-circle"></i> Great Grand Child</span>
+                                                                <ul>
+                                                                    <li style="display:none">
+                                                                        <span><i class="icon-leaf"></i> Great great Grand Child</span>
+                                                                    </li>
+                                                                    <li style="display:none">
+                                                                        <span><i class="icon-leaf"></i> Great great Grand Child</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li style="display:none">
+                                                                <span><i class="icon-leaf"></i> Great Grand Child</span>
+                                                            </li>
+                                                            <li style="display:none">
+                                                                <span><i class="icon-leaf"></i> Great Grand Child</span>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
                                 </ul>
+                                <footer>
+                                    <input type="button" class="btn btn-primary" id="BtnSaveCompanyStructure" value="">
+                                    <input type="hidden" id="product_id" name="product_id" value="0">
+                                    <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
+                                </footer>
                             </div>
-                            <section class="col-md-6">
-                                <h3>Add New Category</h3>
+                            {{--<div class="row">--}}
+                            {{--<div class="tree smart-form col col-6">--}}
+                                {{--<ul>--}}
+                                    {{--<li>--}}
+                                        {{--<span><i class="fa fa-lg fa-folder-open"></i> Parent</span>--}}
+                                        {{--<ul>--}}
+                                            {{--@foreach($categories as $category)--}}
+                                            {{--<li>--}}
+                                                {{--<span><i class="fa fa-lg fa-plus-circle"></i>  {{ $category->title }}</span>--}}
+                                                {{--<ul>--}}
+                                                    {{--<li>--}}
+                                                       {{--@if(count($category->childs))--}}
+                                                            {{--@include('backend.HRIS.admin.Company.structure.manageChild',['childs' => $category->childs])--}}
+                                                        {{--@endif--}}
+                                                        {{--</label> </span>--}}
 
-                                <form id="frmCategory" action="{{url('/administration/view-company-structure')}}" method="post"  class="smart-form">
+                                                    {{--</li>--}}
 
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <fieldset>
-                                        @if ($message = Session::get('success'))
-                                            <div class="alert alert-success alert-block">
-                                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                                <strong>{{ $message }}</strong>
-                                            </div>
-                                        @endif
-                                        <div  class="form-group input {{ $errors->has('title') ? 'has-error' : '' }}">
-                                            {!! Form::label('Title:') !!}
-                                            {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter Title']) !!}
-                                            <span class="text-danger">{{ $errors->first('title') }}</span>
-                                        </div>
+                                                {{--</ul>--}}
+                                            {{--</li>--}}
+                                            {{--@endforeach--}}
+                                        {{--</ul>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                            {{--<section class="col-md-6">--}}
+                                {{--<h3>Add New Category</h3>--}}
 
-                                        <div class="form-group input {{ $errors->has('parent_id') ? 'has-error' : '' }}">
-                                            {!! Form::label('Category:') !!}
-                                            {!! Form::select('parent_id',$allCategories, old('parent_id'), ['class'=>'form-control', 'placeholder'=>'Select Category']) !!}
-                                            <span class="text-danger">{{ $errors->first('parent_id') }}
+                                {{--<form id="frmCategory" action="{{url('/administration/view-company-structure')}}" method="post"  class="smart-form">--}}
 
-                                                    </span>
-                                        </div>
-                                        <div class="form-group input">
-                                            <button class="btn btn-success">Add New</button>
-                                        </div>
+                                    {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
+                                    {{--<fieldset>--}}
+                                        {{--@if ($message = Session::get('success'))--}}
+                                            {{--<div class="alert alert-success alert-block">--}}
+                                                {{--<button type="button" class="close" data-dismiss="alert">×</button>--}}
+                                                {{--<strong>{{ $message }}</strong>--}}
+                                            {{--</div>--}}
+                                        {{--@endif--}}
+                                        {{--<div  class="form-group input {{ $errors->has('title') ? 'has-error' : '' }}">--}}
+                                            {{--{!! Form::label('Title:') !!}--}}
+                                            {{--{!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter Title']) !!}--}}
+                                            {{--<span class="text-danger">{{ $errors->first('title') }}</span>--}}
+                                        {{--</div>--}}
 
-                                    </fieldset>
-                                    {!! Form::close() !!}
-                                </form>
+                                        {{--<div class="form-group input {{ $errors->has('parent_id') ? 'has-error' : '' }}">--}}
+                                            {{--{!! Form::label('Category:') !!}--}}
+                                            {{--{!! Form::select('parent_id',$allCategories, old('parent_id'), ['class'=>'form-control', 'placeholder'=>'Select Category']) !!}--}}
+                                            {{--<span class="text-danger">{{ $errors->first('parent_id') }}--}}
+
+                                                    {{--</span>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="form-group input">--}}
+                                            {{--<button class="btn btn-success">Add New</button>--}}
+                                        {{--</div>--}}
+
+                                    {{--</fieldset>--}}
+                                    {{--{!! Form::close() !!}--}}
+                                {{--</form>--}}
 
 
-                            </section>
+                            {{--</section>--}}
 
-                        </div>
+                        {{--</div>--}}
                         <!-- end widget content -->
                         </div>
                     </div>
@@ -105,6 +170,7 @@
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function() {
+            $('#BtnSaveCompanyStructure').val('Edit');
 
             pageSetUp();
             // PAGE RELATED SCRIPTS

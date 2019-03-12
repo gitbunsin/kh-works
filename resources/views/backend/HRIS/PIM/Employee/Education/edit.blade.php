@@ -32,7 +32,7 @@
                                             <label class="select">
                                                 <select name="level_id" id="level_id">
                                                     <option value="">-- Level --</option>
-                                                    @php $e = \App\Education::all(); @endphp
+                                                    @php $e = \App\Model\Education::all(); @endphp
                                                     @foreach($e as $es)
                                                         <option value="{{$es->id}}"  {{$es->id == $ex->education_id ? "selected =='selected'":''}}>{{$es->name}}</option>
                                                     @endforeach

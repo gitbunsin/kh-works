@@ -19,7 +19,13 @@ class CreateLocationsTable extends Migration
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
             $table->string('name')->nullable();
-            $table->string('country_code')->nullable();
+
+//            $table->string('name')->nullable();
+//            $table->string('country_code')->unsigned()
+            $table->integer('country_code')->unsigned()->nullable();
+            $table->foreign('country_code')->references('id')->on('countries')->onDelete('cascade');
+
+
             $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();

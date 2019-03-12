@@ -52,7 +52,7 @@
                                                 <label class="select">
                                                     <select name="reporting_id" id="reporting_id">
                                                         <option value="">-- Reporting --</option>
-                                                        @php $reporting = \App\ReportingMethods::all(); @endphp
+                                                        @php $reporting = \App\Model\ReportingMethods::all(); @endphp
                                                         @foreach($reporting as $reportings)
                                                             {{--<option value="{{$reportings->id}}">{{$reportings->name}}</option>--}}
                                                             <option value="{{$reportings->id}}"  {{ $reportings->id == $r->reporting_id ? 'selected="selected"' : '' }}>{{$reportings->name}}</option>

@@ -46,26 +46,28 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($employee as $employees)
-                                    <tr id="employee_id{{$employees->emp_number}}">
-                                        {{-- <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td> --}}
-                                        <td>{{$employees->employee_id}}</td>
-                                        <td> <a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_firstname}}  {{$employees->emp_middle_name}}</a>
-                                            <td><a href="{{url('/administration/employee-personal-details')}}">{{$employees->emp_lastname}}</a> </td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-            <a data-id="{{$employees->emp_number}}" href="{{url('/administration/employee-personal-details')}}" style="text-decoration:none;" class="btn-detail">
-                <i class="glyphicon glyphicon-edit"></i>
-            </a>
-                                            <a data-id="{{$employees->emp_number}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
+                                @foreach($JobTitle as $JobTitles)
+                                    @foreach($JobTitles->Employee as $employees)
+                                    <tr>
+                                            <td>{{$employees->emp_number}}</td>
+                                            <td>{{$employees->emp_firstname}} {{$employees->emp_lastname}}</td>
+                                            <td>{{$employees->emp_middle_name}}</td>
+                                            <td>
+                                                {{$JobTitles->name}}
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <a data-id="" href="{{url('/administration/employee-personal-details')}}" style="text-decoration:none;" class="btn-detail">
+                                                    <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </td>
                                     </tr>
+                                    @endforeach
                                 @endforeach
                                 </tbody>
                             </table>
@@ -127,18 +129,18 @@
                                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.
                                                     </div>
                                                 </section>
-            <section class="col col-4">
-                <label class="label">Job Title</label>
-                <label class="select">
-                    @php $job_titles = \App\Model\JobTitle::all(); @endphp
-                    <select name="job_titles" id="Job_title">
-                        @foreach($job_titles as $job_title)
-                            <option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>
-                        @endforeach
-                    </select>
-                    <i></i>
-                </label>
-            </section>
+                                                <section class="col col-4">
+                                                    <label class="label">Job Title</label>
+                                                    <label class="select">
+                                                        @php $job_titles = \App\Model\JobTitle::all(); @endphp
+                                                        <select name="job_titles" id="Job_title">
+                                                            @foreach($job_titles as $job_title)
+                                                                <option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
                                                 <section class="col col-4">
                                                     <label class="label"> Employee Photo</label>
                                                     <div style="width:200px;height: 200px; border: 1px solid whitesmoke ;text-align: center;position: relative" id="image">

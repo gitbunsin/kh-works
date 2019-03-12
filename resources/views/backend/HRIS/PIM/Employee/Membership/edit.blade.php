@@ -21,7 +21,7 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <div class="widget-body no-padding">
-                            <form id="frmMembership" method="POST"  action="{{url('administration/view-membership/'.$m->id)}}" class="smart-form" enctype="multipart/form-data">
+                            <form id="frmMembership" method="POST"  action="{{url('administration/view-membership/'.$emp_membership->id)}}" class="smart-form" enctype="multipart/form-data">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -33,7 +33,7 @@
                                                     <option value="">-- select --</option>
                                                     @php $membership = \App\Model\Membership::all(); @endphp
                                                     @foreach($membership as $memberships)
-                                                        <option value="{{$memberships->id}}" {{$memberships->id == $m->membership_code ? 'selected == "selected " ':''}}>{{$memberships->name}}</option>
+                                                        <option value="{{$memberships->id}}" {{$memberships->id == $emp_membership->membership_code ? 'selected == "selected " ':''}}>{{$memberships->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -44,7 +44,7 @@
                                             <label class="select">
                                                 <select name="subscription" id="subscription">
                                                     <option value="">-- select --</option>
-                                                    @if($m->ememb_subscript_ownership == "1")
+                                                    @if($emp_membership->ememb_subscript_ownership == "1")
                                                     <option value="1" selected> Company </option>
                                                     <option value="2"> Individual </option>
                                                     @else
@@ -60,7 +60,7 @@
                                         <section class="col col-6">
                                             <label class="label"> Subscription Amount</label>
                                             <label class="input">
-                                                <input value="{{$m->ememb_subscript_amount}}" type="number" name="sub_amount" id="sub_amount">
+                                                <input value="{{$emp_membership->ememb_subscript_amount}}" type="number" name="sub_amount" id="sub_amount">
                                             </label>
                                         </section>
                                         <section class="col col-6">
@@ -70,7 +70,7 @@
                                                     <option value="">-- select --</option>
                                                     @php use App\Model\currency;$currency = Currency::all(); @endphp
                                                     @foreach($currency as $currencys)
-                                                        <option value="{{$currencys->id}}" {{$currencys->id == $m->ememb_subs_crrency ? 'selected == "selected" ' : ''}}>{{$currencys->name}}</option>
+                                                        <option value="{{$currencys->id}}" {{$currencys->id == $emp_membership->ememb_subs_currency ? 'selected == "selected" ' : ''}}>{{$currencys->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -82,14 +82,14 @@
                                             <label class="label"> Subscription Commence Date </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input value="{{$m->ememb_commence_date}}" type="text" id="ememb_commence_date" name="ememb_commence_date" class="datepicker">
+                                                <input value="{{$emp_membership->ememb_commence_date}}" type="text" id="ememb_commence_date" name="ememb_commence_date" class="datepicker">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">  Subscription Renewal Date </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input value="{{$m->ememb_renewal_date}}" type="text" id="ememb_renewal_date" name="ememb_renewal_date" class="datepicker">
+                                                <input value="{{$emp_membership->ememb_renewal_date}}" type="text" id="ememb_renewal_date" name="ememb_renewal_date" class="datepicker">
                                             </label>
                                         </section>
                                     </div>

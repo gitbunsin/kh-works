@@ -17,6 +17,7 @@ class SubUnitController extends BackendController
         $this->shareMenu();
         $categories = Subunit::where('parent_id', '=', 0)->get();
         $allCategories = Subunit::pluck('title','id')->all();
+//        dd($allCategories);
 //        return view('categoryTreeview');
         return view('backend.HRIS.admin.Company.structure.index',compact('categories','allCategories'))->with('success','Item has been added');
 

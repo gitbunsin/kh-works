@@ -1,6 +1,7 @@
 <?php
 
 namespace  App\Http\Controllers\Backend;
+use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -21,7 +22,16 @@ class UsersCvController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        $company_id = Auth::guard('admins')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $CompanyID = Auth::guard('admins')->user()->id;
+
+        }else{
+            $CompanyID = Auth::guard('employee')->user()->company_id;
+        }
+        $CandidateAttachment= DB::table('job_candidates as JC')
+            ->join('job_candidate_attchments as JCA','JCA.candidate_id','=','JC.id')
+            ->get();
+        //dd($CandidateAttachment);
 //        $user_cv = DB::table('tbl_job_candidate as c')
 //                    ->select('c.name as candidate_name','c.id as candidate_id','cv.name as cv_name',
 //                        'cv.user_id as user_cv_id',
@@ -34,7 +44,7 @@ class UsersCvController extends BackendController
 //                    ->join('users as s','c.user_id','=','s.id')
 //                    ->where('v.company_id',$company_id)
 //                    ->get();
-        return view('backend.HRIS.Recruitment.Cv.index');
+        return view('backend.HRIS.Recruitment.Cv.index',compact('CandidateAttachment'));
     }
     public function getDownload($user_id)
     {

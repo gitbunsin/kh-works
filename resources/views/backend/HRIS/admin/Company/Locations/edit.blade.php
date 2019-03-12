@@ -27,7 +27,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmLocations" method="POST" enctype="multipart/form-data" action="{{url('administration/locations/'.$l->id)}}" class="smart-form">
+                            <form id="frmLocations" method="POST" enctype="multipart/form-data" action="{{url('administration/locations/'.$location->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -35,17 +35,17 @@
                                         <section class="col col-4">
                                             <label class="label">Name</label>
                                             <label class="input">
-                                                <input value="{{$l->location_name}}"  type="text" name="name" id="name">
+                                                <input value="{{$location->name}}"  type="text" name="name" id="name">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Country</label>
                                             <label class="select state-success">
                                                 <select name="country_code" id="country_code" class="valid">
-                                                    @php use Illuminate\Support\Facades\DB;$c = DB::table('tbl_country')->get(); @endphp
+                                                    @php use Illuminate\Support\Facades\DB;$country = \App\Model\Country::all(); @endphp
                                                     <option value="">-- country --</option>
-                                                    @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}"  {{ $l->country_code == $l->id ? 'selected="selected"' : '' }}>{{$l->name}}</option>
+                                                    @foreach($country as $countries)
+                                                        <option value="{{$countries->id}}" {{$countries->id == $location->country_code ?'selected="selected"' : ''}}>{{$countries->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -54,7 +54,7 @@
                                         <section class="col col-4">
                                             <label class="label">State/Province</label>
                                             <label class="input">
-                                                <input value="{{$l->province}}"  type="text" name="province_id" id="province_id">
+                                                <input value="{{$location->province}}"  type="text" name="province_id" id="province_id">
                                             </label>
                                         </section>
                                     </div>
@@ -62,19 +62,19 @@
                                         <section class="col col-4">
                                             <label class="label">City</label>
                                             <label class="input">
-                                                <input  value="{{$l->city}}" type="text" name="city" id="city">
+                                                <input  value="{{$location->city}}" type="text" name="city" id="city">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Address</label>
                                             <label class="input">
-                                                <input value="{{$l->address}}"  type="text" name="address" id="address">
+                                                <input value="{{$location->address}}"  type="text" name="address" id="address">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Zip/Postal Code</label>
                                             <label class="input">
-                                                <input value="{{$l->zip_code}}" type="text" name="zip_code" id="zip_code">
+                                                <input value="{{$location->zip_code}}" type="text" name="zip_code" id="zip_code">
                                             </label>
                                         </section>
                                     </div>
@@ -83,19 +83,19 @@
                                         <section class="col col-4">
                                             <label class="label">Phone</label>
                                             <label class="input">
-                                                <input value="{{$l->phone}}"  type="text" name="phone" id="phone">
+                                                <input value="{{$location->phone}}"  type="text" name="phone" id="phone">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Fax</label>
                                             <label class="input">
-                                                <input value="{{$l->fax}}" type="text" name="fax" id="fax">
+                                                <input value="{{$location->fax}}" type="text" name="fax" id="fax">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Notes</label>
                                             <label class="input">
-                                                <input value="{{$l->notes}}" type="text" name="notes" id="notes">
+                                                <input value="{{$location->notes}}" type="text" name="notes" id="notes">
                                             </label>
                                         </section>
                                     </div>

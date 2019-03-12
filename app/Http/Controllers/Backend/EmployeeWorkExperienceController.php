@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EmployeeWorkExperienceController extends Controller
+class EmployeeWorkExperienceController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -20,6 +20,7 @@ class EmployeeWorkExperienceController extends Controller
     public function index()
     {
         //
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
         }else{
@@ -27,8 +28,7 @@ class EmployeeWorkExperienceController extends Controller
         }
         $employeeExperience = EmployeeWorkExperience::where('id',$company_id);
 //        dd($employeeExperience);
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Employee.qualification',compact('employeeExperience','menus'));
+        return view('backend.HRIS.PIM.Employee.qualification',compact('employeeExperience'));
 
     }
 
@@ -40,6 +40,7 @@ class EmployeeWorkExperienceController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.WorkExperiense.create');
 
     }
@@ -60,8 +61,7 @@ class EmployeeWorkExperienceController extends Controller
         }
         $emp_experience = new EmployeeWorkExperience();
         $emp_experience->eexp_employer = $request->company;
-        $emp_experience->company_id = $company_id;
-        $emp_experience->eexp_jobtit = $request->job_titles;
+        $emp_experience->eexp_jobtitle = $request->job_titles;
         $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
         $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
         $emp_experience->eexp_comments = $request->comment;
@@ -94,6 +94,7 @@ class EmployeeWorkExperienceController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $w = EmployeeWorkExperience::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.WorkExperiense.edit',compact('w'));
     }

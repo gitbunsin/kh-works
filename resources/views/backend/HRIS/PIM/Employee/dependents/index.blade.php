@@ -45,16 +45,16 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($d as $ds)
-                                    <tr id="job_id{{$ds->id}}">
-                                        <td>{{$ds->ed_name}}</td>
-                                        <td>{{$ds->name}}</td>
-                                        <td>{{$ds->ed_date_of_birth}}</td>
+                                @foreach($ListEmployeeEmergencyDependent as $ListEmployeeEmergencyDependents)
+                                    <tr id="job_id{{$ListEmployeeEmergencyDependents->id}}">
+                                        <td>{{$ListEmployeeEmergencyDependents->ed_name}}</td>
+                                        <td>{{$ListEmployeeEmergencyDependents->ed_relationship}}</td>
+                                        <td>{{$ListEmployeeEmergencyDependents->ed_date_of_birth}}</td>
                                         <td>
-                                            <a  href="{{url('administration/view-dependents/'.$ds->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/view-dependents/'.$ListEmployeeEmergencyDependents->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$ds->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$ListEmployeeEmergencyDependents->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -68,6 +68,4 @@
             </article>
         </div>
     </section>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    {{--<script src="{{ asset('currenccurrency.js</script>--}}
 @endsection

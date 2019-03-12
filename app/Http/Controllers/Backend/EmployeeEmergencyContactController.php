@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Backend;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
-use \App\Model\EmployeeEmergencyContacts;
 use App\Http\Controllers\Controller;
 
+use App\Model\EmployeeEmergencyContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeEmergencyContactController extends Controller
+class EmployeeEmergencyContactController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +19,12 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
+        $ListEmployeeEmergencyContact = DB::table('employee_emergency_contacts as ec')
+                ->join('employees as e','ec.emp_number','=','e.emp_number')
+            ->get();
 
-        $EmergencyContact = DB::table('employee_emergency_contacts as c')->get();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Employee.Emergency.index',compact('EmergencyContact','menus'));
+        return view('backend.HRIS.PIM.Employee.Emergency.index',compact('ListEmployeeEmergencyContact'));
     }
 
     /**
@@ -33,6 +35,7 @@ class EmployeeEmergencyContactController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.Emergency.create');
     }
 
@@ -45,10 +48,15 @@ class EmployeeEmergencyContactController extends Controller
     public function store(Request $request)
     {
 
-        $emergency = new EmployeeEmergencyContacts();
+        if(Auth::guard('admins')->user()){
+           $employeeID =  Auth::guard('admins')->user()->id;
+        }else{
+
+            $employeeID = Auth::guard('employee')->user()->company_id;
+        }
+        $emergency = new EmployeeEmergencyContact();
         $emergency->eec_name = $request->name;
-        $emergency->emp_number = Auth::guard('employee')->user()->id;
-        $emergency->relationship_id = $request->relationship_id;
+        $emergency->emp_number = $employeeID;
         $emergency->eec_home_no = $request->home_telephone;
         $emergency->eec_mobile_no = $request->mobile;
         $emergency->eec_office_no = $request->work_telephone;
@@ -77,14 +85,14 @@ class EmployeeEmergencyContactController extends Controller
      */
     public function edit($id)
     {
-
-        $e = DB::table('tbl_hr_emp_emergency_contacts as e')
-                        ->select('e.*','r.*','e.id as emergency_id')
-                        ->join('tbl_relationship as r','e.relationship_id',"=",'r.id')
-                        ->where('e.id',$id)
-                        ->first();
+        $this->shareMenu();
+//        $e = DB::table('tbl_hr_emp_emergency_contacts as e')
+//                        ->select('e.*','r.*','e.id as emergency_id')
+//                        ->join('tbl_relationship as r','e.relationship_id',"=",'r.id')
+//                        ->where('e.id',$id)
+//                        ->first();
 //        dd($e);
-        return view('backend.HRIS.PIM.Employee.Emergency.edit',compact('e'));
+        return view('backend.HRIS.PIM.Employee.Emergency.edit');
 
     }
 

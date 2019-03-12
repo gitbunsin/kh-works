@@ -39,7 +39,7 @@
                                                         <option value="">-- select employee --</option>
                                                         @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
-                                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                            <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 </select>
@@ -54,7 +54,7 @@
                                                 <label class="select">
                                                     <select name="reporting_id" id="reporting_id">
                                                         <option value="">-- Reporting --</option>
-                                                        @php $reporting = \App\ReportingMethods::all(); @endphp
+                                                        @php use App\Model\ReportingMethod;$reporting = ReportingMethod::all(); @endphp
                                                         @foreach($reporting as $reportings)
                                                             <option value="{{$reportings->id}}">{{$reportings->name}}</option>
                                                         @endforeach

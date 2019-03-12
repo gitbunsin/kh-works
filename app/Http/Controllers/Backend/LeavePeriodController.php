@@ -8,6 +8,7 @@ use App\Model\LeavePeriodHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use function Sodium\compare;
 
 class LeavePeriodController extends BackendController
@@ -20,21 +21,27 @@ class LeavePeriodController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        return $this->listLeavePeriod();
+//        $ListLeavePeriod = DB::table('leave_period_histories')
+//                                    ->select(max('id'))->first();
+        $ListLeavePeriod = LeavePeriodHistory::whereRaw('id = (select max(`id`) from leave_period_histories)')->first();
+//        dd($order);
+       // return $this->listLeavePeriod();
+        return view('backend.HRIS.Leave.LeavePeriod.create',compact('ListLeavePeriod'));
     }
-
     public function listLeavePeriod(){
-        $p = DB::table('leave_period_histories')->get();
-        $userId = Auth::guard('admins')->user()->id;
-        $FindLeavePeriod = LeavePeriodHistory::where('company_id', '=', $userId)->orderBy('id', 'desc')->first();
-        $checkStatusLeavePeriod = '';
-        if($FindLeavePeriod){
-            $checkStatusLeavePeriod = "true";
-        }
-        else{
-            $checkStatusLeavePeriod = "false";
-        }
-        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
+        //dd('hello');
+
+
+//        $userId = Auth::guard('admins')->user()->id;
+//        $FindLeavePeriod = LeavePeriodHistory::where('company_id', '=', $userId)->orderBy('id', 'desc')->first();
+//        $checkStatusLeavePeriod = '';
+//        if($FindLeavePeriod){
+//            $checkStatusLeavePeriod = "true";
+//        }
+//        else{
+//            $checkStatusLeavePeriod = "false";
+//        }
+//        return view('backend.HRIS.Leave.LeavePeriod.create')->with(['getLastPeriod'=>$FindLeavePeriod, 'status'=> $checkStatusLeavePeriod, 'success'=>'item are successfully added!']);
     }
 
     /**
@@ -56,12 +63,21 @@ class LeavePeriodController extends BackendController
     public function store(Request $request)
     {
         //
-        $p = new LeavePeriodHistory();
-        $p->leave_period_start_month = $request->bmonth;
-        $p->leave_period_start_day = $request->bday;
-        $p->company_id = Auth::guard('admins')->user()->id;
-        $p->save();
-        return redirect('/administration/define-leave-period');
+        //dd('hello');
+        $this->shareMenu();
+        $LeavePeriod = new LeavePeriodHistory();
+        $LeavePeriod->leave_period_start_month = input::get('StartDate');
+        $LeavePeriod->leave_period_start_day = input::get('EndDate');
+        $LeavePeriod->company_id = Auth::guard('admins')->user()->id;
+
+        $LeavePeriod->save();
+
+        return redirect('/administration/define-leave-period')->with('success','Item has been added successfully');
+//        $ListLeavePeriod = LeavePeriodHistory::where('id',$LeavePeriod->id)->first();
+//        // dd($ListLeavePeriod);
+//        return view('backend.HRIS.Leave.LeavePeriod.create',compact('ListLeavePeriod'))->with('success','Item has been added successfully');
+//        $p = DB::table('leave_period_histories')->get();
+
     }
 
     /**

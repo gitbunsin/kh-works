@@ -1,17 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeLanguage extends Model
 {
     //
-    protected $table = 'tbl_hr_emp_language';
+    protected $table = 'employee_languages';
     protected $fillable = [
         'id',
         'employee_id',
-        'company_id',
         'lang_id',
         'fluency',
         'competency',

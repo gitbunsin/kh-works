@@ -38,19 +38,20 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone"><i class="hidden-xs"></i>Name</th>
-                                    <th data-class="expand">Country</th>
-                                    <th data-class="expand">City</th>
-                                    <th data-class="expand">Phone</th>
+                                    <th>Country</th>
+                                    <th>Name</th>
+                                    <th>City</th>
+                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($location  as  $locations )
+                                @foreach($country  as  $countries )
+                                    @foreach($countries->Location as $locations)
                                     <tr>
+                                        <td>{{$countries->name}}</td>
                                         <td>{{$locations->name}}</td>
                                         <td>{{$locations->city}}</td>
-                                        <td>{{$locations->country_code}}</td>
                                         <td>{{$locations->phone}}</td>
                                         <td>
                                             <a data-id="{{$locations->id}}" href="{{url('administration/locations/'.$locations->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
@@ -60,7 +61,9 @@
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
+
                                     </tr>
+                                @endforeach
                                 @endforeach
                                 </tbody>
                             </table>

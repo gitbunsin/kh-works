@@ -42,19 +42,19 @@
                                 </tr>
                                 </thead>
                                 @php //dd($EmergencyContact) @endphp
-                                @foreach($EmergencyContact as $EmergencyContacts)
+                                @foreach($ListEmployeeEmergencyContact as $ListEmployeeEmergencyContacts)
                                     <tbody id="products-list" name="products-list">
-                                    <tr id="emergency_id{{$EmergencyContacts->id}}">
-                                        <td>{{$EmergencyContacts->eec_name}}</td>
-                                        <td>{{$EmergencyContacts->name}}</td>
-                                        <td>{{$EmergencyContacts->eec_home_no}}</td>
-                                        <td>{{$EmergencyContacts->eec_mobile_no}}</td>
-                                        <td>{{$EmergencyContacts->eec_office_no}}</td>
+                                    <tr id="emergency_id{{$ListEmployeeEmergencyContacts->id}}">
+                                        <td>{{$ListEmployeeEmergencyContacts->eec_name}}</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->eec_relationship}}</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->eec_home_no}}</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->eec_mobile_no}}</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->eec_office_no}}</td>
                                         <td>
-                                            <a data-id="{{$EmergencyContacts->emergency_id}}" href="{{url('administration/employee-emergency-contact/'.$EmergencyContacts->emergency_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$ListEmployeeEmergencyContacts->id}}" href="{{url('administration/employee-emergency-contact/'.$ListEmployeeEmergencyContacts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$EmergencyContacts->emergency_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$ListEmployeeEmergencyContacts->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>

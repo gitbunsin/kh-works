@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Dependents;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
+use App\Model\EmployeeDependent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class DependentsController extends Controller
+class DependentsController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,11 @@ class DependentsController extends Controller
      */
     public function index()
     {
-        //
-        $d = DB::table('employee_dependents as d')->get();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Employee.dependents.index',compact('d','menus'));
+        $this->shareMenu();
+        $ListEmployeeEmergencyDependent = DB::table('employee_dependents as ec')
+            ->join('employees as e','ec.emp_number','=','e.emp_number')
+            ->get();
+        return view('backend.HRIS.PIM.Employee.dependents.index',compact('ListEmployeeEmergencyDependent'));
 
     }
 
@@ -35,6 +36,7 @@ class DependentsController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.dependents.create');
 
     }
@@ -48,10 +50,15 @@ class DependentsController extends Controller
     public function store(Request $request)
     {
         //
-        $d = new Dependents();
-        $d->emp_number = Auth::guard('employee')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $employeeID =  Auth::guard('admins')->user()->id;
+        }else{
+
+            $employeeID = Auth::guard('employee')->user()->company_id;
+        }
+        $d = new EmployeeDependent();
+        $d->emp_number = $employeeID;
         $d->ed_name = $request->name;
-        $d->relationship_id = $request->relationship_id;
         $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
         $d->save();
         return redirect('/administration/view-dependents')->with('success','Item added successfully');
@@ -77,7 +84,8 @@ class DependentsController extends Controller
     public function edit($id)
     {
         //
-        $d = Dependents::findOrFail($id);
+        $this->shareMenu();
+        $d = EmployeeDependent::findOrFail($id);
 //        dd($d);
         return view('backend.HRIS.PIM.Employee.dependents.edit',compact('d'));
 
@@ -93,10 +101,15 @@ class DependentsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $d =  Dependents::findOrFail($id);
-        $d->emp_number = Auth::guard('employee')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $employeeID =  Auth::guard('admins')->user()->id;
+        }else{
+
+            $employeeID = Auth::guard('employee')->user()->company_id;
+        }
+        $d =  EmployeeDependent::findOrFail($id);
+        $d->emp_number =  $employeeID;
         $d->ed_name = $request->name;
-        $d->relationship_id = $request->relationship_id;
         $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
         $d->save();
         return redirect('/administration/view-dependents')->with('success','Item added successfully');

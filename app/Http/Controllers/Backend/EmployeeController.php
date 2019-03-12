@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Helper\AppHelper;
-use App\Helper\MenuHelper;
+use App\Model\Country;
 use App\Model\Employee;
 use \App\Model\EmployeeEmergencyContacts;
+use App\Model\EmployeeLanguage;
+use App\Model\EmployeeLocation;
 use \App\Model\EmployeeSkills;
 use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendVerificationEmployeeEmail;
+use App\Model\EmployementStatus;
+use App\Model\JobTitle;
+use App\Model\Location;
 use App\Model\UserEmployee;
 use App\OrganizationGenInfo;
 use Illuminate\Auth\Events\Registered;
@@ -30,25 +35,33 @@ class EmployeeController extends BackendController
         $this->middleware('isEmployee')->only('loginEmployee');
         $this->middleware('isAdmin')->except(['loginEmployee','EmployeeLogin']);
 //        $this->middleware('isAdmin');
-    
     }
 
     public function index()
     {
         $this->shareMenu();
+
+//        $employee = Employee::find(1)->JobTitle->name;
+//        dd($employee);
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-        $employee = DB::table('employees as e')
-            ->select('e.*')
-            ->where('e.company_id',$company_id)
-            ->orderBy('e.emp_number','DESC')
-            ->get();
+//        $employee = DB::table('employees as e')
+//            ->select('e.*','j.*')
+//            ->join('job_titles as j','e.job_title_code','=','j.id')
+//            ->orderBy('e.emp_number','DESC')
+//            ->get();
+        $JobTitle = JobTitle::with('Employee')->get();
+
+        //dd($employee->Employee->emp_lastname);
+//        foreach ($employee->Employee as $e){
+//           echo $e->company_id;
+//        }
 //        $employee = Employee::all();
-        return view('backend.HRIS.PIM.Employee.index',compact('employee'));
+        return view('backend.HRIS.PIM.Employee.index',compact('JobTitle'));
     }
 
     public function EmployeeInfo(){
@@ -57,8 +70,18 @@ class EmployeeController extends BackendController
         $employee_skill = DB::table('employee_skills as es')
             ->join('skills as s','es.skill_id','=','s.id')
             ->get();
-        $EmployeeID = Auth::guard('admins')->user()->id;
+
+        if(Auth::guard('employee')->user())
+        {
+            $EmployeeID = Auth::guard('employee')->user()->id;
+        }else{
+
+            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+            $EmployeeID = $listCompanyEmployee->emp_number;
+
+        }
         $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
+        //dd($EmployeeID);
         return view('backend.HRIS.PIM.Employee.Details.index',
             compact('employee_experience',
                 'employee_skill',
@@ -140,17 +163,31 @@ class EmployeeController extends BackendController
         return redirect('/administration/employee')->with('success','Item created successfully!');
     }
 
-    public  function  getJob()
+    public  function  GetJob()
     {
 
         $this->shareMenu();
-        return view('backend.HRIS.PIM.Employee.Job.index');
+        if(Auth::guard('employee')->user())
+        {
+            $EmployeeID = Auth::guard('employee')->user()->id;
+        }else{
+
+            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+            $EmployeeID = $listCompanyEmployee->emp_number;
+        }
+
+        $EmployeeDetailsJob= Employee::where('emp_number',$EmployeeID)->first();
+
+      //  $EmployeeLocation = Employee::with('location')->get();
+        //dd($EmployeeLocation);
+//        dd($EmployeeDetailsJob);
+        return view('backend.HRIS.PIM.Employee.Job.index',compact('EmployeeDetailsJob'));
     }
-    public function  getSalary()
-    {
-        $this->shareMenu();
-        return view('backend.HRIS.PIM.Employee.Salary.index');
-    }
+//    public function  getSalary()
+//    {
+//        $this->shareMenu();
+//        return view('backend.HRIS.PIM.Employee.Salary.index');
+//    }
     public function getReport()
     {
         $this->shareMenu();
@@ -212,28 +249,72 @@ class EmployeeController extends BackendController
     public function update(Request $request, $id)
     {
 
+        //dd('hello');
 //        dd($request->all());
         //dd($request->gender);
             $employee = Employee::findOrFail($id);
-            $employee->emp_lastname = $request->emp_lastname;
-            $employee->emp_lastname = $request->emp_lastname;
-            $employee->emp_firstname = $request->emp_firstname;
-            $employee->employee_id = $request->employee_id;
-            $employee->emp_other_id = $request->other_id;
-            $employee->emp_dri_lice_num = $request->driver_license_number;
-            $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
-            $employee->emp_marital_status = $request->emp_marital_status;
-               $gender = (int) $request->gender;
-              // dd($gender);
-            $employee->emp_gender = 1;
-           // $employee->nation_code = $request->nationality;
-            $employee->emp_nick_name = $request->nickname;
-            $employee->emp_military_service = $request->military_service;
-            $employee->emp_dri_lice_num = $request->driver_license;
-            $employee->emp_gender = $request->emp_gender;
-            $employee->emp_smoker = $request->smoker;
-            $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
-            $employee->save();
+
+            $checkEmployee = $request->emp_lastname;
+            if($checkEmployee){
+
+                $employee->emp_lastname = $request->emp_lastname;
+                $employee->emp_lastname = $request->emp_lastname;
+                $employee->emp_firstname = $request->emp_firstname;
+                $employee->employee_id = $request->employee_id;
+                $employee->emp_other_id = $request->other_id;
+                $employee->emp_dri_lice_num = $request->driver_license_number;
+                $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
+                $employee->emp_marital_status = $request->emp_marital_status;
+                $gender = (int) $request->gender;
+                // dd($gender);
+                $employee->emp_gender = 1;
+                // $employee->nation_code = $request->nationality;
+                $employee->emp_nick_name = $request->nickname;
+                $employee->emp_military_service = $request->military_service;
+                $employee->emp_dri_lice_num = $request->driver_license;
+                $employee->emp_gender = $request->emp_gender;
+                $employee->emp_smoker = $request->smoker;
+                $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
+                $employee->save();
+
+
+            }
+
+
+            //Job
+
+            $JobTitles = $request->JobTitleCode;
+             if($JobTitles)
+             {
+//                 dd($JobTitles);
+                 $employee->job_title_code = $request->JobTitleCode;
+                 $employee->eeo_cat_code = $request->JobCategory;
+                 $employee->joined_date = $request->JoinDate;
+                 $employee->emp_status = $request->EmploymentStatus;
+                 $employee->work_station = $request->SubUnit;
+                 $employee->save();
+                 return redirect('/administration/employee-job')->with('success','Item has been edit successfully');
+
+             }
+             $location = $request->location;
+             if($location){
+                 if(Auth::guard('employee')->user())
+                 {
+                     $EmployeeID = Auth::guard('employee')->user()->id;
+                 }else{
+
+                     $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+                     $EmployeeID = $listCompanyEmployee->emp_number;
+                 }
+                 $EmployeeLocation = new EmployeeLocation();
+                 $EmployeeLocation->emp_number = $EmployeeID;
+                 $EmployeeLocation->location_id = $request->location;
+                 $EmployeeLocation->save();
+
+
+             }
+
+
         return redirect('/administration/employee-personal-details')->with('success','Item has been edit successfully');
 
        // return response()->json($employee);

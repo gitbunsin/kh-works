@@ -33,18 +33,9 @@
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">Relationship</label>
-                                            @php
-                                                $r = \App\Relationship::all();
-                                            @endphp
-                                            <label class="select state-success">
-                                                <select name="relationship_id" id="relationship_id" class="valid">
-                                                    <option value="">-- Relationship --</option>
-                                                    @foreach($r as $rs)
-                                                        <option value="{{$rs->id}}">{{$rs->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <i></i>
+                                            <label class="label">Relationship </label>
+                                            <label class="input">
+                                                <input type="text" name="relationship_id" id="relationship_id">
                                             </label>
                                         </section>
                                     </div>

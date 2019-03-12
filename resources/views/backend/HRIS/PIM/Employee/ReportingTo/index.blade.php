@@ -40,20 +40,20 @@
                                     <th> Action </th>
                                 </tr>
                                 </thead>
-                                @foreach($reporting as $reportings)
+                                @foreach($ListEmployeeEmergencyReportto as $ListEmployeeEmergencyReporttos)
                                     <tbody id="products-list" name="products-list">
                                     {{--@php dd($reportings) @endphp--}}
-                                    <tr id="reporting_id{{$reportings->reporting_id}}">
-                                        <td>{{$reportings->emp_lastname}} {{$reportings->emp_firstname}} </td>
-                                        <td>{{$reportings->name}}</td>
+                                    <tr id="reporting_id{{$ListEmployeeEmergencyReporttos->id}}">
+                                        <td>{{$ListEmployeeEmergencyReporttos->emp_lastname}} {{$ListEmployeeEmergencyReporttos->emp_firstname}} </td>
+                                        <td>Piseth Ros</td>
                                         <td>
                                             {{--<a id="{{$reportings->emp_id}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
                                                 {{--<i class="glyphicon glyphicon-edit"></i>--}}
                                             {{--</a>--}}
-                                            <a href="{{url('administration/view-ReportTo-details/'.$reportings->reporting_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a href="{{url('administration/view-ReportTo-details/'.$ListEmployeeEmergencyReporttos->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$reportings->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$ListEmployeeEmergencyReporttos->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -65,65 +65,6 @@
                     </div>
                 </div>
             </article>
-        </div>
-        <input id="url" type="hidden" value="{{ \Request::url() }}">
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content"><div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            ×
-                        </button>
-                        <h4 class="modal-title"> Supervisor</h4>
-                    </div>
-                    <div class="modal-body no-padding">
-                        <form action="" id="frmSupervisor" class="smart-form" novalidate="novalidate">
-                            <fieldset>
-                                <section>
-                                    <div class="row">
-                                        <label class="label col col-2"> Name</label>
-                                        <div class="from-group col col-10">
-                                            <label class="select">
-                                                <select name="supervisor_id" id="supervisor_id">
-                                                    <option value="">-- select employee --</option>
-                                                   @php $tracker = \App\Model\Employee::all(); @endphp
-                                                @foreach($tracker as $trackers)
-                                                    <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
-                                                @endforeach
-                                                </select>
-                                                <i></i>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section>
-                                    <div class="row">
-                                        <label class="label col col-2"> Reporting Methods</label>
-                                        <div class="from-group col col-10">
-                                        <label class="select">
-                                            {{--<select name="reporting_id" id="reporting_id">--}}
-                                                {{--<option value="">-- Reporting --</option>--}}
-                                                {{--@php use App\Model\ReportingMethods;$reporting = ReportingMethods::all(); @endphp--}}
-                                                {{--@foreach($reporting as $reportings)--}}
-                                                     {{--<option value="{{$reportings->id}}">{{$reportings->name}}</option>--}}
-                                                {{--@endforeach--}}
-                                            {{--</select>--}}
-                                            <i></i>
-                                        </label>
-                                        </div>
-                                    </div>
-                                </section>
-                            </fieldset>
-                            <footer>
-                                <input type="submit" class="btn btn-primary" id="btn-save" value="add">
-                                <input type="hidden" id="product_id" name="product_id" value="0">
-                                {{--<input type="hidden" id="pay_grade_id" name="pay_grade_id" value="{{$pay_grade->id}}">--}}
-                                <button type="button" class="btn btn-default" id="btnclose" data-dismiss="modal">Close</button>
-                            </footer>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <section id="widget-grid" class="">
@@ -156,6 +97,7 @@
                         <!-- end widget edit box -->
 
                         <!-- widget content -->
+                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
@@ -165,6 +107,26 @@
                                     <th> Action </th>
                                 </tr>
                                 </thead>
+                                @foreach($ListEmployeeEmergencyReportto as $ListEmployeeEmergencyReporttos)
+                                    <tbody id="products-list" name="products-list">
+                                    {{--@php dd($reportings) @endphp--}}
+                                    <tr id="reporting_id{{$ListEmployeeEmergencyReporttos->id}}">
+                                        <td>{{$ListEmployeeEmergencyReporttos->emp_lastname}} {{$ListEmployeeEmergencyReporttos->emp_firstname}} </td>
+                                        <td>Piseth Ros</td>
+                                        <td>
+                                            {{--<a id="{{$reportings->emp_id}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
+                                            {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            <a href="{{url('administration/view-ReportTo-details/'.$ListEmployeeEmergencyReporttos->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="{{$ListEmployeeEmergencyReporttos->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                @endforeach
                             </table>
                         </div>
                     </div>

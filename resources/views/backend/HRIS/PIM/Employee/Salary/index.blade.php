@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/employee/create')}}" role="button">
+                            <a style="background: #333;" class="btn btn-primary" href="{{url('/administration/employee-salary/create')}}" role="button">
                                 <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
                         </div>
                     </div>
@@ -43,24 +43,26 @@
                                 <th> Action </th>
                             </tr>
                             </thead>
+                            @foreach($BasicSalary as $BasicSalaries)
                             <tbody id="products-list" name="products-list">
                             <tr id="employee_id">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$BasicSalaries->salary_component}}</td>
+                                <td>{{$BasicSalaries->PayPeriod_Name}}</td>
+                                <td>{{$BasicSalaries->Currency_Name}}</td>
+                                <td>{{$BasicSalaries->ebsal_basic_salary}}</td>
+                                <td>{{$BasicSalaries->comments}}</td>
                                 <td></td>
                                 <td>
-                                    <a data-id="" href="" style="text-decoration:none;" class="btn-detail">
+                                    <a data-id="" href="{{url('administration/employee-salary/'.$BasicSalaries->basicSalary_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
-                                    <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                    <a data-id="" href="" style="text-decoration:none;" class="delete-item">
                                         <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                     </a>
                                 </td>
                             </tr>
                             </tbody>
+                                @endforeach
                         </table>
                     </div>
                 </div>

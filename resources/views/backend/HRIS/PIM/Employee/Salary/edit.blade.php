@@ -1,8 +1,10 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
     <section id="widget-grid" class="">
+
         <!-- row -->
         <div class="row">
+
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <!-- Widget ID (each widget will need unique ID)-->
@@ -10,7 +12,7 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2>Education</h2>
+                        <h2>Add New Employee</h2>
                     </header>
 
                     <!-- widget div-->
@@ -22,67 +24,72 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form method="POST" action="{{url('/administration/employee-education')}}" id="frmEducation"  class="smart-form">
+                            <form method="POST" action="{{url('/administration/employee-salary/'.$BasicSalary->id)}}" id="frmBasicSalary"  class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                                <input name="_method" type="hidden" value="PATCH">
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-4">
-                                            <label class="label">Level</label>
+                                        <section class="col col-6">
+                                            @php $PayGrade= \App\Model\PayGrade::all(); @endphp
+                                            <label class="label"> PayGrades</label>
                                             <label class="select">
-                                                <select name="level_id" id="level_id">
-                                                    <option value="">-- Level --</option>
-                                                    @php $e = \App\Model\Education::all(); @endphp
-                                                    @foreach($e as $es)
-                                                        <option value="{{$es->id}}">{{$es->name}}</option>
+                                                <select name="pay_grade" id="pay_grade">
+                                                    <option value=""> -- Select -- </option>
+                                                    @foreach($PayGrade as $PayGrades)
+                                                        <option value="{{$PayGrades->id}}" {{$PayGrades->id == $BasicSalary->sal_grd_code ? "selected='selected'": ""}}>{{$PayGrades->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
-                                        <section class="col col-4">
-                                            <label class="label">Institute *</label>
+                                        <section class="col col-6">
+                                            <label class="label"> Salary Component *</label>
                                             <label class="input">
-                                                <input type="text" name="institute_id" id="institute_id">
-                                            </label>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="label">Major/Specialization *</label>
-                                            <label class="input">
-                                                <input type="text" name="major" id="major">
+                                                <input type="text" value="{{$BasicSalary->salary_component}}" name="SalaryComponent" id="SalaryComponent">
                                             </label>
                                         </section>
                                     </div>
-                                    <div>
-                                        <div class="row">
-                                            <section class="col col-4">
-                                                <label class="label"> Year </label>
-                                                <label class="input">
-                                                    <input value="" type="text" id="year" name="year" class="year">
-                                                </label>
-                                            </section>
-                                            <section class="col col-4">
-                                                <label class="label"> GPA/Score </label>
-                                                <label class="input">
-                                                    <input  value="" type="text" id="gpa_id" name="score" class="gpa_id">
-                                                </label>
-                                            </section>
-                                            <section class="col col-4">
-                                                <label class="label"> Start Date </label>
-                                                <label class="input">
-                                                    <i class="icon-append fa fa-calendar"></i>
-                                                    <input value="" type="text" id="start_date" name="start_date" class="datepicker">
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <section>
-                                            <label class="label"> End Date </label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-calendar"></i>
-                                                <input value="" type="text" id="end_date" name="end_date" class="datepicker">
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            @php $PayFrequency= \App\Model\Payperiod::all(); @endphp
+                                            <label class="label"> Pay Frequency </label>
+                                            <label class="select">
+                                                <select name="Payperiod" id="Payperiod">
+                                                    <option value=""> -- Select -- </option>
+                                                    @foreach($PayFrequency as $PayFrequencys)
+                                                        <option value="{{$PayFrequencys->id}}" {{$PayFrequencys->id == $BasicSalary->payperiod_code ? "selected='selected'": ""}}>{{$PayFrequencys->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
                                             </label>
                                         </section>
-
+                                        <section class="col col-6">
+                                            @php $Currency = \App\Model\currency::all(); @endphp
+                                            <label class="label"> Currency </label>
+                                            <label class="select">
+                                                <select name="currency" id="currency">
+                                                    <option value=""> -- Select -- </option>
+                                                    @foreach($Currency as $Currencies)
+                                                        <option value="{{$Currencies->id}}" {{$Currencies->id == $BasicSalary->currency_id ? "selected='selected'": ""}}>{{$Currencies->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label"> amount *</label>
+                                            <label class="input">
+                                                <input value="{{$BasicSalary->ebsal_basic_salary}}" type="number" maxlength="100" name="ebsal_basic_salary" id="ebsal_basic_salary" required>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> comment *</label>
+                                            <label class="input">
+                                                <textarea id="comment" name="comment" cols="78" rows="5">{{$BasicSalary->comments}}</textarea>
+                                            </label>
+                                        </section>
                                     </div>
                                 </fieldset>
                                 <footer>
@@ -119,15 +126,19 @@
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
         $(document).ready(function() {
-            var $loginForm = $("#frmExperience").validate({
+            var $loginForm = $("#frmBasicSalary").validate({
                 // Rules for form validation
                 rules : {
-                    company : {
+                    pay_grade : {
                         required : true
                     },
-                    job_titles : {
+                    currency : {
+                        required: true
+                    },Payperiod: {
                         required : true
                     }
+
+
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {

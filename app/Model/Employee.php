@@ -59,5 +59,16 @@ class Employee extends Model
         'custom10',
     ];
 
+    public function JobTitle()
+    {
+        return $this->belongsTo(JobTitle::class);
+    }
+    public function location()
+    {
+
+        return $this->belongsToMany(Location::class);
+    }
+
+
     //
 }

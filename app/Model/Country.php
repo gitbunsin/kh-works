@@ -18,4 +18,11 @@ class Country extends Model
         'iso3',
         'numcode',
     ];
+
+    public function Location()
+    {
+        return $this->hasMany(Location::class,'country_code','id');
+    }
+
+
 }

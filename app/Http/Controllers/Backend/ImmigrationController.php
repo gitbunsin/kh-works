@@ -5,12 +5,13 @@ use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Immigration;
+use App\Model\EmployeePassport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ImmigrationController extends Controller
+class ImmigrationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +20,14 @@ class ImmigrationController extends Controller
      */
     public function index()
     {
-        //
 
-        $m = DB::table('employee_passports')->get();
-        //dd($m);
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Employee.immigration.index',compact('m','menus'));
+        $this->shareMenu();
+      //  $m = DB::table('employee_passports')->get();
+        $ListEmployeeEmergencyContact = DB::table('employee_passports as ec')
+            ->join('employees as e','ec.emp_number','=','e.emp_number')
+            ->get();
+
+        return view('backend.HRIS.PIM.Employee.immigration.index',compact('ListEmployeeEmergencyContact'));
     }
 
     /**
@@ -35,6 +38,7 @@ class ImmigrationController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
 
         return view('backend.HRIS.PIM.Employee.immigration.create');
     }
@@ -49,17 +53,17 @@ class ImmigrationController extends Controller
     {
         //
         //dd($request->document);
-        $migration = new Immigration();
-        $migration->ep_seqno = $request->document;
-        $migration->company_id = Auth::guard('admins')->user()->id;
-        $migration->ep_passport_num = $request->passport_number;
-        $migration->ep_passportissueddate = carbon::parse($request->issued_date);
-        $migration->ep_passportexpiredate = carbon::parse($request->expiry_date);
-        $migration->ep_comment = $request->comments;
-        $migration->ep_passport_type_flg = $request->Issued_By;
-        $migration->ep_i9_status = $request->status;
-        $migration->ep_i9_review_date = carbon::parse($request->review_date);
-        $migration->save();
+        $EmployeePassport= new EmployeePassport();
+        $EmployeePassport->eq_seqno = $request->document;
+        $EmployeePassport->emp_number = Auth::guard('admins')->user()->id;
+        $EmployeePassport->eq_passport_num = $request->passport_number;
+        $EmployeePassport->ep_passportissueddate = carbon::parse($request->issued_date);
+        $EmployeePassport->ep_passportexpiredate = carbon::parse($request->expiry_date);
+        $EmployeePassport->ep_comments = $request->comments;
+        $EmployeePassport->ep_passport_type_flg = $request->Issued_By;
+        $EmployeePassport->ep_i9_status = $request->status;
+        $EmployeePassport->ep_i9_review_date = carbon::parse($request->review_date);
+        $EmployeePassport->save();
         //$migration->cou_code =
 
         return redirect('/administration/view-immigration')->with('success','Item has been added succesfully');
@@ -85,6 +89,7 @@ class ImmigrationController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $m = DB::table('employee_passports as p')->get();
         return view('backend.HRIS.PIM.Employee.immigration.edit',compact('m'));
     }

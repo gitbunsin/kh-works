@@ -3,6 +3,7 @@
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\Model\Country;
 use App\Model\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +22,10 @@ class LocationController extends BackendController
 //                ->select('s.*','c.*','c.name as country_name','s.name as location_name')
 //                ->join('tbl_country as c','s.country_code','=','c.id')->get();
         $this->shareMenu();
-        $location = Location::all();
-        return view('backend.HRIS.admin.Company.Locations.index',compact('location'));
+        $country = Country::with('Location')->get();
+//        dd($country);
+//        $location = Location::all();
+        return view('backend.HRIS.admin.Company.Locations.index',compact('country'));
     }
 
     /**
@@ -83,12 +86,13 @@ class LocationController extends BackendController
     {
         //
         $this->shareMenu();
-        $l = DB::table('tbl_location as s')
-            ->select('s.*','c.*','c.name as country_name','s.name as location_name')
-            ->join('tbl_country as c','s.country_code','=','c.id')
-            ->where('s.id',$id)
-            ->first();
-        return view('backend.HRIS.admin.Company.Locations.edit',compact('l'));
+        $location = Location::findOrFail($id);
+//        $l = DB::table('tbl_location as s')
+//            ->select('s.*','c.*','c.name as country_name','s.name as location_name')
+//            ->join('tbl_country as c','s.country_code','=','c.id')
+//            ->where('s.id',$id)
+//            ->first();
+        return view('backend.HRIS.admin.Company.Locations.edit',compact('location'));
     }
 
     /**

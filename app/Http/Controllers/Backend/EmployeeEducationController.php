@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeEducationController extends Controller
+class EmployeeEducationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -27,6 +27,7 @@ class EmployeeEducationController extends Controller
      */
     public function create()
     {
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.Education.create');
         //
     }
@@ -48,8 +49,7 @@ class EmployeeEducationController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         $E = new EmployeeEducation();
-        $E->employee_id = 1;
-        $E->company_id = $company_id;
+        $E->emp_number = 1;
         $E->education_id = $request->level_id;
         $E->institute= $request->institute_id;
         $E->major = $request->major;

@@ -66,8 +66,10 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('post-jobs','JobController');
         Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
         Route::resource('employee','EmployeeController');
-        Route::get('/employee-job','EmployeeController@getJob');
-        Route::get('/employee-salary','EmployeeController@getSalary');
+        Route::get('/employee-job','EmployeeController@GetJob');
+        //Route::get('/employee-salary','EmployeeController@getSalary');
+
+        Route::resource('employee-salary','EmployeeBasicSalaryController');
         Route::get('/employee-report-to','EmployeeController@getReport');
         Route::get('/employee-personal-details','EmployeeController@EmployeeInfo');
         Route::resource('employee-contact-details','EmployeeContactController');
@@ -104,6 +106,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         //Leave
         Route::resource('leave-type','LeaveTypeController');
         Route::resource('define-leave-period','LeavePeriodController');
+
+        Route::post('add-leave-period','LeavePeriodController@listLeavePeriod');
         Route::resource('define-holiday','HolidayController');
 
 
@@ -117,6 +121,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
         Route::get('assign-leave','LeaveController@AssignLeave');
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
+
+        Route::get('/display-leave-details','LeaveController@DisplayLeaveDetails');
+
         Route::resource('leave-adjustment','LeaveAdjustmentController');
 
         Route::get('view-leave-balance-report','LeaveController@viewLeaveBalanceReport');
@@ -144,8 +151,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
         //Employee
         Route::resource('view-dependents','DependentsController');
-        Route::resource('view-ReportTo-details','ReportingToController');
-        Route::get('employee/report/{report_id}/{method_id}/{employee_id}','ReportingToController@ShowEmployeeReport');
+        Route::resource('view-ReportTo-details','EmployeeReportController');
+        Route::get('employee/report/{report_id}/{method_id}/{employee_id}','EmployeeReportController@ShowEmployeeReport');
         Route::resource('view-immigration','ImmigrationController');
         Route::resource('view-membership','EmployeeMembershipController');
        // Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');

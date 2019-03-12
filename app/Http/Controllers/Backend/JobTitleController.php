@@ -24,9 +24,10 @@ class JobTitleController extends BackendController
     }
     public function index()
     {
-    $JobTitle = JobTitle::all();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle','menus'));
+        $this->shareMenu();
+        $JobTitle = JobTitle::all();
+        //$menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
+        return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }
 
     public function edit($id)

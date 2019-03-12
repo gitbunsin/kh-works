@@ -42,25 +42,25 @@
                                 </tr>
                                 </thead>
                                 @php //dd($EmergencyContact) @endphp
-                                @foreach($m as $ms)
+                                @foreach($ListEmployeeEmergencyContact as $ListEmployeeEmergencyContacts)
                                     <tbody id="products-list" name="products-list">
-                                    <tr id="emergency_id{{$ms->passport_id}}">
+                                    <tr id="emergency_id{{$ListEmployeeEmergencyContacts->id}}">
 
-                                        @if($ms->ep_seqno == "1")
+                                        @if($ListEmployeeEmergencyContacts->eq_seqno == "1")
                                             <td> Passport</td>
                                         @else
                                             <td> Visa</td>
                                         @endif
-                                            <td>{{$ms->ep_passport_num}}</td>
+                                            <td>{{$ListEmployeeEmergencyContacts->eq_passport_num}}</td>
 
-                                        <td>{{$ms->name}}</td>
-                                        <td>{{$ms->ep_passportissueddate}}</td>
-                                        <td>{{$ms->ep_passportexpiredate}}</td>
+                                        <td>Piseth Ros</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->ep_passportissueddate}}</td>
+                                        <td>{{$ListEmployeeEmergencyContacts->ep_passportexpiredate}}</td>
                                         <td>
-                                            <a data-id="{{$ms->passport_id}}" href="{{url('administration/view-immigration/'.$ms->passport_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a data-id="{{$ListEmployeeEmergencyContacts->id}}" href="{{url('administration/view-immigration/'.$ListEmployeeEmergencyContacts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$ms->passport_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$ListEmployeeEmergencyContacts->id}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>

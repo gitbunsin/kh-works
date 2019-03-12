@@ -24,4 +24,15 @@ class Location extends Model
         'update_at',
     ];
     public $timestamps = false;
+
+    public function Country(){
+
+        return $this->belongsTo(Country::class);
+    }
+    public function employee()
+    {
+
+        return $this->belongsToMany(Employee::class);
+    }
+
 }

@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Model;
-
 use Illuminate\Database\Eloquent\Model;
-
 class JobTitle extends Model
 {
 
@@ -19,8 +17,12 @@ class JobTitle extends Model
 
     public function company()
     {
-
         return $this->belongsTo('App\organization_gen_infos');
+    }
+
+    public function Employee()
+    {
+        return $this->hasMany(Employee::class,'job_title_code','id');
     }
 
 

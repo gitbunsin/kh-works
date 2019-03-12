@@ -27,10 +27,9 @@
                                     $id = Auth::guard('admins')->user()->id;
                                 @endphp
                             @endif
-                            {{Form::open(array("url"=>"#", "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
-                            <input name="company_id" id="company_id" type="hidden" value="{{$id}}">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="company_id" value="">
+                            {{Form::open(array("url"=>"administration/companyProfile/".$id,"method"=>"POST","class"=>"smart-form","id"=>"frmCompany","enctype"=>"multipart/form-data"))}}
+                                <input name="_method" type="hidden" value="PATCH">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <fieldset>
                                 <div class="row">
                                     <section class="col col-6">
@@ -51,7 +50,7 @@
                                 <section>
                                     <label class="label">Postal Address *</label>
                                     <label class="input">
-                                        <textarea id="postal_address" name="postal_address" rows="10" cols="150">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                        <textarea class="form-control" id="postal_address" name="postal_address" rows="10" cols="163">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                     </label>
                                     <div class="note">
                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -75,7 +74,7 @@
                                     <section class="col col-4">
                                         <label class="label">Street</label>
                                         <div class="input-group">
-                                            <input class="form-control" value="{{Auth::guard('admins')->user()->street1}}" type="text" name="street1" id="street1">
+                                            <input class="form-control" value="{{Auth::guard('admins')->user()->stree1}}" type="text" name="street1" id="street1">
                                             <span class="input-group-addon"><i class="fa fa-street-view "></i></span>
                                         </div>
                                     </section>
@@ -85,21 +84,21 @@
                                         <label class="label">Country</label>
                                         <div class="input-group">
                                             <input class="form-control"  value="{{Auth::guard('admins')->user()->country}}" type="text" name="country" id="country">
-                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-street-view "></i></span>
                                         </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Province</label>
                                         <div class="input-group">
                                             <input class="form-control" value="{{Auth::guard('admins')->user()->province}}" type="text" name="province" id="province">
-                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-street-view "></i></span>
                                         </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">Tax Id</label>
                                         <div class="input-group">
                                             <input class="form-control"  value="{{Auth::guard('admins')->user()->tax_id}}" type="text" name="tax_id" id="tax_id">
-                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-circle-o-notch "></i></span>
                                         </div>
                                     </section>
                                 </div>
@@ -108,14 +107,14 @@
                                         <label class="label">Websites</label>
                                         <div class="input-group">
                                             <input class="form-control" value="{{Auth::guard('admins')->user()->website}}" type="text" name="website" id="website">
-                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-circle-o-notch "></i></span>
                                         </div>
                                     </section>
                                     <section class="col col-4">
                                         <label class="label">registration number</label>
                                         <div class="input-group">
                                             <input class="form-control"  value="{{Auth::guard('admins')->user()->registration_number}}" type="text" name="registration_number" id="registration_number">
-                                            <span class="input-group-addon"><i class="fa fa-get-pocket "></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-circle-o-notch "></i></span>
                                         </div>
                                     </section>
                                     <section class="col col-4">
@@ -130,7 +129,7 @@
                                 <section>
                                     <label class="label">Company Profiles *</label>
                                     <label class="input">
-                                        <textarea id="company_profile" name="ckeditor" rows="10" cols="150">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                        <textarea class="form-control" id="company_profile" name="ckeditor" rows="10" cols="163">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                     </label>
                                     <div class="note">
                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.

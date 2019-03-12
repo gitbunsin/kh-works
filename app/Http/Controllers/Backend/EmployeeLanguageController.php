@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use \App\Model\EmployeeLanguage;
+use App\Model\EmployeeLanguage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EmployeeLanguageController extends Controller
+class EmployeeLanguageController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -26,6 +26,7 @@ class EmployeeLanguageController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
 
         return view('backend.HRIS.PIM.Employee.languages.create');
     }
@@ -45,8 +46,7 @@ class EmployeeLanguageController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         $l = new EmployeeLanguage();
-        $l->employee_id = $company_id;
-        $l->company_id = $company_id;
+        $l->emp_number = $company_id;
         $l->lang_id = $request->lang_id;
         $l->fluency = $request->fluency_id;
         $l->competency = $request->competency_id;
@@ -76,7 +76,7 @@ class EmployeeLanguageController extends Controller
     public function edit($id)
     {
         //
-
+        $this->shareMenu();
         $lx = EmployeeLanguage::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.languages.edit',compact('lx'));
     }
@@ -98,8 +98,7 @@ class EmployeeLanguageController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         $l = EmployeeLanguage::findOrFail($id);
-        $l->employee_id = $company_id;
-        $l->company_id = $company_id;
+        $l->emp_number = $company_id;
         $l->lang_id = $request->lang_id;
         $l->fluency = $request->fluency_id;
         $l->competency = $request->competency_id;

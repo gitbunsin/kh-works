@@ -53,12 +53,21 @@
                                         <section class="col col-6">
                                             <label class="label"> Location * </label>
                                             <label class="select">
-                                                <select name="location" id="location">
-                                                    <option value="">-- All --</option>
-                                                    {{--@php $location = \App\Location::all(); @endphp--}}
+                                                {{--<select name="location" id="location">--}}
+                                                    {{--<option value="">-- All --</option>--}}
+                                                    {{--@php dd($location); @endphp--}}
                                                     {{--@foreach($location as $locations)--}}
-                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
+                                                        {{--<option value="{{$locations->id}}">{{$locations->province}}</option>--}}
                                                     {{--@endforeach--}}
+                                                {{--</select>--}}
+                                                <select name="location" id="location">
+                                                    <option> -- All -- </option>
+                                                      @foreach($country as $countries)
+                                                            <option>&nbsp; {{$countries->name}}</option>
+                                                                @foreach($countries->Location as $locations)
+                                                                      <option>&nbsp;&nbsp;&nbsp;&nbsp;  {{$locations->name}}</option>
+                                                                @endforeach
+                                                      @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>

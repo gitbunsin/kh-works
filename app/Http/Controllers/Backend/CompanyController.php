@@ -62,6 +62,7 @@ class CompanyController extends BackendController
 
     public function update(Request $request , $id)
     {
+//dd('hello');
 
         $company = OrganizationGenInfo::findOrFail($id);
         $company->name = $request->name;
@@ -72,16 +73,16 @@ class CompanyController extends BackendController
         $company->fax = $request->fax;
         $company->email = $request->email;
         $company->country= $request->country;
-        $company->province = $request->province;
+//        $company->province = $request->province;
         $company->city = $request->city;
         $company->zip_code = $request->zip_code;
-        $company->street1 = $request->street1;
+        $company->stree1 = $request->street1;
         $company->street2 = $request->street2;
         $company->note = $request->note;
         $company->postal_address = $request->postal_address;
         $company->website = $request->website;
-        $company->mobile = $request->mobile;
-        $company->status = $request->status;
+        //$company->mobile = $request->mobile;
+        //$company->status = $request->status;
         $file = Input::file('company_logo');
         if ($request->hasFile('company_logo')) {
             $image = $request->file('company_logo');
@@ -94,7 +95,9 @@ class CompanyController extends BackendController
             $company->company_logo = $name;
         }
         $company->save();
-        return response()->json($company);
+//        return response()->json($company);
+
+        return redirect('/administration/companyProfile')->with('success','Item has been added successfully');
 
     }
 

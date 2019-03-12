@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
-use employeesSkills;
-use App\Skill;
+use App\Model\EmployeeSkill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-class EmployeeSkillsController extends Controller
+class EmployeeSkillsController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +28,9 @@ class EmployeeSkillsController extends Controller
      */
     public function create()
     {
-        //
 
+
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.skill.create');
     }
 
@@ -48,8 +48,7 @@ class EmployeeSkillsController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $data = new EmployeeSkills();
-        $data->company_id = $company_id;
+        $data = new EmployeeSkill();
         $data->skill_id = $request->skills;
         $data->years_of_exp = $request->year_of_experience;
         $data->comments = $request->comments;
@@ -85,6 +84,7 @@ class EmployeeSkillsController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $s = EmployeeSkills::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.skill.edit',compact('s'));
     }
@@ -107,7 +107,6 @@ class EmployeeSkillsController extends Controller
         }
         $data = EmployeeSkills::findOrFail($id);
         $data->skill_id = $request->skills;
-        $data->company_id = $company_id;
         $data->years_of_exp = $request->year_of_experience;
         $data->comments = $request->comments;
         $data->save();

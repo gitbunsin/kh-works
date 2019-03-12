@@ -38,7 +38,17 @@
                             <!-- end widget edit box -->
                             <!-- widget content -->
                             @php
-                                    $employeeID = \Illuminate\Support\Facades\Auth::guard('admins')->user()->id;
+                                    if(\Illuminate\Support\Facades\Auth::guard('employee')->user())
+                                    {
+                                       $employeeID = \Illuminate\Support\Facades\Auth::guard('employee')->user()->emp_number;
+                                    }else
+                                    {
+                                        //$employeeID = \Illuminate\Support\Facades\Auth::guard('admins')->user()->id;
+                                        $ListCompanyEmployee = \App\Model\Employee::where('emp_number',\Illuminate\Support\Facades\Auth::guard('admins')->user()->id)->first();
+                                        $employeeID = $ListCompanyEmployee->emp_number;
+                                        //dd($employeeID);
+
+                                    }
                             @endphp
                             <div class="widget-body">
                                 <form  name="EmployeeInfo" id="validate_employee" method="POST"  action="{{url('administration/employee/'.$employeeID)}}" class="smart-form form-horizontal" enctype="multipart/form-data">

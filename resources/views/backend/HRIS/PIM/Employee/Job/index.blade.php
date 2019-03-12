@@ -27,9 +27,21 @@
                         <!-- widget content -->
                         {{--<div class="widget-body no-padding">--}}
                         {{--</div>--}}
-                        <form id="validate_employee" method="POST"  action="{{url('administration/employee')}}" class="smart-form form-horizontal" enctype="multipart/form-data">
+                        @php
+                            if(\Illuminate\Support\Facades\Auth::guard('employee')->user())
+                            {
+                               $employeeID = \Illuminate\Support\Facades\Auth::guard('employee')->user()->emp_number;
+
+                            }else
+                            {
+                                $ListCompanyEmployee = \App\Model\Employee::where('emp_number',\Illuminate\Support\Facades\Auth::guard('admins')->user()->id)->first();
+                                $employeeID = $ListCompanyEmployee->emp_number;
+                                //dd($employeeID);
+                            }
+                        @endphp
+                        <form id="frmEmployeeJob" method="POST"  action="{{url('administration/employee/'.$employeeID)}}" class="smart-form form-horizontal" enctype="multipart/form-data">
+                            <input name="_method" type="hidden" value="PATCH">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" id="isContactDetails" name="isContactDetails" value="1"/>
                             <div class="row">
                                 <section class="col col-4">
                                     {{--@php $nation = \App\nation::all(); @endphp--}}
@@ -37,9 +49,10 @@
                                     <label class="select">
                                         <select class="form-control" name="JobTitleCode" id="JobTitleCode">
                                             <option value="0">Select</option>
-                                            {{--@foreach($nation as $nations)--}}
-                                            {{--<option value="{{$nations->id}}" {{ $employee->nation_code == $nations->id ? 'selected="selected"' : '' }}>{{$nations->name}}</option>--}}
-                                            {{--@endforeach--}}
+                                            @php $JobTitle = \App\Model\JobTitle::all(); @endphp
+                                            @foreach($JobTitle as $JobTitles)
+                                            <option value="{{$JobTitles->id}}" {{$JobTitles->id == $EmployeeDetailsJob->job_title_code? "selected='selected'":""}}>{{$JobTitles->name}}</option>
+                                            @endforeach
                                         </select>
                                         <i></i>
                                     </label>
@@ -47,7 +60,7 @@
                                 <section class="col col-4">
                                     <label class="label">Job Specification</label>
                                     <label class="input">
-                                        <input value="" type="text" name="job_specification" id="job_specification">
+                                        <input value="" type="text" name="JobSpecification" id="JobSpecification">
                                     </label>
                                 </section>
                                 <section class="col col-4">
@@ -55,9 +68,10 @@
                                     <label class="select">
                                         <select class="form-control" name="EmploymentStatus" id="EmploymentStatus">
                                             <option value="0">Select</option>
-                                            {{--@foreach($nation as $nations)--}}
-                                            {{--<option value="{{$nations->id}}" {{ $employee->nation_code == $nations->id ? 'selected="selected"' : '' }}>{{$nations->name}}</option>--}}
-                                            {{--@endforeach--}}
+                                            @php $EmploymentStatus = \App\Model\EmployementStatus::all();  @endphp
+                                                @foreach($EmploymentStatus as $EmploymentStatuss)
+                                                <option value="{{$EmploymentStatuss->id}}"{{$EmploymentStatuss->id == $EmployeeDetailsJob->emp_status? "selected='selected'":""}}>{{$EmploymentStatuss->name}}</option>
+                                                @endforeach
                                         </select>
                                         <i></i>
                                     </label>
@@ -69,50 +83,52 @@
                                     <label class="label"> Job Category</label>
                                     <label class="select">
                                         <select class="form-control" name="JobCategory" id="JobCategory">
-                                            <option value="0">Select</option>
-                                            {{--@foreach($nation as $nations)--}}
-                                            {{--<option value="{{$nations->id}}" {{ $employee->nation_code == $nations->id ? 'selected="selected"' : '' }}>{{$nations->name}}</option>--}}
-                                            {{--@endforeach--}}
+                                            <option value="0">Select
+                                            @php $JobCategory = \App\Model\JobCategory::all(); @endphp
+                                            @foreach($JobCategory as $JobCategories)
+                                                <option value="{{$JobCategories->id}}"{{$JobCategories->id == $EmployeeDetailsJob->eeo_cat_code? "selected='selected'":""}}>{{$JobCategories->name}}</option>
+                                            @endforeach
                                         </select>
                                         <i></i>
                                     </label>
                                 </section>
                                 <section class="col col-4">
-                                    <label class="label">Join Date</label>
+                                    <label class="label"> Join Date </label>
                                     <label class="input">
-                                        <input class="form-control" value="" type="text" name="JoinDate" id="JoinDate">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input value="{{$EmployeeDetailsJob->joined_date}}" type="text" id="JoinDate" name="JoinDate" class="JoinDate form-control">
                                     </label>
                                 </section>
                                 <section class="col col-4">
-                                    {{--@php $nation = \App\nation::all(); @endphp--}}
+                                    @php $SubUnit = \App\Model\SubUnit::all(); @endphp
                                     <label class="label"> Sub Unit</label>
                                     <label class="select">
                                         <select class="form-control" name="SubUnit" id="SubUnit">
-                                            {{--<option value="0">Select</option>--}}
-                                            {{--@foreach($nation as $nations)--}}
-                                            {{--<option value="{{$nations->id}}" {{ $employee->nation_code == $nations->id ? 'selected="selected"' : '' }}>{{$nations->name}}</option>--}}
-                                            {{--@endforeach--}}
+                                            <option value="0">Select</option>
+                                            @foreach($SubUnit as $SubUnits)
+                                            <option value="{{$SubUnits->id}}" {{$EmployeeDetailsJob->work_station == $SubUnits->id ? 'selected="selected"' : '' }}>{{$SubUnits->title}}</option>
+                                            @endforeach
                                         </select>
                                         <i></i>
                                     </label>
                                 </section>
                             </div>
                             <section>
-                                {{--@php $nation = \App\nation::all(); @endphp--}}
+                                @php $location = \App\Model\Location::all(); @endphp
                                 <label class="label"> Location</label>
                                 <label class="select">
-                                    <select class="form-control" name="Location" id="Location">
+                                    <select class="form-control" name="location" id="location">
                                         <option value="0">Select</option>
-                                        {{--@foreach($nation as $nations)--}}
-                                        {{--<option value="{{$nations->id}}" {{ $employee->nation_code == $nations->id ? 'selected="selected"' : '' }}>{{$nations->name}}</option>--}}
-                                        {{--@endforeach--}}
+                                        @foreach($location as $locations)
+                                        <option value="{{$locations->id}}" {{ $EmployeeDetailsJob->nation_code == $locations->id ? 'selected="selected"' : '' }}>{{$locations->name}}</option>
+                                        @endforeach
                                     </select>
                                     <i></i>
                                 </label>
                             </section>
-<section>
-    <legend>Employee Contract</legend>
-</section>
+                                <section>
+                                    <legend>Employee Contract</legend>
+                                </section>
                             <div class="row">
                                 <section class="col col-6">
                                     <label class="label"> Start Date </label>
@@ -136,7 +152,7 @@
                                 </label>
                             </section>
                             <footer>
-                                <button type="submit" class="btn btn-primary">Edit</button>
+                                <input class="btn btn-primary" type="button" value="" name="BtnEmployeeJob" id="BtnEmployeeJob" />
                                 <button type="button" class="btn btn-danger" onclick="window.history.back();">
                                     Terminate Employee
                                 </button>
@@ -151,15 +167,86 @@
 @section('script')
     <script src="{{ asset('/js/hr/employee.js') }}"></script>
     <script>
-        $('#JobTitleCode').prop('disabled',true);
-        $('#JobCategory').prop('disabled',true);
-        $('#SubUnit').prop('disabled',true);
-        $('#JoinDate').prop('disabled',true);
-        $('#Location').prop('disabled',true);
-        $('#EmploymentStatus').prop('disabled',true);
-        $('#StartDate').prop('disabled',true);
-        $('#EndDate').prop('disabled',true);
-        $('#ContractDetails').prop('disabled',true);
+
+        // START AND FINISH DATE
+
+        $('#JoinDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#EndDate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+
+
+        $('#StartDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#EndDate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+        $('#EndDate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#StartDate').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
+
+        DisabledEmployeeJob();
+        function DisabledEmployeeJob(){
+
+            $('#JobTitleCode').prop('disabled',true);
+            $('#JobCategory').prop('disabled',true);
+            $('#SubUnit').prop('disabled',true);
+            $('#JoinDate').prop('disabled',true);
+            $('#Location').prop('disabled',true);
+            $('#EmploymentStatus').prop('disabled',true);
+            $('#StartDate').prop('disabled',true);
+            $('#EndDate').prop('disabled',true);
+            $('#ContractDetails').prop('disabled',true);
+        }
+        function EnableEmployeeJob(){
+            $('#JobTitleCode').prop('disabled',false);
+            $('#JobCategory').prop('disabled',false);
+            $('#SubUnit').prop('disabled',false);
+            $('#JoinDate').prop('disabled',false);
+            $('#Location').prop('disabled',false);
+            $('#EmploymentStatus').prop('disabled',false);
+            $('#StartDate').prop('disabled',false);
+            $('#EndDate').prop('disabled',false);
+            $('#ContractDetails').prop('disabled',false);
+
+
+        }
+
+        $('#BtnEmployeeJob').val("Edit");
+        $('#BtnEmployeeJob').on('click',function () {
+
+            $isEdit = $('#BtnEmployeeJob').val();
+            if($isEdit =="Edit"){
+                EnableEmployeeJob();
+                var Save = $('#BtnEmployeeJob').val('Save');
+            }else{
+                $isSave = $('#BtnEmployeeJob').val();
+                // alert($isSave);
+                if($isSave == "Save") {
+                    // alert('ok');
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $('#frmEmployeeJob').submit();
+                    e.preventDefault();
+                }
+            }
+        });
 
     </script>
 @endsection

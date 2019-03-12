@@ -5,9 +5,16 @@ use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
+use App\Model\EmployeeReportto;
+use App\Model\ReportingMethods;
+use App\ReportingTo;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Psy\Util\Json;
 
-class EmployeeReportController extends Controller
+class EmployeeReportController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -17,14 +24,11 @@ class EmployeeReportController extends Controller
     public function index()
     {
         //
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Time.Project.employee_report',compact('menus'));
-    }
-    public function displayAttendanceSummaryReport(){
-
-
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.Time.Project.summary_report',compact('menus'));
+        $this->shareMenu();
+        $ListEmployeeEmergencyReportto = DB::table('employee_dependents as ec')
+            ->join('employees as e','ec.emp_number','=','e.emp_number')
+            ->get();
+        return view('backend.HRIS.PIM.Employee.ReportingTo.index',compact('ListEmployeeEmergencyReportto'));
     }
 
     /**
@@ -35,6 +39,9 @@ class EmployeeReportController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
+        return view('backend.HRIS.PIM.Employee.ReportingTo.create');
+
     }
 
     /**
@@ -45,7 +52,24 @@ class EmployeeReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //dd('hell0');
+
+        $Reporting = new EmployeeReportto();
+        $Reporting->erep_sup_emp_number = $request->supervisor_id;
+       // $Reporting->erep_sub_emp_number  = Auth::guard('admins')->user()->id;
+        $Reporting->erep_reporting_mode = $request->reporting_id;
+        $Reporting->save();
+//        $Reporting = DB::table('tbl_hr_emp_reportto as r')
+//            ->select('r.*','m.*','e.*','r.id as reporting_id')
+//            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->where('m.id',$request->reporting_id)
+//            ->where('e.emp_id',$request->supervisor_id)
+//            ->first();
+//        return response()->json($Reporting);
+
+        return redirect('/administration/view-ReportTo-details')->with('success','Item added Successfully');
     }
 
     /**
@@ -54,10 +78,39 @@ class EmployeeReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function ShowEmployeeReport($reporting_id,$method_id,$employee_id)
     {
-        //
+
+        $this->shareMenu();
+
+        $data['all_report'] = DB::table('tbl_hr_emp_reportto as r')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->where('r.id',$reporting_id)
+            ->where('e.emp_id',$employee_id)
+            ->get();
+
+        $data['all_method'] = ReportingMethods::where('id',$method_id)->get();
+        return response()->json($data);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+//    public function show($reporting_id)
+//    {
+//        //
+//        $Reporting = DB::table('tbl_hr_emp_reportto as r')
+//            ->select('r.*','m.*','e.*','r.id as reporting_id')
+//            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->where('r.id',$reporting_id)
+//            ->where('e.emp_id',$request->supervisor_id)
+//            ->first();
+//        return response()->json($data);
+//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -68,6 +121,17 @@ class EmployeeReportController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
+        $r = DB::table('tbl_hr_emp_reportto as r')
+            ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id')
+            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->where('r.id',$id)
+            ->first();
+        //dd($r);
+
+        return view('backend.HRIS.PIM.Employee.ReportingTo.edit',compact('r'));
+
     }
 
     /**
@@ -80,6 +144,13 @@ class EmployeeReportController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $Reporting = EmployeeReportto::findOrFail($id);
+        $Reporting->erep_sup_emp_number = $request->supervisor_id;
+        // $Reporting->erep_sub_emp_number  = Auth::guard('admins')->user()->id;
+        $Reporting->company_id = Auth::guard('admins')->user()->id;
+        $Reporting->erep_reporting_method = $request->reporting_id;
+        $Reporting->save();
+        return redirect('/administration/view-ReportTo-details')->with('success','Item added Successfully');
     }
 
     /**

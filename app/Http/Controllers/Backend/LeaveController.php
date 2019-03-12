@@ -109,7 +109,6 @@ class LeaveController extends BackendController
     public function viewLeaveBalanceReport()
     {
 
-
         return view('backend.HRIS.Leave.Leave.leave_report');
     }
     /**
@@ -119,12 +118,19 @@ class LeaveController extends BackendController
      */
     public function requestLeaveBalance($id)
     {
-        $leave_balance = DB::table('leave_entitlements')->get();
-//                 ->join('leave_types as t','e.leave_types_id','=','t.id')
-//                ->where('e.leave_type_id',$id)
-//                ->first();
+        $leave_balance = DB::table('leave_entitlements as e')
+                 ->join('leave_types as t','e.leave_type_id','=','t.id')
+                 ->where('e.leave_type_id',$id)
+                 ->first();
         return response()->json($leave_balance);
     }
+    public function DisplayLeaveDetails(){
+
+
+        return response()->json(['Data'=>"True"]);
+    }
+
+
     public function AssignLeave()
     {
         $this->shareMenu();

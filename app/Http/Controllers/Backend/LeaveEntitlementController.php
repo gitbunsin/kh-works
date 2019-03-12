@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Backend;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
+use App\Model\Country;
 use App\Model\LeaveEntitlement;
-use App\Model\SubUnit;
+use App\Model\Location;
+use FontLib\Table\Type\loca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +21,15 @@ class LeaveEntitlementController extends BackendController
      */
     public function index()
     {
-        //
 
         $this->shareMenu();
+        $country = Country::with('Location')->get();
+        //dd($country);
+        //$country->Country;
+        //dd($country->Country);
 //        $categories = Subunit::where('parent_id', '=', 0)->get();
 //        $allCategories = Subunit::pluck('title','id')->all();
-        return view('backend.HRIS.Leave.Entitlement.index');
+        return view('backend.HRIS.Leave.Entitlement.index',compact('country'));
 
 
     }

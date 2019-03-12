@@ -17,7 +17,17 @@ class EmployeeContactController extends BackendController
     {
         //
         $this->shareMenu();
-        $EmployeeContactDetails = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+        if(Auth::guard('employee')->user())
+        {
+            $EmployeeID = Auth::guard('employee')->user()->id;
+        }else{
+
+            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+            $EmployeeID = $listCompanyEmployee->emp_number;
+
+        }
+        $EmployeeContactDetails = Employee::where('emp_number',$EmployeeID)->first();
+        //dd($EmployeeContactDetails);
         return view('backend.HRIS.PIM.Employee.Contact.index',compact('EmployeeContactDetails'));
 
     }

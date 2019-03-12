@@ -32,7 +32,7 @@
                                             <label class="select">
                                                 <select name="lang_id" id="lang_id">
                                                     <option value="">-- select --</option>
-                                                    @php $l = \App\language::all(); @endphp
+                                                    @php $l = \App\Model\language::all(); @endphp
                                                     @foreach($l as $ls)
                                                         <option value="{{$ls->id}}" {{$ls->id == $lx->lang_id ? "selected=='selected' ":''}}>{{$ls->name}}</option>
                                                     @endforeach

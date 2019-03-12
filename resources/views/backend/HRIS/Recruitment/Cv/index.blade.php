@@ -30,26 +30,26 @@
                                 <tr>
                                     <th data-hide="phone">CVs ID</th>
                                     <th> Seekers Name</th>
-                                    <th> Photo</th>
                                     <th> Candidate CV</th>
                                     <th> Download </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{--@foreach($user_cv as $user_cvs)--}}
-                                    {{--{{dd()}}--}}
-                                    {{--<tr>--}}
-                                        {{--<td>{{$user_cvs->candidate_id}}</td>--}}
-                                        {{--<td>{{$user_cvs->candidate_name}}</td>--}}
+                                @foreach($CandidateAttachment as $CandidateAttachments)
+                                    <tr>
+                                        <td>{{$CandidateAttachments->id}}</td>
+                                        <td>{{$CandidateAttachments->first_name}} {{$CandidateAttachments->last_name}}</td>
+                                        <td>{{$CandidateAttachments->file_name}}</td>
+                                        {{--<td></td>--}}
                                         {{--<td><img class="img-circle" width="90px;" height="70px;" src="{{asset('uploaded/UserPhoto/'.$user_cvs->user_photo)}}"></td>--}}
                                         {{--<td><a href="{{url('administration/download/'.$user_cvs->user_cv_id)}}">{{$user_cvs->cv_name}} </a></td>--}}
-                                        {{--<td style="text-align: center;">--}}
-                                            {{--<a data-id="{{$user_cvs->user_cv_id}}" href="{{url('administration/download/'.$user_cvs->user_cv_id)}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
-                                                {{--<i class="glyphicon glyphicon-download"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
+                                        <td style="text-align: center;">
+                                            <a data-id="{{$CandidateAttachments->id}}" href="{{url('administration/download/'.$CandidateAttachments->id)}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-download"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -58,6 +58,4 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 @endsection

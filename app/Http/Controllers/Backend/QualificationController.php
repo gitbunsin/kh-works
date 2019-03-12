@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use \App\Model\EmployeeEducation;
+use App\Model\EmployeeLanguage;
 use \App\Model\EmployeeWorkExperience;
 use App\Http\Controllers\Controller;
 
@@ -11,7 +12,7 @@ use App\Model\License;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class QualificationController extends Controller
+class QualificationController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -20,18 +21,19 @@ class QualificationController extends Controller
      */
     public function index()
     {
-        $employee_skill = DB::table('employee_skills as es')
+        $this->shareMenu();
+        $EmployeeSkill = DB::table('employee_skills as es')
             ->select('es.*','s.*','es.id as employee_skill_id')
             ->join('skills as s','es.skill_id','=','s.id')
             ->get();
 //        dd($employee_skill);\
-        $employee_education = DB::table('employee_educations as e')
+        $EmployeeEducation = DB::table('employee_educations as e')
                                 ->join('education as ed','e.education_id','=','ed.id')
                                 ->get();
 //        dd($e);
-        $employee_experience = EmployeeWorkExperience::all();
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Employee.qualification',compact('menus'));
+        $EmployeeWorkExperience = EmployeeWorkExperience::all();
+        $EmployeeLanguage = EmployeeLanguage::all();
+        return view('backend.HRIS.PIM.Employee.qualification',compact('EmployeeWorkExperience','EmployeeEducation','EmployeeSkill','EmployeeLanguage'));
 
     }
 

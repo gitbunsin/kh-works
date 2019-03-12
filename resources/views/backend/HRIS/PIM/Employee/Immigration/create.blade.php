@@ -125,9 +125,6 @@
                     passport_number : {
                         required : true
                     },
-                    Issued_By : {
-                        required: true
-                    }
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {
