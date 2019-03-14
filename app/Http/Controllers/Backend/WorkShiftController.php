@@ -48,21 +48,23 @@ class WorkShiftController extends BackendController
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $WorkShift  = new WorkShift();
         $WorkShift->name = $request->name;
-        $WorkShift->hours_per_day = $request->hours_per_day;
-        $WorkShift->company_id = Auth::guard('admins')->user()->id;
+
+        $hours_per_day = $request->duration;
+//        dd($hours_per_day);
+        $WorkShift->hours_per_day =  $hours_per_day;
+        $WorkShift->start_time = $request->fromDate;
+        $WorkShift->end_time = $request->ToDate;
         $WorkShift->save();
         $Work_shift_id = $WorkShift->id;
-        $emp = $request->input('wishlist');
+        $emp = input::get('duallistbox_demo2');
         foreach ($emp as $item){
             $EmployeeWorkShift = new EmployeeWorkShift();
-            $EmployeeWorkShift->emp_id = $item;
+            $EmployeeWorkShift->emp_number = $item;
             $EmployeeWorkShift->work_shift_id = $Work_shift_id;
             $EmployeeWorkShift->save();
-            $employee = Employee::findOrFail($item);
-            $employee-> status = 1;
-            $employee->save();
         }
         return redirect('/administration/work-shift');
     }
@@ -117,7 +119,7 @@ class WorkShiftController extends BackendController
         $Work_shift_id = $WorkShift->id;
         foreach ($emp as $item){
             $EmployeeWorkShift = new EmployeeWorkShift();
-            $EmployeeWorkShift->emp_id = $item;
+            $EmployeeWorkShift->emp_number = $item;
             $EmployeeWorkShift->work_shift_id = $Work_shift_id;
             $EmployeeWorkShift->save();
             $employee = Employee::findOrFail($item);
@@ -127,7 +129,7 @@ class WorkShiftController extends BackendController
         }
 //        $Work_shift_id = $WorkShift->id;
 //        $EmployeeWorkShift->work_shift_id = $Work_shift_id;
-//        $EmployeeWorkShift->emp_id = $request->wishlist_list;
+//        $EmployeeWorkShift->emp_number = $request->wishlist_list;
 //        $EmployeeWorkShift->save();
         return redirect('/administration/work-shift');
     }

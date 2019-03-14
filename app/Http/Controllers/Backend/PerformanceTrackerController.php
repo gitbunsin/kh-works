@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Backend;
 use App\Model\Employee;
 use App\Http\Controllers\Controller;
 
-use App\PerformanceTrack;
+use App\Model\PerformanceTrack;
 use App\PerformanceTrackerLog;
+use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,11 @@ class PerformanceTrackerController extends BackendController
     {
         //
         $this->shareMenu();
-//        $p = DB::table('tbl_hr_performance_track as p')
-//            ->select('p.*','e.*')
-//            ->join('employees as e','p.employee_id','=','e.emp_id')
-//            ->get();
-
-
-        return view('backend.HRIS.performance.trackers.index');
+        $PerformanceTrack = DB::table('performance_tracks as p')
+            ->select('p.*','e.*')
+            ->join('employees as e','p.emp_number','=','e.emp_number')
+            ->get();
+        return view('backend.HRIS.performance.trackers.index',compact('PerformanceTrack'));
     }
 
         public function addPerformanceTrackerLog()
@@ -50,6 +49,7 @@ class PerformanceTrackerController extends BackendController
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.performance.trackers.create');
 
     }
@@ -58,7 +58,7 @@ class PerformanceTrackerController extends BackendController
 
 //        $p = DB::table('tbl_hr_performance_track as p')
 //            ->select('p.*','e.*')
-//            ->join('employees as e','p.employee_id','=','e.emp_id')
+//            ->join('employees as e','p.employee_id','=','e.emp_number')
 //            ->get();
         //dd($p);
         return view('backend.HRIS.performance.EmployeeTracker.index');
@@ -91,13 +91,21 @@ class PerformanceTrackerController extends BackendController
 //                $p->employee_id = $data;
 //            }
 //        $p->save();
+        if(Auth::guard('admins')->user()){
+            $Orgazation_Code = Auth::guard('admins')->user()->id;
+        }else{
+            $Orgazation_Code = Auth::guard('employees')->user()->company_id;
+        }
         if ($request->duallistbox_demo1)
             foreach($request->duallistbox_demo1 as $subject)
             {
-                $forumTeacher= new PerformanceTrack(); // I think this is your intermediat, pivot, table
-                $forumTeacher->tracker_name = $request->name; // you should know how to find this id
-                $forumTeacher->employee_id= $subject;
-                $forumTeacher->save();
+                $PerformanceTrack= new PerformanceTrack(); // I think this is your intermediat, pivot, table
+                $PerformanceTrack->tracker_name = $request->name; // you should know how to find this id
+                $PerformanceTrack->emp_number= $subject;
+                $PerformanceTrack->added_date = Carbon::now();
+                $PerformanceTrack->Organization_Code = $Orgazation_Code;
+                $PerformanceTrack->save();
+
             }
         return redirect('/administration/employee-performance-trackers')->with('success','Item added successfully');
 
@@ -123,6 +131,7 @@ class PerformanceTrackerController extends BackendController
     public function edit($id)
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.performance.trackers.edit');
 
     }
@@ -158,7 +167,7 @@ class PerformanceTrackerController extends BackendController
      */
     public function getEmployeeNoTrakerEmp($id) {
 
-        $employee = Employee::where('emp_id', '!=', $id)->get();
+        $employee = Employee::where('emp_number', '!=', $id)->get();
 
 
         return Response()->json(["success" => true, "data" => $employee]);

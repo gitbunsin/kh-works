@@ -33,6 +33,7 @@ class CustomerController extends BackendController
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.Time.Customer.create');
 
     }
@@ -46,10 +47,15 @@ class CustomerController extends BackendController
     public function store(Request $request)
     {
         //
+        if(Auth::guard('admins')->user()){
+            $Organization_Code = Auth::guard('admins')->user()->id;
+        }else{
+            $Organization_Code = Auth::guard('employees')->user()->company_id;
+        }
         $c = new Customer();
         $c->name = $request->name;
         $c->description = $request->description;
-        $c->employee_id = Auth::guard('employee')->user()->id;
+        $c->Organization_Code = $Organization_Code ;
         $c->save();
         return redirect('/administration/customer-project')->with('success','Item added Successfully');
     }
@@ -75,6 +81,7 @@ class CustomerController extends BackendController
     {
         //dd('hello');
         //
+        $this->shareMenu();
         $c = Customer::findOrFail($id);
         return view('backend.HRIS.Time.Customer.edit',compact('c'));
 
@@ -90,10 +97,16 @@ class CustomerController extends BackendController
     public function update(Request $request, $id)
     {
         //
-        $c =  Customer::findOrFail($id);
+        //
+        if(Auth::guard('admins')->user()){
+            $Organization_Code = Auth::guard('admins')->user()->id;
+        }else{
+            $Organization_Code = Auth::guard('employees')->user()->company_id;
+        }
+        $c = Customer::findOrFail($id);
         $c->name = $request->name;
         $c->description = $request->description;
-        $c->employee_id = Auth::guard('employee')->user()->id;
+        $c->Organization_Code = $Organization_Code ;
         $c->save();
         return redirect('/administration/customer-project')->with('success','Item Edited Successfully');
     }

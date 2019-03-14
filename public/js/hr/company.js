@@ -19,7 +19,7 @@ $('#company_logo').prop('disabled',true);
 $(document).ready(function () {
 
     var edit = $('#btn_company').val('Edit');
-    // alert(emp_id);
+    // alert(emp_number);
     $('#btn_company').click(function(e){
         $isEdit = $('#btn_company').val();
         // alert($isEdit);

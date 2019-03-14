@@ -249,9 +249,9 @@
                                                 ->where('company_id',Auth::guard('admins')->user()->id)
                                                 ->get();
                                                 @endphp
-                    <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
+                    <select multiple="multiple" size="10" name="duallistbox_demo2[]" id="initializeDuallistboxCustomWorkshift">
                         @foreach($e as $es)
-                          <option value="{{$es->emp_id}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
+                          <option value="{{$es->emp_number}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -284,9 +284,18 @@
 @section('script')
 <script type="text/javascript">
 
+    var demo1 = $('select[name="duallistbox_demo2[]"]').bootstrapDualListbox({
+        nonSelectedListLabel: 'Available Reviewers',
+        selectedListLabel: 'Assigned Reviewer',
+        preserveSelectionOnMove: 'moved',
+        moveOnSelect: true,
+        helperSelectNamePostfix: '_helper',
+        nonSelectedFilter: ''
+
+    });
 
 
-           // $('#duration').val("8");
+    $('#duration').val("8:00");
            function calculate() {
                // var hours = parseInt($(".Time2").val().split(':')[1], 10) - parseInt($(".Time1").val().split(':')[1], 10);
                // console.log("success",hours);
@@ -311,8 +320,6 @@
            $(".Time1,.Time2").on('change',function () {
                calculate();
            });
-
-
 
             var $loginForm = $("#frmWorkshift").validate({
                 // Rules for form validation

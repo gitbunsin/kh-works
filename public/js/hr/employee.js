@@ -19,6 +19,7 @@
  $('#military_service').prop('disabled', true);
  $('#checkbox-smoker').prop('disabled', true);
  $('#nickname').prop('disabled', true);
+ $('#SSN_Number').prop('disabled',true);
  ////////////////////////////////---------------------Employee Adress ----------------------------------//////////////////////////////
 // $('#emp_street1').prop('disabled', true);
 // $('#emp_street2').prop('disabled', true);
@@ -35,7 +36,7 @@
 $(document).ready(function () {
 
     var edit = $('#btn_edit').val('Edit');
-    // alert(emp_id);
+    // alert(emp_number);
     $('#btn_edit').click(function(e){
         $isEdit = $('#btn_edit').val();
         if($isEdit =="Edit"){
@@ -55,10 +56,11 @@ $(document).ready(function () {
             $('#military_service').prop('disabled', false);
             $('#checkbox-smoker').prop('disabled', false);
             $('#nickname').prop('disabled', false);
+            $('#SSN_Number').prop('disabled',false);
             var Save = $('#btn_edit').val('Save');
         }else{
             $isSave = $('#btn_edit').val();
-            var emp_id = $('#emp_id').val();
+            var emp_number = $('#emp_number').val();
             // alert($isSave);
             if($isSave == "Save") {
                 // alert('ok');
@@ -79,7 +81,7 @@ $(document).ready(function () {
 // $(document).ready(function () {
 //
 //     var edit = $('#btn_edit1').val('Edit');
-//     // alert(emp_id);
+//     // alert(emp_number);
 //     $('#btn_edit1').click(function(e){
 //         $isEdit = $('#btn_edit1').val();
 //         if($isEdit =="Edit"){
@@ -97,7 +99,7 @@ $(document).ready(function () {
 //             var Save = $('#btn_edit1').val('Save');
 //         }else{
 //             $isSave = $('#btn_edit1').val();
-//             var emp_id = $('#emp_id').val();
+//             var emp_number = $('#emp_number').val();
 //             // alert($isSave);
 //             if($isSave == "Save") {
 //                 // alert('ok');
@@ -167,7 +169,7 @@ $("#btn-save").click(function (e) {
 
     e.preventDefault();
     var formData = {
-            // emp_id : $('#emp_id').val(),
+            // emp_number : $('#emp_number').val(),
             id: $('#product_id').val(),
             eec_name:$('#name').val(),
             eec_relationship:$('#relationship').val(),
@@ -177,7 +179,7 @@ $("#btn-save").click(function (e) {
     }
      // alert(JSON.stringify(formData));
     var state = $('#btn-save').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var emergency_id = $('#product_id').val();
@@ -330,7 +332,7 @@ $("#btn-save_experience").click(function (e) {
     }
     // alert(JSON.stringify(formData));
     var state = $('#btn-save_experience').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var emp_work_id = $('#product_id').val();
@@ -448,7 +450,7 @@ $("#btn_add_skills").click(function (e) {
         }
     // alert(JSON.stringify(formData));
     var state = $('#btn_add_skills').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var emp_skill_id = $('#skill_id').val();
@@ -562,7 +564,7 @@ $("#btn_save_education").click(function (e) {
         }
     // alert(JSON.stringify(formData));
     var state = $('#btn_save_education').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var education_id = $('#education_id').val();
@@ -641,7 +643,7 @@ $("#btn_save_license").click(function (e) {
         }
     alert(JSON.stringify(formData));
     var state = $('#btn_save_license').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var license_id = $('#product_id').val();
@@ -718,7 +720,7 @@ $("#btn_add_language").click(function (e) {
         }
     // alert(JSON.stringify(formData));
     var state = $('#btn_save_license').val();
-    var employee_id = $('#emp_id').val();
+    var employee_id = $('#emp_number').val();
     // alert(employee_id);
     var type = "POST"; //for creating new resource
     var lang_id = $('#product_id').val();

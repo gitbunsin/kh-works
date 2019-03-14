@@ -63,9 +63,9 @@ class EmployeeReportController extends BackendController
 //        $Reporting = DB::table('tbl_hr_emp_reportto as r')
 //            ->select('r.*','m.*','e.*','r.id as reporting_id')
 //            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_number')
 //            ->where('m.id',$request->reporting_id)
-//            ->where('e.emp_id',$request->supervisor_id)
+//            ->where('e.emp_number',$request->supervisor_id)
 //            ->first();
 //        return response()->json($Reporting);
 
@@ -84,9 +84,9 @@ class EmployeeReportController extends BackendController
         $this->shareMenu();
 
         $data['all_report'] = DB::table('tbl_hr_emp_reportto as r')
-            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_number')
             ->where('r.id',$reporting_id)
-            ->where('e.emp_id',$employee_id)
+            ->where('e.emp_number',$employee_id)
             ->get();
 
         $data['all_method'] = ReportingMethods::where('id',$method_id)->get();
@@ -105,9 +105,9 @@ class EmployeeReportController extends BackendController
 //        $Reporting = DB::table('tbl_hr_emp_reportto as r')
 //            ->select('r.*','m.*','e.*','r.id as reporting_id')
 //            ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+//            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_number')
 //            ->where('r.id',$reporting_id)
-//            ->where('e.emp_id',$request->supervisor_id)
+//            ->where('e.emp_number',$request->supervisor_id)
 //            ->first();
 //        return response()->json($data);
 //    }
@@ -123,9 +123,9 @@ class EmployeeReportController extends BackendController
         //
         $this->shareMenu();
         $r = DB::table('tbl_hr_emp_reportto as r')
-            ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_id as employee_id')
+            ->select('r.*','m.*','e.*','r.id as reporting_id','e.emp_number as employee_id')
             ->join('tbl_hr_reporting_method as m','r.erep_reporting_method','=','m.id')
-            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_id')
+            ->join('employees as e','r.erep_sup_emp_number','=','e.emp_number')
             ->where('r.id',$id)
             ->first();
         //dd($r);

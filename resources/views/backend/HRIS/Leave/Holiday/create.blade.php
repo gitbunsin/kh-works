@@ -24,10 +24,10 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <section>
-                                        <label class="label">Name *</label>
-                                        <label class="input">
-                                            <input type="text" name="name" id="name">
-                                        </label>
+                                        <label class="label">Name</label>
+                                        <label class="input"> <i class="icon-append fa fa-user"></i>
+                                            <input type="text" name="name" placeholder="Name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                     </section>
                                     <div class="row">
                                         <section class="col col-6">
@@ -39,23 +39,33 @@
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> Full Day/Half Day </label>
+                                            @php $Holiday = array('0'=>'FullDay','8'=>'Half Day'); @endphp
                                             <label class="select">
                                                 <select name="day" id="day">
                                                     <option value="">-- select --</option>
-                                                    <option value="0"> Full Day</option>
-                                                    <option value="8"> Half Day</option>
+                                                    @foreach($Holiday as $key => $Holidays)
+                                                            <option value="{{$key}}">{{$Holidays}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
                                     </div>
                                     <section>
-                                        <label class="label"></label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input value="" type="checkbox" name="IsDefault" id="IsDefault">
-                                                <i></i>Repeats Annually
+                                        <div class="row">
+                                            <label class="label col col-2"> check Repeat Holiday
                                             </label>
+                                            <div class="inline-group col col-8">
+                                                <label class="checkbox">
+                                                    <input name="check" value="1" type="checkbox" id="myCheck">
+                                                    <i></i> Yes
+                                                </label>
+                                                <label class="checkbox">
+                                                    <input name="uncheck" value="0" type="checkbox" id="myCheck">
+                                                    <i></i> No
+                                                </label>
+
+                                            </div>
                                         </div>
                                     </section>
                                 </fieldset>
@@ -78,13 +88,21 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-         $('#IsDefault').val("0");
-         $("#IsDefault").click(function(){
-             if ($(this).prop('checked')==true){
-                 //do something
-                 $('#IsDefault').val("1");
-             }else{
-                 $('#IsDefault').val("0");
+         // $('#IsDefault').val("0");
+         // $("#IsDefault").click(function(){
+         //     if ($(this).prop('checked')==true){
+         //         //do something
+         //         $('#IsDefault').val("1");
+         //     }else{
+         //         $('#IsDefault').val("0");
+         //     }
+         // });
+         $('#date').datepicker({
+             dateFormat: 'yy-mm-dd',
+             prevText: '<i class="fa fa-chevron-left"></i>',
+             nextText: '<i class="fa fa-chevron-right"></i>',
+             onSelect: function (selectedDate) {
+                 $('#finishdate').datepicker('option', 'minDate', selectedDate);
              }
          });
             var $loginForm = $("#frmHoliday").validate({

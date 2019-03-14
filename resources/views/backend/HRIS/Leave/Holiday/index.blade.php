@@ -49,8 +49,16 @@
                                     <tbody id="products-list" name="products-list">
                                     <td>{{$Holidays->name}}</td>
                                     <td>{{$Holidays->date}}</td>
-                                    <td></td>
-                                    <td></td>
+                                    @if($Holidays->length ==0)
+                                        <td>Full Days</td>
+                                        @else
+                                        <td>Half Day</td>
+                                    @endif
+                                    @if($Holidays->recurring ==1)
+                                        <td>Yes</td>
+                                    @else
+                                        <td>No</td>
+                                    @endif
                                             <td>
                                                 <a  href="{{url('administration/define-holiday/'.$Holidays->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                     <i class="glyphicon glyphicon-edit"></i>

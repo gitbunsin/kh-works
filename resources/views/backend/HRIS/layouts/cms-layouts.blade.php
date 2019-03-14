@@ -76,7 +76,6 @@
 					@include('flash-message')
                     <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                         <!-- END MAIN CONTENT -->
-
                         @yield('content')
                     </div>
                 </article>

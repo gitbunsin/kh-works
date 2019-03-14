@@ -49,7 +49,7 @@
                                                     <option value="0">-- select trackers --</option>
                                                     @php $tracker = \App\Model\Employee::all(); @endphp
                                                     @foreach($tracker as $trackers)
-                                                        <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                        <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             </select>

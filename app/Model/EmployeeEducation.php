@@ -8,7 +8,7 @@ class EmployeeEducation extends Model
 {
     //
     protected $table = 'employee_educations';
-//    protected $primaryKey = 'emp_id';
+//    protected $primaryKey = 'emp_number';
     protected $fillable = [
         'id',
         'emp_number',

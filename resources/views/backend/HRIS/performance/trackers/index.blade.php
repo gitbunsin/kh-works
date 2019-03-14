@@ -46,22 +46,22 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                {{--@foreach($p as $ps)--}}
-                                    {{--<tr id="termination-reason">--}}
-                                        {{--<td>{{$ps->emp_lastname}}{{$ps->emp_firstname}}</td>--}}
-                                        {{--<td>{{$ps->tracker_name}}</td>--}}
-                                        {{--<td>{{$ps->created_at}}</td>--}}
-                                        {{--<td>{{$ps->updated_at}}</td>--}}
-                                        {{--<td>--}}
-                                            {{--<a  href="{{url('/administration/employee-performance-trackers/'.$ps->id .'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
-                                    {{--</tr>--}}
-                                {{--@endforeach--}}
+                                @foreach($PerformanceTrack as $PerformanceTracks)
+                                    <tr id="termination-reason">
+                                        <td>{{$PerformanceTracks->emp_lastname}}{{$PerformanceTracks->emp_firstname}}</td>
+                                        <td>{{$PerformanceTracks->tracker_name}}</td>
+                                        <td>{{$PerformanceTracks->added_date}}</td>
+                                        <td>{{$PerformanceTracks->modified_date}}</td>
+                                        <td>
+                                            <a  href="{{url('/administration/employee-performance-trackers/'.$PerformanceTracks->id .'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </a>
+                                            <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

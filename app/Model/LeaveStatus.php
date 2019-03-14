@@ -1,16 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class LeaveStatus extends Model
 {
+
+   protected $table ="leave_statuses";
     //
-    protected $table = 'tbl_hr_leave_status';
-    protected $fillable = [
-        'id',
-        'name',
-        'status',
-    ];
 }

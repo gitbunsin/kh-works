@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class PerformanceTrack extends Model
 {
-
+    //
     protected $connection = 'mysql';
-    protected $table = 'tbl_hr_performance_track';
+    protected $table = 'performance_tracks';
     protected $fillable =
         ['id',
             'emp',

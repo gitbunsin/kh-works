@@ -44,7 +44,7 @@
                                                     <option value="">-- select leave periods --</option>
                                                     @php $leave_period = \App\Model\LeavePeriodHistory::all(); @endphp
                                                     @foreach($leave_period as $leave_periods)
-                                                        <option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}}</option>
+                                                        <option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}} {{"-"}} {{$leave_periods->leave_period_start_day}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -71,16 +71,6 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="row">
-                    <div class="col-lg-12 margin-tb">
-
-                        <div class="pull-right">
-                            <a style="background: #333;" class="btn btn-primary" href="{{url('administration/leave-type/create')}}" role="button">
-                                <i class="glyphicon glyphicon-plus-sign "></i> Add</a>
-                        </div>
-                    </div>
-                </div>
-                <br/>
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -112,11 +102,11 @@
                                 <tbody id="products-list" name="products-list">
                                 @foreach($leave_entitlement as $leave_entitlements)
                                     <tr id="job_id{{$leave_entitlements->id}}">
-                                        <td></td>
+                                        <td>{{$leave_entitlements->name}}</td>
+                                        <td>{{$leave_entitlements->entitlement_type_name}}</td>
                                         <td>{{$leave_entitlements->from_date}}</td>
                                         <td>{{$leave_entitlements->to_date}}</td>
-                                        <td>{{$leave_entitlements->no_of_day}}</td>
-                                        <td>{{$leave_entitlements->no_of_day}}</td>
+                                        <td>{{$leave_entitlements->no_of_day - $leave_entitlements->day_used}}</td>
                                         <td>
                                             <a  href="{{url('administration/view-leave-entitlements/'.$leave_entitlements->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>

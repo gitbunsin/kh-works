@@ -44,7 +44,7 @@ class HolidayController extends BackendController
     public function store(Request $request)
     {
         //
-        //dd($request->all());
+//        dd($request->all());
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
         }else{
@@ -56,9 +56,13 @@ class HolidayController extends BackendController
         $Holiday->operational_country_id = 1;
         //$l->employee_id = Auth::guard('employee')->user()->id;
         $Holiday->date = Carbon::parse($request->date);
-        $Holiday->recurring = $request->IsDefault;
+        $check = $request->check;
+        if($check =="1"){
+            $Holiday->recurring = 1;
+        }else{
+            $Holiday->recurring = 0;
+        }
         $Holiday->length = $request->day;
-
         $Holiday->save();
 
         return redirect('/administration/define-holiday')->with('success','Item Added successfully');
@@ -107,15 +111,13 @@ class HolidayController extends BackendController
         $l->company_id = Auth::guard('admins')->user()->id;
         //$l->employee_id = Auth::guard('employee')->user()->id;
         $l->date = Carbon::parse($request->date);
-        $length = $request->IsDefault;
-        if($length){
-            $l->recurring = $length;
-        }
-        $length1 = $request->IsDefault1;
-        if($length1){
-            $l->recurring = $length1;
-        }
         $l->length = $request->day;
+        $check = $request->check;
+        if($check =="1"){
+            $l->recurring = 1;
+        }else{
+            $l->recurring = 0;
+        }
         $l->save();
         return redirect('/administration/define-holiday')->with('success','Item Edited successfully');
     }

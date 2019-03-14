@@ -39,6 +39,8 @@
                                 <thead>
                                 <tr>
                                     <th data-hide="phone"><i class="hidden-xs"></i>Work Shift</th>
+                                    <th data-hide="phone">From</th>
+                                    <th data-hide="phone">To</th>
                                     <th data-hide="phone">Hours Per Day</th>
                                     <th>Action</th>
                                 </tr>
@@ -47,6 +49,8 @@
                                 @foreach($WorkShift as $WorkShifts)
                                     <tr id="job_id{{$WorkShifts->id}}">
                                         <td>{{$WorkShifts->name}}</td>
+                                        <td>{{$WorkShifts->start_time}}</td>
+                                        <td>{{$WorkShifts->end_time}}</td>
                                         <td>{{$WorkShifts->hours_per_day}}</td>
                                         <td>
                                             <a data-id="" href="{{url('administration/work-shift/'.$WorkShifts->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">

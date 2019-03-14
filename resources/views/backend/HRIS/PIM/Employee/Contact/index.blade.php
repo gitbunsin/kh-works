@@ -190,7 +190,7 @@
         $(document).ready(function () {
             DisabledEmployeeContactDatailsForm();
             var edit = $('#BtnSubmitContactDetails').val('Edit');
-            // alert(emp_id);
+            // alert(emp_number);
             $('#BtnSubmitContactDetails').click(function(e){
                 $isEdit = $('#BtnSubmitContactDetails').val();
                 if($isEdit =="Edit"){
@@ -198,7 +198,7 @@
                     var Save = $('#BtnSubmitContactDetails').val('Save');
                 }else{
                     $isSave = $('#BtnSubmitContactDetails').val();
-                    var emp_id = $('#emp_id').val();
+                    var emp_number = $('#emp_number').val();
                     // alert($isSave);
                     if($isSave == "Save") {
                         // alert('ok');

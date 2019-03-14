@@ -26,7 +26,7 @@ class VacanciesController extends Controller
     {
         $vacancy = DB::table('tbl_job_vacancy')
             ->join('tbl_job_titles', 'job_titles_code', '=', 'tbl_job_titles.id')
-            ->join('employees','tbl_job_vacancy.hiring_manager_id','=','employees.emp_id')
+            ->join('employees','tbl_job_vacancy.hiring_manager_id','=','employees.emp_number')
             ->select('tbl_job_vacancy.*', 'tbl_job_titles.job_titles','employees.*')
             ->OrderBy('tbl_job_vacancy.id','DESC')
             ->get();

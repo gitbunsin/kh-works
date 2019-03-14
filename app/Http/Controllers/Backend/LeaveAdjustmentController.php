@@ -26,7 +26,7 @@ class LeaveAdjustmentController extends Controller
     public function viewMatchEmployee()
     {
 
-        $e = DB::table('employees')->count(DB::raw('DISTINCT emp_id'));
+        $e = DB::table('employees')->count(DB::raw('DISTINCT emp_number'));
         return Response()->json($e);
 
     }

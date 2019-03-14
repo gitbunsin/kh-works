@@ -20,20 +20,20 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmTerminationReason" method="POST" enctype="multipart/form-data" action="{{url('administration/view-reporting-methods/'.$ReportingMethod->id)}}" class="smart-form">
+                            <form id="frmJobTitle" method="POST" enctype="multipart/form-data" action="{{url('administration/jobs-title')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input name="_method" type="hidden" value="PATCH">
+                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
                                         <label class="input">
-                                            <input type="text" value="{{$ReportingMethod->name}}" name="name" id="name">
+                                            <input type="text" name="job_titles" id="job_titles">
                                         </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>
                                         <label class="textarea">
-                                            <textarea rows="8" id="description" name="description" class="custom-scroll">{{$ReportingMethod->description}}</textarea>
+                                            <textarea rows="8" id="job_description" name="job_description" class="custom-scroll"></textarea>
                                         </label>
                                         <div class="note">
                                             <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -55,13 +55,14 @@
             </article>
         </div>
     </section>
+
 @endsection
 @section('script')
     <script type="text/javascript">
-        var $loginForm = $("#frmTerminationReason").validate({
+        var $loginForm = $("#frmJobTitle").validate({
             // Rules for form validation
             rules : {
-                name : {
+                job_titles : {
                     required : true
                 },
             },

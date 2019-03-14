@@ -35,7 +35,7 @@
                                         <section class="col col-6">
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                @php $job_titles = \App\JobTitle::all(); @endphp
+                                                @php $job_titles = \App\Model\JobTitle::all(); @endphp
                                                 <select required name="Job_title" id="Job_title">
                                                     <option value="0">Choose JobTitle</option>
                                                     @foreach ($job_titles as $job_title)

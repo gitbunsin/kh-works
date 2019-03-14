@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Http\Controllers\Controller;
-use App\Model\ReportingMethod;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ReportingMethodsController extends BackendController
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class DirectoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,12 @@ class ReportingMethodsController extends BackendController
      */
     public function index()
     {
-        //
-        $this->shareMenu();
-        $r = ReportingMethod::all();
-        return view('backend.HRIS.PIM.Configuration.ReportingMethods.index',compact('r'));
 
+
+
+
+
+        return view('backend.HRIS.Directory.index');
     }
 
     /**
@@ -30,8 +30,6 @@ class ReportingMethodsController extends BackendController
     public function create()
     {
         //
-        $this->shareMenu();
-        return view('backend.HRIS.PIM.Configuration.ReportingMethods.create');
     }
 
     /**
@@ -43,13 +41,6 @@ class ReportingMethodsController extends BackendController
     public function store(Request $request)
     {
         //
-        $r = new ReportingMethod();
-//        $r->company_id = Auth::guard('admins')->user()->id;
-        $r->name = $request->name;
-        $r->description = $request->description;
-
-        $r->save();
-        return redirect('/administration/view-reporting-methods');
     }
 
     /**
@@ -71,10 +62,7 @@ class ReportingMethodsController extends BackendController
      */
     public function edit($id)
     {
-        $this->shareMenu();
-        $ReportingMethod = ReportingMethod::findOrFail($id);
-//        dd($ReportingMethod);
-        return view('backend.HRIS.PIM.Configuration.ReportingMethods.edit',compact('ReportingMethod'));
+        //
     }
 
     /**
@@ -86,14 +74,7 @@ class ReportingMethodsController extends BackendController
      */
     public function update(Request $request, $id)
     {
-       // dd('hello');
         //
-        $r = ReportingMethod::findOrFail($id);
-        $r->name = $request->name;
-        $r->description = $request->description;
-        $r->save();
-        return view('backend.HRIS.PIM.Configuration.ReportingMethods.edit');
-
     }
 
     /**

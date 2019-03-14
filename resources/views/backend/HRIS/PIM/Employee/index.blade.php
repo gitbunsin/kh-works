@@ -46,14 +46,14 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($JobTitle as $JobTitles)
-                                    @foreach($JobTitles->Employee as $employees)
+                                {{--@foreach($JobTitle as $JobTitles)--}}
+                                    @foreach($employee as $employees)
                                     <tr>
                                             <td>{{$employees->emp_number}}</td>
                                             <td>{{$employees->emp_firstname}} {{$employees->emp_lastname}}</td>
                                             <td>{{$employees->emp_middle_name}}</td>
                                             <td>
-                                                {{$JobTitles->name}}
+                                                {{--{{$JobTitles->name}}--}}
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -68,7 +68,7 @@
                                             </td>
                                     </tr>
                                     @endforeach
-                                @endforeach
+                                {{--@endforeach--}}
                                 </tbody>
                             </table>
                         </div>

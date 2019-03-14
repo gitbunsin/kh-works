@@ -40,31 +40,33 @@
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> Full Day/Half Day </label>
+                                            @php $Holiday = array('0'=>'FullDay','8'=>'Half Day'); @endphp
                                             <label class="select">
                                                 <select name="day" id="day">
                                                     <option value="">-- select --</option>
-                                                    <option value="0" {{"0" == $h->length ? "selected=='selected'":''}}> Full Day</option>
-                                                    <option value="4" {{"4" == $h->length ? "selected=='selected'":''}}> Half Day</option>
+                                                    @foreach($Holiday as $key => $Holidays)
+                                                        <option value="{{$key}}" {{$key == $h->length ?"selected='selected'":""}}>{{$Holidays}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
                                     </div>
                                     <section>
-                                        <label class="label"></label>
-                                        <div class="inline-group">
-                                            @if($h->recurring == "1")
-                                            <label class="checkbox">
-                                                <input value="" type="checkbox" checked  name="IsDefault" id="IsDefault">
-                                                <i></i>Repeats Annually
+                                        <div class="row">
+                                            <label class="label col col-2"> check Repeat Holiday
                                             </label>
-                                                @else
+                                            <div class="inline-group col col-8">
                                                 <label class="checkbox">
-                                                    <input value="" type="checkbox" name="IsDefault1" id="IsDefault1">
-                                                    <i></i>Repeats Annually
+                                                    <input name="check" value="1" {{$h->recurring ==1 ? "checked='true'":""}} type="checkbox" id="myCheck">
+                                                    <i></i> Yes
                                                 </label>
-                                                @endif
+                                                <label class="checkbox">
+                                                    <input name="uncheck" {{$h->recurring ==0?"checked='false'":""}} value="0" type="checkbox" id="myCheck">
+                                                    <i></i> No
+                                                </label>
 
+                                            </div>
                                         </div>
                                     </section>
                                 </fieldset>

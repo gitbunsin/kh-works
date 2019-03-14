@@ -8,7 +8,7 @@ class Relationship extends Model
 {
     //
     protected $table = 'tbl_relationship';
-//    protected $primaryKey = 'emp_id';
+//    protected $primaryKey = 'emp_number';
     protected $fillable = [
         'id',
         'name',

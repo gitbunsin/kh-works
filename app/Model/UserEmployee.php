@@ -13,7 +13,7 @@ class UserEmployee extends Authenticatable
     protected $table = 'user_employees';
     protected $fillable = [
         'id',
-        'emp_id',
+        'emp_number',
         'company_id',
         'role_id',
 

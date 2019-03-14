@@ -54,12 +54,10 @@
                                             <a  href="{{url('administration/jobs-title/'.$JobTitles->id.'/edit')}}" style="text-decoration:none;" class="">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-        
         <form action="{{ url('/administration/jobs-title', ['id' => $JobTitles->id]) }}" style="display:inline" method="post">
             <input type="hidden" name="_method" value="delete" />
             {!! csrf_field() !!}
-            <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="btn">
-
+            <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="">
                     <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
             </a>
         </form>                                        

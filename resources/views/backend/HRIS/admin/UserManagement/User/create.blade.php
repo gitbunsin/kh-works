@@ -28,45 +28,46 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmUser" method="POST" enctype="multipart/form-data" action="{{url('administration/user')}}" class="smart-form">
+                            <form id="smart-form-register" method="POST" enctype="multipart/form-data" action="{{url('administration/user')}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
                                 <fieldset>
                                         <div class="row">
                                             <section class="col col-6">
-                                                <label class="label">Username</label>
-                                                <label class="input">
-                                                    <input class="form-control" type="text" name="username" id="username">
-                                                </label>
+                                                <label class="label">username</label>
+                                                <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                    <input type="text" name="username" placeholder="Username">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                             </section>
                                             <section class="col col-6">
                                                 <label class="label">Email</label>
-                                                <label class="input">
-                                                    <input class="form-control" type="text" name="email" id="email">
-                                                </label>
+                                                <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                                    <input type="email" name="email" placeholder="Email address">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
                                             </section>
                                         </div>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label class="label">Password</label>
-                                            <label class="input">
-                                                <input class="form-control" type="password" name="password" id="password">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                <input type="password" name="password" placeholder="Password" id="password">
+                                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">Confirm Password</label>
-                                            <label class="input">
-                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                <input type="password" name="passwordConfirm" placeholder="Confirm password">
+                                                <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                                         </section>
                                     </div>
                                         <section>
                                             <label class="label"> Status</label>
                                             <label class="select">
+                                                @php $Status = array("0"=>"Disabled","1"=>"Enable") @endphp
                                                 <select name="status" id="status" class="required">
-                                                    <option value="">Choose Status</option>
-                                                    <option value="1">Enable</option>
-                                                    <option value="2">Disabled</option>
+                                                   @foreach($Status as $key => $Statuses)
+                                                        <option value="{{$key}}">{{$Statuses}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -90,34 +91,53 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        $(document).ready(function() {
-            var $loginForm = $("#frmUser").validate({
-                // Rules for form validation
-                rules : {
-                    username : {
-                        required : true
-                    },
-                    email:{
-                        required : true
-                    },
-                    password : {
-                        required : true,
-                        minlength : 6
-                    },
-                    confirm_password : {
-                        required : true,
-                        minlength : 6,
-                        equalTo : "#password"
-                    },
-                    status : {
-                        required : true
-                    }
+        var $registerForm = $("#smart-form-register").validate({
+
+            // Rules for form validation
+            rules : {
+                username : {
+                    required : true
                 },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
-            });
+                email : {
+                    required : true,
+                    email : true
+                },
+                password : {
+                    required : true,
+                    minlength : 6,
+                    maxlength : 20
+                },
+                passwordConfirm : {
+                    required : true,
+                    minlength : 6,
+                    maxlength : 20,
+                    equalTo : '#password'
+                },
+            },
+
+            // Messages for form validation
+            messages : {
+                login : {
+                    required : 'Please enter your login'
+                },
+                email : {
+                    required : 'Please enter your email address',
+                    email : 'Please enter a VALID email address'
+                },
+                password : {
+                    required : 'Please enter your password'
+                },
+                passwordConfirm : {
+                    required : 'Please enter your password one more time',
+                    equalTo : 'Please enter the same password as above'
+                },
+            },
+
+            // Do not change code below
+            errorPlacement : function(error, element) {
+                error.insertAfter(element.parent());
+            }
         });
+
     </script>
 @endsection

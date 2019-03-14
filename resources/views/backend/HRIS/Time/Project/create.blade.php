@@ -25,10 +25,10 @@
                                 <fieldset>
                                     <div class="form-group">
                                         <label> Customer Name</label>
-                                        @php $c = \App\Customer::all(); @endphp
+                                        @php $Customer = \App\Model\Customer::all(); @endphp
                                         <select name="customer_name[]" multiple style="width:100%" class="select2 required">
-                                            @foreach($c as $cs)
-                                                <option value="{{$cs->id}}">{{$cs->name}}</option>
+                                            @foreach($Customer as $Customers)
+                                                <option value="{{$Customers->id}}">{{$Customers->name}}</option>
                                             @endforeach
                                         </select>
                                         <div class="note">
@@ -46,7 +46,7 @@
                                         @php $p = \App\Model\Employee::all(); @endphp
                                         <select name="project_name[]" multiple style="width:100%" class="select2 required">
                                             @foreach($p as $ps)
-                                                <option value="{{$ps->emp_id}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
+                                                <option value="{{$ps->emp_number}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
                                             @endforeach
                                         </select>
                                         <div class="note">

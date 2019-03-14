@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
-use App\Helper\AppHelper;
 use App\Model\Country;
 use App\Model\Employee;
 use \App\Model\EmployeeEmergencyContacts;
@@ -49,19 +47,20 @@ class EmployeeController extends BackendController
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-//        $employee = DB::table('employees as e')
-//            ->select('e.*','j.*')
+        $employee = DB::table('employees as e')
+            ->select('e.*')
 //            ->join('job_titles as j','e.job_title_code','=','j.id')
-//            ->orderBy('e.emp_number','DESC')
-//            ->get();
-        $JobTitle = JobTitle::with('Employee')->get();
+            ->orderBy('e.emp_number','DESC')
+            ->get();
+//        dd($employee);
+//        $JobTitle = JobTitle::with('Employee')->get();
 
         //dd($employee->Employee->emp_lastname);
 //        foreach ($employee->Employee as $e){
 //           echo $e->company_id;
 //        }
 //        $employee = Employee::all();
-        return view('backend.HRIS.PIM.Employee.index',compact('JobTitle'));
+        return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
 
     public function EmployeeInfo(){
@@ -78,10 +77,10 @@ class EmployeeController extends BackendController
 
             $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
             $EmployeeID = $listCompanyEmployee->emp_number;
-
         }
         $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
-        //dd($EmployeeID);
+//        dd($EmployeeDetailsInfo);
+//        dd($EmployeeID);
         return view('backend.HRIS.PIM.Employee.Details.index',
             compact('employee_experience',
                 'employee_skill',
@@ -262,25 +261,28 @@ class EmployeeController extends BackendController
                 $employee->emp_firstname = $request->emp_firstname;
                 $employee->employee_id = $request->employee_id;
                 $employee->emp_other_id = $request->other_id;
-                $employee->emp_dri_lice_num = $request->driver_license_number;
+               // dd($request->driver_license_number);
+                $employee->emp_dri_lice_num = $request->driver_license;
+                $employee->emp_ssn_num = $request->SSN_Number;
+//                 $gender = (int)$request->gender;
+//                dd($request->marital_status);
+                $employee->emp_marital_status =  $request->marital_status;
+//                 $gender = (int)$request->GenderMale;
                 $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
-                $employee->emp_marital_status = $request->emp_marital_status;
-                $gender = (int) $request->gender;
-                // dd($gender);
-                $employee->emp_gender = 1;
+                $employee->nation_code = $request->nationality;
+                $gender = (int) $request->GenderMale;
+//                 dd($gender);
+                $employee->emp_gender =$gender;
                 // $employee->nation_code = $request->nationality;
                 $employee->emp_nick_name = $request->nickname;
                 $employee->emp_military_service = $request->military_service;
                 $employee->emp_dri_lice_num = $request->driver_license;
-                $employee->emp_gender = $request->emp_gender;
-                $employee->emp_smoker = $request->smoker;
+                //dd($request->emp_smoker);
+                $employee->emp_smoker = $request->emp_smoker;
                 $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
                 $employee->save();
 
-
             }
-
-
             //Job
 
             $JobTitles = $request->JobTitleCode;
@@ -294,7 +296,6 @@ class EmployeeController extends BackendController
                  $employee->work_station = $request->SubUnit;
                  $employee->save();
                  return redirect('/administration/employee-job')->with('success','Item has been edit successfully');
-
              }
              $location = $request->location;
              if($location){

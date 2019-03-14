@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Model\currency;
 use App\Model\PayGrade;
-use App\PayGradeCurrency;
+use App\Model\PaygradeCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -26,6 +26,7 @@ class PayGradeController extends BackendController
     {
         $this->shareMenu();
         $pay_grade = PayGrade::where(['company_id' => Auth::guard('admins')->user()->id])->get();
+//        dd($pay_grade);
         $data = [];
         foreach ($pay_grade as $item) {
             $result = $this->getCurrencyNameByPaygrade($item["id"]);
@@ -38,12 +39,13 @@ class PayGradeController extends BackendController
     public function getCurrencyNameByPaygrade($payGradeId)
     {
 
-        $pay_grade = DB::table('tbl_pay_grade_currency as pc')
-            ->select('ct.currency_name')
-            ->leftJoin('tbl_currency_type as ct', 'pc.currency_id', "=", 'ct.currency_id')
-            ->where('pc.pay_grade_id', $payGradeId)
+        $pay_grade = DB::table('paygrade_currencies as pc')
+            ->select('ct.name')
+            ->leftJoin('currencies as ct', 'pc.currency_id', "=", 'ct.id')
+            ->where('pc.paygrade_id', $payGradeId)
             ->get()
             ->toArray();
+//        dd($pay_grade);
         return $pay_grade;
     }
     /**
@@ -66,7 +68,7 @@ class PayGradeController extends BackendController
      */
     public function store(Request $request)
     {
-        $paygrade = Paygrade::create($request->all());
+        $paygrade = PayGrade::create($request->all());
         $paygrade->companies()->associate(Auth::guard('admins')->user()->id);
         $paygrade->save();
         return redirect('/administration/pay-grade');
@@ -113,7 +115,7 @@ class PayGradeController extends BackendController
      */
     public function show($currency_id)
     {
-        $data['selected_currency'] = PayGradeCurrency::findOrFail($currency_id);
+        $data['selected_currency'] = PaygradeCurrency::findOrFail($currency_id);
         $data['all_currency'] = Currency::all();
         return response()->json($data);
     }
@@ -126,8 +128,10 @@ class PayGradeController extends BackendController
      */
     public function edit($id)
     {
+        //dd('hello');
         $this->shareMenu();
-        $pay_grade = Paygrade::with('currencies')->where('id', $id)->first();
+        $pay_grade = PayGrade::with('currencies')->where('id', $id)->first();
+        dd($pay_grade);
         // return response()->json($pay_grade);
         return view('backend.HRIS.admin.PayGrade.edit', compact('pay_grade'));
     }
@@ -155,12 +159,12 @@ class PayGradeController extends BackendController
      */
     public function destroy($id)
     {
-        $pay_grade = PayGradeCurrency::destroy($id);
+        $pay_grade = PaygradeCurrency::destroy($id);
         return response()->json($pay_grade);
     }
 
     public function getRelationPayGradeCurrency($id) {
-        $payGrade = Paygrade::with('currencies')->get();
+        $payGrade = PayGrade::with('currencies')->get();
 
         return response()->json($payGrade);
     }

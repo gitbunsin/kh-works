@@ -47,7 +47,7 @@
                                         <td>{{$ListEmployeeEmergencyReporttos->emp_lastname}} {{$ListEmployeeEmergencyReporttos->emp_firstname}} </td>
                                         <td>Piseth Ros</td>
                                         <td>
-                                            {{--<a id="{{$reportings->emp_id}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
+                                            {{--<a id="{{$reportings->emp_number}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
                                                 {{--<i class="glyphicon glyphicon-edit"></i>--}}
                                             {{--</a>--}}
                                             <a href="{{url('administration/view-ReportTo-details/'.$ListEmployeeEmergencyReporttos->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
@@ -114,7 +114,7 @@
                                         <td>{{$ListEmployeeEmergencyReporttos->emp_lastname}} {{$ListEmployeeEmergencyReporttos->emp_firstname}} </td>
                                         <td>Piseth Ros</td>
                                         <td>
-                                            {{--<a id="{{$reportings->emp_id}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
+                                            {{--<a id="{{$reportings->emp_number}}" data-id1="{{$reportings->reporting_id}}"  href="#"  data-id="{{$reportings->method_id}}" class="delete-item open_modal">--}}
                                             {{--<i class="glyphicon glyphicon-edit"></i>--}}
                                             {{--</a>--}}
                                             <a href="{{url('administration/view-ReportTo-details/'.$ListEmployeeEmergencyReporttos->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
@@ -177,10 +177,10 @@
                       //console.log(value);
                       var isSelected = false;
                       //console.log(value.reporting_id);
-                      if(value.emp_id == employee_id) {
+                      if(value.emp_number == employee_id) {
                           isSelected = true;
                       }
-                      items.append("<option value='"+ value.emp_id +"' selected = '"+isSelected+"'>" + value.emp_lastname + value.emp_firstname+"</option>");
+                      items.append("<option value='"+ value.emp_number +"' selected = '"+isSelected+"'>" + value.emp_lastname + value.emp_firstname+"</option>");
                   });
                   $('#product_id').val(data.reporting_id);
                   $('#btn-save').val("update");

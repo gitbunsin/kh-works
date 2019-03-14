@@ -46,7 +46,7 @@
                                         @php $p = \App\Model\Employee::all(); @endphp
                                         <select name="project_name[]" multiple style="width:100%" class="select2 required">
                                             @foreach($p as $ps)
-                                                <option value="{{$ps->emp_id}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
+                                                <option value="{{$ps->emp_number}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
                                             @endforeach
                                         </select>
                                         <div class="note">

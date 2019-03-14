@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class KpiController extends Controller
+class KpiController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +18,7 @@ class KpiController extends Controller
      */
     public function index()
     {
+        $this->shareMenu();
         if(Auth::guard('admins')->user()){
             $company_id = Auth::guard('admins')->user()->id;
 
@@ -25,14 +26,13 @@ class KpiController extends Controller
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         //
-//        $k = DB::table('kpis as k')
-//                ->select('k.*','j.*','k.id as kpi_id')
-//                ->join('job_titles as j','k.job_titles_code','=','j.id')
-//                ->get();
-        $k = Kpi::all();
+        $k = DB::table('kpis as k')
+                ->select('k.*','j.*','k.id as kpi_id')
+                ->join('job_titles as j','k.job_title_code','=','j.id')
+                ->get();
+//        $k = Kpi::all();
        // dd($k);
-        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k','menus'));
+        return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k'));
     }
 
     /**
@@ -43,6 +43,7 @@ class KpiController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Configuration.Kpi.create');
     }
 
@@ -56,8 +57,7 @@ class KpiController extends Controller
     {
         //
         $k = new Kpi();
-        $k->job_titles_code = $request->job_titles_code;
-        $k->employee_id = Auth::guard('employee')->user()->id;
+        $k->job_title_code = $request->job_titles_code;
         $k->kpi_indicators = $request->performance;
         $k->min_rating	= $request->min_id;
 		$k->max_rating = $request->max_id;
@@ -92,6 +92,7 @@ class KpiController extends Controller
     public function edit($id)
     {
         //
+        $this->shareMenu();
         $k = Kpi::findOrFail($id);
         return view('backend.HRIS.PIM.Configuration.Kpi.edit',compact('k'));
     }
@@ -108,8 +109,7 @@ class KpiController extends Controller
         //
         //dd($request->IsDefault_yes);
         $k =  Kpi::findOrFail($id);
-        $k->job_titles_code = $request->job_titles_code;
-        $k->employee_id = Auth::guard('employee')->user()->id;
+        $k->job_title_code = $request->job_titles_code;
         $k->kpi_indicators = $request->performance;
         $k->min_rating	= $request->min_id;
         $k->max_rating = $request->max_id;

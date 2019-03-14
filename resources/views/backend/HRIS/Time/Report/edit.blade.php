@@ -47,7 +47,7 @@
                                         @php $p = \employees::all(); @endphp
                                         <select multiple style="width:100%" class="select2">
                                             @foreach($p as $ps)
-                                                <option value="{{$ps->emp_id}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
+                                                <option value="{{$ps->emp_number}}">{{$ps->emp_lastname}}{{$ps->emp_firstname}}</option>
                                             @endforeach
                                         </select>
                                         <div class="note">

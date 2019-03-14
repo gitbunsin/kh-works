@@ -121,7 +121,7 @@
                                                     {{--<select name="hiring_manager_id" id="hiring_manager_id">--}}
                                                         {{--<option value="0">Choose Manager</option>--}}
                                                         {{--@foreach($employee as $employees)--}}
-                                                            {{--<option value="{{$employees->emp_id}}">{{$employees->emp_lastname}}</option>--}}
+                                                            {{--<option value="{{$employees->emp_number}}">{{$employees->emp_lastname}}</option>--}}
                                                         {{--@endforeach--}}
                                                     {{--</select>--}}
                                                     {{--<i></i>--}}

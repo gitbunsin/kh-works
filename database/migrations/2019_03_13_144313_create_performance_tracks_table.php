@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTerminationsTable extends Migration
+class CreatePerformanceTracksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,20 @@ class CreateTerminationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('terminations', function (Blueprint $table) {
+        Schema::create('performance_tracks', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('emp_number')->unsigned()->nullable();
             $table->foreign('emp_number')->references('emp_number')->on('employees')->onDelete('cascade');
 
-            $table->integer('reason_id')->unsigned()->nullable();
-            $table->foreign('reason_id')->references('id')->on('termination_reasons')->onDelete('cascade');
+            $table->string('tracker_name')->nullable();
+            $table->timestamp('added_date')->nullable();
+            $table->integer('Organization_Code')->unsigned()->nullable();
+            $table->foreign('Organization_Code')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
-            $table->date('termination_date')->nullable();
+            $table->integer('status')->default(0)->nullable();
+            $table->timestamp('modified_date')->nullable();
+
             $table->timestamps();
         });
     }
@@ -34,6 +38,6 @@ class CreateTerminationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('terminations');
+        Schema::dropIfExists('performance_tracks');
     }
 }

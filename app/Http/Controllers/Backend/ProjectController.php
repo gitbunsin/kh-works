@@ -30,7 +30,6 @@ class ProjectController extends BackendController
         //
         $this->shareMenu();
         return view('backend.HRIS.Time.Project.create');
-
     }
 
     /**

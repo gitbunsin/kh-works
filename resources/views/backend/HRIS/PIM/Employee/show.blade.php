@@ -47,16 +47,16 @@
                                 </thead>
                                 <tbody id="products-list" name="products-list">
                                 @foreach($employee as $employees)
-                                    <tr id="employee_id{{$employees->emp_id}}">
+                                    <tr id="employee_id{{$employees->emp_number}}">
                                         <td><img style="width: 40px;" src="{{asset('/uploaded/EmpPhoto/'.$employees->photo)}}" alt="me" class="img-responsive img-circle"></td>
                                         <td>{{$employees->employee_id}}</td>
                                         <td>{{$employees->emp_lastname}} {{$employees->emp_firstname}} </td>
                                         <td>{{$employees->job_titles}}</td>
                                         <td>
-                                            <a data-id="{{$employees->emp_id}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                            <a data-id="{{$employees->emp_number}}" href="{{url('administration/employee/'.$employees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$employees->emp_id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                            <a data-id="{{$employees->emp_number}}" href="#" style="text-decoration:none;" class="delete-item">
                                                 <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                             </a>
                                         </td>
@@ -125,7 +125,7 @@
                                                 <section class="col col-4">
                                                     <label class="label">Job Title</label>
                                                     <label class="select">
-                                                        @php $job_titles = \App\JobTitle::all(); @endphp
+                                                        @php $job_titles = \App\Model\JobTitle::all(); @endphp
                                                         <select name="job_titles" id="Job_title">
                                                             @foreach($job_titles as $job_title)
                                                                 <option value="{{$job_title->id}}">{{$job_title->job_titles}}</option>

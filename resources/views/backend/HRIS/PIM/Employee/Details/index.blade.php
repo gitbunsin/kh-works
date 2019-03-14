@@ -47,7 +47,6 @@
                                         $ListCompanyEmployee = \App\Model\Employee::where('emp_number',\Illuminate\Support\Facades\Auth::guard('admins')->user()->id)->first();
                                         $employeeID = $ListCompanyEmployee->emp_number;
                                         //dd($employeeID);
-
                                     }
                             @endphp
                             <div class="widget-body">
@@ -103,9 +102,9 @@
                                             </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">Driver's License Number</label>
+                                            <label class="label">SSN Number</label>
                                             <label class="input">
-                                                <input class="form-control" value="{{$EmployeeDetailsInfo->emp_dri_lice_num }}" type="number" name="driver_license_number" id="driver_license_number" >
+                                                <input class="form-control" value="{{$EmployeeDetailsInfo->emp_ssn_num }}" type="text" name="SSN_Number" id="SSN_Number">
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -123,11 +122,11 @@
                                                 <label class="label col col-2">Gender</label>
                                                 <div class="inline-group">
                                                     <label class="radio">
-                                                        <input  class="form-control col col-10" type="radio" value="1" id="GenderMale" name="gender">
+                                                        <input  class="form-control col col-10" type="radio" value="1" {{1 ==$EmployeeDetailsInfo->emp_gender ? 'checked': '' }} id="GenderMale" name="GenderMale">
                                                         <i></i>Male
                                                 </label>
                                                     <label class="radio">
-                                                            <input class="form-control"  type="radio" value="0" id="GenderFemale" name="gender">
+                                                            <input class="form-control"  type="radio" value="0" {{0 ==$EmployeeDetailsInfo->emp_gender ? 'checked': '' }} id="GenderFemale" name="GenderMale">
                                                             <i></i>Female
                                                     </label>
                                                 </div>
@@ -137,8 +136,11 @@
                                             <label class="label"> Marital Status</label>
                                             <label class="select">
                                                 <select class="form-control" name="marital_status" id="martial_Status">
-                                                    <option value="0">-- select --</option>
-                                                        <option class="form-control" value=""></option>
+                                                    @php $status = array("1"=>"Male", "2"=>"Female", "3"=>"Other"); @endphp
+                                                    <option value="">-- select --</option>
+                                                    @foreach($status as $x => $x_value)
+                                                        <option class="form-control" value="{{$x}}" {{$x == $EmployeeDetailsInfo->emp_marital_status ? "selected='selected'":""}}>{{$x_value}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -149,7 +151,10 @@
                                             <label class="select">
                                                 <select class="form-control"  name="nationality" id="nationality">
                                                     <option value="0">Select</option>
-                                                        <option class="form-control" value="{{$EmployeeDetailsInfo->nation_code}}"></option>
+                                                    @php $nationality = \App\Model\Nationality::all(); @endphp
+                                                    @foreach($nationality as $nationalities)
+                                                        <option class="form-control" value="{{$nationalities->id}}" {{$nationalities->id == $EmployeeDetailsInfo->nation_code ? "selected=selected":""}}>{{$nationalities->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -172,7 +177,7 @@
                                         <section class="col col-4">
                                             <label class="label">Smoker</label>
                                             <label class="checkbox">
-                                                <input class="form-control" name="user_check1" type="checkbox" value="0" id="checkbox-smoker">
+                                                <input class="form-control" name="emp_smoker" type="checkbox" value="" id="checkbox-smoker">
                                                 <i></i>
                                             </label>
                                         </section>
@@ -191,4 +196,23 @@
 @endsection
 @section('script')
     <script src="{{ asset('/js/hr/employee.js') }}"></script>
+    <script>
+        // START AND FINISH DATE
+        $('#license_expiry_date').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            // onSelect: function (selectedDate) {
+            //     $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            // }
+        });
+        $('#date_of_birth').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            // onSelect: function (selectedDate) {
+            //     $('#startdate').datepicker('option', 'maxDate', selectedDate);
+            // }
+        });
+    </script>
 @endsection

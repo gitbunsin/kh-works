@@ -87,14 +87,18 @@ class UserController extends BackendController
     public function edit($id)
     {
         //
-        $company_id = Auth::guard('admins')->user()->id;
-        $u = DB::table('users as u')
+        $this->shareMenu();
+        if(Auth::guard('admins')->user()){
+            $Organization_Code = Auth::guard('admins')->user()->id;
+        }else{
+            $Organization_Code = Auth::guard('employees')->user()->company_id;
+        }
+        $User = DB::table('users as u')
             ->select('u.*')
             ->where('id',$id)
-            ->where('company_id',$company_id)
+            ->where('company_id',$Organization_Code)
             ->first();
-//        dd($u);
-        return view('backend.HRIS.admin.UserManagement.User.edit',compact('u'));
+        return view('backend.HRIS.admin.UserManagement.User.edit',compact('User'));
     }
     /**
      * Update the specified resource in storage.

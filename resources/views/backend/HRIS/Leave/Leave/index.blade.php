@@ -43,46 +43,35 @@
                                             <label class="label">* From </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="startdate" name="startdate" class="startdate">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> *  To </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" id="date" name="date" class="datepicker">
+                                                <input type="text" id="finishdate" name="finishdate" class="finishdate">
                                             </label>
                                         </section>
-                                    </div> <section>
-                                        <label class="label">Show Leave with Status</label>
-                                        <div class="inline-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i> All
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i> Rejected
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i> Cancelled
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i>Pending Approval
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i>Scheduled
-                                            </label>
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="myCheck">
-                                                <i></i> Taken
-                                            </label>
+                                    </div>
+                                    <section>
+                                        @php $LeaveStatus = \App\Model\LeaveStatus::all(); @endphp
+                                        <div class="row">
+                                            <label class="label col col-2">Show Leave with Status</label>
+                                            <div class="inline-group col col-10">
+                                                <label class="checkbox">
+                                                    <input  onClick="check_uncheck_checkbox(this.checked);" type="checkbox" id="CheckAllStatus">
+                                                    <i></i>All
+                                                </label>
+                                                @foreach($LeaveStatus as $LeaveStatuses)
+                                                    <label class="checkbox">
+                                                        <input  type="checkbox" name="CheckStatus" id="CheckStatus">
+                                                        <i></i>{{$LeaveStatuses->name}}
+                                                    </label>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </section>
-
                                     <section>
                                         <label class="label">Employee Name</label>
                                         <div class="form-group">
@@ -94,7 +83,7 @@
                                                     <option value="0">-- select trackers --</option>
                                                     @php $tracker = \App\Model\Employee::all(); @endphp
                                                     @foreach($tracker as $trackers)
-                                                        <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                        <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             </select>
@@ -109,23 +98,23 @@
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select Sub Unit --</option>
-                                                    {{--@php $location = \App\Location::all(); @endphp--}}
-                                                    {{--@foreach($location as $locations)--}}
-                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
-                                                    {{--@endforeach--}}
+                                                    @php $SubUnit = \App\Model\SubUnit::all(); @endphp
+                                                    @foreach($SubUnit as $SubUnits)
+                                                        <option value="{{$SubUnits->id}}">{{$SubUnits->title}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label"> Employeement Status * </label>
+                                            <label class="label"> Employment Status * </label>
                                             <label class="select">
                                                 <select name="project_name" id="project_name">
                                                     <option value="">-- select Employee Status --</option>
-                                                    {{--@php $location = \App\Location::all(); @endphp--}}
-                                                    {{--@foreach($location as $locations)--}}
-                                                        {{--<option value="{{$locations->id}}">{{$locations->name}}</option>--}}
-                                                    {{--@endforeach--}}
+                                                    @php $EmploymentStatus = \App\Model\EmploymentStatus::all(); @endphp
+                                                    @foreach($EmploymentStatus as $EmploymentStatuses)
+                                                        <option value="{{$EmploymentStatuses->id}}">{{$EmploymentStatuses->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -232,6 +221,34 @@
 @endsection
 @section('script')
     <script>
+        function check_uncheck_checkbox(isChecked) {
+            if(isChecked) {
+                $('input[name="CheckStatus"]').each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $('input[name="CheckStatus"]').each(function() {
+                    this.checked = false;
+                });
+            }
+        }
+        // START AND FINISH DATE
+        $('#startdate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+        $('#finishdate').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#startdate').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
         $('#sex').editable({
             prepend: " Select Action",
             source: [{

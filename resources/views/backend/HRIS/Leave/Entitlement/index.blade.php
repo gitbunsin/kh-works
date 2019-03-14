@@ -2,11 +2,6 @@
 @section('content')
     <section id="widget-grid" class="" xmlns="http://www.w3.org/1999/html">
         <!-- row -->
-        <style>
-            li ul.treeview-menu{
-                padding: 10px;
-            }
-        </style>
         <div class="row">
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -33,7 +28,7 @@
                                             <label class="label"></label>
                                             <div class="inline-group">
                                                 <label class="checkbox">
-                                                    <input type="checkbox" id="CheckEmployee" >Add new item type
+                                                    <input type="checkbox" value="" name="CheckEmployee" id="CheckEmployee" >Add new item type
                                                     <i></i> Add to Multiple Employee
                                                 </label>
                                             </div>
@@ -41,25 +36,37 @@
 
                                     </div>
                                     <div class="row" id="DivShow">
-                                        <section>
+                                        <section class="col col-6">
                                             <label class="label"></label>
                                             <label class="input">
                                                 <div class="employee">
-                                                    <h6 class="emp_number"> <strong></strong></h6>
+                                                    {{--<h6 class="emp_number"> <strong></strong></h6>--}}
+                                                    {{--<button type="button" id="emp_number" class="emp_number form-control btn btn-danger"></button>--}}
                                                 </div>
 
                                             </label>
                                         </section>
                                         <section class="col col-6">
+                                            <label class="label"></label>
+                                            <label class="input">
+                                                <div class="employee">
+                                                    {{--<h6 class="emp_number"> <strong></strong></h6>--}}
+                                                    <button type="button" value="" name="emp_number" id="emp_number" class="emp_number form-control btn btn-danger"/>
+                                                </div>
+                                                {{--<input type="hidden" value="" id="EmpNumber" name="EmpNumber[]" />--}}
+                                            </label>
+                                            <section class="hidden" >
+                                                <label class="label"> EmpNumber</label>
+                                                <label class="select">
+                                                    <select name="EmpNumber[]" id="EmpNumber" multiple>
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </section>
+                                        <section class="col col-6">
                                             <label class="label"> Location * </label>
                                             <label class="select">
-                                                {{--<select name="location" id="location">--}}
-                                                    {{--<option value="">-- All --</option>--}}
-                                                    {{--@php dd($location); @endphp--}}
-                                                    {{--@foreach($location as $locations)--}}
-                                                        {{--<option value="{{$locations->id}}">{{$locations->province}}</option>--}}
-                                                    {{--@endforeach--}}
-                                                {{--</select>--}}
                                                 <select name="location" id="location">
                                                     <option> -- All -- </option>
                                                       @foreach($country as $countries)
@@ -77,6 +84,13 @@
                                             <label class="select">
                                                 <select name="location" id="location">
                                                     <option value="">-- All  --</option>
+                                                    {{--@php $SubUnit = \App\Model\SubUnit::all(); @endphp--}}
+                                                    @foreach($categories as $category)
+                                                        <option>{{$category->title}}</option>
+                                                        @if(count($category->childs))
+                                                            <option>&nbsp;&nbsp;&nbsp;@include('backend.HRIS.admin.Company.structure.SubUnit',['childs' => $category->childs])</option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -124,11 +138,10 @@
                                                 <label class="select">
                                                     <select name="leave_period" id="leave_period">
                                                         <option value="">-- select leave periods --</option>
-                                                        <option value="1"> 2019-01-01 - 2019-12-31</option>
-                                                       {{--@php $leave_period = \App\LeavePeriod::all(); @endphp--}}
-                                                        {{--@foreach($leave_period as $leave_periods)--}}
-                                                            {{--<option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}}</option>--}}
-                                                        {{--@endforeach--}}
+                                                       @php $leave_period = \App\Model\LeavePeriodHistory::all(); @endphp
+                                                        @foreach($leave_period as $leave_periods)
+                                                            <option value="{{$leave_periods->id}}"> {{$leave_periods->leave_period_start_month}} {{"-"}} {{$leave_periods->leave_period_start_day}}</option>
+                                                        @endforeach
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -167,6 +180,7 @@
                 duration: 800,
             });
             $('#ShowEmployee').hide();
+            $('#CheckEmployee').val('1');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -178,11 +192,25 @@
                 method: "GET",
                 type: "json",
                 data: formData,
-                success: function (respond) {
-                    console.log('Success',respond);
+                success: function (data) {
+                    console.log('Success',data);
+
+                    var $brand_options = $("#EmpNumber");
+                    $.each(data, function(i , item) {
+                        console.log(i,item);
+                        $brand_options.append(
+                            $("<option/>").val(item.emp_number).text(item.emp_lastname).attr('selected','selected')
+                        );
+                    });
+                    // $.each(data, function(item) {
+                    //     console.log(data[item].emp_number);
+                    //     $('#EmpNumber').val(data[item].emp_number);
+                    // });
+                    //         $('#EmpNumber').val(data);
+                    // $("article.post").html(temp);
                     //alert(JSON.stringify(respond));
-                   // $('.emp_number').text("( Matches "  + respond + " Employees )");
-                    //$('.emp_number').css({"margin-left":"600px","margin-top":"-43px"});
+                   $('.emp_number').text("( Matches "  + data.length + " Employees )");
+
                 },
                 error: function (err) {
                     console.log(err)
@@ -195,6 +223,7 @@
             $('#DivShow').hide({
                 duration: 800,
             });
+            $('#CheckEmployee').val('0');
 
         }
     }

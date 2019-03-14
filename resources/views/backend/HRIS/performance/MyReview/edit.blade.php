@@ -36,7 +36,7 @@
                                                         <option value="0">-- select trackers --</option>
                                                         @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
-                                                            <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                            <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 </select>
@@ -52,7 +52,7 @@
                                 @endphp
                                 <select multiple="multiple" size="10" name="duallistbox_demo2" id="initializeDuallistbox">
                                     @foreach($e as $es)
-                                        <option value="{{$es->emp_id}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
+                                        <option value="{{$es->emp_number}}">{{$es->emp_lastname}}{{$es->emp_firstname}}</option>
                                     @endforeach
                                 </select>
                             </div>

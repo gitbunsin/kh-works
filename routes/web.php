@@ -135,9 +135,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
 
 
-        Route::get('view-leave-my-entitlements','LeaveController@viewMyLeaveEntitlements');
+        Route::get('view-leave-my-entitlements','LeaveEntitlementController@viewMyLeaveEntitlements');
         Route::get('view-leave-entitlements','LeaveEntitlementController@viewLeaveEntitlements');
-        Route::get('addLeaveEntitlement','LeaveEntitlementController@addLeaveEntitlement');
+        Route::get('addLeaveEntitlement','LeaveEntitlementController@addEmployeeLeaveEntitlment');
 
         //PIM
         Route::resource('list-CustomFields','CustomFieldController');
@@ -157,9 +157,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('view-membership','EmployeeMembershipController');
        // Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');
 
+        Route::resource('view-Directory','DirectoryController');
+
 
         //Time
         Route::resource('customer-project','CustomerController');
+
         Route::resource('defined-project','ProjectController');
         Route::resource('view-attendance-record','AttendanceController');
         Route::get('attendance-configure','AttendanceController@AttendanceConfigure');

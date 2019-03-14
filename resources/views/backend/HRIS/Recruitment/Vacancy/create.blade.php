@@ -28,7 +28,7 @@
                                         <section class="col col-6">
                                             <label class="label">Job Title</label>
                                             <label class="select">
-                                                @php $job_titles = \App\JobTitle::all(); @endphp
+                                                @php $job_titles = \App\Model\JobTitle::all(); @endphp
                                                 <select required name="Job_title" id="Job_title">
                                                     <option value="0">Choose JobTitle</option>
                                                     @foreach ($job_titles as $job_title)
@@ -53,7 +53,7 @@
                                             <select name="hiring_manager_id" id="hiring_manager_id">
                                                 <option value="0">Choose Manager</option>
                                                 @foreach($employee as $employees)
-                                                    <option value="{{$employees->emp_id}}">{{$employees->emp_lastname}}</option>
+                                                    <option value="{{$employees->emp}}">{{$employees->emp_lastname}}</option>
                                                 @endforeach
                                             </select>
                                             <i></i>

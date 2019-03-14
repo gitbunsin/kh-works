@@ -51,7 +51,6 @@
                                              @foreach($pay_grades["currency_name"] as $currency_names)
 
                                                     {{$currency_names->currency_name}},
-
                                             @endforeach
                                         </td>
                                         <td>

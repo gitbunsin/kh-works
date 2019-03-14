@@ -23,7 +23,7 @@ class PerformanceReviewController extends BackendController
         //$p = PerformanceReview::all();
 //        $p = DB::table('tbl_hr_performance_review as p')
 //            ->select('p.*','e.*')
-//            ->join('employees as e','p.employee_id','=','e.emp_id')
+//            ->join('employees as e','p.employee_id','=','e.emp_number')
 //            ->get();
 //        dd($p);
 //        $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());

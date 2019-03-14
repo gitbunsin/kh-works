@@ -190,7 +190,7 @@
                 middle_name:{
                     required:true
                 },
-                emp_id :{
+                emp_number :{
                     required:true
                 }
             },
@@ -206,7 +206,7 @@
                 middle_name:{
                     required:'please enter middle name'
                 },
-                emp_id : {
+                emp_number : {
                     required:'please enter employee id'
                 }
             },

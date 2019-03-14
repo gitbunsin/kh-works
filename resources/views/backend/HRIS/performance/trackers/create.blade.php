@@ -30,15 +30,15 @@
                                         <section class="col col-6">
                                             <label class="label">Employee Name</label>
                                             <div class="form-group">
+                                                @php $tracker = \App\Model\Employee::all(); @endphp
                                                 <select name="employee_tracker"
                                                         id="employee_tracker"
                                                         style="width:100%" class="select2 select2-hidden-accessible"
                                                         tabindex="-1" aria-hidden="true">
                                                     <optgroup label="Performance Employee Trackers">
                                                         <option value="0">-- select trackers --</option>
-                                                        @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
-                                                              <option value="{{$trackers->emp_id}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                              <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 </select>
@@ -49,7 +49,6 @@
                                         </section>
                                     </fieldset>
                                 </div>
-
                                 <select multiple="multiple" size="10" name="duallistbox_demo1[]" id="employeeTrackers">
                                         {{--<option value="">Name</option>--}}
                                 </select>
@@ -102,7 +101,6 @@
 
         $("#employee_tracker").on('change', function () {
             let employeeID = this.value;
-
             if (employeeID != 0) {
                 //console.log("Employee ID = ", employeeID);
                 /**
@@ -136,8 +134,6 @@
             nonSelectedFilter: ''
 
         });
-
-
         function bindEmployeeOption(employees) {
             // employees.each(emp => {
             //     console.log(emp);
@@ -146,7 +142,7 @@
 
             $.each(employees, function (key, value) {
                 console.log(employeeTrackers);
-                $("#employeeTrackers").append('<option value="'+ value.emp_id +'">'+ value.emp_lastname + " " +value.emp_firstname +'</option>')
+                $("#employeeTrackers").append('<option value="'+ value.emp_number +'">'+ value.emp_lastname + " " +value.emp_firstname +'</option>')
             })
             $("#employeeTrackers").bootstrapDualListbox('refresh', true);
 

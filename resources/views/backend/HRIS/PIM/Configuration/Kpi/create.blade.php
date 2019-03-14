@@ -28,10 +28,10 @@
                                             <label class="label"> Job Title</label>
                                             <label class="select state-success">
                                                 <select name="job_titles_code" id="job_titles_code" class="valid">
-                                                    @php $c = \App\JobTitle::all(); @endphp
+                                                    @php $JobTitle = \App\Model\JobTitle::all(); @endphp
                                                     <option value="">-- select --</option>
-                                                    @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}">{{$cs->job_titles}}</option>
+                                                    @foreach($JobTitle as $JobTitles)
+                                                        <option value="{{$JobTitles->id}}">{{$JobTitles->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>

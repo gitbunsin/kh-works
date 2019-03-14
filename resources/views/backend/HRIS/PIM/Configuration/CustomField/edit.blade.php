@@ -37,7 +37,7 @@
                                             <label class="label"> Screen *</label>
                                             <label class="select ">
                                                 <select name="screen" id="screen" class="valid">
-                                                    @php $c = \App\JobTitle::all(); @endphp
+                                                    @php $c = \App\Model\JobTitle::all(); @endphp
                                                     <option value="">-- select --</option>
                                                     @foreach($c as $cs)
                                                         <option value="{{$cs->id}}">{{$cs->job_titles}}</option>
