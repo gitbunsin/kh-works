@@ -146,7 +146,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="{{url('administration/leave-request')}}" class="smart-form">
+                            <form id="frmLeavetype" method="POST" enctype="multipart/form-data" action="" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <section>

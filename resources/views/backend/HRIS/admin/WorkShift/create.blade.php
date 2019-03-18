@@ -23,9 +23,9 @@
                         <fieldset class="smart-form">
                             <section>
                                 <label class="label">Name</label>
-                                <label class="input">
-                                    <input type="text" name="name" id="name">
-                                </label>
+                                <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                    <input type="text" name="name" placeholder="Name">
+                                    <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                             </section>
                             <div class="row">
                                 <section class="col col-5">

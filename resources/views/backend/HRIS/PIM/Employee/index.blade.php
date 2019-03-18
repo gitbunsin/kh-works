@@ -32,8 +32,36 @@
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
                                 <thead>
+                                <tr>
+                                    <th class="hasinput" style="">
+                                        {{--<input type="text" class="form-control" placeholder="Filter Name" />--}}
+                                    </th>
+                                    <th class="hasinput" style="width:18%">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Filter Position" type="text">
+                                        </div>
+                                    </th>
+                                    <th class="hasinput" style="width:16%">
+                                        <input type="text" class="form-control" placeholder="Filter Office" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        {{--<input type="text" class="form-control" placeholder="Filter Age" />--}}
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th> id </th>
                                     <th> First (& Middle) Name</th>

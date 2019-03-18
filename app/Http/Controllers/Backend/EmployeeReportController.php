@@ -25,8 +25,8 @@ class EmployeeReportController extends BackendController
     {
         //
         $this->shareMenu();
-        $ListEmployeeEmergencyReportto = DB::table('employee_dependents as ec')
-            ->join('employees as e','ec.emp_number','=','e.emp_number')
+        $ListEmployeeEmergencyReportto = DB::table('employee_reporttos as ec')
+            ->join('employees as e','ec.erep_sup_emp_number','=','e.emp_number')
             ->get();
         return view('backend.HRIS.PIM.Employee.ReportingTo.index',compact('ListEmployeeEmergencyReportto'));
     }

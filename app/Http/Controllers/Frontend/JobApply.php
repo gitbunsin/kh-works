@@ -23,7 +23,7 @@ class JobApply extends Controller
         $this->middleware('auth');
     }
 
-    public function apply(Request $request, $id)
+    public function ApplyVacancy(Request $request, $id)
     {
 //        dd($id);
         if (Auth::user()) {
@@ -36,6 +36,7 @@ class JobApply extends Controller
                 ->where('c.user_id', '=', $user_id)
                 ->get()
                 ->first();
+
             if ($user_candidate) {
 
                 $candidate->cv_file_id = $user_candidate->id;
@@ -58,23 +59,23 @@ class JobApply extends Controller
                 $date_applied = \Carbon\Carbon::now();
                 $vacancy_candidate->applied_date = $date_applied;
                 $vacancy_candidate->save();
-//                dd($id,$company_id);
-//                $user = User::where('id', $user_id)->select('name', 'email')->get();
-//                $job = Job::where('id', $id)->select('company_id', 'job_titles_code')->get();
-//                Excel::create('User', function ($excel) use ($user, $job) {
-//                    $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
-//                        foreach ($user as $key => $value) {
-//                            $i = $key + 2;
-//                            $sheet->cell('A' . $i, $value['name']);
-//                            $sheet->cell('B' . $i, $value['email']);
-//                        }
-//                        foreach ($job as $key => $values) {
-//                            $is = $key + 2;
-//                            $sheet->cell('C' . $is, $values['company_id']);
-//                            $sheet->cell('D' . $is, $values['job_titles_code']);
-//                        }
-//                    });
-//                })->download();
+                dd($id,$company_id);
+                $user = User::where('id', $user_id)->select('name', 'email')->get();
+                $job = Job::where('id', $id)->select('company_id', 'job_titles_code')->get();
+                Excel::create('User', function ($excel) use ($user, $job) {
+                    $excel->sheet('Sheet', function ($sheet) use ($user, $job) {
+                        foreach ($user as $key => $value) {
+                            $i = $key + 2;
+                            $sheet->cell('A' . $i, $value['name']);
+                            $sheet->cell('B' . $i, $value['email']);
+                        }
+                        foreach ($job as $key => $values) {
+                            $is = $key + 2;
+                            $sheet->cell('C' . $is, $values['company_id']);
+                            $sheet->cell('D' . $is, $values['job_titles_code']);
+                        }
+                    });
+                })->download();
                 return redirect('/administration/display-job-details/'.$id .'/'.$company_id);
             }
             else {

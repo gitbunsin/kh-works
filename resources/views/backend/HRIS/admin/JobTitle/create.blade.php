@@ -26,9 +26,9 @@
                                 <fieldset>
                                     <section>
                                         <label class="label">Job Title</label>
-                                        <label class="input">
-                                            <input type="text" name="job_titles" id="job_titles">
-                                        </label>
+                                        <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                            <input type="text" name="job_titles" placeholder="Job Title">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                     </section>
                                     <section>
                                         <label class="label">description</label>

@@ -131,6 +131,7 @@ class LeaveController extends BackendController
 
     public function leaveRequest(Request $request)
     {
+        //dd('hello');
          if(Auth::guard('admins')->user()){
              $emp_number = Auth::guard('admins')->user()->id;
 
@@ -150,19 +151,20 @@ class LeaveController extends BackendController
             $name = Auth::guard('employee')->user()->email;
         }
 
-
         // dd($request->all());
         $time1 = strtotime($request->startdate);
         $time2 = strtotime($request->finishdate);
+//        dd($time1,$time2);
         $CheckExistingDateApplyLeave = Leave::where('date', $request->startdate)
             ->orWhere('date', $request->finishdate)
             ->get();
-        //dd($CheckExistingDateApplyLeave);
+//        dd($CheckExistingDateApplyLeave);
         if (!$CheckExistingDateApplyLeave->isEmpty()) {
 //            $this->shareMenu();
 //            return view('backend.HRIS.Leave.Leave.applyLeave')->with('warning', 'Workshift Length Exceeded Due To the Following Leave Requests:');
             return redirect('/administration/get-applyLeave')->with('warning', 'Workshift Length Exceeded Due To the Following Leave Requests:');
         }else{
+           // dd('hello');
             for ($i = $time1; $i <= $time2; $i = $i + 86400) {
                 // $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
                 $leave_request = new LeaveRequest();
@@ -206,7 +208,6 @@ class LeaveController extends BackendController
                     $leave->duration_type =$request->duration_start_Day;
                 }
 
-
                 $allDays = $request->partial_day;
                 if($allDays == "3"){
 
@@ -219,7 +220,6 @@ class LeaveController extends BackendController
                     $leave->end_time = $request->End_Day_ToDate;
                     $leave->duration_type =$request->duration_end_date;
                 }
-
                 $leave->created_by_name =$name;
                 $leave->status = 1;
                 $leave->comment = $request->comments;
@@ -235,8 +235,8 @@ class LeaveController extends BackendController
             $leaveEntitlement->day_used = $result;
             $leaveEntitlement->save();
         }
-
         return redirect('/administration/get-applyLeave')->with('success', 'Leave has been requested');
+
 
         //dd('hello');
     }

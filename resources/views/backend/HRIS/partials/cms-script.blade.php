@@ -51,6 +51,14 @@
 		<!-- FastClick: For mobile devices -->
 		<script src="{{ asset('js/plugin/fastclick/fastclick.min.js')}}"></script>
 
+
+         <script src="{{asset('js/plugin/chartjs/chart.min.js')}}"></script>
+
+<!-- SmartChat pages : plugin -->
+        <script src="{{asset('js/smart-chat-ui/smart.chat.ui.min.js')}}"></script>
+        <script src="{{asset('js/smart-chat-ui/smart.chat.manager.min.js')}}"></script>
+
+
 <script src="{{ asset('js/plugin/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
@@ -208,7 +216,8 @@
             },
             "drawCallback" : function(oSettings) {
                 responsiveHelper_dt_basic.respond();
-            }
+            },
+			//bServerSide: false
         });
 		$('table.display').dataTable({
 			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+

@@ -61,13 +61,31 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('companyProfile', 'CompanyController');
         Route::resource('user_cv','UsersCvController');
         Route::resource('vacancy', 'VacanciesController');
-        Route::resource('jobs-title','JobTitleController');
+
+
+        //
+    Route::resource('Dashboard','DashboardController');
+
+
+    Route::get('staff-directory','EmployeeController@ListAllStaffDirectory');
+//        Route::post('Apply-Vacancy',)
+
+
+
+
+    Route::resource('jobs-title','JobTitleController');
         Route::resource('jobs-category','JobCategoryController');
         Route::resource('post-jobs','JobController');
-        Route::get('/display-job-details/{job_id}/{company_id}','JobController@displayJob');
+        Route::get('/display-job-details/{job_id}/{company_id}','JobController@DisplayVacancy');
         Route::resource('employee','EmployeeController');
         Route::get('/employee-job','EmployeeController@GetJob');
-        //Route::get('/employee-salary','EmployeeController@getSalary');
+
+
+    Route::post('/apply-job/{VacancyID}/{OrganizationCode}', 'JobController@ApplyVacancy');
+
+
+
+    //Route::get('/employee-salary','EmployeeController@getSalary');
 
         Route::resource('employee-salary','EmployeeBasicSalaryController');
         Route::get('/employee-report-to','EmployeeController@getReport');
@@ -217,7 +235,6 @@ Route::group(['namespace' => 'Frontend','prefix'=>'kh-works'], function () {
     Route::get('/resume','ResumeController@resume')->middleware('isClient');
     Route::post('/apply/{id}/{user_id}', 'KhWorksController@apply')->middleware('auth');
     Route::get('/lists', 'KhWorksController@lists')->middleware('auth');
-    Route::post('/apply-job/{id}', 'JobApply@apply')->middleware('auth');
 
 
 

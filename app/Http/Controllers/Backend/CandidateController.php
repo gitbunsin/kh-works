@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Interview;
 use App\Model\JobCandidate;
 use App\Model\JobCandidateAttchment;
+use App\Model\JobCandidateHistory;
+use App\Model\JobCandidateVacancy;
 use App\Model\JobVacancyAttachment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,19 +35,16 @@ class CandidateController extends BackendController
     {
         $this->shareMenu();
             $company_id = Auth::guard('admins')->user()->id;
-            $JobCandidate = JobCandidate::all();
-//            $candidate = DB::table('tbl_job_candidate_vacancy as cv')
-//                        ->select('cv.*','c.*','v.*','jt.*','cv.id as apply_id')
-////                        ->select('cv.*','c.*','jt.*','cv.id as apply_id')
-//                        ->join('kh_job_vacancy as v','cv.vacancy_id','=','v.id')
-//                        ->join('tbl_job_candidate as c','c.id','=','cv.candidate_id')
-//                        ->join('tbl_job_titles as jt','c.job_titles_code','=','jt.id')
-//                        ->where('v.company_id',$company_id)
-//                        ->where('cv.status',2)
-//                        ->get();
-
-      //  $menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
-        $this->shareMenu();
+//            $JobCandidate = DB::table('job_candidates as c')
+//                            ->join('')
+        $JobCandidate = DB::table('job_candidate_vacancies as cv')
+                        ->select('cv.*','c.*','v.*','jt.*','cv.id as apply_id' ,'cv.status as CandidateStatus','c.id as Candidate_id')
+                        ->join('job_vacancies as v','cv.vacancy_id','=','v.id')
+                        ->join('job_candidates as c','c.id','=','cv.candidate_id')
+                        ->join('job_titles as jt','v.job_title_code','=','jt.id')
+                        ->where('v.company_id',$company_id)
+                        ->get();
+//            dd($JobCandidate);
         return view('backend.HRIS.Recruitment.Candidate.index',compact('JobCandidate'));
     }
 
@@ -128,7 +127,7 @@ class CandidateController extends BackendController
         $Candidate->keyword = $request->keyword;
         $Candidate->date_of_application = Carbon::parse($request->date_of_application)->format('Y-m-d');
         $Candidate->save();
-        $Candidate__id = $Candidate->id;
+        $Candidate_id = $Candidate->id;
        // dd($Candidate__id);
         if ($request->hasFile('cv_file_id')) {
             $image = $request->file('cv_file_id');
@@ -139,12 +138,29 @@ class CandidateController extends BackendController
             $destinationPath = public_path('/uploaded');
             $image->move($destinationPath,$name);
             $CandidateAttachment = new JobCandidateAttchment();
-            $CandidateAttachment->candidate_id = $Candidate__id;
+            $CandidateAttachment->candidate_id = $Candidate_id;
             $CandidateAttachment->file_name = $name;
             $CandidateAttachment->file_size = $size;
             $CandidateAttachment->file_type = $type;
             $CandidateAttachment->save();
         }
+        $JobCandiateVacancy = new JobCandidateVacancy();
+        $JobCandiateVacancy->candidate_id = $Candidate_id;
+        $JobCandiateVacancy->vacancy_id = $request->vacancy_name;
+        $JobCandiateVacancy->applied_date = $request->date_of_application;
+        $JobCandiateVacancy->status = $request->candidateAddStatus;
+        $JobCandiateVacancy->save();
+
+
+        $JobCandiateVacancyHistory = new JobCandidateHistory();
+        $JobCandiateVacancyHistory->candidate_id = $Candidate_id;
+        $JobCandiateVacancyHistory->vacancy_id = $request->vacancy_name;
+        $JobCandiateVacancyHistory->candidate_vacancy_name = $request->vacancy_name;
+        $JobCandiateVacancyHistory->performed_by = $request->date_of_application;
+
+        $JobCandiateVacancyHistory->save();
+
+
         return redirect('/administration/candidate')->with('success','Item created successfully!');
     }
 
@@ -168,9 +184,12 @@ class CandidateController extends BackendController
     public function edit($id)
     {
         $this->shareMenu();
-        $candidate = Candidate::where('id',$id)->first();
-        dd($candidate);
-        return view('backend.HRIS.Recruitment.Candidate.edit',compact('candidate','id'));
+        $candidate = JobCandidate::find($id);
+        $CandidateHistory = DB::table('job_candidate_histories')
+                            ->where('candidate_id',$id)
+                            ->get();
+//        dd($CandidateHistory);
+        return view('backend.HRIS.Recruitment.Candidate.edit',compact('CandidateHistory','candidate'));
     }
 
     /**

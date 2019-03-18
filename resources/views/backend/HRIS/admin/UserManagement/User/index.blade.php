@@ -44,12 +44,12 @@
                                         <td>{{$us->name}}</td>
                                         <td>{{$us->email}}</td>
                                         @if($us->verified == "1")
-                                            <td style="color: blue;">
-                                                Enable
+                                            <td>
+                                                <span class="label label-success">Enabled</span>
                                             </td>
                                         @else
-                                            <td style="color:red;">
-                                                Disabled
+                                            <td>
+                                                <span class="label label-danger">Disabled</span>
                                             </td>
                                         @endif
                                         <td>

@@ -3,6 +3,7 @@
 namespace  App\Http\Controllers\Backend;
 use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
+use App\Model\JobCandidateAttchment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class UsersCvController extends BackendController
     public function getDownload($user_id)
     {
 //        dd('hello');
-        $entry = UserAttchment::where('user_id',$user_id)->firstOrFail();
+        $entry = JobCandidateAttchment::where('id',$user_id)->firstOrFail();
 //        dd($entry);
         $pathToFile = public_path()."/uploaded/UserCv/".$entry->name;
         return response()->download($pathToFile);

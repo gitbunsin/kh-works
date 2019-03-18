@@ -14,7 +14,6 @@
                     </header>
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -66,15 +65,36 @@
                                                data-title="Enter note">
                                             </a>
                                         </td>
-                                        <td style="text-align: center;">
-                                            <a  href="#" data-id="" style="text-decoration:none;" class="btn-detail pass">
-                                                <i class="glyphicon glyphicon-align-center "></i>
-                                                Pass ||
-                                            </a>
-                                            <a data-id=""  href="#" style="text-decoration:none;" class="btn-detail fail">
-                                                <i class="glyphicon glyphicon-calendar "></i>
-                                                Fail
-                                            </a>
+                                        <td class="text-center sorting_1">
+                                            <div class="dropdown">
+                                                <a href="#" class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px; ">
+                                                    Action
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li>
+                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/profile">
+                                                            <input type="hidden" name="id" value="8818">
+                                                            <button type="submit" class="btn-link"> <i class="fa fa-mail-forward "></i> Pass </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/edit">
+                                                            <input type="hidden" name="id" value="8818">
+                                                            <button type="submit" class="btn-link"> <i class="fa  fa-file "></i> Fail </button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="http://hrmsa.herokuapp.com/employee/destroy" class="delete-form" data-name="Employee">
+                                                            <input type="hidden" name="_token" value="6WkaKcu4nuyc2GHJ5HbWOEWT2zAvNCvr3lCNNRdK">
+                                                            <input type="hidden" name="id" value="111">
+                                                            <input type="hidden" name="_method" value="delete">
+                                                            <button type="submit" class="btn-link"> <i class="fa fa-trash"></i> Delete </button>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

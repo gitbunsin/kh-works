@@ -19,7 +19,7 @@
                             &times;
                         </button>
                         <h4 class="modal-title">
-                            <img src="img/logo.png" width="150" alt="SmartAdmin">
+                            <img src="{{asset('img/logo.png')}}" width="150" alt="SmartAdmin">
                         </h4>
                     </div>
                     <div class="modal-body no-padding">
@@ -279,7 +279,7 @@
             $('#JobCategory').prop('disabled',true);
             $('#SubUnit').prop('disabled',true);
             $('#JoinDate').prop('disabled',true);
-            $('#Location').prop('disabled',true);
+            $('#location').prop('disabled',true);
             $('#EmploymentStatus').prop('disabled',true);
             $('#StartDate').prop('disabled',true);
             $('#EndDate').prop('disabled',true);
@@ -290,7 +290,7 @@
             $('#JobCategory').prop('disabled',false);
             $('#SubUnit').prop('disabled',false);
             $('#JoinDate').prop('disabled',false);
-            $('#Location').prop('disabled',false);
+            $('#location').prop('disabled',false);
             $('#EmploymentStatus').prop('disabled',false);
             $('#StartDate').prop('disabled',false);
             $('#EndDate').prop('disabled',false);

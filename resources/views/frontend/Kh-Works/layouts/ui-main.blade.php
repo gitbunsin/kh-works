@@ -15,7 +15,6 @@
 <body>
 <!-- header -->
 @include('frontend.Kh-Works.partials.nav-ui')
-
 <div class="banner-job">
     <div class="banner-overlay"></div>
     <div class="container text-center">

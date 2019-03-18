@@ -25,13 +25,29 @@
                         </div>
                         <div class="widget-body no-padding">
 
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
                                 <thead>
                                 <tr>
-                                    <th data-hide="phone">CVs ID</th>
-                                    <th> Seekers Name</th>
-                                    <th> Candidate CV</th>
-                                    <th> Download </th>
+                                    <th class="hasinput" style="width:3%">
+                                        <input type="text" class="form-control" placeholder="CV ID" />
+                                    </th>
+                                    <th class="hasinput" style="width:18%">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Filter Position" type="text">
+                                        </div>
+                                    </th>
+                                    <th class="hasinput" style="width:16%">
+                                        <input type="text" class="form-control" placeholder="Filter Office" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        {{--<input type="text" class="form-control" placeholder="Filter Age" />--}}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-class="expand"> CVs ID</th>
+                                    <th data-class="expand"> Seekers Name</th>
+                                    <th data-class="expand"> Candidate CV</th>
+                                    <th data-class="expand" style="text-align: center;"> Download </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +61,7 @@
                                         {{--<td><a href="{{url('administration/download/'.$user_cvs->user_cv_id)}}">{{$user_cvs->cv_name}} </a></td>--}}
                                         <td style="text-align: center;">
                                             <a data-id="{{$CandidateAttachments->id}}" href="{{url('administration/download/'.$CandidateAttachments->id)}}" style="text-decoration:none;" class="btn-detail open_modal">
-                                                <i class="glyphicon glyphicon-download"></i>
+                                                <i class="fa fa-2x fa-download"></i>
                                             </a>
                                         </td>
                                     </tr>

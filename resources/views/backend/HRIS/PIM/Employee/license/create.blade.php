@@ -28,7 +28,7 @@
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
-                                            @php $l = \App\LicenseType::all(); @endphp
+                                            @php $l = \App\Model\License::all(); @endphp
                                             <label class="label"> License Type</label>
                                             <label class="select">
                                                 <select name="license_type_id" id="license_type_id">

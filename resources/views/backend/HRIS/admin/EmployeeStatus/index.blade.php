@@ -57,7 +57,7 @@
                                             <form action="{{ url('/administration/employment-status', ['id' => $status->id]) }}" style="display:inline" method="post">
                                                 <input type="hidden" name="_method" value="delete" />
                                                 {!! csrf_field() !!}
-                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="btn">
+                                                <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="">
                                     
                                                         <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
                                                 </a>

@@ -27,9 +27,9 @@
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Name</label>
-                                            <label class="input">
-                                                <input  type="text" name="name" id="name">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="name" placeholder="Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Country</label>
@@ -46,28 +46,30 @@
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">State/Province</label>
-                                            <label class="input">
-                                                <input  type="text" name="province_id" id="province_id">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="province_id" placeholder="Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                     </div>
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">City</label>
-                                            <label class="input">
-                                                <input  type="text" name="city" id="city">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="city" placeholder="Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Address</label>
-                                            <label class="input">
-                                                <input  type="text" name="address" id="address">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="address" placeholder="Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Zip/Postal Code</label>
                                             <label class="input">
-                                                <input  type="text" name="zip_code" id="zip_code">
+                                                <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                    <input  type="text" name="zip_code" id="zip_code">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                             </label>
                                         </section>
                                     </div>
@@ -76,20 +78,30 @@
                                             <section class="col col-4">
                                                 <label class="label">Phone</label>
                                                 <label class="input">
-                                                    <input  type="text" name="phone" id="phone">
+                                                    <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                        <input  type="text" name="phone" id="phone">
+                                                        <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                                 </label>
                                             </section>
                                             <section class="col col-4">
                                                 <label class="label">Fax</label>
                                                 <label class="input">
-                                                    <input  type="text" name="fax" id="fax">
+                                                    <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                        <input  type="text" name="fax" id="fax">
+                                                        <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
+                                                    </label>
+
                                                 </label>
                                             </section>
                                             <section class="col col-4">
                                                 <label class="label">Notes</label>
                                                 <label class="input">
-                                                    <input  type="text" name="notes" id="notes">
-                                                </label>
+                                                    <label class="input"> <i class="icon-append fa fa-joomla"></i>
+
+                                                        <input  type="text" name="notes" id="notes">
+                                                        <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
+                                                    </label>
+                                                    </label>
                                             </section>
                                         </div>
 

@@ -29,7 +29,8 @@
         <div class="resume-content">
             <div class="profile section clearfix">
                 <div class="profile-logo">
-                    <img  class="img-responsive" alt="Image" width="150px;" height="150px;" src="{{asset('uploaded/UserPhoto/'.Auth::user()->photo)}}"/>
+                    <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive" width="150px;" height="150px;">
+                    {{--<img  class="img-responsive" alt="Image" width="150px;" height="150px;" src="{{asset('uploaded/UserPhoto/'.Auth::user()->photo)}}"/>--}}
                 </div>
                 <div class="profile-info">
                     <h1></h1>

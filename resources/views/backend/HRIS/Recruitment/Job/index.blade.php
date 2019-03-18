@@ -26,14 +26,34 @@
 
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Vacancy Name</th>
-                                    <th>Hiring Manager</th>
-                                    <th>Job title</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Name" />
+                                    </th>
+                                    <th class="hasinput" style="width:18%">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Filter Position" type="text">
+                                        </div>
+                                    </th>
+                                    <th class="hasinput" style="width:16%">
+                                        <input type="text" class="form-control" placeholder="Filter Office" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                    <th class="hasinput icon-addon">
+                                        <input id="dateselect_filter" type="text" placeholder="Filter Date" class="form-control datepicker" data-dateformat="yy/mm/dd">
+                                        <label for="dateselect_filter" class="glyphicon glyphicon-calendar no-margin padding-top-15" rel="tooltip" title="" data-original-title="Filter Date"></label>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-class="expand">Vacancy Name</th>
+                                    <th data-hide="phone">Hiring Manager</th>
+                                    <th data-hide="phone">Job title</th>
+                                    <th data-hide="phone">Status</th>
+                                    <th data-hide="phone,tablet">Posting Date</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
@@ -42,15 +62,16 @@
                                         <td>{{$jobVacancys->name}}</td>
                                         <td>{{$jobVacancys->emp_lastname}}{{$jobVacancys->emp_firstname}}</td>
                                         <td>{{$jobVacancys->name}}</td>
-                                        <td>Active</td>
-                                        <td>
-                                            <a href="{{url('administration/post-jobs/'.$jobVacancys->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
-                                                <i class="glyphicon glyphicon-edit"></i>
-                                            </a>
-                                            <a data-id="{{$jobVacancys->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
-                                        </td>
+                                        <td><span class="label label-success">Active</span></td>
+                                        <td></td>
+                                        {{--<td>--}}
+                                            {{--<a href="{{url('administration/post-jobs/'.$jobVacancys->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
+                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
+                                            {{--</a>--}}
+                                            {{--<a data-id="{{$jobVacancys->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

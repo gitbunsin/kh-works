@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+use App\CandidateAttachment;
 use App\CandidateVacancy;
 use App\JobDescription;
+use App\Model\JobCandidate;
+use App\Model\JobCandidateVacancy;
 use App\Model\JobVacancy;
 use App\Model\JobVacancyAttachment;
 use App\Model\OrganizationGenInfo;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +28,7 @@ class JobController extends BackendController
    }
     public function index()
     {
+
         $this->shareMenu();
 //        $job = Job::orderBy('id','DESC')->get();
         $company_id = Auth::guard('admins')->user()->id;
@@ -35,6 +40,7 @@ class JobController extends BackendController
         return view('backend.HRIS.Recruitment.Job.index',compact('jobVacancy'));
         //
     }
+
 //    public function store(Request $request)
 //    {
 //        $job = Job::create($request->all());
@@ -47,9 +53,18 @@ class JobController extends BackendController
      * @param  \App\Job  $job
      * @return \Illuminate\Http\Response
      */
-        public  function displayJob($job_id , $company_id){
-            $jobVacancy = JobVacancy::where('id',$job_id)->first();
+        public  function DisplayVacancy($VacancyID , $OrgizationID){
+            $jobVacancy = DB::table('job_vacancies as v')
+                ->join('job_titles as t','v.job_title_code','=','t.id')
+                ->join('organization_gen_infos as com','v.company_id','=','com.id')
+                ->where('t.id',$VacancyID)
+                ->orWhere('com.id',$OrgizationID)
+                ->select('v.*','t.*','com.*','v.id as VacancyID','com.id as OrganizationCode')
+                ->first();
+           // dd($VacancyID,$OrgizationID);
+//            $jobVacancy = JobVacancy::where('id',$job_id)->first();
            // dd($jobVacancy);
+
            // dd('hello');
 //            $isApply = false;
 //            if(auth::user()){
@@ -72,6 +87,78 @@ class JobController extends BackendController
         return view('backend.HRIS.Recruitment.Job.show',compact('jobVacancy'));
 //        return view('backend.HRIS.Recruitment.Job.show',compact('job_titles','company','isApply'));
         }
+
+    /**
+     *
+     */
+    public function ApplyVacancy(Request $request ,$VacancyID,$OrganizationCode)
+       {
+           if(Auth::user()){
+               //UserApplyVacancy
+               $UserApplyVacancy = User::where('id',Auth::user()->id)->first();
+
+//               dd($UserApplyVacancy);
+
+//               $email = $UserApplyVacancy->email;
+//               $CandiateExistingModel = JobCandidate::where('email',$email)->first();
+
+              // dd($check);
+//                if($CandiateExistingModel){
+//
+//                }else{
+//                    $Candidate  = new JobCandidate();
+//                    $Candidate->company_id = $OrganizationCode;
+//                    $Candidate->email   = $UserApplyVacancy->email;
+//                    $Candidate->save();
+
+//                }
+
+
+//
+//                      $Candidate  = DB::table('job_candidates as c')
+//                        ->join('job_candidate_attchments as jc','c.id','=','jc.candidate_id')
+//                      ->where('jc.candidate_id',$Candidate->id)
+//                        ->first();
+//
+//                      dd($Candidate);
+
+
+               //CheckUserApply
+//               $CandidateVacancy = DB::table('job_candidate_vacancies')
+//                                        ->where('candidate_id',$VacancyID)
+//                                        ->orWhere('vacancy_id')
+//                                        ->first();
+               //dd($CandidateVacancy);
+
+
+//               dd($user);
+//               if ($user === null) {
+//                   // user doesn't exist
+//                   $Candidate  = new JobCandidate();
+//                   $Candidate->company_id = $OrganizationCode;
+//                   $Candidate->email   = $user->email;
+//                   $Candidate->save();
+//                   //CheckUserAttachment
+//                   $CandidateAttachment = DB::table('job_candidates as c')
+//                       ->join('job_candidate_attchments as jc','jc.candidate_id','=','c.id')
+//                       ->where('c.id',$Candidate->id)
+//                       ->first();
+//               }
+
+            //   dd($CandidateAttachment);
+
+              // dd($request->all());
+               //dd($VacancyID,$OrganizationCode);
+
+           }else{
+               return redirect('/login')->with('error','Please login to apply this Job!');
+           }
+
+
+
+        }
+
+
     public function destroy($id)
     {
         $job = JobVacancyAttachment::destroy($id);

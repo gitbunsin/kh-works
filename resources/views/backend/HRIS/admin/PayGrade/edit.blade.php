@@ -198,7 +198,7 @@
                         data: formData,
                         dataType: "json",
                         success: function(respond) {
-                            // console.log("Success", respond);
+                            console.log("Success", respond);
                             bindDataToTable(respond);
                         },
                         error: function(error) {

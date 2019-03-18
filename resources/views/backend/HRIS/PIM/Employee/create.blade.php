@@ -31,29 +31,29 @@
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
-                                            <label class="input">
-                                                <input type="text" name="emp_firstname" id="emp_firstname">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="emp_firstname" placeholder="First Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Middle Name</label>
-                                            <label class="input">
-                                                <input type="text" name="emp_middle_name" id="emp_middle_name">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="emp_middle_name" placeholder="Middle Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                         </section>
                                         <section class="col col-4">
-                                            <label class="label">Last Name</label>
-                                            <label class="input">
-                                                <input type="text" name="emp_lastname" id="emp_lastname" >
-                                            </label>
+                                            <label class="label">Middle Name</label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="emp_lastname" placeholder="Last Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                         </section>
                                     </div>
                                     <div class="row">
-                                        <section class="col col-4">
-                                            <label class="label"> Employee Id</label>
-                                            <label class="input">
-                                                <input type="text" name="employee_id" id="employee_id" >
-                                            </label>
+                                        <section class="col col-6">
+                                            <label class="label">Middle Name</label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="employee_id" placeholder="Employee ID">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label"> Employee Photo</label>
@@ -74,50 +74,50 @@
                                         </label>
                                     </section>
                                     <div id="div_login">
-                                        <div  class="row">
-                                            <section  class="col col-6">
-                                                <label class="label"> Username *</label>
-                                                <label class="input">
-                                                    <input type="text" name="user_name" id="user_name" maxlength="30">
-                                                </label>
-                                            </section>
-                                            <section  class="col col-6">
-                                                <label class="label"> email *</label>
-                                                <label class="input">
-                                                    <input type="email" name="user_email" id="user_email" >
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div id="" class="row">
-                                            <section  class="col col-6">
-                                                <label class="label"> Password *</label>
-                                                <label class="input">
-                                                    <input type="password" name="user_password" id="user_password" maxlength="10">
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Note:</strong> For a strong password, please use a hard to guess combination of text with upper and lower
-                                                    case characters, symbols and numbers
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-6">
+                                                        <label class="label">username</label>
+                                                        <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                            <input type="text" name="user_name" placeholder="Username">
+                                                            <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                                    </section>
+                                                    <section class="col col-6">
+                                                        <label class="label">Email</label>
+                                                        <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                                            <input type="email" name="email" placeholder="Email address">
+                                                            <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
+                                                    </section>
                                                 </div>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label class="label"> Confirm Password ** </label>
-                                                <label class="input">
-                                                    <input type="password" id="emp_confimpassword" name="emp_confimpassword">
-                                                </label>
-                                            </section>
-                                            <section class="col col-6">
-                                                <label class="label">Status</label>
-                                                <label class="select">
-                                                    <select name="role" id="role">
-                                                            <option value="enable">enable</option>
-                                                            <option value="disabled">disabled</option>
-                                                    
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                        
+                                                <div class="row">
+                                                    <section class="col col-6">
+                                                        <label class="label">Password</label>
+                                                        <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                            <input type="password" name="user_password" placeholder="Password" id="password">
+                                                            <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+                                                    </section>
+                                                    <section class="col col-6">
+                                                        <label class="label">Confirm Password</label>
+                                                        <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                                            <input type="password" name="emp_confimpassword" placeholder="Confirm password">
+                                                            <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+                                                    </section>
+                                                </div>
+                                                <section>
+                                                    <label class="label"> Status</label>
+                                                    <label class="select">
+                                                        @php $Status = array("0"=>"Disabled","1"=>"Enable") @endphp
+                                                        <select name="role" id="role" class="required">
+                                                            @foreach($Status as $key => $Statuses)
+                                                                <option value="{{$key}}">{{$Statuses}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                            </fieldset>
                                     </div>
                                 </fieldset>
                                 <footer>

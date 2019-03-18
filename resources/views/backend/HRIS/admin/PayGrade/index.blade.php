@@ -50,7 +50,8 @@
                                         <td>
                                              @foreach($pay_grades["currency_name"] as $currency_names)
 
-                                                    {{$currency_names->currency_name}},
+                                                    {{$currency_names->name}},
+
                                             @endforeach
                                         </td>
                                         <td>

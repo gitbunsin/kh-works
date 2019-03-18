@@ -4,11 +4,12 @@ namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\License;
+use App\Model\Backend\EmployeeLicense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeLicenseController extends Controller
+class EmployeeLicenseController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -28,6 +29,7 @@ class EmployeeLicenseController extends Controller
     public function create()
     {
         //
+        $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.license.create');
     }
 
@@ -45,7 +47,7 @@ class EmployeeLicenseController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $l = new License();
+        $l = new EmployeeLicense();
         $l->company_id = $company_id;
         $l->employee_id = $company_id;
         $l->licenseType_id = $request->license_type_id;
@@ -82,7 +84,8 @@ class EmployeeLicenseController extends Controller
     public function edit($id)
     {
         //
-        $lx = License::findOrFail($id);
+        $this->shareMenu();
+        $lx = EmployeeLicense::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.license.edit',compact('lx'));
 
     }
@@ -101,7 +104,7 @@ class EmployeeLicenseController extends Controller
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $l = License::findOrFail($id);
+        $l = EmployeeLicense::findOrFail($id);
         $l->company_id = $company_id;
         $l->employee_id = $company_id;
         $l->licenseType_id = $request->license_type_id;

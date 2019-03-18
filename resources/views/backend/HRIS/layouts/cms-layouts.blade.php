@@ -35,6 +35,9 @@
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-portrait.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}" media="screen and (max-device-width: 320px)">
 
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
 		<!-- Custom Own Style -->
 		<link  href="{{ asset('css/custom.css') }}" rel="stylesheet">
 		<style>
@@ -46,6 +49,9 @@
 				left: 990.609px !important;
 				display: block;
 			} */
+			.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+				background: #eee !important;
+			}
 		</style>
 
 	</head>

@@ -5,7 +5,7 @@
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{{asset('img/avatars/sunny.png')}}" alt="me" class="online" />
-                        {{--<span>{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->email}}</span>--}}
+                        <span>{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->email}}</span>
                         <i class="fa fa-angle-down"></i>
 					</a>
 				</span>
@@ -13,15 +13,14 @@
     <!-- end user info -->
 
     <!-- NAVIGATION : This navigation is also responsive-->
-    
     <nav>
             @php
                //dd($menus);
             @endphp
                      <ul>
                             
-                         <li>
-                             <a href="" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                         <li class="{{ Request::segment(2) == "Dashboard" ? "active" : " " }}">
+                             <a href="{{url('/administration/Dashboard')}}" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                          </li>
                          @foreach ($menus as $item)
                              <li>
@@ -51,15 +50,13 @@
                                          @endphp
                                      </li>
                                      @endforeach
-                                 </ul> 
+                                 </ul>
                                  @php
                                      }
-                                 @endphp    
+                                 @endphp
                              </li>
                          @endforeach
                      </ul>
-                                 
-          
          </nav>
      
 </aside>

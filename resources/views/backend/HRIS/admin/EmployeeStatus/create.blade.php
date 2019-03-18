@@ -26,10 +26,10 @@
                                 {{--<input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>--}}
                                 <fieldset>
                                     <section>
-                                        <label class="label">name</label>
-                                        <label class="input">
-                                            <input type="text" name="name" id="name">
-                                        </label>
+                                        <label class="label">Name</label>
+                                        <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                            <input type="text" name="name" placeholder="Name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                     </section>
                                     <section>
                                             <label class="label"> description</label>

@@ -59,20 +59,12 @@
                                 {{--<li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>--}}
                                 <li><i class="fa fa-dashcube " aria-hidden="true"></i>Application Deadline :</li>
                                 <li>
-                                    {{--{{Form::open(array("url"=>"kh-works/apply-job/".$job_titles->job_id, "class"=>"smart-form"))}}--}}
-                                            {{--<meta name="csrf-token" content="{{ csrf_token() }}">--}}
+                                    {{Form::open(array("url"=>"administration/apply-job/".$jobVacancy->VacancyID.'/'.$jobVacancy->OrganizationCode,"class"=>"smart-form"))}}
+                                            <meta name="csrf-token" content="{{ csrf_token() }}">
                                             {{--<input type="hidden" name="company_id" value="{{$company->id}}"/>--}}
                                             {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
                                             {{--<input type="hidden" value="{{$job_titles->job_id}}" name="job_id"/>--}}
-                                            {{--<input type="hidden" value="{{$job_titles->job_titles_code}}" name="job_titles_code"/>  --}}
-
-
-                                    {{Form::open(array("url"=>"", "class"=>"smart-form"))}}
-                                            <meta name="csrf-token" content="{{ csrf_token() }}">
-                                            <input type="hidden" name="company_id" value=""/>
-                                            <input id="url" type="hidden" value="{{ \Request::url() }}">
-                                            <input type="hidden" value="" name="job_id"/>
-                                            <input type="hidden" value="" name="job_titles_code"/>
+                                            {{--<input type="hidden" value="{{$job_titles->job_titles_code}}" name="job_titles_code"/>--}}
                                     {{--{{dd($isApply)}}--}}
                                     {{--@if(Auth::check())--}}
                                     {{--@if($isApply->isEmpty())--}}
@@ -82,9 +74,7 @@
                                     {{--@endif--}}
                                     {{--{{ Form::close() }}--}}
                                         {{--@else--}}
-
                                         {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
-
                                     {{--@endif--}}
                                     {{--@if(Auth::check())--}}
                                     {{--@if($isApply->isEmpty())--}}
@@ -93,9 +83,7 @@
                                     {{--@endif--}}
                                     {{ Form::close() }}
                                         {{--@else--}}
-
                                         {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
-
                                     {{--@endif--}}
                                 </li>
                                 {{--{{date('d-m-Y', strtotime())}}--}}
@@ -123,9 +111,8 @@
                         <div class="section company-info">
                             <h1>Short Info</h1>
                             <ul>
-
-                                <li> closing Date: </li>
-                                <li> Job poster: <strong></strong></li>
+                                <li> closing Date: {{date('d-m-Y', strtotime($jobVacancy->created_at))}}</li>
+                                <li> Job poster: <strong>{{$jobVacancy->name}}</strong></li>
                                 <li> Experience: <a href="#">Entry level</a></li>
                                 <li> Job function: Advertising </li>
 
@@ -137,14 +124,14 @@
                             <ul>
                                 <li>Company Name:<a href="">
                                         <strong>
-                                            {{--{{$company->name}}--}}
+                                            {{$jobVacancy->name}}
                                         </strong></a></li>
-                                <li>Address: </li>
+                                <li>Address: {{$jobVacancy->postal_address}}</li>
                                 <li>company SIze:  2k Employee</li>
                                 <li>Industry: <a href="#">Technology</a></li>
-                                <li>Phone: </li>
-                                <li>Email: <a href="#"></a></li>
-                                <li>Website: <a href=""><strong>}</strong></a></li>
+                                <li>Phone: {{$jobVacancy->phone}}</li>
+                                <li>Email: <a href="#">{{$jobVacancy->email}}</a></li>
+                                <li>Website: <a href=""><strong>{{$jobVacancy->website}}</strong></a></li>
 
                             </ul>
                             <ul class="share-social">

@@ -34,9 +34,9 @@
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">Name</label>
-                                            <label class="input">
-                                                <input value="{{$location->name}}"  type="text" name="name" id="name">
-                                            </label>
+                                            <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="name" placeholder="Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Country</label>
@@ -54,7 +54,10 @@
                                         <section class="col col-4">
                                             <label class="label">State/Province</label>
                                             <label class="input">
-                                                <input value="{{$location->province}}"  type="text" name="province_id" id="province_id">
+                                                <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input value="{{$location->province}}"  type="text" name="province_id" id="province_id">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                     </div>
@@ -62,19 +65,28 @@
                                         <section class="col col-4">
                                             <label class="label">City</label>
                                             <label class="input">
-                                                <input  value="{{$location->city}}" type="text" name="city" id="city">
+                                                <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input  value="{{$location->city}}" type="text" name="city" id="city">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Address</label>
                                             <label class="input">
-                                                <input value="{{$location->address}}"  type="text" name="address" id="address">
+                                               <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input value="{{$location->address}}"  type="text" name="address" id="address">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Zip/Postal Code</label>
                                             <label class="input">
-                                                <input value="{{$location->zip_code}}" type="text" name="zip_code" id="zip_code">
+                                                <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input value="{{$location->zip_code}}" type="text" name="zip_code" id="zip_code">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                     </div>
@@ -83,19 +95,27 @@
                                         <section class="col col-4">
                                             <label class="label">Phone</label>
                                             <label class="input">
-                                                <input value="{{$location->phone}}"  type="text" name="phone" id="phone">
+                                                <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input value="{{$location->phone}}"  type="text" name="phone" id="phone">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Fax</label>
                                             <label class="input">
-                                                <input value="{{$location->fax}}" type="text" name="fax" id="fax">
+                                               <i class="icon-append fa fa-joomla"></i>
+
+                                                    <input value="{{$location->fax}}" type="text" name="fax" id="fax">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Notes</label>
                                             <label class="input">
-                                                <input value="{{$location->notes}}" type="text" name="notes" id="notes">
+                                               <i class="icon-append fa fa-joomla"></i>
+                                                    <input value="{{$location->notes}}" type="text" name="notes" id="notes">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b>
                                             </label>
                                         </section>
                                     </div>

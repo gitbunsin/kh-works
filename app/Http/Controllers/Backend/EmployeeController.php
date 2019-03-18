@@ -87,6 +87,13 @@ class EmployeeController extends BackendController
                 'EmployeeDetailsInfo'));
     }
 
+    public function ListAllStaffDirectory(){
+
+
+        $this->shareMenu();
+        return view('backend.HRIS.PIM.Employee.list_staff');
+    }
+
     public function create()
     {
         $this->shareMenu();

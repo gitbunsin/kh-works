@@ -191,32 +191,41 @@
                                     <fieldset>
                                         <section>
                                             <div class="row">
+                                                {{--<section class="col col-6">--}}
+                                                    {{--<label class="label">Company Name*</label>--}}
+                                                    {{--<input name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />--}}
+                                                    {{--<label class="input">--}}
+                                                        {{--<input disabled  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">--}}
+                                                    {{--</label>--}}
                                                 <section class="col col-6">
-                                                    <label class="label">Company Name*</label>
-                                                    <input name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />
-                                                    <label class="input">
-                                                        <input disabled  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">
-                                                    </label>
+                                                    <label class="label">Company Name</label>
+                                                    <div class="input-group">
+                                                        <input disabled  class="form-control" value="{{Auth::guard('admins')->user()->name}}" type="text" name="email" id="email">
+                                                        <span class="input-group-addon"><i class="fa fa-send-o "></i></span>
+                                                    </div>
                                                 </section>
                                                 <section class="col col-6">
-                                                    <label class="label">Contact Name * </label>
-                                                    <label class="input">
-                                                        <input disabled type="text" name="ContactName" id="ContactName">
-                                                    </label>
+                                                    <label class="label">Contact Number</label>
+                                                    <div class="input-group">
+                                                        <input disabled  class="form-control" value="" type="text" name="email" id="email">
+                                                        <span class="input-group-addon"><i class="fa fa-phone-square "></i></span>
+                                                    </div>
                                                 </section>
                                             </div>
                                             <div class="row">
                                                 <section class="col col-6">
-                                                    <label class="label">Email ID *</label>
-                                                    <label class="input">
-                                                        <input disabled  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
-                                                    </label>
+                                                    <label class="label">Email</label>
+                                                    <div class="input-group">
+                                                        <input disabled  class="form-control" value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->email : Auth::guard('employee')->user()->email}}" type="text" name="email" id="email">
+                                                        <span class="input-group-addon"><i class="fa fa-mail-forward "></i></span>
+                                                    </div>
                                                 </section>
                                                 <section class="col col-6">
-                                                    <label class="label">Mobile Number *</label>
-                                                    <label class="input">
-                                                        <input disabled value="{{Auth::guard('admins')->user()->phone}}" id="mobile" type="text" name="mobile">
-                                                    </label>
+                                                    <label class="label">Mobile Number</label>
+                                                    <div class="input-group">
+                                                        <input disabled  class="form-control" value="{{Auth::guard('admins')->user()->phone}}" type="text" name="email" id="email">
+                                                        <span class="input-group-addon"><i class="fa fa-phone "></i></span>
+                                                    </div>
                                                 </section>
                                             </div>
                                             <section>
@@ -225,19 +234,7 @@
                                                     <textarea disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                                 </label>
                                             </section>
-
                                             <section>
-                                                {{--<label class="label">Active</label>--}}
-                                                {{--<div class="inline-group">--}}
-                                                {{--<label class="checkbox">--}}
-                                                {{--<input  type="checkbox"  name="checkbox-inline" checked>--}}
-                                                {{--<i></i>--}}
-                                                {{--</label>--}}
-                                                {{--<label class="checkbox">--}}
-                                                {{--<input type="checkbox" name="checkbox-inline" checked>--}}
-                                                {{--<i></i>Publish in RSS feed(1) and web page(2)--}}
-                                                {{--</label>--}}
-                                                {{--</div>--}}
                                                 <hr>
                                                 <br/>
                                                 <footer>

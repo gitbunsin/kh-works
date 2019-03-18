@@ -25,26 +25,26 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
                                     <div class="row">
-                                            <section class="col col-4">
-                                                <label class="label">First Name</label>
-                                                <label class="input">
-                                                    <input type="text" name="emp_firstname" id="emp_firstname">
-                                                </label>
-                                            </section>
-                                            <section class="col col-4">
-                                                <label class="label">Middle Name</label>
-                                                <label class="input">
-                                                    <input type="text" name="emp_middle_name" id="emp_middle_name">
-                                                </label>
-                                            </section>
-                                            <section class="col col-4">
-                                                <label class="label">Last Name</label>
-                                                <label class="input">
-                                                    <input type="text" name="emp_lastname" id="emp_lastname" >
-                                                </label>
-                                            </section>
-                                        </div>
-
+                                        <section class="col col-4">
+                                            <label class="label">First Name</label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-user"></i>
+                                                <input type="text" name="emp_firstname" placeholder="First Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">First Name</label>
+                                            <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                <input type="text" name="emp_middle_name" placeholder="Middle Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">First Name</label>
+                                            <label class="input"> <i class="icon-append fa fa-user"></i>
+                                                <input type="text" name="emp_lastname" placeholder="Last Name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                        </section>
+                                    </div>
                                       <div class="row">
                                           <section class="col col-4">
                                               <label class="label">Job Vacancy</label>
@@ -61,15 +61,15 @@
                                           </section>
                                           <section class="col col-4">
                                               <label class="label">Contact No</label>
-                                              <label class="input">
-                                                  <input name="contact_number" id="contact_number" type="text" list="list">
-                                              </label>
+                                              <label class="input"> <i class="icon-append fa fa-sort-numeric-asc"></i>
+                                                  <input type="number" name="contact_number" placeholder="Contact Number">
+                                                  <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                           </section>
                                           <section class="col col-4">
                                               <label class="label">Email</label>
-                                              <label class="input">
-                                                  <input name="email" id="email" placeholder="Enter comma separated words..." type="email">
-                                              </label>
+                                              <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                                  <input type="email" name="email" placeholder="Email address">
+                                                  <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
                                           </section>
                                     </div>
                                     <div class="row">
@@ -77,7 +77,7 @@
                                             <label class="label"> Date </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" name="date-of-application" placeholder="Request activation on" class="datepicker">
+                                                <input type="text" id="date" name="date_of_application" placeholder="Request activation on" class="datepicker">
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -89,6 +89,24 @@
                                             <div class="note">
                                                 <strong>Note:</strong> Accepts .docx, .doc, .odt, .pdf, .rtf, .txt up to 1MB
                                             </div>
+                                        </section>
+                                        <section class="col col-4">
+                                            <label class="label">Status</label>
+                                            <label class="select">
+                                                    <select name="candidateAddStatus" id="candidateAddStatus">
+                                                        <option value=""> --  All --</option>
+                                                        <option value="APPLICATION INITIATED">Application Initiated</option>
+                                                        <option value="SHORTLISTED">Shortlisted</option>
+                                                        <option value="INTERVIEW SCHEDULED">Interview Scheduled</option>
+                                                        <option value="INTERVIEW PASSED">Interview Passed</option>
+                                                        <option value="INTERVIEW FAILED">Interview Failed</option>
+                                                        <option value="JOB OFFERED">Job Offered</option>
+                                                        <option value="OFFER DECLINED">Offer Declined</option>
+                                                        <option value="REJECTED">Rejected</option>
+                                                        <option value="HIRED">Hired</option>
+                                                    </select>
+                                                <i></i>
+                                            </label>
                                         </section>
                                     </div>
                                     <section>
@@ -137,6 +155,9 @@
                     email:{
                         required : true,
                         email : true
+                    },
+                    candidateAddStatus: {
+                        required: true,
                     }
                 },
                 // Do not change code below
@@ -144,6 +165,15 @@
                     error.insertAfter(element.parent());
                 }
             });
+        });
+        // START AND FINISH DATE
+        $('#date').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            }
         });
 
     </script>

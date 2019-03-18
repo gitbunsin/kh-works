@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Http\Controllers\Controller;
+
+
 use App\Model\currency;
 use App\Model\PayGrade;
 use App\Model\PaygradeCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 
 class PayGradeController extends BackendController
@@ -39,10 +39,10 @@ class PayGradeController extends BackendController
     public function getCurrencyNameByPaygrade($payGradeId)
     {
 
-        $pay_grade = DB::table('paygrade_currencies as pc')
+        $pay_grade = DB::table('currency_pay_grade as pc')
             ->select('ct.name')
             ->leftJoin('currencies as ct', 'pc.currency_id', "=", 'ct.id')
-            ->where('pc.paygrade_id', $payGradeId)
+            ->where('pc.pay_grade_id', $payGradeId)
             ->get()
             ->toArray();
 //        dd($pay_grade);
@@ -83,16 +83,16 @@ class PayGradeController extends BackendController
     public function AddPayGradeCurrency(Request $request)
     {
 
-        $currency = \App\Model\Currency::findOrFail($request->currency_id);
-        $paygrade = Paygrade::findOrFail($request->pay_grade_id);
+        $currency = Currency::findOrFail($request->currency_id);
+        $pay_grade = Paygrade::findOrFail($request->pay_grade_id);
         $arrPovit = [
             'min_salary' => $request->min_salary,
             'max_salary' => $request->max_salary
         ];
-        $paygrade->currencies()->attach($currency, $arrPovit);
+        $pay_grade->currencies()->attach($currency, $arrPovit);
 
         //reterive paygrade back
-        $p = Paygrade::findOrFail($paygrade->id);
+        $p = Paygrade::findOrFail($pay_grade->id);
         $data = $p->currencies()->wherePivot('currency_id', $currency->id)->first();
 
         return response()->json($data);
@@ -130,10 +130,10 @@ class PayGradeController extends BackendController
     {
         //dd('hello');
         $this->shareMenu();
-        $pay_grade = PayGrade::with('currencies')->where('id', $id)->first();
-        dd($pay_grade);
+        $pay_grade = PayGrade::findOrFail($id);
+        //dd($pay_grade);
         // return response()->json($pay_grade);
-        return view('backend.HRIS.admin.PayGrade.edit', compact('pay_grade'));
+        return view('backend.HRIS.admin.PayGrade.edit',compact('pay_grade'));
     }
 
     /**

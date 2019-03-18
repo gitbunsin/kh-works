@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{url('/kh-works')}}"><img class="img-responsive" src="/img/logo-job.png" alt="Logo"></a>
+                <a class="navbar-brand" href="{{url('/kh-works')}}"><img style="width: 85px;" class="img-responsive" src="{{asset('/img/kh-works.png')}}" alt="Logo"></a>
             </div>
             <!-- /navbar-header -->
 
@@ -42,7 +42,7 @@
                 {{--asdfasdfs--}}
             </div><!-- navbar-left -->
             <div>
-                <span style="position:absolute !important;z-index:1 !important;margin-bottom:30px;">@include('flash::message')</span>
+                <span style="position:absolute !important;z-index:1 !important;margin-bottom:30px;">@include('flash-message')</span>
             </div>
             <!-- nav-right -->
             <div class="nav-right">
