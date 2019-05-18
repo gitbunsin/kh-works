@@ -31,7 +31,7 @@
                                             @php $l = \App\Model\License::all(); @endphp
                                             <label class="label"> License Type</label>
                                             <label class="select">
-                                                <select name="license_type_id" id="license_type_id">
+                                                <select name="licenses_id" id="licenses_id">
                                                     <option value=""> -- Select license -- </option>
                                                     @foreach($l as $ls)
                                                         <option value="{{$ls->id}}">{{$ls->name}}</option>
@@ -43,7 +43,9 @@
                                         <section class="col col-6">
                                             <label class="label"> License Number *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input  type="number" name="license_number" id="license_number">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available License Number</b> </label>
                                             </label>
                                         </section>
                                     </div>
@@ -52,14 +54,14 @@
                                             <label class="label"> Issued Date *</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input class="datepicker" type="text" name="issued_date" id="issued_date">
+                                                <input class="datepicker" type="text" name="license_issued_date" id="license_issued_date">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> Expiry Date *</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input class="datepicker" type="text" name="expiry_date" id="expiry_date">
+                                                <input class="datepicker" type="text" name="license_expiry_date" id="license_expiry_date">
                                             </label>
                                         </section>
                                     </div>

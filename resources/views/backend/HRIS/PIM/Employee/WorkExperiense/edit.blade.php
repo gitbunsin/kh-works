@@ -31,14 +31,20 @@
                                         <section class="col col-6">
                                             <label class="label"> Company *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="text" value="{{$w->eexp_employer}}" name="company" id="company">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Company</b> </label>
+
                                             </label>
                                         </section>
 
                                         <section class="col col-6">
                                             <label class="label">Job Title *</label>
                                             <label class="input">
-                                                <input type="text" value="{{$w->eexp_jobtit}}" name="job_titles" id="job_titles">
+                                                <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" value="{{$w->eexp_jobtitle}}" name="job_titles" id="job_titles">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job Title </b> </label>
+
                                             </label>
                                         </section>
                                     </div>

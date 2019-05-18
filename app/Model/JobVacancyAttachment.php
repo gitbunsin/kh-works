@@ -18,4 +18,9 @@ class JobVacancyAttachment extends Model
         'comment'
     ];
     public $timestamps = false;
+
+    public function vacancy()
+    {
+        return $this->belongsTo(JobVacancy::class,'vacancy_id','id');
+    }
 }

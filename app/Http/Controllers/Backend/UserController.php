@@ -3,11 +3,16 @@
 namespace  App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\Jobs\SendVerificationEmployeeEmail;
+use App\Model\UserEmployee;
+use App\OrganizationGenInfo;
 use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends BackendController
 {
@@ -18,7 +23,6 @@ class UserController extends BackendController
     {
 
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +31,11 @@ class UserController extends BackendController
     public function index()
     {
         parent::shareMenu();
-        $company_id = Auth::guard('admins')->user()->id;
-        $u = User::where('company_id',$company_id)->get();
-        return view('backend.HRIS.admin.UserManagement.User.index',compact('u'));
+//        $company_id = Auth::guard('admins')->user()->id;
+//        $u = User::where('company_id',$company_id)->get();
+         $userEmployee = UserEmployee::with(['role','company','employee'])->get();
+       // dd($userEmployee);
+        return view('backend.HRIS.admin.UserManagement.User.index',compact('userEmployee'));
 
     }
 
@@ -52,19 +58,34 @@ class UserController extends BackendController
      */
     public function store(Request $request)
     {
-        $u = new User();
-        $u->name = $request->username;
-        $u->email = $request->email;
-        $u->email_token = base64_encode($request->user_email);
-        $u->password = Hash::make($request->password);
-        $u->company_id = Auth::guard('admins')->user()->id;
-        if($request->status == "" ){
-            $u->verified = 1;
-        }else{
-            $u->verified = 0;
+        $user = UserEmployee::where('email', '=', Input::get('email'))->first();
+        if ($user) {
+            // user doesn't exist
+            return redirect('/administration/user')->with('warning',"user email already existing");
+
+        }else {
+            $UserEmployee = UserEmployee::create($request->all());
+            $UserEmployee->email = $request->email;
+            $UserEmployee->role()->associate($request->role_id);
+            $UserEmployee->employee()->associate($request->employee_name);
+            $UserEmployee->company()->associate(Auth::guard('admins')->user()->id);
+            $UserEmployee->email_token = base64_encode($request->email);
+            $UserEmployee->password = Hash::make($request->password);
+            $isVerified = $request->status;
+            // dd($isVerified);
+            if ($isVerified == "0") {
+
+                $UserEmployee->verified = 0;
+            } else {
+                $UserEmployee->verified = 1;
+            }
+            $UserEmployee->save();
+            $company = OrganizationGenInfo::findOrFail($UserEmployee->company_id)->first();
+//            dd($company);
+            event(new Registered($UserEmployee));
+            dispatch(new SendVerificationEmployeeEmail($UserEmployee, $company));
+            return redirect('/administration/user')->with('success', 'You have successfully registered. An email is sent to you for verification!');
         }
-        $u->save();
-        return redirect('/administration/user')->with('success','Item created successfully!');
     }
 
     /**
@@ -88,17 +109,9 @@ class UserController extends BackendController
     {
         //
         $this->shareMenu();
-        if(Auth::guard('admins')->user()){
-            $Organization_Code = Auth::guard('admins')->user()->id;
-        }else{
-            $Organization_Code = Auth::guard('employees')->user()->company_id;
-        }
-        $User = DB::table('users as u')
-            ->select('u.*')
-            ->where('id',$id)
-            ->where('company_id',$Organization_Code)
-            ->first();
-        return view('backend.HRIS.admin.UserManagement.User.edit',compact('User'));
+        $userEmployee = UserEmployee::findorFail($id);
+
+        return view('backend.HRIS.admin.UserManagement.User.edit',compact('userEmployee'));
     }
     /**
      * Update the specified resource in storage.
@@ -109,19 +122,35 @@ class UserController extends BackendController
      */
     public function update(Request $request, $id)
     {
-        //
-        $u = User::findOrFail($id);
-        $u->name = $request->username;
-        $u->email = $request->email;
-        $u->email_token = base64_encode($request->user_email);
-        $u->password = Hash::make($request->password);
-        $u->company_id = Auth::guard('admins')->user()->id;
-        if($request->status == "" ){
-            $u->verified = 1;
+        $UserEmployee  = UserEmployee::findorFail($id);
+        $UserEmployee->email = $request->email;
+        $UserEmployee->role()->associate($request->role_id);
+        $UserEmployee->employee()->associate($request->employee_name);
+        $UserEmployee->company()->associate(Auth::guard('admins')->user()->id);
+        $UserEmployee->email_token = base64_encode($request->email);
+        $UserEmployee->password = Hash::make($request->password);
+        $isVerified = $request->status;
+       // dd($isVerified);
+        if($isVerified == "0"){
+
+            $UserEmployee->verified = 0;
         }else{
-            $u->verified = 0;
+            $UserEmployee->verified = 1;
         }
-        $u->save();
+        $UserEmployee->save();
+        //
+//        $u = User::findOrFail($id);
+//        $u->name = $request->username;
+//        $u->email = $request->email;
+//        $u->email_token = base64_encode($request->user_email);
+//        $u->password = Hash::make($request->password);
+//        $u->company_id = Auth::guard('admins')->user()->id;
+//        if($request->status == "" ){
+//            $u->verified = 1;
+//        }else{
+//            $u->verified = 0;
+//        }
+//        $u->save();
         return redirect('/administration/user')->with('success','Item edited successfully!');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Model\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,9 +16,9 @@ class DashboardController extends BackendController
     public function index()
     {
 
-$this->shareMenu();
-
-        return view('backend/HRIS/Dashboard/index');
+        $this->shareMenu();
+        $employee = Employee::count();
+        return view('backend/HRIS/Dashboard/index',compact('employee'));
         //
     }
 

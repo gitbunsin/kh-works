@@ -34,10 +34,22 @@
                                 <fieldset>
                                         <div class="row">
                                             <section class="col col-6">
-                                                <label class="label">username</label>
-                                                <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                    <input type="text" name="username" placeholder="Username">
-                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                                <label class="label">Employee Name</label>
+                                                <div class="form-group">
+                                                    <select name="employee_name"
+                                                            id="employee_name"
+                                                            style="width:100%" class="select2 select2-hidden-accessible"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <option value=""></option>
+                                                            @php $tracker = \App\Model\Employee::all(); @endphp
+                                                            @foreach($tracker as $trackers)
+                                                                <option value="{{$trackers->emp_number}}">{{$trackers->emp_firstname}}{{$trackers->emp_middle_name}}{{$trackers->emp_firstname}}</option>
+                                                            @endforeach
+                                                    </select>
+                                                    <div class="note">
+                                                        <strong>Usage:</strong> Employee for login system
+                                                    </div>
+                                                </div>
                                             </section>
                                             <section class="col col-6">
                                                 <label class="label">Email</label>
@@ -60,18 +72,37 @@
                                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                                         </section>
                                     </div>
-                                        <section>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label"> Role</label>
+                                            <label class="select">
+                                                @php $role = \App\Role::all(); @endphp
+                                                <select name="role_id" id="role_id" class="required">
+                                                   @foreach($role as $roles)
+                                                        <option value="{{$roles->id}}">{{$roles->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="note">
+                                                    <strong>Ess:</strong> Employee Role &  <strong> Admin </strong>is Admin role
+                                                </div>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
                                             <label class="label"> Status</label>
                                             <label class="select">
                                                 @php $Status = array("0"=>"Disabled","1"=>"Enable") @endphp
                                                 <select name="status" id="status" class="required">
-                                                   @foreach($Status as $key => $Statuses)
+                                                    @foreach($Status as $key => $Statuses)
                                                         <option value="{{$key}}">{{$Statuses}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
+
                                         </section>
+
+                                    </div>
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -95,7 +126,7 @@
 
             // Rules for form validation
             rules : {
-                username : {
+                employee_name : {
                     required : true
                 },
                 email : {

@@ -22,7 +22,7 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <div class="widget-body no-padding">
-                            <form id="frmEmergency" method="POST"  action="{{url('administration/employee-emergency-contact/'.$e->emergency_id)}}" class="smart-form" enctype="multipart/form-data">
+                            <form id="frmEmergency" method="POST"  action="{{url('administration/employee-emergency-contact/'.$e->id)}}" class="smart-form" enctype="multipart/form-data">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -34,15 +34,13 @@
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">Relationship</label>
-                                            @php
-                                                $r = \App\Relationship::all();
-                                            @endphp
-                                            <label class="select state-success">
-                                                <select name="relationship_id" id="relationship_id" class="valid">
-                                                    <option value=""> -- Relationship --</option>
-                                                    @foreach($r as $rs)
-                                                        <option value="{{$rs->id}}"  {{ $rs->id == $e->relationship_id ? 'selected="selected"' : '' }}>{{$rs->name}}</option>
+                                            <label class="label"> Relationship</label>
+                                            <label class="select">
+                                                <select class="form-control" name="relationship_id" id="relationship_id">
+                                                    @php $relationship = array('parents','fathers','son'); @endphp
+                                                    <option value=""> -- select relationship --</option>
+                                                    @foreach($relationship as $relationships)
+                                                        <option value="{{$relationships}}" {{$e->ed_relationship == $relationships?"selected='selected":""}}>{{$relationships}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -54,7 +52,7 @@
                                             <div class="form-group">
                                                 <label class="label">Home Telephone</label>
                                                 <div class="input-group">
-                                                    <input value="{{$e->eec_home_no}}" id="work_telephone"  type="text" name="work_telephone" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
+                                                    <input value="{{$e->eec_home_no}}" id="home_telephone"  type="text" name="work_telephone" class="form-control" data-mask="(999) 999-9999" data-mask-placeholder= "X">
                                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                                 </div>
                                                 <p class="note">

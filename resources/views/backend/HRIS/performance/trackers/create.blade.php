@@ -135,10 +135,6 @@
 
         });
         function bindEmployeeOption(employees) {
-            // employees.each(emp => {
-            //     console.log(emp);
-            // })
-            //$("#bootstrap-duallistbox-nonselected-list_duallistbox_demo2").empty();
 
             $.each(employees, function (key, value) {
                 console.log(employeeTrackers);

@@ -50,20 +50,12 @@
                                 @foreach($k as $ks)
                                     <tr id="termination-reason{{$ks->kpi_id}}">
                                         <td>{{$ks->kpi_indicators}}</td>
-                                        <td>{{$ks->name}}</td>
+                                        <td>{{$ks->jobTitle->name}}</td>
                                         <td>{{$ks->min_rating}}</td>
                                         <td>{{$ks->max_rating}}</td>
-                                        @if($ks->default_kpi)
+                                        <td></td>
                                         <td>
-                                           <b>Yes</b>
-                                        </td>
-                                        @else
-                                            <td>
-                                               <b style="color: red;"> No </b>
-                                            </td>
-                                        @endif
-                                        <td>
-                                            <a  href="{{url('/administration/employee-kpi/'.$ks->kpi_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('/administration/employee-kpi/'.$ks->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a data-id="{{$ks->id}}" href="#" style="text-decoration:none;" class="delete-item">

@@ -16,6 +16,7 @@ class CreateReportingMethodsTable extends Migration
         Schema::create('reporting_methods', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

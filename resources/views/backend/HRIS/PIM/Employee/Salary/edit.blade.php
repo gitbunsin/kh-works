@@ -128,22 +128,22 @@
         $(document).ready(function() {
             var $loginForm = $("#frmBasicSalary").validate({
                 // Rules for form validation
-                rules : {
-                    pay_grade : {
-                        required : true
-                    },
-                    currency : {
-                        required: true
-                    },Payperiod: {
-                        required : true
-                    }
-
-
-                },
-                // Do not change code below
-                errorPlacement : function(error, element) {
-                    error.insertAfter(element.parent());
-                }
+                // rules : {
+                //     pay_grade : {
+                //         required : true
+                //     },
+                //     currency : {
+                //         required: true
+                //     },Payperiod: {
+                //         required : true
+                //     }
+                //
+                //
+                // },
+                // // Do not change code below
+                // errorPlacement : function(error, element) {
+                //     error.insertAfter(element.parent());
+                // }
             });
         });
     </script>

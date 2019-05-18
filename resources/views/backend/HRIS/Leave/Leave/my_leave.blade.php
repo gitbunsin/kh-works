@@ -129,13 +129,12 @@
                                                data-title="Enter note">
                                             </a>
                                         </td>
-                                        <td>
-                                            <a href="form-x-editable.html#"
-                                               id="sex" data-type="select"
-                                               data-pk="1" data-value=""
-                                               data-original-title="Select sex"
-                                               class="editable editable-click editable-unsaved"
-                                               style="color: rgb(128, 128, 128); background-color: rgba(0, 0, 0, 0);">
+                                        <td class="">
+                                            <a  href="{{url('administration/Candidate-Offer-Job/'.$Interviews->id)}}" style="text-decoration:none;" class="">
+                                                JOB OFFER
+                                            </a>/
+                                            <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                REJECT
                                             </a>
                                         </td>
                                     </tr>

@@ -19,8 +19,8 @@ class CreateLeavePeriodHistoriesTable extends Migration
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
-            $table->integer('leave_period_start_month')->nullable();
-            $table->integer('leave_period_start_day')->nullable();
+            $table->date('leave_period_start_month')->nullable();
+            $table->date('leave_period_start_day')->nullable();
             $table->timestamps();
         });
     }

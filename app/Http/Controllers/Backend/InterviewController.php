@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Backend;
 use App\CandiateHistory;
-use App\Candidate;
+use App\Model\Candidate;
+use App\Model\candidate_history;
+use App\Model\candidate_vacancy;
 use \App\Model\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Interview;
+use App\Model\JobCandidateHistory;
+use App\Model\JobCandidateVacancy;
 use App\Model\JobInterview;
+use App\Model\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class InterviewController extends BackendController
 {
@@ -28,41 +34,41 @@ class InterviewController extends BackendController
     }
     public function index()
     {
-//        $interview = DB::table('tbl_job_interview as v')
-//            ->select('v.*','c.*','v.id as interview_id','c.id as candidate_id')
-//            ->join('tbl_job_candidate as c','c.id','=','v.candidate_id')
-//            ->where('v.status',0)
-//            ->get();
-//        //
-//        dd($interview);
+
         $this->shareMenu();
-        $Interview = JobInterview::all();
+        $Interview = \App\Model\interview::with(['candidate','CandidateVacancy'])->get();
+//        dd($Interview);
         return view('backend.HRIS.Recruitment.Interview.index',compact('Interview'));
     }
-    public function updateUser(Request $request)
-
+    public function UpdateCandidateInterviewDate(Request $request,$id)
     {
 //         dd($request->all());
-         $interview = Interview::findOrFail($request->pk);
-         if($request->name == "note"){
+        $interview = \App\Model\interview::findOrFail($id);
+        $interview->interview_date = $request->value;
+        $interview->save();
 
-             $interview->note = $request->value;
-         }
-         if ($request->name == "interview_time"){
+        return response()->json(["success"=>"done","id"=>$request->value]);
 
-             $input = $request->value;
-             $interview->interview_time = Carbon::parse($input)->format('H:i:s');
-         }
-         if($request->name == "interview_date"){
+    }
+    public function UpdateCandidateInterviewTime(Request $request,$id)
+    {
+//         dd($request->all());
+        $interview = \App\Model\interview::findOrFail($id);
+        $interview->interview_time = $request->value;
+        $interview->save();
 
-             $input = $request->value;
-             $interview->interview_date =Carbon::parse($input)->format('Y-d-m');
+        return response()->json(["success"=>"done","id"=>$request->value]);
 
-         }
-         $interview->save();
-//        Interview::find($request->pk)->update([$request->interview_name => $request->value]);
+    }
 
-        return response()->json(['success'=>'done']);
+     public function UpdateCandidateInterviewNote(Request $request,$id)
+    {
+//         dd($request->all());
+        $interview = \App\Model\interview::findOrFail($id);
+        $interview->note = $request->value;
+        $interview->save();
+
+        return response()->json(["success"=>"done","id"=>$request->value]);
 
     }
 
@@ -76,51 +82,214 @@ class InterviewController extends BackendController
         //
     }
 
-    public  function passInterview($candidate_id)
+    public  function CandidateInterviewPass($id)
     {
-//        dd($interview_id);
-      $CanPass = DB::table('tbl_job_interview as v')
-            ->select('c.*','v.*','v.id as interview_id')
-            ->join('tbl_job_candidate as c','v.candidate_id','=','c.id')
-            ->where('c.id',$candidate_id)
-            ->first();
-//      dd($CanPass);
-      $interview_id = $CanPass->interview_id;
-      $interview = Interview::findOrFail($interview_id);
-//      dd($interview);
-      $interview->status = 1;
-      $interview->save();
-      $p = new Employee();
-      $p->company_id = Auth::guard('admins')->user()->id;
-      $p->emp_lastname = $CanPass->name;
-      $p->emp_firstname = $CanPass->name;
-      $p->emp_middle_name = $CanPass->name;
-      $p->save();
-      return response()->json(['data'=>"done"]);
+//        dd($id);
+        $this->shareMenu();
+        $Interview = \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+//        dd($Interview);
+        $Vacancy = Vacancy::where('id',$Interview->CandidateVacancy->vacancy_id)->first();
+//        dd($Vacancy->name);
+//        dd($Vacancy->hiring_manager_id);
+        return view('backend.HRIS.Recruitment.Interview.pass',compact('Interview','Vacancy'));
+    }
+
+
+    public function UpdateCandidateInterviewPass($candidate_id,$vacancy_id)
+    {
+//        dd($candidate_id, $vacancy_id);
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "INTERVIEW PASS";
+        $candidate_vacancy->save();
+
+//        $candidate= Candidate::find($id);
+//        $candidate->vacancies()->updateExistingPivot($candidate,array('status'=>'INTERVIEW PASS','applied_date'=>carbon::now()));
+
+        return redirect('/administration/interview')->with('success','Candidate has been became the Interview Pass!');
 
     }
-    public function failInterview($candidate_id)
-    {
 
-        $fail = DB::table('tbl_job_interview as v')
-            ->select('c.*','v.*','v.id as interview_id')
-            ->join('tbl_job_candidate as c','v.candidate_id','=','c.id')
-            ->where('c.id',$candidate_id)
-            ->first();
-//      dd($CanPass);
-        $interview_id = $fail->interview_id;
-        $interview = Interview::findOrFail($interview_id);
-//      dd($interview);
-        $interview->status = 1;
-        $interview->save();
-        $f = new CandiateHistory();
-        $f->candidate_id = $candidate_id;
-        $f->performed_date = $fail->interview_date;
-        $f->note = $fail->note;
-        $f->save();
-        return response()->json($candidate_id);
+    public function CandidateInterviewFail($id){
+
+        $this->shareMenu();
+        $InterviewFails = \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+        $Vacancy = Vacancy::where('id',$InterviewFails->CandidateVacancy->vacancy_id)->first();
+        return view('backend.HRIS.Recruitment.Interview.fail',compact('InterviewFails','Vacancy'));
+    }
+
+    public function UpdateCandidateInterviewFail($candidate_id,$vacancy_id){
+
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "INTERVIEW FAIL";
+        $candidate_vacancy->save();
+
+        $candidate_history = new candidate_history();
+        $candidate_history->candidate_id = $candidate_id;
+        $candidate_history->vacancy_id = $vacancy_id;
+        $candidate_history->performed_date = carbon::now();
+        $candidate_history->note = input::get('note');
+        $candidate_history->save();
+
+//        $candidate= Candidate::find($id);
+//        $candidate->vacancies()->updateExistingPivot($candidate,array('status'=>'INTERVIEW PASS','applied_date'=>carbon::now()));
+
+        return redirect('/administration/interview')->with('success','Candidate has been became the Interview Pass!');
+    }
+
+
+    public function CandidateOfferJob($id){
+        //dd($id);
+        $this->shareMenu();
+        $CandidateJobOffer = \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+        $Vacancy = Vacancy::where('id',$CandidateJobOffer->CandidateVacancy->vacancy_id)->first();
+        return view('backend.HRIS.Recruitment.Interview.offer',compact('CandidateJobOffer','Vacancy'));
+    }
+
+    public function UpdateCandidateOfferJob($candidate_id,$vacancy_id)
+    {
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "OFFER  JOB";
+        $candidate_vacancy->save();
+
+        $candidate_history = new candidate_history();
+        $candidate_history->candidate_id = $candidate_id;
+        $candidate_history->vacancy_id = $vacancy_id;
+        $candidate_history->performed_date = carbon::now();
+        $candidate_history->note = input::get('note');
+        $candidate_history->save();
+
+       // dd($id);
+//        $candidate= Candidate::find($id);
+//        $candidate->vacancies()->updateExistingPivot($candidate,array('status'=>'OFFER  JOB','applied_date'=>carbon::now()));
+        return redirect('/administration/interview')->with('success','Candidate has been became the Job Offer!');
 
     }
+
+
+    public function CandidateDeclineJob($id)
+    {
+        $this->shareMenu();
+        $CandidateDeclineJob = \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+        $Vacancy = Vacancy::where('id',$CandidateDeclineJob->CandidateVacancy->vacancy_id)->first();
+
+        return view('backend.HRIS.Recruitment.Interview.decline',compact('CandidateDeclineJob','Vacancy'));
+    }
+
+    public function UpdateCandidateDeclineJob($candidate_id,$vacancy_id)
+    {
+
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "OFFER  DECLINED";
+        $candidate_vacancy->save();
+
+        $candidate_history = new candidate_history();
+        $candidate_history->candidate_id = $candidate_id;
+        $candidate_history->vacancy_id = $vacancy_id;
+        $candidate_history->performed_date = carbon::now();
+        $candidate_history->note = input::get('note');
+        $candidate_history->save();
+//        $candidate= Candidate::find($id);
+//        $candidate->vacancies()->updateExistingPivot($candidate,array('status'=>'OFFER  DECLINED','applied_date'=>carbon::now()));
+        return redirect('/administration/interview')->with('success','Candidate has been became the Offer Declined!');
+
+    }
+
+
+
+    public function CandidateHireJob($id){
+        $this->shareMenu();
+        $CandidateHireJob = \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+        $Vacancy = Vacancy::where('id',$CandidateHireJob->CandidateVacancy->vacancy_id)->first();
+
+        return view('backend.HRIS.Recruitment.Interview.hire',compact('CandidateHireJob','Vacancy'));
+
+    }
+
+    public function UpdateCandidateHireJob($candidate_id,$vacancy_id)
+    {
+
+//        $candidate= Candidate::find($id);
+//        $candidate->vacancies()->updateExistingPivot($candidate,array('status'=>'HIRED','applied_date'=>carbon::now()));
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "HIRED";
+        $candidate_vacancy->save();
+        $candidate_history = new candidate_history();
+        $candidate_history->candidate_id = $candidate_id;
+        $candidate_history->vacancy_id = $vacancy_id;
+        $candidate_history->performed_date = carbon::now();
+        $candidate_history->note = input::get('note');
+        $candidate_history->save();
+
+        $candidate = Candidate::where('id',$candidate_id)->first();
+//        $vacancy = Vacancy::where('id',$vacancy_id)->first();
+//        dd($candidate,$vacancy);
+        $employee = new Employee();
+        $employee->emp_firstname = $candidate->first_name;
+        $employee->emp_middle_name = $candidate->middle_name;
+        $employee->emp_lastname = $candidate->last_name;
+        $employee->emp_work_email = $candidate->email;
+        $employee->emp_mobile = $candidate->contact_number;
+        $employee->save();
+
+        $remove_interview=  \App\Model\interview::where('candidate_id',"=",$candidate_id)->first();
+        $remove_interview->delete();
+
+        return redirect('/administration/employee')->with('success','Candidate has been became the employees!');
+
+    }
+
+//
+//    public function CandidateReject($id)
+//    {
+//        $this->shareMenu();
+//        $CandidateReject = DB::table('job_interviews as i')
+//            ->join('job_interview_interviewers as ii','ii.interview_id','=','i.id')
+//            ->join('employees as e','e.emp_number','=','ii.interviewer_id')
+//            ->join('job_candidates as c','i.candidate_id','=','c.id')
+//            ->join('job_candidate_vacancies as cv','i.candidate_vacancy_id','=','cv.id')
+//            ->join('job_vacancies as v','cv.vacancy_id','=','v.id')
+//            ->select('i.*','ii.*','e.*','c.*','cv.*','cv.status as candidate_application_status','v.*')
+//            ->first();
+//
+//        return view('backend.HRIS.Recruitment.Interview.reject',compact('CandidateReject'));
+//    }
+
+    public function CandidateReject($id)
+    {
+
+        $this->shareMenu();
+        $CandidateReject= \App\Model\interview::with(['candidate','CandidateVacancy'])->where('id',$id)->first();
+        $Vacancy = Vacancy::where('id',$CandidateReject->CandidateVacancy->vacancy_id)->first();
+
+        return view('backend.HRIS.Recruitment.Interview.reject',compact('CandidateReject','Vacancy'));
+    }
+
+
+    public function UpdateCandidateReject($candidate_id,$vacancy_id)
+    {
+
+        $candidate_vacancy =   candidate_vacancy::where('candidate_id',"=",$candidate_id)->where('vacancy_id',"=",$vacancy_id)->first();
+        $candidate_vacancy->status = "REJECT";
+        $candidate_vacancy->save();
+        $candidate_history = new candidate_history();
+        $candidate_history->candidate_id = $candidate_id;
+        $candidate_history->vacancy_id = $vacancy_id;
+        $candidate_history->performed_date = carbon::now();
+        $candidate_history->note = input::get('note');
+        $candidate_history->save();
+
+        $remove_interview=  \App\Model\interview::where('candidate_id',"=",$candidate_id)->first();
+        $remove_interview->delete();
+       // dd('hello');
+//        $JobCandidateVacancy = JobCandidateVacancy::findOrFail($id);
+//        $JobCandidateVacancy->status = "Reject";
+//        $JobCandidateVacancy->save();
+        return redirect('/administration/interview')->with('success','Candidate has been Rejected!');
+    }
+
+
+
+
 
     /**
      * Store a newly created resource in storage.

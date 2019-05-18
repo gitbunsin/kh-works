@@ -20,7 +20,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="frmDependents" method="POST" enctype="multipart/form-data" action="{{url('administration/view-dependents/'.$d->id.'/edit')}}" class="smart-form">
+                            <form id="frmDependents" method="POST" enctype="multipart/form-data" action="{{url('administration/view-dependents/'.$d->id)}}" class="smart-form">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -32,15 +32,13 @@
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">Relationship</label>
-                                            @php
-                                                $r = \App\Relationship::all();
-                                            @endphp
-                                            <label class="select state-success">
-                                                <select name="relationship_id" id="relationship_id" class="valid">
-                                                    <option value=""> -- Relationship --</option>
-                                                    @foreach($r as $rs)
-                                                        <option value="{{$rs->id}}"  {{ $rs->id == $d->relationship_id ? 'selected="selected"' : '' }}>{{$rs->name}}</option>
+                                            <label class="label"> Relationship</label>
+                                            <label class="select">
+                                                <select class="form-control" name="relationship_id" id="relationship_id">
+                                                    @php $relationship = array('parents','fathers','son'); @endphp
+                                                    <option value=""> -- select relationship --</option>
+                                                    @foreach($relationship as $relationships)
+                                                        <option value="{{$relationships}}" {{$d->ed_relationship == $relationships?"selected='selected":""}}>{{$relationships}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>

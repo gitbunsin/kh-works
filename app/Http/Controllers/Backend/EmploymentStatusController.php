@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Backend;
 use \App\Model\EmployeeStatus;
 use App\Http\Controllers\Controller;
+use App\Model\EmploymentStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Model\EmployementStatus;
@@ -21,7 +22,7 @@ class EmploymentStatusController extends BackendController
     {
         //
         $this->shareMenu();
-        $employee_status = EmployementStatus::all();
+        $employee_status = EmploymentStatus::all();
 
         return view('backend.HRIS.admin.EmployeeStatus.index',compact('employee_status'));
     }
@@ -45,7 +46,7 @@ class EmploymentStatusController extends BackendController
      */
     public function store(Request $request)
     {
-        $EmployeeStatus = new EmployementStatus();
+        $EmployeeStatus = new EmploymentStatus();
         $EmployeeStatus->name = $request->name;
         $EmployeeStatus->description = $request->description;
         $EmployeeStatus->company_id = Auth::guard('admins')->user()->id;
@@ -74,7 +75,7 @@ class EmploymentStatusController extends BackendController
     {
         //
         $this->shareMenu();
-        $employeeStatus = EmployementStatus::where('id',$id)->first();
+        $employeeStatus = EmploymentStatus::where('id',$id)->first();
         return view('backend.HRIS.admin.EmployeeStatus.edit',compact('employeeStatus'));
     }
 
@@ -88,7 +89,7 @@ class EmploymentStatusController extends BackendController
     public function update(Request $request, $id)
     {
         //
-        $employeeStatus = EmployementStatus::findOrFail($id);
+        $employeeStatus = EmploymentStatus::findOrFail($id);
         $employeeStatus->name = $request->name;
         $employeeStatus->description=$request->description;
         $employeeStatus->company_id = Auth::guard('admins')->user()->id;
@@ -105,7 +106,7 @@ class EmploymentStatusController extends BackendController
      */
     public function destroy($id)
     {
-        $EmployementStatus= EmployementStatus::findOrFail( $id );
+        $EmployementStatus= EmploymentStatus::findOrFail( $id );
         $EmployementStatus->delete();
         return  redirect('/administration/employment-status')->with('success','Item success successfully!');
 

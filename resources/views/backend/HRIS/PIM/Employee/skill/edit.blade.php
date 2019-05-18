@@ -31,7 +31,7 @@
 
                                 <fieldset>
                                     <section>
-                                        @php $skill = \App\Skill::all(); @endphp
+                                        @php $skill = \App\Model\Skill::all(); @endphp
                                         <label class="label"> Skills</label>
                                         <label class="select">
                                             <select name="skills" id="skills">
@@ -47,7 +47,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Years of Experience *</label>
                                             <label class="input">
-                                                <input value="{{$s->years_of_exp}}" type="number" name="year_of_experience" id="year_of_experience">
+                                                <i class="icon-append fa fa-joomla"></i>
+                                                  <input value="{{$s->years_of_exp}}" type="number" name="year_of_experience" id="year_of_experience">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job Title </b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-6">

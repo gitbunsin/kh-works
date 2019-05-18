@@ -95,7 +95,7 @@ class EmployeeEducationController extends BackendController
         //dd($id);
         //dd('hello');
 
-
+        $this->shareMenu();
         $ex = EmployeeEducation::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.Education.edit',compact('ex'));
     }
@@ -116,8 +116,7 @@ class EmployeeEducationController extends BackendController
             $company_id = Auth::guard('employee')->user()->company_id;
         }
         $E = EmployeeEducation::findOrFail($id);
-        $E->employee_id = 1;
-        $E->company_id = $company_id;
+        $E->emp_number = Auth::guard('admins')->user()->id;
         $E->education_id = $request->level_id;
         $E->institute= $request->institute_id;
         $E->major = $request->major;

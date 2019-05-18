@@ -29,19 +29,19 @@
                                             <label class="label">First Name</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="emp_firstname" placeholder="First Name">
+                                                <input type="text" name="first_name" placeholder="First Name">
                                                 <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="emp_middle_name" placeholder="Middle Name">
+                                                <input type="text" name="middle_name" placeholder="Middle Name">
                                                 <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="emp_lastname" placeholder="Last Name">
+                                                <input type="text" name="last_name" placeholder="Last Name">
                                                 <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </section>
                                     </div>
@@ -50,7 +50,7 @@
                                               <label class="label">Job Vacancy</label>
                                               <label class="select">
                                                   <select name="vacancy_name" id="vacancy_name" class="required">
-                                                      @php $JobVacancy = \App\Model\JobVacancy::all(); @endphp
+                                                      @php $JobVacancy = \App\Model\Vacancy::all(); @endphp
                                                       <option value="">-- select --</option>
                                                       @foreach($JobVacancy as $JobVacancys)
                                                       <option value="{{$JobVacancys->id}}">{{$JobVacancys->name}}</option>
@@ -89,24 +89,6 @@
                                             <div class="note">
                                                 <strong>Note:</strong> Accepts .docx, .doc, .odt, .pdf, .rtf, .txt up to 1MB
                                             </div>
-                                        </section>
-                                        <section class="col col-4">
-                                            <label class="label">Status</label>
-                                            <label class="select">
-                                                    <select name="candidateAddStatus" id="candidateAddStatus">
-                                                        <option value=""> --  All --</option>
-                                                        <option value="APPLICATION INITIATED">Application Initiated</option>
-                                                        <option value="SHORTLISTED">Shortlisted</option>
-                                                        <option value="INTERVIEW SCHEDULED">Interview Scheduled</option>
-                                                        <option value="INTERVIEW PASSED">Interview Passed</option>
-                                                        <option value="INTERVIEW FAILED">Interview Failed</option>
-                                                        <option value="JOB OFFERED">Job Offered</option>
-                                                        <option value="OFFER DECLINED">Offer Declined</option>
-                                                        <option value="REJECTED">Rejected</option>
-                                                        <option value="HIRED">Hired</option>
-                                                    </select>
-                                                <i></i>
-                                            </label>
                                         </section>
                                     </div>
                                     <section>

@@ -25,17 +25,12 @@
                                             <label class="label">Employee Name </label>
                                             <div class="form-group">
                                                 <select name="employee" id="review_id" style="width:100%" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                                    <optgroup label="Performance Employee Trackers">
                                                         <option value="">-- select trackers --</option>
                                                         @php $tracker = \App\Model\Employee::all(); @endphp
                                                         @foreach($tracker as $trackers)
                                                             <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                         @endforeach
-                                                    </optgroup>
                                                 </select>
-                                                <div class="note">
-                                                    <strong>Usage:</strong> Employee performance tracker
-                                                </div>
                                             </div>
                                         </section>
                                     </div>
@@ -44,6 +39,7 @@
                                             <section class="col col-6">
                                                 <label class="label"> Supervisor Review</label>
                                                 <label class="input">
+                                                    <i class="icon-append fa fa-joomla"></i>
                                                     <input type="text" name="name" id="name">
                                                 </label>
                                             </section>

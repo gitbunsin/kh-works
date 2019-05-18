@@ -43,13 +43,19 @@
                                         <section class="col col-4">
                                             <label class="label">Institute *</label>
                                             <label class="input">
-                                                <input value="{{$es->institute}}" type="text" name="institute_id" id="institute_id">
+                                                <i class="icon-append fa fa-joomla"></i>
+                                                <input value="{{$ex->institute}}" type="text" name="institute_id" id="institute_id">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Institute</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Major/Specialization *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input value="{{$ex->major}}" type="text" name="major" id="major">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Major/Specialization</b> </label>
+
                                             </label>
                                         </section>
                                     </div>
@@ -58,13 +64,18 @@
                                             <section class="col col-4">
                                                 <label class="label"> Year </label>
                                                 <label class="input">
+                                                    <i class="icon-append fa fa-joomla"></i>
                                                     <input value="{{$ex->year}}" type="text" id="year" name="year" class="year">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available Year</b> </label>
+
                                                 </label>
                                             </section>
                                             <section class="col col-4">
                                                 <label class="label"> GPA/Score </label>
                                                 <label class="input">
-                                                    <input  value="{{$ex->score}}" type="text" id="gpa_id" name="score" class="gpa_id">
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input  value="{{$ex->score}}" type="number" id="gpa_id" name="score" class="gpa_id">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available GPA/Score</b> </label>
                                                 </label>
                                             </section>
                                             <section class="col col-4">

@@ -28,21 +28,33 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body no-padding">
-                            <form id="smart-form-register" method="POST" enctype="multipart/form-data" action="{{url('administration/user')}}" class="smart-form">
+                            <form id="smart-form-register" method="POST" enctype="multipart/form-data" action="{{url('administration/user/'.$userEmployee->id)}}" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" name="user_id" value="{{Auth::guard('admins')->user()->id}}"/>
+                                <input name="_method" type="hidden" value="PATCH">
                                 <fieldset>
                                     <div class="row">
                                         <section class="col col-6">
-                                            <label class="label">username</label>
-                                            <label class="input"> <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="username" placeholder="Username">
-                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+                                            <label class="label">Employee Name</label>
+                                            <div class="form-group">
+                                                <select name="employee_name"
+                                                        id="employee_name"
+                                                        style="width:100%" class="select2 select2-hidden-accessible"
+                                                        tabindex="-1" aria-hidden="true">
+                                                    <option value=""></option>
+                                                    @php $tracker = \App\Model\Employee::all(); @endphp
+                                                    @foreach($tracker as $trackers)
+                                                        <option value="{{$trackers->emp_number}}"{{$trackers->emp_number == $userEmployee->emp_number ? "selected='selected'":""}}>{{$trackers->emp_firstname}}{{$trackers->emp_middle_name}}{{$trackers->emp_firstname}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="note">
+                                                    <strong>Usage:</strong> Employee performance tracker
+                                                </div>
+                                            </div>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label">Email</label>
                                             <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-                                                <input type="email" value="{{$User->email}}" name="email" placeholder="Email address">
+                                                <input value="{{$userEmployee->email}}" type="email" name="email" placeholder="Email address">
                                                 <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
                                         </section>
                                     </div>
@@ -50,7 +62,7 @@
                                         <section class="col col-6">
                                             <label class="label">Password</label>
                                             <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                                <input value="" type="password" name="password" placeholder="Password" id="password">
+                                                <input type="password" name="password" placeholder="Password" id="password">
                                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                                         </section>
                                         <section class="col col-6">
@@ -60,18 +72,32 @@
                                                 <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
                                         </section>
                                     </div>
-                                    <section>
-                                        <label class="label"> Status</label>
-                                        <label class="select">
-                                            @php $Status = array("0"=>"Disabled","1"=>"Enable") @endphp
-                                            <select name="status" id="status" class="required">
-                                                @foreach($Status as $key => $Statuses)
-                                                    <option value="{{$key}}"{{$User->status == $key?"selected='selected'":""}}>{{$Statuses}}</option>
-                                                @endforeach
-                                            </select>
-                                            <i></i>
-                                        </label>
-                                    </section>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label class="label"> Role</label>
+                                            <label class="select">
+                                                @php $role = \App\Role::all(); @endphp
+                                                <select name="role_id" id="role_id" class="required">
+                                                    @foreach($role as $roles)
+                                                        <option value="{{$roles->id}}"{{$userEmployee->role_id == $roles->id ? "selected='selected'":""}}>{{$roles->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label class="label"> Status</label>
+                                            <label class="select">
+                                                @php $Status = array("0"=>"Disabled","1"=>"Enable") @endphp
+                                                <select name="status" id="status" class="required">
+                                                    @foreach($Status as $key => $Statuses)
+                                                        <option value="{{$key}}"{{$userEmployee->verified == $key? "selected='selected'":""}}>{{$Statuses}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                    </div>
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -95,7 +121,7 @@
 
             // Rules for form validation
             rules : {
-                username : {
+                employee_name : {
                     required : true
                 },
                 email : {

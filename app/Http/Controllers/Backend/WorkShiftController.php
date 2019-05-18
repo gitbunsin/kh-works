@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\WorkShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class WorkShiftController extends BackendController
@@ -22,7 +23,6 @@ class WorkShiftController extends BackendController
     }
     public function index()
     {
-        //
         $this->shareMenu();
         $WorkShift = WorkShift::all();
         return view('backend.HRIS.admin.WorkShift.index',compact('WorkShift'));
@@ -35,9 +35,12 @@ class WorkShiftController extends BackendController
      */
     public function create()
     {
-        //
         $this->shareMenu();
-        return view('backend.HRIS.admin.WorkShift.create');
+//        $workshift = DB::table('employees as e')
+//                        ->join('employee_work_shift as ew','e.emp_number','=','ew.employee_emp_number')
+//                        ->get();
+        $workshift = Employee::all();
+        return view('backend.HRIS.admin.WorkShift.create',compact('workshift'));
     }
 
     /**
@@ -48,25 +51,16 @@ class WorkShiftController extends BackendController
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        $WorkShift  = new WorkShift();
-        $WorkShift->name = $request->name;
 
-        $hours_per_day = $request->duration;
-//        dd($hours_per_day);
-        $WorkShift->hours_per_day =  $hours_per_day;
-        $WorkShift->start_time = $request->fromDate;
-        $WorkShift->end_time = $request->ToDate;
+        //dd($request);
+        $WorkShift = WorkShift::create($request->all());
+//        $WorkShift->company()->associate(Auth::guard('admins')->user()->id);
+//        dd($request->duallistbox_demo2);
+        $employeeID = Employee::find($request->duallistbox_demo2);
+        $WorkShift->Employees()->attach($employeeID);
         $WorkShift->save();
-        $Work_shift_id = $WorkShift->id;
-        $emp = input::get('duallistbox_demo2');
-        foreach ($emp as $item){
-            $EmployeeWorkShift = new EmployeeWorkShift();
-            $EmployeeWorkShift->emp_number = $item;
-            $EmployeeWorkShift->work_shift_id = $Work_shift_id;
-            $EmployeeWorkShift->save();
-        }
-        return redirect('/administration/work-shift');
+
+        return redirect('/administration/work-shift')->with('success','WorkShift has been created');
     }
 
     /**
@@ -90,9 +84,22 @@ class WorkShiftController extends BackendController
     {
         //
         $this->shareMenu();
-        $work_shift = WorkShift::where("id",$id)->first();
-//        dd($work_shift);
-        return view('backend.HRIS.admin.WorkShift.edit',compact('work_shift'));
+        $workShift = WorkShift::with('Employees')->where('id',$id)->first();
+        $employees = $workShift->employees;
+        //return response()->json($employees);
+      //  dd($employees);
+        $arrIDEmployee = [];
+        foreach($employees as $value) {
+            array_push($arrIDEmployee, $value->emp_number);
+        }
+//        dd($arrIDEmployee);
+        $emp = Employee::select('*')->whereNotIn('emp_number', $arrIDEmployee)->get();
+//        dd($emp);
+//        $EmployeeWorkShiftReview = DB::table('employees as e')
+//                                ->join('employee_work_shift as ew','e.emp_number','!=','ew.employee_emp_number')
+//                                ->get();
+//        dd($EmployeeWorkShift);
+        return view('backend.HRIS.admin.WorkShift.edit',compact('workShift','emp'));
     }
 
     /**
@@ -104,33 +111,12 @@ class WorkShiftController extends BackendController
      */
     public function update(Request $request, $id)
     {
-//        dd($id);
-        //
-       // $work_shift = WorkShift::finde
-//        $subjects = Input::get('wishlist');
-//        dd(implode(',', Input::get('wishlist')));
-        //dd(input::get('wishlist'));
-//        dd($request->all());
-         $WorkShift  =  WorkShift::findOrFail($id);
-         $WorkShift->name = $request->name;
-         $WorkShift->hours_per_day = $request->hours_per_day;
-         $WorkShift->save();
-        $emp = $request->input('wishlist');
-        $Work_shift_id = $WorkShift->id;
-        foreach ($emp as $item){
-            $EmployeeWorkShift = new EmployeeWorkShift();
-            $EmployeeWorkShift->emp_number = $item;
-            $EmployeeWorkShift->work_shift_id = $Work_shift_id;
-            $EmployeeWorkShift->save();
-            $employee = Employee::findOrFail($item);
-            $employee-> status = 1;
-            $employee->save();
+        $Workshift = WorkShift::findOrFail($id);
+        $Workshift->update($request->all());
+//        dd($request->duallistbox_demo2);
+        $EmployeeWorkshift_ID = Employee::find($request->duallistbox_demo2);
+        $Workshift->Employees()->sync($EmployeeWorkshift_ID);
 
-        }
-//        $Work_shift_id = $WorkShift->id;
-//        $EmployeeWorkShift->work_shift_id = $Work_shift_id;
-//        $EmployeeWorkShift->emp_number = $request->wishlist_list;
-//        $EmployeeWorkShift->save();
         return redirect('/administration/work-shift');
     }
 

@@ -1,6 +1,6 @@
 <header id="header">
 			<div id="logo-group">
-				<span id="logo"> <img style="width: 73px;padding-left: 3px;height: auto;" src="{{ asset('img/logo.png')}}" alt="SmartAdmin"> </span>
+				<span id="logo"> <img  style="width: 65px;padding-left: 3px;height: auto;" src="{{ asset('img/kh-works.png')}}" alt="SmartAdmin"> </span>
 			</div>
 			<div class="pull-right">
 				
@@ -9,7 +9,6 @@
 					<span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
 				</div>
 				<!-- end collapse menu -->
-				
 				<!-- #MOBILE -->
 				<!-- Top menu profile link : this shows only when top menu is active -->
 				<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
@@ -48,6 +47,23 @@
 				<div id="fullscreen" class="btn-header transparent pull-right">
 					<span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
 				</div>
+				{{--<ul class="header-dropdown-list hidden-xs">--}}
+					{{--<li>--}}
+						{{--<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="{{url(asset('img/blank.gif'))}}" class="flag flag-us" alt="United States"> <span> English (US) </span> <i class="fa fa-angle-down"></i> </a>--}}
+						{{--<ul class="dropdown-menu pull-right">--}}
+							{{--<li class="">--}}
+								{{--<a href="{{ url('locale/en') }}"><img src="{{url(asset('img/blank.gif'))}}" class="flag flag-us" alt="United States"> English (US)</a>--}}
+							{{--</li>--}}
+							{{--<li><a href="{{ url('locale/en') }}" ><i class="fa fa-language"></i> EN</a></li>--}}
+							{{--<li><a href="{{ url('locale/fr') }}" ><i class="fa fa-language"></i> FR</a></li>--}}
+
+							{{--<li class="">--}}
+								{{--<a href="{{ url('locale/kh') }}"><img src="{{url(asset('img/blank.gif'))}}" class="flag flag-kh" alt="Khmer"> Khmer (KH)</a>--}}
+							{{--</li>--}}
+
+						{{--</ul>--}}
+					{{--</li>--}}
+				{{--</ul>--}}
 
 			</div>
 			<!-- end pulled right: nav area -->

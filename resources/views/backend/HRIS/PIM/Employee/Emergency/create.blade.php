@@ -1,7 +1,6 @@
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
     <section id="widget-grid" class="">
-
         <!-- row -->
         <div class="row">
 
@@ -29,13 +28,22 @@
                                         <section class="col col-6">
                                             <label class="label">Name</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="text" name="name" id="name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                             </label>
                                         </section>
                                         <section class="col col-6">
-                                            <label class="label">Relationship </label>
-                                            <label class="input">
-                                                <input type="text" name="relationship_id" id="relationship_id">
+                                            <label class="label"> Relationship</label>
+                                            <label class="select">
+                                                <select class="form-control" name="relationship_id" id="relationship_id">
+                                                    @php $relationship = array('parents','fathers','son'); @endphp
+                                                        <option value=""> -- select relationship --</option>
+                                                    @foreach($relationship as $relationships)
+                                                        <option value="{{$relationships}}">{{$relationships}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
                                             </label>
                                         </section>
                                     </div>

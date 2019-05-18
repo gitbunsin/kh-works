@@ -17,4 +17,8 @@ class EmployeeLanguage extends Model
         'comments',
     ];
     public $timestamps = false;
+    public function language(){
+
+        return $this->belongsTo(Language::class,'lang_id','id');
+    }
 }

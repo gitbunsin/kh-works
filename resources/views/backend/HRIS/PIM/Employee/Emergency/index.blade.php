@@ -21,14 +21,9 @@
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2> List all Emergency Contact</h2>
                     </header>
-                    <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-                        </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
+                        <div class="jarviswidget-editbox"></div>
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>

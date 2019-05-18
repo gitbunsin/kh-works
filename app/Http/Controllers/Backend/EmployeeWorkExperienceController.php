@@ -83,6 +83,7 @@ class EmployeeWorkExperienceController extends BackendController
         //
         $EmergencyContact = EmployeeWorkExperience::findOrFail($emp_work_id);
         return response()->json($EmergencyContact);
+
     }
 
     /**
@@ -115,8 +116,7 @@ class EmployeeWorkExperienceController extends BackendController
         }
         $emp_experience = EmployeeWorkExperience::findOrFail($id);
         $emp_experience->eexp_employer = $request->company;
-        $emp_experience->company_id = $company_id;
-        $emp_experience->eexp_jobtit = $request->job_titles;
+        $emp_experience->eexp_jobtitle = $request->job_titles;
         $emp_experience->eexp_from_date =\Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
         $emp_experience->eexp_to_date = \Carbon\Carbon::parse($request->to_date)->format('Y-m-d');
         $emp_experience->eexp_comments = $request->comment;

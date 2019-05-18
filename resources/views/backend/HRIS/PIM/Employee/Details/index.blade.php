@@ -35,16 +35,15 @@
                             <div class="jarviswidget-editbox">
                                 <!-- This area used as dropdown edit box -->
                             </div>
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
                             @php
-                                    if(\Illuminate\Support\Facades\Auth::guard('employee')->user())
+                                if(\Illuminate\Support\Facades\Auth::guard('employee')->user())
                                     {
                                        $employeeID = \Illuminate\Support\Facades\Auth::guard('employee')->user()->emp_number;
                                     }else
                                     {
                                         //$employeeID = \Illuminate\Support\Facades\Auth::guard('admins')->user()->id;
                                         $ListCompanyEmployee = \App\Model\Employee::where('emp_number',\Illuminate\Support\Facades\Auth::guard('admins')->user()->id)->first();
+                                       // dd($ListCompanyEmployee);
                                         $employeeID = $ListCompanyEmployee->emp_number;
                                         //dd($employeeID);
                                     }
@@ -57,19 +56,26 @@
                                         <section class="col col-4">
                                             <label class="label">First Name</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input value="{{$EmployeeDetailsInfo->emp_firstname}}" class="form-control" placeholder="Default Text Field" name="emp_firstname" id="emp_firstname" type="text">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Middle Name</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input  class="form-control" value="{{$EmployeeDetailsInfo->emp_middle_name}}"  type="text" name="emp_middle_name" id="emp_middle_name">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Last Name</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_lastname}}" type="text" name="emp_lastname" id="emp_lastname" >
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                     </div>
@@ -77,13 +83,20 @@
                                         <section class="col col-4">
                                             <label class="label">Employee Id</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control"  value="{{$EmployeeDetailsInfo->employee_id}}" type="text" name="employee_id" id="employee_id">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Other Id</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
+
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_other_id}}" type="text" name="other_id" id="other_id">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -91,6 +104,8 @@
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
                                                 <input class="form-control"  value="{{$EmployeeDetailsInfo->emp_dri_lice_exp_date}}" type="text" id="license_expiry_date" name="license_expiry_date" class="datepicker">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                     </div>
@@ -98,13 +113,18 @@
                                         <section class="col col-4">
                                             <label class="label">Driver's License</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_dri_lice_num}}" type="text" name="driver_license" id="driver_license" >
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">SSN Number</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
+
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_ssn_num }}" type="text" name="SSN_Number" id="SSN_Number">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -112,6 +132,7 @@
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_birthday}}" type="text" id="date_of_birth" name="date_of_birth" class="">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
 
                                             </label>
                                         </section>
@@ -136,7 +157,7 @@
                                             <label class="label"> Marital Status</label>
                                             <label class="select">
                                                 <select class="form-control" name="marital_status" id="martial_Status">
-                                                    @php $status = array("1"=>"Male", "2"=>"Female", "3"=>"Other"); @endphp
+                                                    @php $status = array("1"=>"Single", "2"=>"Married", "3"=>"Other"); @endphp
                                                     <option value="">-- select --</option>
                                                     @foreach($status as $x => $x_value)
                                                         <option class="form-control" value="{{$x}}" {{$x == $EmployeeDetailsInfo->emp_marital_status ? "selected='selected'":""}}>{{$x_value}}</option>
@@ -164,14 +185,22 @@
                                         <section class="col col-4">
                                             <label class="label">Nick name</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_nick_name}}" type="text" name="nickname" id="nickname" >
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
 
                                         <section class="col col-4">
                                             <label class="label">Military Service</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+
                                                 <input class="form-control" value="{{$EmployeeDetailsInfo->emp_military_service}}" type="text" name="military_service" id="military_service" >
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">

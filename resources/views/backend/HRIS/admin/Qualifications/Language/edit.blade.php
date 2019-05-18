@@ -27,7 +27,9 @@
                                     <section>
                                         <label class="label">Name</label>
                                         <label class="input">
+                                            <i class="icon-append fa fa-joomla"></i>
                                             <input value="{{$language->name}}" type="text" name="name" id="name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available Language name</b>
                                         </label>
                                     </section>
                                     <section>

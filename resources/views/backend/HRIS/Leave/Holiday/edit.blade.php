@@ -27,7 +27,9 @@
                                     <section>
                                         <label class="label">Name *</label>
                                         <label class="input">
+                                            <i class="icon-append fa fa-joomla"></i>
                                             <input value="{{$h->name}}" type="text" name="name" id="name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
                                         </label>
                                     </section>
                                     <div class="row">
@@ -89,36 +91,6 @@
 @endsection
 @section('script')
     <script type="text/javascript">
-        // $(document).ready(function() {
-        //     $('#IsDefault').click(function(event) {
-        //         if(this.checked) { // check select status
-        //                 this.checked = true;  //select all
-        //         }else{
-        //                 this.checked = false; //deselect all
-        //         }
-        //     });
-        // });
-        // $('#IsDefault').val("1");
-        // $("#IsDefault").click(function(){
-        //     if ($(this).prop('checked')==true){
-        //         //do something
-        //         $('#IsDefault').val("1");
-        //     }else{
-        //         $('#IsDefault').val("0");
-        //     }
-        // });
-        //
-        //
-        // $('#IsDefault1').val("0");
-        // $("#IsDefault1").click(function(){
-        //     if ($(this).prop('checked')==true){
-        //         //do something
-        //         $('#IsDefault1').val("1");
-        //     }else{
-        //         $('#IsDefault1').val("0");
-        //     }
-        // });
-
         var $loginForm = $("#frmHoliday").validate({
             // Rules for form validation
             rules : {

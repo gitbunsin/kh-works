@@ -15,8 +15,8 @@ class CreatePayperiodsTable extends Migration
     {
         Schema::create('payperiods', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('organization_code')->unsigned()->nullable();
-            $table->foreign('organization_code')->references('id')->on('organization_gen_infos')->onDelete('cascade');
+//            $table->integer('organization_code')->unsigned()->nullable();
+//            $table->foreign('organization_code')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
             $table->string('name')->nullable();
 

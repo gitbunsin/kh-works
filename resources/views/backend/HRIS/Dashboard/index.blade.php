@@ -16,7 +16,7 @@
                                     <h4 class="txt-color-blue">Pie <span class="semi-bold">Employees</span> <a href="javascript:void(0);" class="pull-right"><i class="fa fa-refresh"></i></a></h4>
                                     <br>
                                     <div class="">
-                                        <i class="fa  fa-4x fa-group txt-color-blueLight"></i>
+                                       <i class="fa  fa-4x fa-group txt-color-blueLight">  {{$employee}} </i>
                                     </div>
                                     <br>
                                 </div>

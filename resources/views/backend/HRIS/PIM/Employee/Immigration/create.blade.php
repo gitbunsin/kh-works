@@ -44,7 +44,10 @@
                                     <section>
                                         <label class="label">Number </label>
                                         <label class="input">
+                                            <i class="icon-append fa fa-joomla"></i>
                                             <input type="number" name="passport_number" id="passport_number">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+
                                         </label>
                                     </section>
                                     <div class="row">
@@ -67,7 +70,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Eligible Status</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="number" name="status" id="status">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-6">

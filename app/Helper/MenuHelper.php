@@ -39,7 +39,7 @@ class MenuHelper
             ->where(['rcm.is_active' => 1, 'r.id' => $roleID, 'c.id' => $companyID])
             ->orderBy('m.id', 'asc')
             ->get();
-        //dd($menu);
+//        dd($menu);
         /**
          * Step 1: Separate to  be two array
          * 1 - Parent Menu

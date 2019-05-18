@@ -26,7 +26,9 @@
                                     <section>
                                         <label class="label">Name</label>
                                         <label class="input">
-                                            <input type="text" name="name" id="name">
+                                            <i class="icon-append fa fa-joomla"></i>
+                                                <input type="text" name="name" id="name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available Leave Types</b> </label>
                                         </label>
                                     </section>
                                     <section>

@@ -1,29 +1,25 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Model\Country;
+use App\Model\contract;
 use App\Model\Employee;
+use App\Model\EmployeeAttachment;
 use \App\Model\EmployeeEmergencyContacts;
-use App\Model\EmployeeLanguage;
-use App\Model\EmployeeLocation;
 use \App\Model\EmployeeSkills;
-use \App\Model\EmployeeWorkExperience;
-use App\Http\Controllers\Controller;
-use App\Jobs\SendVerificationEmployeeEmail;
 use App\Model\EmployementStatus;
-use App\Model\JobTitle;
-use App\Model\Location;
-use App\Model\UserEmployee;
-use App\OrganizationGenInfo;
-use Illuminate\Auth\Events\Registered;
+use App\Model\Termination;
+use App\Model\TerminationReason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use function Sodium\compare;
 
+/**
+ * Class EmployeeController
+ * @package App\Http\Controllers\Backend
+ */
 class EmployeeController extends BackendController
 {
     protected $redirectTo = '/administration/employee-personal-details';
@@ -47,11 +43,11 @@ class EmployeeController extends BackendController
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-        $employee = DB::table('employees as e')
-            ->select('e.*')
-//            ->join('job_titles as j','e.job_title_code','=','j.id')
-            ->orderBy('e.emp_number','DESC')
-            ->get();
+//        $employee = DB::table('employees as e')
+//            ->select('e.*')
+////            ->join('job_titles as j','e.job_title_code','=','j.id')
+//            ->orderBy('e.emp_number','DESC')
+//            ->get();
 //        dd($employee);
 //        $JobTitle = JobTitle::with('Employee')->get();
 
@@ -59,32 +55,48 @@ class EmployeeController extends BackendController
 //        foreach ($employee->Employee as $e){
 //           echo $e->company_id;
 //        }
-//        $employee = Employee::all();
+        $employee = Employee::with(['JobTitle','EmploymentStatus','WorkStation'])->get();
+//        dd($employee[0]->JobTitle->name);
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
     }
 
-    public function EmployeeInfo(){
+    public function EmployeeInfo(Request $request){
         $this->shareMenu();
-        $employee_experience = EmployeeWorkExperience::all();
-        $employee_skill = DB::table('employee_skills as es')
-            ->join('skills as s','es.skill_id','=','s.id')
-            ->get();
 
-        if(Auth::guard('employee')->user())
-        {
-            $EmployeeID = Auth::guard('employee')->user()->id;
+        if(Auth::guard('admins')->user()){
+            $employeeId = Auth::guard('admins')->user()->id;
         }else{
-
-            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
-            $EmployeeID = $listCompanyEmployee->emp_number;
+            $employeeId = Auth::guard('employee')->user()->id;
         }
-        $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
+        $EmployeeDetailsInfo = Employee::where('emp_number', $employeeId)->first();
+        //dd($employeeDetails);
+
+//        dd($id);
+//        $employee_experience = EmployeeWorkExperience::all();
+//        $employee_skill = DB::table('employee_skills as es')
+//            ->join('skills as s','es.skill_id','=','s.id')
+//            ->get();
+
+//        if(Auth::guard('employee')->user())
+//        {
+//            $EmployeeID = Auth::guard('employee')->user()->id;
+//        }else{
+//
+//            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+//            $EmployeeID = $listCompanyEmployee->emp_number;
+//        }
+//        $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
 //        dd($EmployeeDetailsInfo);
 //        dd($EmployeeID);
-        return view('backend.HRIS.PIM.Employee.Details.index',
-            compact('employee_experience',
-                'employee_skill',
-                'EmployeeDetailsInfo'));
+//        return view('backend.HRIS.PIM.Employee.Details.index',
+//            compact('employee_experience',
+//                'employee_skill',
+//                'EmployeeDetailsInfo'));
+
+//        $EmployeeDetailsInfo = Employee::al
+
+        return view('backend.HRIS.PIM.Employee.Details.index',compact('EmployeeDetailsInfo'));
+
     }
 
     public function ListAllStaffDirectory(){
@@ -114,6 +126,27 @@ class EmployeeController extends BackendController
      */
     public function store(Request $request)
     {
+        $employee = Employee::create($request->all());
+        $employee->company()->associate(Auth::guard('admins')->user()->id);
+        $employee->save();
+        $employee_attachments = new EmployeeAttachment();
+
+        if ($request->hasFile('photo'))
+         {
+             $image = $request->file('photo');
+             $mytime = \Carbon\Carbon::now()->toDateTimeString();
+             $name = $image->getClientOriginalName();
+             $size = $image->getClientSize();
+             $type = $image->getMimeType();
+             $destinationPath = public_path('/uploaded/EmpPhoto/');
+             $image->move($destinationPath,$name);
+             $employee_attachments->emp_number = $employee->emp_number;
+             $employee_attachments->eattach_filename = $name;
+             $employee_attachments->eattach_size = $size;
+             $employee_attachments->eattach_type = $type;
+             $employee_attachments->save();
+         }
+
         //dd($request->all());
         //dd('hello');
 //        dd($request->all());
@@ -123,14 +156,14 @@ class EmployeeController extends BackendController
 //            $company_id = Auth::guard('employee')->user()->company_id;
 //
 //        }
-        $employee = new Employee();
-        $employee->emp_firstname = $request->emp_firstname;
-        $employee->emp_lastname = $request->emp_lastname;
-        $employee->emp_middle_name = $request->emp_middle_name;
-        $employee->company_id = Auth::guard('admins')->user()->id;
-//        $employee->job_titles_code = $request->job_titles;
-        $employee->employee_id = $request->employee_id;
-        $employee->company_id = $request->company_id;
+//        $employee = new Employee();
+//        $employee->emp_firstname = $request->emp_firstname;
+//        $employee->emp_lastname = $request->emp_lastname;
+//        $employee->emp_middle_name = $request->emp_middle_name;
+//        $employee->company_id = Auth::guard('admins')->user()->id;
+////        $employee->job_titles_code = $request->job_titles;
+////        $employee->employee_id = $request->employee_id;
+//        $employee->company_id = $request->company_id;
         // if ($request->hasFile('photo'))
         // {
         //     $image = $request->file('photo');
@@ -143,29 +176,29 @@ class EmployeeController extends BackendController
         //     $employee->photo = $name;
 
         // }
-        $employee->save();
-        $employee_id = $employee->emp_number;
-//        dd($employee_id);
-        $check = $request->user_check;
-        if ($check == 1) {
-            //dd('hello');
-//            $emp_log = Employee::findOrFail($employee_id);
-            $emp_log  = new UserEmployee();
-            $emp_log->email = $request->user_email;
-            $emp_log->role_id = 2;
-            $emp_log->company_id = Auth::guard('admins')->user()->id;
-//            $emp_log->employee_id = $employee_id;
-            $emp_log->email_token = base64_encode($request->user_email);
-            $emp_log->password = Hash::make($request->user_password);
-            $emp_log->save();
+//        $employee->save();
+//        $employee_id = $employee->emp_number;
+////        dd($employee_id);
+//        $check = $request->user_check;
+//        if ($check == 1) {
+//            //dd('hello');
+////            $emp_log = Employee::findOrFail($employee_id);
+//            $emp_log  = new UserEmployee();
+//            $emp_log->email = $request->user_email;
+//            $emp_log->role_id = 2;
+//            $emp_log->company_id = Auth::guard('admins')->user()->id;
+////            $emp_log->employee_id = $employee_id;
+//            $emp_log->email_token = base64_encode($request->user_email);
+//            $emp_log->password = Hash::make($request->user_password);
+//            $emp_log->save();
            // dd($emp_log);
             //dd($emp_log->company_id);
-            $company = OrganizationGenInfo::findOrFail($emp_log->company_id)->first();
+           // $company = OrganizationGenInfo::findOrFail($emp_log->company_id)->first();
            // dd($company);
-            event(new Registered($emp_log));
-            dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
-            return view('verification');
-        }
+//            event(new Registered($emp_log));
+//            dispatch(new SendVerificationEmployeeEmail($emp_log,$company));
+//            return view('verification');
+//        }
         return redirect('/administration/employee')->with('success','Item created successfully!');
     }
 
@@ -221,7 +254,7 @@ class EmployeeController extends BackendController
             $email = Input::get('email');
             $password = Input::get('password');
            // dd($email);
-            $authAdmin = Auth::guard('employee')->attempt(['email' => $email, 'password' => $password]);
+            $authAdmin = Auth::guard('employee')->attempt(['email' => $email, 'password' => $password ,'verified'=> 1]);
 //            dd($authAdmin);
             if (!$authAdmin) {
                 return Redirect::route('login')->with('global', 'You do not confirm your email yet.');
@@ -252,81 +285,149 @@ class EmployeeController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request , $id)
     {
+//        dd('hello');
+        $employee = Employee::findorFail($id);
+        $employee->update($request->all());
+//        $employee->update($request->all());
 
         //dd('hello');
 //        dd($request->all());
         //dd($request->gender);
-            $employee = Employee::findOrFail($id);
+//            $employee = Employee::findOrFail($id);
+//            $employee->update($request->all());
 
-            $checkEmployee = $request->emp_lastname;
-            if($checkEmployee){
 
-                $employee->emp_lastname = $request->emp_lastname;
-                $employee->emp_lastname = $request->emp_lastname;
-                $employee->emp_firstname = $request->emp_firstname;
-                $employee->employee_id = $request->employee_id;
-                $employee->emp_other_id = $request->other_id;
-               // dd($request->driver_license_number);
-                $employee->emp_dri_lice_num = $request->driver_license;
-                $employee->emp_ssn_num = $request->SSN_Number;
-//                 $gender = (int)$request->gender;
-//                dd($request->marital_status);
-                $employee->emp_marital_status =  $request->marital_status;
-//                 $gender = (int)$request->GenderMale;
-                $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
-                $employee->nation_code = $request->nationality;
-                $gender = (int) $request->GenderMale;
-//                 dd($gender);
-                $employee->emp_gender =$gender;
-                // $employee->nation_code = $request->nationality;
-                $employee->emp_nick_name = $request->nickname;
-                $employee->emp_military_service = $request->military_service;
-                $employee->emp_dri_lice_num = $request->driver_license;
-                //dd($request->emp_smoker);
-                $employee->emp_smoker = $request->emp_smoker;
-                $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
-                $employee->save();
-
-            }
+//            $checkEmployee = $request->emp_lastname;
+//            if($checkEmployee){
+//                $employee->emp_lastname = $request->emp_lastname;
+//                $employee->emp_lastname = $request->emp_lastname;
+//                $employee->emp_firstname = $request->emp_firstname;
+//                $employee->employee_id = $request->employee_id;
+//                $employee->emp_other_id = $request->other_id;
+//               // dd($request->driver_license_number);
+//                $employee->emp_dri_lice_num = $request->driver_license;
+//                $employee->emp_ssn_num = $request->SSN_Number;
+////                 $gender = (int)$request->gender;
+////                dd($request->marital_status);
+//                $employee->emp_marital_status =  $request->marital_status;
+////                 $gender = (int)$request->GenderMale;
+//                $employee->emp_dri_lice_exp_date = \Carbon\Carbon::parse($request->emp_dri_lice_exp_date);
+//                $employee->nation_code = $request->nationality;
+//                $gender = (int) $request->GenderMale;
+////                 dd($gender);
+//                $employee->emp_gender =$gender;
+//                // $employee->nation_code = $request->nationality;
+//                $employee->emp_nick_name = $request->nickname;
+//                $employee->emp_military_service = $request->military_service;
+//                $employee->emp_dri_lice_num = $request->driver_license;
+//                //dd($request->emp_smoker);
+//                $employee->emp_smoker = $request->emp_smoker;
+//                $employee->emp_birthday = \Carbon\Carbon::parse($request->date_of_birth);
+//                $employee->save();
+//
+//            }
             //Job
 
-            $JobTitles = $request->JobTitleCode;
-             if($JobTitles)
-             {
-//                 dd($JobTitles);
-                 $employee->job_title_code = $request->JobTitleCode;
-                 $employee->eeo_cat_code = $request->JobCategory;
-                 $employee->joined_date = $request->JoinDate;
-                 $employee->emp_status = $request->EmploymentStatus;
-                 $employee->work_station = $request->SubUnit;
-                 $employee->save();
-                 return redirect('/administration/employee-job')->with('success','Item has been edit successfully');
-             }
-             $location = $request->location;
-             if($location){
-                 if(Auth::guard('employee')->user())
-                 {
-                     $EmployeeID = Auth::guard('employee')->user()->id;
-                 }else{
-
-                     $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
-                     $EmployeeID = $listCompanyEmployee->emp_number;
-                 }
-                 $EmployeeLocation = new EmployeeLocation();
-                 $EmployeeLocation->emp_number = $EmployeeID;
-                 $EmployeeLocation->location_id = $request->location;
-                 $EmployeeLocation->save();
-
-
-             }
+//            $JobTitles = $request->JobTitleCode;
+//             if($JobTitles)
+//             {
+////                 dd($JobTitles);
+//                 $employee->job_title_code = $request->JobTitleCode;
+//                 $employee->eeo_cat_code = $request->JobCategory;
+//                 $employee->joined_date = $request->JoinDate;
+//                 $employee->emp_status = $request->EmploymentStatus;
+//                 $employee->work_station = $request->SubUnit;
+//                 $employee->save();
+//                 return redirect('/administration/employee-job')->with('success','Item has been edit successfully');
+//             }
+//             $location = $request->location;
+//             if($location){
+//                 if(Auth::guard('employee')->user())
+//                 {
+//                     $EmployeeID = Auth::guard('employee')->user()->id;
+//                 }else{
+//
+//                     $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
+//                     $EmployeeID = $listCompanyEmployee->emp_number;
+//                 }
+//                 $EmployeeLocation = new EmployeeLocation();
+//                 $EmployeeLocation->emp_number = $EmployeeID;
+//                 $EmployeeLocation->location_id = $request->location;
+//                 $EmployeeLocation->save();
 
 
-        return redirect('/administration/employee-personal-details')->with('success','Item has been edit successfully');
+//             }
+
+
+        return redirect('/administration/employee-personal-details/')->with('success','Employee has been edit successfully');
 
        // return response()->json($employee);
 
+    }
+    public function UpdateEmployeeJob(Request $request,$id)
+    {
+
+        $employee = Employee::findorFail($id);
+        $employee->update($request->all());
+        $contract = new contract();
+        $contract->employee()->associate(Auth::guard('admins')->user()->id);
+        $contract->econ_extend_start_date = $request->econ_extend_start_date;
+        $contract->econ_extend_end_date = $request->econ_extend_end_date;
+        $contract->save();
+
+        return redirect('/administration/employee-job')->with('success','Employee has been update');
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function EmployeeTerminate(Request $request){
+//        dd($request->emp_number);
+
+//        $empNumber = input::get('emp_number');
+        $terminate = Termination::create($request->all());
+        $terminate->employee()->associate($request->emp_number);
+        $terminate->save();
+
+        return response()->json(["ok"=>$request->all()]);
+
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function EmployeeTerminateEdit(Request $request ,$id){
+
+
+        $data['termination'] = Termination::findOrFail($id);
+        $data['TerminationReason'] = TerminationReason::all();
+        return response()->json($data);
+
+    }
+
+    public function EmployeeTerminateReason(Request $request ,$id)
+    {
+        $terminate = Termination::findOrFail($id);
+        $terminate->update($request->all());
+        $terminate->employee()->associate($request->emp_number);
+        $terminate->save();
+        return response()->json(["ok"=>$id]);
+    }
+    public function EmployeeTerminateReasonDelete($id){
+        //dd($id);
+
+        $terminate = Termination::find($id);
+        $terminate->delete();
+
+        return redirect('administration/employee-job')->with('success','Employee active terminate');
     }
 //    =======================
     public function EditEmergencyContact(Request $request, $emergency_id){
@@ -345,10 +446,16 @@ class EmployeeController extends BackendController
         return response()->json(['data'=>'ok']);
     }
 
-    public function destroy($employee_id)
+    public function destroy($id)
     {
-        $employee = Employee::where('em_number',$employee_id)->delete();
-        return response()->json($employee);
+
+        $user = Employee::findOrFail($id);
+        $user->delete();
+
+        return redirect('/administration/employee')->with('success','Employee has been deleted');
+//        $employee = Employee::where('em_number',$employee_id)->delete();
+//        return response()->json($employee);
+
     }
 
 }

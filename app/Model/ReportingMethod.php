@@ -10,8 +10,17 @@ class ReportingMethod extends Model
     protected $connection = 'mysql';
     protected $table = 'reporting_methods';
     protected $fillable =
-        ['reporting_method_id',
-            'reporting_method_name'
+        ['name',
+
+            'description'
         ];
     public $timestamps = false;
+
+    public function employees()
+    {
+
+        return $this->belongsToMany(Employee::class);
+    }
+
+
 }

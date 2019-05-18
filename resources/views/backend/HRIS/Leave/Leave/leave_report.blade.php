@@ -7,33 +7,15 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{--<div class="row">--}}
-            {{--<div class="col-lg-12 margin-tb">--}}
-
-            {{--<div class="pull-right">--}}
-            {{--<a style="background: #333;" class="btn btn-primary" href="{{url('administration/leave-type/create')}}" role="button">--}}
-            {{--<i class="glyphicon glyphicon-plus-sign "></i> Add new</a>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--<br/>--}}
-            <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2> Leave Entitlements and Usage Report </h2>
                     </header>
-
-                    <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
-
                         </div>
-                        <!-- end widget edit box -->
-
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <form id="frmReport" method="POST" enctype="multipart/form-data" action="#" class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -56,8 +38,10 @@
                                                 <label class="select">
                                                     <select name="report_generate" id="report_generate">
                                                         <option value="">-- select --</option>
-                                                        <option value="1">Leave Type</option>
-                                                        <option value="1">Employee</option>
+                                                        @php $LeaveType = \App\Model\LeaveType::all(); @endphp
+                                                             @foreach($LeaveType as $LeaveTypes)
+                                                                   <option value="{{$LeaveTypes->id}}">{{$LeaveTypes->name}}</option>
+                                                            @endforeach
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -74,8 +58,10 @@
                                                 <label class="select">
                                                     <select name="report_generate" id="report_generate">
                                                         <option value="">-- select --</option>
-                                                        <option value="leave type">Leave Type</option>
-                                                        <option value="employee ">Employee</option>
+                                                        @php $JobTitle = \App\Model\JobTitle::all(); @endphp
+                                                        @foreach($JobTitle as $JobTitles)
+                                                          <option value="{{$JobTitles->id}}">{{$JobTitles->name}}</option>
+                                                            @endforeach
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -88,17 +74,25 @@
                                                 <label class="select">
                                                     <select name="report_generate" id="report_generate">
                                                         <option value="">-- select --</option>
-                                                        <option value="1">Leave Type</option>
-                                                        <option value="1">Employee</option>
+                                                        @php $location = \App\Model\Location::all(); @endphp
+                                                        @foreach($location as $locations)
+                                                        <option value="{{$locations->id}}">{{$locations->name}}</option>
+                                                            @endforeach
                                                     </select>
                                                     <i></i>
                                                 </label>
                                             </section>
                                             <section class="col col-4">
                                                 <label class="label"> SubUnit </label>
-                                                <label class="input">
-                                                    <i class="icon-append fa fa-calendar"></i>
-                                                    <input type="text" id="date" name="date" class="datepicker">
+                                                <label class="select">
+                                                    <select name="subID" id="subID">
+                                                        <option value="">-- select --</option>
+                                                        @php $SubUnit= \App\Model\SubUnit::all(); @endphp
+                                                        @foreach($SubUnit as $SubUnits)
+                                                            <option value="{{$SubUnits->id}}">{{$SubUnits->title}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <i></i>
                                                 </label>
                                             </section>
                                             <section class="col col-4">
@@ -113,13 +107,9 @@
                                         </div>
                                         <footer>
                                             <button type="submit" class="btn btn-primary"> View</button>
-                                            {{--<button type="button" class="btn btn-default" onclick="window.history.back();">--}}
-                                                {{--Back--}}
-                                            {{--</button>--}}
+                                            <button type="button" class="btn btn-default" onclick="window.history.back();">Back</button>
                                         </footer>
                                     </div>
-
-                                    {{--//Employee frm--}}
                                     <div class="Div_Employee">
                                         <div class="row">
                                             <section class="col col-6">
@@ -129,13 +119,11 @@
                                                             id="employee_tracker"
                                                             style="width:100%" class="select2 select2-hidden-accessible"
                                                             tabindex="-1" aria-hidden="true">
-                                                        <optgroup label="Performance Employee Trackers">
                                                             <option value="0">-- select trackers --</option>
                                                             @php $tracker = \App\Model\Employee::all(); @endphp
                                                             @foreach($tracker as $trackers)
                                                                 <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
                                                             @endforeach
-                                                        </optgroup>
                                                     </select>
                                                     <div class="note">
                                                         <strong>Usage:</strong> Employee performance tracker
@@ -152,9 +140,6 @@
                                         </div>
                                         <footer>
                                             <button type="submit" class="btn btn-primary"> View</button>
-                                            {{--<button type="button" class="btn btn-default" onclick="window.history.back();">--}}
-                                                {{--Back--}}
-                                            {{--</button>--}}
                                         </footer>
                                     </div>
                                 </fieldset>
@@ -198,6 +183,15 @@
             // Do not change code below
             errorPlacement : function(error, element) {
                 error.insertAfter(element.parent());
+            }
+        });
+
+        $('#date').datepicker({
+            dateFormat: 'yy-mm-dd',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
             }
         });
     </script>

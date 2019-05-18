@@ -27,7 +27,9 @@
                                     <section>
                                         <label class="label">Name</label>
                                         <label class="input">
-                                            <input type="text" name="name" id="name">
+                                            <i class="icon-append fa fa-joomla"></i>
+                                            <input placeholder="Education name" type="text" name="name" id="name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available education name</b>
                                         </label>
                                     </section>
                                     <section>

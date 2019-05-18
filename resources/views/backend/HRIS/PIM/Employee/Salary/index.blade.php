@@ -45,15 +45,15 @@
                             </thead>
                             @foreach($BasicSalary as $BasicSalaries)
                             <tbody id="products-list" name="products-list">
-                            <tr id="employee_id">
+                            <tr>
                                 <td>{{$BasicSalaries->salary_component}}</td>
-                                <td>{{$BasicSalaries->PayPeriod_Name}}</td>
-                                <td>{{$BasicSalaries->Currency_Name}}</td>
+                                <td>{{$BasicSalaries->payPeriod->name}}</td>
+                                <td>{{$BasicSalaries->currency->name}}</td>
                                 <td>{{$BasicSalaries->ebsal_basic_salary}}</td>
                                 <td>{{$BasicSalaries->comments}}</td>
                                 <td></td>
                                 <td>
-                                    <a data-id="" href="{{url('administration/employee-salary/'.$BasicSalaries->basicSalary_id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                    <a data-id="" href="{{url('administration/employee-salary/'.$BasicSalaries->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                         <i class="glyphicon glyphicon-edit"></i>
                                     </a>
                                     <a data-id="" href="" style="text-decoration:none;" class="delete-item">
@@ -69,7 +69,4 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ asset('/js/hr/employee.js') }}"></script>
 @endsection

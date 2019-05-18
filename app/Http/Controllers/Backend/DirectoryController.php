@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Model\Employee;
+use App\Model\EmployeeAttachment;
+use const http\Client\Curl\AUTH_ANY;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class DirectoryController extends Controller
+class DirectoryController extends BackendController
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +19,12 @@ class DirectoryController extends Controller
     public function index()
     {
 
+        $this->shareMenu();
+        $employee = Employee::with('company')->where('company_id',Auth::guard('admins')->user()->id)->get();
+        $employeeAttachments = EmployeeAttachment::with('employee')->first();
 
+        return view('backend.HRIS.Directory.index',compact('employee','employeeAttachments'));
 
-
-
-        return view('backend.HRIS.Directory.index');
     }
 
     /**

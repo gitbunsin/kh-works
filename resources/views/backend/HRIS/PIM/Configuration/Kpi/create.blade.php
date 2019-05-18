@@ -40,7 +40,7 @@
                                         <section class="col col-6">
                                             <label class="label"> Key Performance Indicator</label>
                                             <label class="input">
-                                               <input type="text" name="performance" id="performance"/>
+                                               <input type="text" name="kpi_indicators" id="kpi_indicators"/>
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -51,7 +51,7 @@
                                         <section class="col col-6">
                                             <label class="label"> Minimum Rating</label>
                                             <label class="input">
-                                                <input type="number" name="min_id" id="min_id"/>
+                                                <input type="number" name="min_rating" id="min_rating"/>
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -60,7 +60,7 @@
                                         <section class="col col-6">
                                             <label class="label"> Maximum Rating</label>
                                             <label class="input">
-                                                <input type="number" name="max_id" id="max_id"/>
+                                                <input type="number" name="max_rating" id="max_rating"/>
                                             </label>
                                             <div class="note">
                                                 <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -71,7 +71,7 @@
                                         <label class="label"></label>
                                         <div class="inline-group">
                                             <label class="checkbox">
-                                                <input value="" type="checkbox" name="IsDefault" id="IsDefault">
+                                                <input value="" type="checkbox" name="default_kpi" id="default_kpi">
                                                 <i></i>Make Default Scale
                                             </label>
                                         </div>

@@ -4,9 +4,12 @@ namespace  App\Http\Controllers\Frontend;
 use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
 
+use App\Model\JobCandidate;
+use App\Model\JobCandidateAttchment;
 use App\Model\UserAttachment;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
+use const http\Client\Curl\AUTH_ANY;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -58,7 +61,34 @@ class ResumeController extends Controller
     public function store(Request $request)
     {
 
-        //
+        $CheckExistingCV = DB::table('users as u')
+                            ->join('user_attachments as ua','ua.user_id','=','u.id')
+                            ->where('ua.user_id',Auth::user()->id)
+                            ->first();
+        if($CheckExistingCV){
+           return redirect('/kh-works/post-resume')->with('warning','Resume already existing !');
+        }else{
+            $file = $request->file('cv_file_id');
+//        dd($file);
+//        dd($request->hasFile('cv_file_id'));
+            if ($request->hasFile('cv_file_id')) {
+                $image = $request->file('cv_file_id');
+                //dd($image);
+                $mytime = \Carbon\Carbon::now()->toDateTimeString();
+                $name = $image->getClientOriginalName();
+                $size = $image->getClientSize();
+                $type = $image->getMimeType();
+                $destinationPath = public_path('/uploaded/UserCV/');
+                $image->move($destinationPath,$name);
+                $Resume_upload = new UserAttachment();
+                $Resume_upload->user_id = Auth::user()->id;
+                $Resume_upload->name = $name;
+                $Resume_upload->size = $size;
+                $Resume_upload->save();
+            }
+            $Resume_upload->save();
+            return redirect('/kh-works/post-resume')->with('success','Resume has been created !');
+        }
     }
 
     /**
@@ -103,49 +133,7 @@ class ResumeController extends Controller
     {
 
 //        dd($request->all());
-        $resume = User::findOrFail($id);
-        $resume->name = $request->name;
-        $resume->full_name = $request->full_name;
-        $resume->address = $request->address;
-        $resume->mobile = $request->mobile;
-        if ($request->hasFile('photo_file_id')) {
-            $image = $request->file('photo_file_id');
-            //dd($image);
-            $mytime = \Carbon\Carbon::now()->toDateTimeString();
-            $name = $image->getClientOriginalName();
-            $size = $image->getClientSize();
-//
-            $type = $image->getMimeType();
-            $destinationPath = public_path('/uploaded/UserPhoto/');
-            $image->move($destinationPath,$name);
-            $resume->photo= $name;
-        }
-//        dd($resume);
-        $file = $request->file('cv_file_id');
-//        dd($file);
-//        dd($request->hasFile('cv_file_id'));
-        if ($request->hasFile('cv_file_id')) {
-            $image = $request->file('cv_file_id');
-            //dd($image);
-            $mytime = \Carbon\Carbon::now()->toDateTimeString();
-            $name = $image->getClientOriginalName();
-            $size = $image->getClientSize();
-//
-            $type = $image->getMimeType();
-            $destinationPath = public_path('/uploaded/UserCV/');
-            $image->move($destinationPath,$name);
-            $Resume_upload = new UserCv();
-            $Resume_upload->user_id = input::get('user_id');
-            $Resume_upload->name = $name;
-            $Resume_upload->size = $size;
-//            $Resume_upload->image = $image;
-//            $Resume_upload->type = $type;
-            $Resume_upload->save();
-            $cv_id = $Resume_upload->id;
-            $resume->cv_file_id = $cv_id;
-        }
-        $resume->save();
-        return redirect('/kh-works/post-resume');
+
         //
     }
 

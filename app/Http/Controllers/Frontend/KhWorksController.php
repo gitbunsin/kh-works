@@ -33,13 +33,18 @@ class KhWorksController extends Controller
     public function index(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
-        $JobVacancy = DB::table('job_vacancies as v')
-            ->join('job_titles as t','v.job_title_code','=','t.id')
-            ->join('organization_gen_infos as com','v.company_id','=','com.id')
-            ->orWhere('description', 'like', '%' .$searchTerm. '%')
-            ->paginate(10);
-//        dd($JobVacancy);
+//        $JobVacancy = DB::table('job_vacancies as v')
+//            ->join('job_titles as t','v.job_title_code','=','t.id')
+//            ->join('organization_gen_infos as com','v.company_id','=','com.id')
+//            ->orWhere('description', 'like', '%' .$searchTerm. '%')
+//            ->select('v.*','t.*','com.*','v.name as vacancy_name','v.id as vacancy_id')
+////            ->get();
+//            ->paginate(10);
+
+       // dd($JobVacancy);
      // dd($Job);
+        $JobVacancy= \App\Model\Vacancy::with(['company','jobtitle'])->get();
+//        dd($JobVacancy);
         return view('frontend.Kh-Works.layouts.ui-main',compact('JobVacancy'));
 
 //        return redirect('/kh-works')->with(compact('JobTitle','JobCategory'));

@@ -22,10 +22,9 @@
                                             <label class="label"> Job Title</label>
                                             <label class="select">
                                                 @php
-                                                    //  $company_id = Auth::guard('admins')->user()->id;use App\Model\Backend\JobTitle;use Illuminate\Support\Facades\Auth;$Job_Title= JobTitle::where('company_id',$company_id)->get();
-                                                                                          $JobTitle = \App\Model\JobTitle::all();
+                                                   $JobTitle = \App\Model\JobTitle::all();
                                                 @endphp
-                                                <select name="job_titles_code" id="job_titles_code" class="required">
+                                                <select name="job_title_code" id="job_title_code" class="required">
                                                     <option value="">Choose Manager</option>
                                                     @foreach($JobTitle as $JobTitles)
                                                         <option value="{{$JobTitles->id}}">{{$JobTitles->name}}</option>
@@ -36,16 +35,17 @@
                                         </section>
                                         <div class="row">
                                             <section class="col col-6">
-                                                <label class="label"> Vacancy Name</label>
+                                                <label class="label">Vacancy Name</label>
                                                 <label class="input">
-                                                    <input type="text" id="vacancy_name" name="vacancy_name">
-                                                </label>
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input type="text" name="name" placeholder="vacancy name">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available vacancy name</b> </label>
                                             </section>
                                             <section class="col col-6">
                                                 <label class="label"> Hiring Manager </label>
                                                 <div class="form-group">
-                                                    <select name="hiring_manager"
-                                                            id="hiring_manager"
+                                                    <select name="hiring_manager_id"
+                                                            id="hiring_manager_id"
                                                             style="width:100%" class="select2 select2-hidden-accessible"
                                                             tabindex="-1" aria-hidden="true">
                                                         <optgroup label="Performance Employee Trackers">
@@ -56,9 +56,6 @@
                                                             @endforeach
                                                         </optgroup>
                                                     </select>
-                                                    {{--<div class="note">--}}
-                                                    {{--<strong>Usage:</strong> Employee performance tracker--}}
-                                                    {{--</div>--}}
                                                 </div>
                                             </section>
 
@@ -66,10 +63,11 @@
 
                                         <div class="row">
                                             <section class="col col-6">
-                                                <label class="label"> Number of Positions</label>
+                                                <label class="label">Number of Position</label>
                                                 <label class="input">
-                                                    <input type="text" id="number_of_position" name="number_of_position">
-                                                </label>
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input type="number" name="number_of_position" placeholder="">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available vacancy name</b> </label>
                                             </section>
                                             <section class="col col-6">
                                                 <div class="row">
@@ -99,7 +97,7 @@
                                                 <label class="label"> Closing Date </label>
                                                 <label class="input">
                                                     <i class="icon-append fa fa-calendar"></i>
-                                                    <input type="text" id="closing_date" name="closing_date" class="datepicker">
+                                                    <input type="text" id="closingDate" name="closingDate" class="datepicker">
                                                 </label>
                                             </section>
                                             <span id="lblErrorresume" style="color: red;"></span>
@@ -191,12 +189,6 @@
                                     <fieldset>
                                         <section>
                                             <div class="row">
-                                                {{--<section class="col col-6">--}}
-                                                    {{--<label class="label">Company Name*</label>--}}
-                                                    {{--<input name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />--}}
-                                                    {{--<label class="input">--}}
-                                                        {{--<input disabled  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">--}}
-                                                    {{--</label>--}}
                                                 <section class="col col-6">
                                                     <label class="label">Company Name</label>
                                                     <div class="input-group">
@@ -238,7 +230,8 @@
                                                 <hr>
                                                 <br/>
                                                 <footer>
-                                                    <input type="submit" id="btnUploadJob" class="btn btn-primary" value="save"/>
+                                                    {{--<input type="submit" id="btnUploadJob" class="btn btn-primary" value="save"/>--}}
+                                                    <button type="submit" id="btnUploadJob" class="btn btn-primary">Save <i class="fa fa-arrow-circle-right"></i> </button>
                                                     <button type="button" class="btn btn-default" onclick="window.history.back();">
                                                         Back
                                                     </button>
@@ -313,18 +306,18 @@
                 }
             });
         });
-        var allowedFiles = [".doc", ".docx", ".pdf"];
-        $('#btnUploadJob').click(function () {
-            var allowedFiles = [".pdf"];
-            var fileUpload = $("#resume");
-            var lblError = $("#lblErrorresume");
-            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-            if (!regex.test(fileUpload.val().toLowerCase())) {
-                lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
-                return false;
-            }
-            lblError.html('');
-            return true;
-        });
+        // var allowedFiles = [".doc", ".docx", ".pdf"];
+        // $('#btnUploadJob').click(function () {
+        //     var allowedFiles = [".pdf"];
+        //     var fileUpload = $("#resume");
+        //     var lblError = $("#lblErrorresume");
+        //     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+        //     if (!regex.test(fileUpload.val().toLowerCase())) {
+        //         lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+        //         return false;
+        //     }
+        //     lblError.html('');
+        //     return true;
+        // });
     </script>
 @endsection

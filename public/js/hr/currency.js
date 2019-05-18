@@ -19,9 +19,9 @@ $(document).on('click','.open_modal',function(){
         type: "GET",
         url: '/administration/pay-grade/' + currency_id,
         success: function (data) {
+            console.log(data);
             var item = $('#currency_id');
             item.empty();
-
             $.each(data.all_currency, function(key, value) {
                 var isSelected = false;
                 if(value.currency_id == currency_id) {
@@ -49,63 +49,6 @@ $(document).on('click','.open_modal',function(){
 /***
  * Add Currency to PayGrade 
  */
-// $("#btn-save").click(function (e) {
-//     $.ajaxSetup({
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//     });
-
-//     e.preventDefault();
-//     var formData = {
-//         pay_grade_id : $('#pay_grade_id').val(),
-//         currency_id : $('#currency_id').val(),
-//         min_salary : $('#min_salary').val(),
-//         max_salary : $('#max_salary').val(),
-//     }
-//     var state = $('#btn-save').val();
-//     var type = "POST"; //for creating new resource
-//     var currency_id = $('#currency_id').val();
-//     var my_url ="/administration/add-currency-pay";
-//     if (state == "update"){
-//         type = "PUT"; //for updating existing resource
-//         my_url = "/administration/pay-grade"
-//         my_url += '/' + currency_id;
-//     }
-
-//     console.log("Form Data = ", formData);
-//     $.ajax({
-//         cache:false,
-//         type: type,
-//         url: my_url,
-//         data: formData,
-//         dataType: 'json',
-//         success: function (data) {
-//             console.log("success", data);
-//             $("tbody>tr>td.dataTables_empty").hide();
-//             var table =
-//                 '<tr id="currency_id'+data.id+'">' +
-//                 '<td class="sorting_1">' + data.currency_name + '</td>'+
-//                 '<td class="sorting_1">' + data.min_salary+ '</td>'+
-//                 '<td class="sorting_1">' + data.max_salary + '</td>';
-//             table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail delete-item"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
-//             if (state == "add"){ //if user added a new record
-//                 $('#products-list').append(table);
-//             } else { //if user updated an existing record
-//                 $("#currency_id" + currency_id).replaceWith(table);
-//             }
-//             $('#frmProducts').trigger("reset");
-//             $('#myModal').modal('hide')
-//         },
-//         error: function (error) {
-//             (JSON.stringify(error));
-//             console.log("Error", error);
-//         }
-//     });
-// });
-
-
-
 
 //delete product and remove it from TABLE list ***************************
 $(document).on('click','.delete-item',function(){

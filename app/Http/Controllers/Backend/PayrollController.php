@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Model\Employee;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class PayrollController extends BackendController
 {
@@ -16,8 +19,28 @@ class PayrollController extends BackendController
     {
         //
         $this->shareMenu();
-        return view('backend.HRIS.Payroll.index');
+        $employee_id = input::get('employee_payroll');
+        if($employee_id){
+            $SearchEmployee = Employee::where('emp_number',$employee_id)->first();
 
+        }else{
+            $SearchEmployee = "";
+        }
+
+        return view('backend.HRIS.Payroll.index',compact('SearchEmployee'));
+
+    }
+    public function getPdf($id)
+    {
+//        $invoice = PDF::loadView('pdf.pdf_bill',array('name'=>$id));
+//        return $invoice->stream();
+        $paySleep = Employee::where('emp_number',$id)->first();
+        if($paySleep){
+            $paySleep = Employee::where('emp_number',$id)->first();
+        }else{
+            $paySleep ="";
+        }
+        return $this->index();
     }
 
     /**
@@ -38,7 +61,32 @@ class PayrollController extends BackendController
      */
     public function store(Request $request)
     {
+        //dd("hello");
+
+        $employee_id = input::get('employee_payroll');
+        if($employee_id){
+            $SearchEmployee = Employee::where('emp_number',$employee_id)->first();
+
+        }else{
+            $SearchEmployee = "";
+        }
+
+        return $this->index();
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function SearchEmpPayroll(){
+        $this->shareMenu();
+        $employee_id = input::get('employee_payroll');
+        $SearchEmployee = Employee::where('emp_number',$employee_id)->first();
+
+        return view('backend.HRIS.Payroll.index',compact('SearchEmployee'));
     }
 
     /**
@@ -49,7 +97,15 @@ class PayrollController extends BackendController
      */
     public function show($id)
     {
-        //
+
+        //dd('hello');
+        $paySleep = Employee::where('emp_number',$id)->first();
+        if($paySleep){
+            $paySleep = Employee::where('emp_number',$id)->first();
+        }else{
+            $paySleep ="";
+        }
+        return $this->index(compact('paySleep'));
     }
 
     /**
@@ -60,6 +116,7 @@ class PayrollController extends BackendController
      */
     public function edit($id)
     {
+        dd('hello');
         //
     }
 

@@ -57,8 +57,9 @@ class DependentsController extends BackendController
             $employeeID = Auth::guard('employee')->user()->company_id;
         }
         $d = new EmployeeDependent();
-        $d->emp_number = $employeeID;
         $d->ed_name = $request->name;
+        $d->emp_number = $employeeID;
+        $d->ed_relationship = $request->relationship_id;
         $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
         $d->save();
         return redirect('/administration/view-dependents')->with('success','Item added successfully');
@@ -108,8 +109,9 @@ class DependentsController extends BackendController
             $employeeID = Auth::guard('employee')->user()->company_id;
         }
         $d =  EmployeeDependent::findOrFail($id);
-        $d->emp_number =  $employeeID;
         $d->ed_name = $request->name;
+        $d->emp_number = $employeeID;
+        $d->ed_relationship = $request->relationship_id;
         $d->ed_date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
         $d->save();
         return redirect('/administration/view-dependents')->with('success','Item added successfully');

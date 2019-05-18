@@ -79,7 +79,7 @@
             onConfirm: function (event, element) {
                 element.closest('form').submit();
             }
-        });   
+        });
     });
 </script>
 @endsection

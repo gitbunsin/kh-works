@@ -21,7 +21,7 @@
                             <!-- This area used as dropdown edit box -->
                         </div>
                         <div class="widget-body no-padding">
-                            <form id="frmImmigration" method="POST"  action="{{url('administration/view-immigration/'.$m->passport_id)}}" class="smart-form" enctype="multipart/form-data">
+                            <form id="frmImmigration" method="POST"  action="{{url('administration/view-immigration/'.$m->id)}}" class="smart-form" enctype="multipart/form-data">
                                 <input name="_method" type="hidden" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
@@ -55,7 +55,7 @@
                                     <section>
                                         <label class="label">Number </label>
                                         <label class="input">
-                                            <input value="{{$m->ep_passport_num}}" type="number" name="passport_number" id="passport_number">
+                                            <input value="{{$m->eq_passport_num}}" type="number" name="passport_number" id="passport_number">
                                         </label>
                                     </section>
                                     <div class="row">
@@ -135,9 +135,6 @@
                 rules : {
                     passport_number : {
                         required : true
-                    },
-                    Issued_By : {
-                        required: true
                     }
                 },
                 // Do not change code below

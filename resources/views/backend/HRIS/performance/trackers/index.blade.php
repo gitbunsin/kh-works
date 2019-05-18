@@ -51,7 +51,7 @@
                                         <td>{{$PerformanceTracks->emp_lastname}}{{$PerformanceTracks->emp_firstname}}</td>
                                         <td>{{$PerformanceTracks->tracker_name}}</td>
                                         <td>{{$PerformanceTracks->added_date}}</td>
-                                        <td>{{$PerformanceTracks->modified_date}}</td>
+                                        <td>{{$PerformanceTracks->updated_at}}</td>
                                         <td>
                                             <a  href="{{url('/administration/employee-performance-trackers/'.$PerformanceTracks->id .'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>

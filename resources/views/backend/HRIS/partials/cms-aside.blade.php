@@ -10,25 +10,26 @@
 					</a>
 				</span>
     </div>
-    <!-- end user info -->
-
-    <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
-            @php
-               //dd($menus);
-            @endphp
                      <ul>
-                            
                          <li class="{{ Request::segment(2) == "Dashboard" ? "active" : " " }}">
                              <a href="{{url('/administration/Dashboard')}}" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
                          </li>
+                          @php
+
+                             // $icon = array("1"=>"fa-cube txt-color-blue",);
+                          $i = 0;
+
+                         @endphp
+
                          @foreach ($menus as $item)
                              <li>
                                  <a href="#">
-                                     <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
+                                     <i class="{{ config('menus.icons')[$i] }}"></i>
                                      <span class="menu-item-parent">{{$item->name}}</span>
                                  </a>
                                  @php
+                                    $i++;
                                     if(count($item->sub_menu)>0){
                                  @endphp
                                  <ul>
@@ -58,5 +59,4 @@
                          @endforeach
                      </ul>
          </nav>
-     
 </aside>

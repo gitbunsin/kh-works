@@ -1,22 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-use App\Helper\AppHelper;
-use App\Helper\MenuHelper;
-use App\Http\Controllers\Controller;
-
 use App\Model\Leave;
+use App\Model\LeaveComment;
 use App\Model\LeaveEntitlement;
 use App\Model\LeaveRequest;
-use DateInterval;
-use DatePeriod;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use function Sodium\compare;
 
 /**
  * Class LeaveController
@@ -29,6 +21,7 @@ class LeaveController extends BackendController
      */
     public function __construct()
     {
+
     }
 
     /**
@@ -39,8 +32,10 @@ class LeaveController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        //
-        $ListAllLeave = LeaveEntitlement::all();
+        $id = input::get('employee_leave');
+        $ListAllLeave = Leave::with(['leavetype','employee','leaveStatus'])->where('emp_number',$id)->first();
+
+//        dd($ListAllLeave);
         return view('backend.HRIS.Leave.Leave.index', compact('ListAllLeave'));
     }
     public function applyLeave()
@@ -63,11 +58,8 @@ class LeaveController extends BackendController
     public function addLeaveEntitlement()
     {
 
-
         return response()->json(['Data' => 'successfully']);
-
     }
-
 
     public function viewMyLeaveList()
     {
@@ -97,6 +89,8 @@ class LeaveController extends BackendController
     public function viewLeaveBalanceReport()
     {
 
+
+        $this->shareMenu();
         return view('backend.HRIS.Leave.Leave.leave_report');
     }
 
@@ -114,9 +108,9 @@ class LeaveController extends BackendController
         return response()->json($leave_balance);
     }
 
+
     public function DisplayLeaveDetails()
     {
-
 
         return response()->json(['Data' => "True"]);
     }
@@ -162,7 +156,7 @@ class LeaveController extends BackendController
         if (!$CheckExistingDateApplyLeave->isEmpty()) {
 //            $this->shareMenu();
 //            return view('backend.HRIS.Leave.Leave.applyLeave')->with('warning', 'Workshift Length Exceeded Due To the Following Leave Requests:');
-            return redirect('/administration/get-applyLeave')->with('warning', 'Workshift Length Exceeded Due To the Following Leave Requests:');
+            return redirect('/administration/get-applyLeave')->with('warning', 'Worksheet Length Exceeded Due To the Following Leave Requests:');
         }else{
            // dd('hello');
             for ($i = $time1; $i <= $time2; $i = $i + 86400) {
@@ -221,7 +215,7 @@ class LeaveController extends BackendController
                     $leave->duration_type =$request->duration_end_date;
                 }
                 $leave->created_by_name =$name;
-                $leave->status = 1;
+                $leave->leave_status = 1;
                 $leave->comment = $request->comments;
                 $leave->date = date('Y-m-d', $i);
                 $leave->save();
@@ -235,7 +229,7 @@ class LeaveController extends BackendController
             $leaveEntitlement->day_used = $result;
             $leaveEntitlement->save();
         }
-        return redirect('/administration/get-applyLeave')->with('success', 'Leave has been requested');
+        return redirect('/administration/assign-leave')->with('success', 'Leave has been requested');
 
 
         //dd('hello');
@@ -253,6 +247,62 @@ class LeaveController extends BackendController
 //        return abs(round($diff / 86400));
 //    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function leaveComment($id){
+
+        $this->shareMenu();
+        $leaveComments = Leave::with(['leavetype','employee','leaveStatus'])->where('id',$id)->first();
+        return view('backend.HRIS.Leave.Leave.comment',compact('leaveComments'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function EmployeeLeaveComment(Request $request,$id){
+//        dd($request->value);
+
+
+//        return response()->json(["ok"=>"scuccessfully"]);
+
+        $leaveComment = Leave::findorFail($id);
+        $leaveComment->comment = $request->value;
+        $leaveComment->save();
+        return response()->json(["ok"=>"scuccessfully"]);
+//        $leaveComment = LeaveComment::create($request->all());
+//        $leaveComment->employee()->associate($request->emp_number);
+//        $leaveComment->company()->associate(Auth::guard('admins')->user()->name);
+//        $leaveComment->leave()->associate($request->leave_id);
+//        $leaveComment->save();
+
+//        return redirect('administration/define-leave-list');
+    }
+
+    public function EmployeeLeaveApprove(Request $request ,$id)
+    {
+
+//        $leaveComment = Leave::findorFail($id);
+//        $leaveComment->comment = $request->value;
+//        $leaveComment->save();
+        return response()->json(["ok"=>"scuccessfully"]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function leaveApprove(){
+
+        $this->shareMenu();
+        return view('backend.HRIS.Leave.Leave.comment');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -262,8 +312,15 @@ class LeaveController extends BackendController
      */
     public function store(Request $request)
     {
-        dd('hello');
+
+//        dd('hello');
         //
+        $id = $request->employee_leave;
+        $ListAllLeave = LeaveEntitlement::with(['leaveType','employee'])->where('emp_number',$id)->first();
+//        dd($ListAllLeave);
+
+        return $this->index();
+
     }
 
     /**

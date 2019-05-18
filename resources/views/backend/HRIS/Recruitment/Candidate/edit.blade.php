@@ -58,6 +58,19 @@
                                     </div>
                                     <div class="row">
                                         <section class="col col-4">
+                                            <label class="label">Job Vacancy</label>
+                                            <label class="select">
+                                                <select  name="vacancy_name" id="vacancy_name" class="required form-control">
+                                                    @php $JobVacancy = \App\Model\Vacancy::all(); @endphp
+                                                    <option value="">-- select --</option>
+                                                    @foreach($JobVacancy as $JobVacancies)
+                                                        <option value="{{$JobVacancies->id}}"{{$JobVacancies->id == $candidate->vacancies[0]->id? "selected='selected'":""}}>{{$JobVacancies->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-4">
                                             <label class="label">Email</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
@@ -75,23 +88,13 @@
 
                                             </label>
                                         </section>
-                                        <section class="col col-4">
-                                            <label class="label">KeyWord</label>
-                                            <label class="input">
-                                                <i class="icon-append fa fa-user"></i>
-                                                <input class="form-control" name="keywords" id="keywords" value="{{$candidate->keywords}}" placeholder="Enter comma separated words..." type="text" maxlength="10">
-                                                <b class="tooltip tooltip-bottom-right">Needed to enter available name</b> </label>
-
-                                            </label>
-                                        </section>
-
                                     </div>
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label"> Date </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input  type="text" id="date_of_application" name="date_of_application" placeholder="Request activation on" class="form-control">
+                                                <input  type="text" value="{{$candidate->date_of_application}}" id="date_of_application" name="date_of_application" placeholder="Request activation on" class="form-control">
                                             </label>
                                         </section>
                                         <section class="col col-4">
@@ -147,10 +150,8 @@
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
-
                         </div>
                         <!-- end widget edit box -->
-
                         <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
@@ -162,16 +163,16 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($CandidateHistory as $CandidateHistories)
-                                    <tr id="job_id{{$CandidateHistories->id}}">
-                                        <td>{{$CandidateHistories->performed_by}}</td>
-                                        <td></td>
+                                @foreach($candidate_history as $candidate_histories)
+                                    <tr>
+                                        <td>{{$candidate_histories->performed_date}}</td>
+                                        <td>{{$candidate_histories->note}}</td>
                                         <td>
-                                            <form action="{{ url('/administration/jobs-title', ['id' => $CandidateHistories->id]) }}" style="display:inline" method="post">
+                                            <form action="{{ url('/administration/jobs-title', ['id' => $candidate_histories->id]) }}" style="display:inline" method="post">
                                                 <input type="hidden" name="_method" value="delete" />
                                                 {!! csrf_field() !!}
                                                 <a href="#" target="_blank" data-toggle="confirmation"  data-title="Are You Sure Delete?" class="">
-                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                    View Details
                                                 </a>
                                             </form>
                                         </td>
@@ -192,6 +193,7 @@
          DisabledCandidateFrm();
          function DisabledCandidateFrm() {
 
+             $('#vacancy_name').prop('disabled',true);
              $('#first_name').prop('disabled',true);
              $('#last_name').prop('disabled',true);
              $('#middle_name').prop('disabled',true);
@@ -205,6 +207,7 @@
         }
          function  EnableCandiateForm(){
 
+             $('#vacancy_name').prop('disabled',false);
              $('#first_name').prop('disabled',false);
              $('#last_name').prop('disabled',false);
              $('#middle_name').prop('disabled',false);

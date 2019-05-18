@@ -28,6 +28,9 @@ class LeaveTypeController extends BackendController
      */
     public function create()
     {
+        $this->shareMenu();
+        return view('backend.HRIS.Leave.LeaveTypes.create');
+
         //
     }
 
@@ -39,7 +42,11 @@ class LeaveTypeController extends BackendController
      */
     public function store(Request $request)
     {
-        //
+
+        $leavetype = LeaveType::create($request->all());
+        return redirect('administration/leave-type')->with('success','Leave type has been added successfully');
+
+
     }
 
     /**
@@ -63,8 +70,8 @@ class LeaveTypeController extends BackendController
     {
         //
         $this->shareMenu();
-
-        return view('backend.HRIS.Leave.LeaveTypes.edit');
+        $leavetype = LeaveType::find($id);
+        return view('backend.HRIS.Leave.LeaveTypes.edit',compact('leavetype'));
     }
 
     /**
@@ -77,6 +84,9 @@ class LeaveTypeController extends BackendController
     public function update(Request $request, $id)
     {
         //
+        $leavetype = LeaveType::findorFail($id);
+        $leavetype->update($request->all());
+        return redirect('administration/leave-type')->with('success','Leave type has been updated successfully');
     }
 
     /**

@@ -46,18 +46,18 @@
                                 @foreach($m as $members)
                                     <tbody id="products-list" name="products-list">
                                     <tr id="emergency_id{{$members->id}}">
-                                        <td>{{$members->name}}</td>
+                                        <td>{{$members->member->name}}</td>
                                         @if($members->ememb_subscript_ownership =="1")
                                              <td>Company</td>
                                         @else
                                               <td>Individual</td>
                                         @endif
                                         <td>{{$members->ememb_subscript_amount}}</td>
-                                        <td></td>
+                                        <td>{{$members->currency->name}}</td>
                                         <td>{{$members->ememb_commence_date}}</td>
                                         <td>{{$members->ememb_renewal_date}}</td>
                                         <td>
-                                            <a  href="{{url('administration/view-membership/'.$members->member_id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
+                                            <a  href="{{url('administration/view-membership/'.$members->id.'/edit')}}" style="text-decoration:none;" class="btn-detail open_modal">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
                                             <a href="#" style="text-decoration:none;" class="delete-item">

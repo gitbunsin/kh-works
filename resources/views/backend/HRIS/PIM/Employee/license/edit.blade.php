@@ -44,7 +44,9 @@
                                         <section class="col col-6">
                                             <label class="label"> License Number *</label>
                                             <label class="input">
-                                                <input value="{{$lx->license_number}}" type="number" name="license_number" id="license_number">
+                                                <i class="icon-append fa fa-joomla"></i>
+                                                    <input value="{{$lx->license->name}}" type="number" name="license_number" id="license_number">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available License Number</b> </label>
                                             </label>
                                         </section>
                                     </div>

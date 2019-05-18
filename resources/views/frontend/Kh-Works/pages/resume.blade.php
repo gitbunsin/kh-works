@@ -36,11 +36,8 @@
                         @endphp
                         @endif
                     {{--<form id="validate_job" method="POST" action="{{url('administration/companyProfile')}}" class="smart-form">--}}
-                    {{Form::open(array("url"=>"kh-works/post-resume/".$id, "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
-                    <input name="_method" type="hidden" value="PATCH">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="name" value="{{Auth::user()->name}}"/>
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}"/>
+                    {{Form::open(array("url"=>"kh-works/post-resume", "class"=>"smart-form","enctype"=>"multipart/form-data"))}}
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <fieldset>
                             <div class="section express-yourself">
                                 <h4>Express Yourself</h4>
@@ -127,33 +124,33 @@
 
 <!-- JS -->
 @include('frontend.Kh-Works.partials.ui-script')
-<script type="application/javascript">
-    $("body").on("click", "#btnUpload", function () {
-//        var allowedFiles = [".doc", ".docx", ".pdf"];
-        var allowedFiles = [".pdf"];
-        var fileUpload = $("#fileUpload");
-        var lblError = $("#lblError");
-        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-        if (!regex.test(fileUpload.val().toLowerCase())) {
-            lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
-            return false;
-        }
-        lblError.html('');
-        return true;
-    });
-    $("body").on("click", "#btnUpload", function () {
-        var allowedFiles = [".jpg", ".png"];
-        var fileUpload = $("#fileUploadPhoto");
-        var lblError = $("#lblErrorPhoto");
-        var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-        if (!regex.test(fileUpload.val().toLowerCase())) {
-            lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
-            return false;
-        }
-        lblError.html('');
-        return true;
-    });
-</script>
+{{--<script type="application/javascript">--}}
+    {{--$("body").on("click", "#btnUpload", function () {--}}
+{{--//        var allowedFiles = [".doc", ".docx", ".pdf"];--}}
+        {{--var allowedFiles = [".pdf"];--}}
+        {{--var fileUpload = $("#fileUpload");--}}
+        {{--var lblError = $("#lblError");--}}
+        {{--var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");--}}
+        {{--if (!regex.test(fileUpload.val().toLowerCase())) {--}}
+            {{--lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");--}}
+            {{--return false;--}}
+        {{--}--}}
+        {{--lblError.html('');--}}
+        {{--return true;--}}
+    {{--});--}}
+    {{--$("body").on("click", "#btnUpload", function () {--}}
+        {{--var allowedFiles = [".jpg", ".png"];--}}
+        {{--var fileUpload = $("#fileUploadPhoto");--}}
+        {{--var lblError = $("#lblErrorPhoto");--}}
+        {{--var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");--}}
+        {{--if (!regex.test(fileUpload.val().toLowerCase())) {--}}
+            {{--lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");--}}
+            {{--return false;--}}
+        {{--}--}}
+        {{--lblError.html('');--}}
+        {{--return true;--}}
+    {{--});--}}
+{{--</script>--}}
 
 </body>
 </html>

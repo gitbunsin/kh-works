@@ -54,7 +54,6 @@
                                     $ListCompanyEmployee = \App\Model\Employee::where('emp_number',\Illuminate\Support\Facades\Auth::guard('admins')->user()->id)->first();
                                     $employeeID = $ListCompanyEmployee->emp_number;
                                     //dd($employeeID);
-
                                 }
                             @endphp
                             <div class="widget-body">
@@ -66,19 +65,25 @@
                                         <section class="col col-4">
                                             <label class="label">Address Street 1</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" value="{{$EmployeeContactDetails->emp_street1}}" type="text" name="emp_street1" id="emp_street1">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Address Street 1</b> </label>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Address Street 2</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control"  value="{{$EmployeeContactDetails->emp_street2}}" type="text" name="emp_street2" id="emp_street2">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Address Street 2</b> </label>
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">City</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" value="{{$EmployeeContactDetails->city_code}}" type="text" name="city_code" id="city_code" >
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available City</b> </label>
                                             </label>
                                         </section>
                                     </div>
@@ -87,21 +92,29 @@
                                         <section class="col col-4">
                                             <label class="label">State/Province</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control"  value="{{$EmployeeContactDetails->provin_code}}" type="text" name="provin_code" id="provin_code">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available State/Province</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Zip/Postal Code</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" value="{{$EmployeeContactDetails->emp_zipcode}}" type="text" name="emp_zipcode" id="emp_zipcode">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Zip/Postal Code</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label"> Country</label>
                                             <label class="select">
                                                 <select class="form-control" name="coun_code" id="coun_code">
-                                                    <option value="0">Select</option>
-                                                    <option value=""></option>
+                                                    @php $country = \App\Model\Country::all(); @endphp
+                                                    @foreach($country as $countries )
+                                                         <option value="{{$countries->id}}">{{$countries->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -111,19 +124,30 @@
                                         <section class="col col-4">
                                             <label class="label">Home Telephone</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" type="number" value="{{$EmployeeContactDetails->emp_hm_telephone}}"  name="emp_hm_telephone" id="emp_hm_telephone">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Home Telephone</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Mobile</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
+
                                                 <input class="form-control" type="number" value="{{$EmployeeContactDetails->emp_mobile}}"  name="emp_mobile" id="emp_mobile">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Mobile</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label"> Work Telephone</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
+
                                                 <input class="form-control" type="number" value="{{$EmployeeContactDetails->emp_work_telephone}}"  name="emp_work_telephone" id="emp_work_telephone">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Work Telephone</b> </label>
+
                                             </label>
                                         </section>
                                     </div>
@@ -132,13 +156,20 @@
                                         <section class="col col-4">
                                             <label class="label">Work Email</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
+
                                                 <input class="form-control" type="email" name="emp_work_email" value="{{$EmployeeContactDetails->emp_work_email}}" id="emp_work_email">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Work Email</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Other Email</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input class="form-control" type="email" name="emp_oth_email" value="{{$EmployeeContactDetails->emp_oth_email}}" id="emp_oth_email">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Other Email</b> </label>
+
                                             </label>
                                         </section>
                                     </div>

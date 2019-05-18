@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
+use App\Model\Backend\EmployeeLicense;
 use \App\Model\EmployeeEducation;
 use App\Model\EmployeeLanguage;
 use \App\Model\EmployeeWorkExperience;
@@ -32,8 +33,14 @@ class QualificationController extends BackendController
                                 ->get();
 //        dd($e);
         $EmployeeWorkExperience = EmployeeWorkExperience::all();
-        $EmployeeLanguage = EmployeeLanguage::all();
-        return view('backend.HRIS.PIM.Employee.qualification',compact('EmployeeWorkExperience','EmployeeEducation','EmployeeSkill','EmployeeLanguage'));
+        $EmployeeLanguage = EmployeeLanguage::with('language')->get();
+        $license = EmployeeLicense::with('license')->get();
+        return view('backend.HRIS.PIM.Employee.qualification',compact(
+            'EmployeeWorkExperience','EmployeeEducation',
+            'EmployeeSkill',
+            'EmployeeLanguage',
+            'license'
+        ));
 
     }
 

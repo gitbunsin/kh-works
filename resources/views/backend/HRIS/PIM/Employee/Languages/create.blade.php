@@ -42,13 +42,13 @@
                                         <section class="col col-6">
                                             <label class="label">Fluency</label>
                                             <label class="select">
-                                                {{--<select name="fluency_id" id="fluency_id">--}}
-                                                    {{--<option value="">-- select --</option>--}}
-                                                    {{--@php $p = array('Poor','Basic','Good','Mother Tough'); @endphp--}}
-                                                    {{--@foreach($p as $ps)--}}
-                                                        {{--<option value="{{$ps}}">{{$ps}}</option>--}}
-                                                    {{--@endforeach--}}
-                                                {{--</select>--}}
+                                                <select name="fluency_id" id="fluency_id">
+                                                    <option value="">-- select --</option>
+                                                    @php $p = array('Poor','Basic','Good','Mother Tough'); @endphp
+                                                    @foreach($p as $ps)
+                                                        <option value="{{$ps}}">{{$ps}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <i></i>
                                             </label>
                                         </section>
@@ -57,13 +57,13 @@
                                         <section class="col col-6">
                                             <label class="label"> Competency *</label>
                                             <label class="select">
-                                                {{--<select name="competency_id" id="competency_id">--}}
-                                                    {{--<option value="">-- select --</option>--}}
-                                                    {{--@php $f = array('writing','speaking','reading'); @endphp--}}
-                                                    {{--@foreach($f as $fs)--}}
-                                                        {{--<option value="{{$fs}}">{{$fs}}</option>--}}
-                                                    {{--@endforeach--}}
-                                                {{--</select>--}}
+                                                <select name="competency_id" id="competency_id">
+                                                    <option value="">-- select --</option>
+                                                    @php $f = array('writing','speaking','reading'); @endphp
+                                                    @foreach($f as $fs)
+                                                        <option value="{{$fs}}">{{$fs}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <i></i>
                                             </label>
                                         </section>

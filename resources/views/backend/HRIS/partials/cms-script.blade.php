@@ -137,6 +137,7 @@
 <!-- JQUERY SELECT2 INPUT -->
 <script src="{{ asset('js/plugin/select2/select2.min.js')}}"></script>
 
+
 <!-- JQUERY pages + Bootstrap Slider -->
 <script src="{{ asset('js/plugin/bootstrap-slider/bootstrap-slider.min.js')}}"></script>
 
@@ -145,6 +146,9 @@
 
 <!-- FastClick: For mobile devices -->
 <script src="{{ asset('js/plugin/fastclick/fastclick.min.js')}}"></script>
+
+<script src="{{asset('js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js')}}"></script>
+
 
 <!--[if IE 8]>
 
@@ -323,7 +327,7 @@
         });
 
         // custom toolbar
-        $("div.toolbar").html('<div class="text-right"><img src="img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+        $("div.toolbar").html('<div class="text-right"></div>');
 
         // Apply the filter
         $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {

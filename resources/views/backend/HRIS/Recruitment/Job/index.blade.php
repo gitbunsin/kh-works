@@ -9,7 +9,7 @@
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
                             <a style="background: #333;" class="btn btn-primary" href="{{url('administration/post-jobs/create')}}" role="button">
-                                <i class="glyphicon glyphicon-plus-sign "></i> Add new</a>
+                                 Add new <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -18,13 +18,10 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> List all Jobs</h2>
+                        <h2> List all Vacancy</h2>
                     </header>
                     <!-- widget div-->
                     <div>
-                        <!-- end widget edit box -->
-
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
                                 <thead>
@@ -57,21 +54,17 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($jobVacancy as $jobVacancys)
-                                    <tr id="">
-                                        <td>{{$jobVacancys->name}}</td>
-                                        <td>{{$jobVacancys->emp_lastname}}{{$jobVacancys->emp_firstname}}</td>
-                                        <td>{{$jobVacancys->name}}</td>
+                                @foreach($jobVacancy as $jobVacancies)
+                                    <tr>
+                                        <td>
+                                            <a href="{{url('/administration/post-jobs/'.$jobVacancies->id.'/edit')}}">{{$jobVacancies->name}}</a>
+
+                                        </td>
+
+                                        <td>{{$jobVacancies->employee->emp_lastname}}{{$jobVacancies->employee->emp_firstname}}</td>
+                                        <td>{{$jobVacancies->jobtitle->name}}</td>
                                         <td><span class="label label-success">Active</span></td>
-                                        <td></td>
-                                        {{--<td>--}}
-                                            {{--<a href="{{url('administration/post-jobs/'.$jobVacancys->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">--}}
-                                                {{--<i class="glyphicon glyphicon-edit"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="{{$jobVacancys->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                        {{--</td>--}}
+                                        <td>{{$jobVacancies->closingDate}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

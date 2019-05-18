@@ -43,13 +43,18 @@
                                         <section class="col col-4">
                                             <label class="label">Institute *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="text" name="institute_id" id="institute_id">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Institute</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Major/Specialization *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="text" name="major" id="major">
+                                                <b class="tooltip tooltip-bottom-right">Needed to enter available Specialization</b> </label>
                                             </label>
                                         </section>
                                     </div>
@@ -58,13 +63,18 @@
                                             <section class="col col-4">
                                                 <label class="label"> Year </label>
                                                 <label class="input">
+                                                    <i class="icon-append fa fa-joomla"></i>
                                                     <input value="" type="text" id="year" name="year" class="year">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available License Number</b> </label>
                                                 </label>
                                             </section>
                                             <section class="col col-4">
                                                 <label class="label"> GPA/Score </label>
                                                 <label class="input">
-                                                    <input  value="" type="text" id="gpa_id" name="score" class="gpa_id">
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input  value="" type="number" id="gpa_id" name="score" class="gpa_id">
+                                                    <b class="tooltip tooltip-bottom-right">Needed to enter available GPA/Score</b> </label>
+
                                                 </label>
                                             </section>
                                             <section class="col col-4">

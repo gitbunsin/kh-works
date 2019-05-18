@@ -23,6 +23,7 @@ class CreateTerminationsTable extends Migration
             $table->foreign('reason_id')->references('id')->on('termination_reasons')->onDelete('cascade');
 
             $table->date('termination_date')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

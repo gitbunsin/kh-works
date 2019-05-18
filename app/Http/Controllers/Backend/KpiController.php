@@ -19,19 +19,7 @@ class KpiController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        if(Auth::guard('admins')->user()){
-            $company_id = Auth::guard('admins')->user()->id;
-
-        }else{
-            $company_id = Auth::guard('employee')->user()->company_id;
-        }
-        //
-        $k = DB::table('kpis as k')
-                ->select('k.*','j.*','k.id as kpi_id')
-                ->join('job_titles as j','k.job_title_code','=','j.id')
-                ->get();
-//        $k = Kpi::all();
-       // dd($k);
+        $k = Kpi::with('jobTitle')->get();
         return view('backend.HRIS.PIM.Configuration.Kpi.index',compact('k'));
     }
 
@@ -55,18 +43,10 @@ class KpiController extends BackendController
      */
     public function store(Request $request)
     {
+        //dd('hello');
         //
-        $k = new Kpi();
-        $k->job_title_code = $request->job_titles_code;
-        $k->kpi_indicators = $request->performance;
-        $k->min_rating	= $request->min_id;
-		$k->max_rating = $request->max_id;
-		$IsCheck = $request->IsDefault;
-		if($IsCheck){
-		    $k->default_kpi = 1;
-        }else{
-		    $k->default_kpi = 0;
-        }
+        $k = Kpi::create($request->all());
+        $k->jobTitle()->associate($request->job_titles_code);
 		$k->save();
 		return redirect('/administration/employee-kpi')->with('success','Item created successfully!');
 
@@ -108,24 +88,27 @@ class KpiController extends BackendController
     {
         //
         //dd($request->IsDefault_yes);
-        $k =  Kpi::findOrFail($id);
-        $k->job_title_code = $request->job_titles_code;
-        $k->kpi_indicators = $request->performance;
-        $k->min_rating	= $request->min_id;
-        $k->max_rating = $request->max_id;
+//        $k =  Kpi::findOrFail($id);
+        $k = Kpi::findOrFail($id);
+        $k->jobTitle()->associate($request->job_titles_code);
 
-        $IsCheck_yes = $request->IsDefault_yes;
-        //dd($IsCheck_no);
-        if($IsCheck_yes == "1"){
-            $k->default_kpi = 1;
-        }else{
-            $k->default_kpi = 0;
-        }
-        if($request->IsDefault_no == "1"){
-            $k->default_kpi = 1;
-        }else{
-            $k->default_kpi = 0;
-        }
+//        $k->job_title_code = $request->job_titles_code;
+//        $k->kpi_indicators = $request->performance;
+//        $k->min_rating	= $request->min_id;
+//        $k->max_rating = $request->max_id;
+//
+//        $IsCheck_yes = $request->IsDefault_yes;
+//        //dd($IsCheck_no);
+//        if($IsCheck_yes == "1"){
+//            $k->default_kpi = 1;
+//        }else{
+//            $k->default_kpi = 0;
+//        }
+//        if($request->IsDefault_no == "1"){
+//            $k->default_kpi = 1;
+//        }else{
+//            $k->default_kpi = 0;
+//        }
         $k->save();
         return redirect('/administration/employee-kpi')->with('success','Item Edited successfully!');
     }

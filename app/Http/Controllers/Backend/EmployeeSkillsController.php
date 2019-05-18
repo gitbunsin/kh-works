@@ -29,7 +29,6 @@ class EmployeeSkillsController extends BackendController
     public function create()
     {
 
-
         $this->shareMenu();
         return view('backend.HRIS.PIM.Employee.skill.create');
     }
@@ -71,7 +70,7 @@ class EmployeeSkillsController extends BackendController
     public function show($skill_id)
     {
 
-        $data = EmployeeSkills::findOrFail($skill_id);
+        $data = EmployeeSkill::findOrFail($skill_id);
         return response()->json($data);
     }
 
@@ -85,7 +84,7 @@ class EmployeeSkillsController extends BackendController
     {
         //
         $this->shareMenu();
-        $s = EmployeeSkills::findOrFail($id);
+        $s = EmployeeSkill::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.skill.edit',compact('s'));
     }
 
@@ -105,7 +104,7 @@ class EmployeeSkillsController extends BackendController
         }else{
             $company_id = Auth::guard('employee')->user()->company_id;
         }
-        $data = EmployeeSkills::findOrFail($id);
+        $data = EmployeeSkill::findOrFail($id);
         $data->skill_id = $request->skills;
         $data->years_of_exp = $request->year_of_experience;
         $data->comments = $request->comments;

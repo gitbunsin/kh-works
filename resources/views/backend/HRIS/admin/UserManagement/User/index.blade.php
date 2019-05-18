@@ -31,19 +31,22 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Username</th>
-                                    <th>Email</th>
+                                    <th>email</th>
+                                    <th>Employee Name</th>
+                                    <th>company</th>
+                                    <th>Role</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($u as $us)
-                                    {{$us->status}}
-                                    <tr id="user_id{{$us->id}}">
-                                        <td>{{$us->name}}</td>
-                                        <td>{{$us->email}}</td>
-                                        @if($us->verified == "1")
+                                @foreach($userEmployee as $userEmployees)
+                                    <tr>
+                                        <td>{{$userEmployees->email}}</td>
+                                        <td>{{$userEmployees->employee->emp_firstname}} {{$userEmployees->employee->emp_lastname}}</td>
+                                        <td>{{$userEmployees->company->name}}</td>
+                                        <td>{{$userEmployees->role->name}}</td>
+                                        @if($userEmployees->verified == "1")
                                             <td>
                                                 <span class="label label-success">Enabled</span>
                                             </td>
@@ -53,12 +56,12 @@
                                             </td>
                                         @endif
                                         <td>
-                                            <a data-id="" href="{{url('administration/user/'.$us->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                            <a data-id="" href="{{url('administration/user/'.$userEmployees->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a data-id="{{$us->id}}" href="#" style="text-decoration:none;" class="delete-item">
-                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
-                                            </a>
+                                            {{--<a data-id="{{$userEmployees->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
+                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
+                                            {{--</a>--}}
                                         </td>
                                     </tr>
                                 @endforeach

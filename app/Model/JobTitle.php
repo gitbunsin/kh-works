@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobTitle extends Model
 {
 
-    protected $table = 'job_titles';
+    protected $table = 'job_title';
     protected $fillable = [
         'id',
         'company_id',
@@ -17,14 +17,13 @@ class JobTitle extends Model
 
     public function company()
     {
-        return $this->belongsTo('App\organization_gen_infos');
+        return $this->belongsTo('App\organization_gen_infos','company_id','id');
     }
 
-    public function Employee()
+    public function vacancies()
     {
-        return $this->hasMany(Employee::class,'job_title_code','id');
+        return $this->hasMany(JobVacancy::class);
     }
 
 
-    //
 }

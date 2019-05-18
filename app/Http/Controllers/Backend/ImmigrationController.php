@@ -5,6 +5,7 @@ use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 
 use App\Immigration;
+use App\Model\Employee;
 use App\Model\EmployeePassport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -88,9 +89,8 @@ class ImmigrationController extends BackendController
      */
     public function edit($id)
     {
-        //
         $this->shareMenu();
-        $m = DB::table('employee_passports as p')->get();
+        $m = EmployeePassport::findOrFail($id);
         return view('backend.HRIS.PIM.Employee.immigration.edit',compact('m'));
     }
 
@@ -104,13 +104,12 @@ class ImmigrationController extends BackendController
     public function update(Request $request, $id)
     {
         //
-        $migration = Immigration::findOrFail($id);
-        $migration->ep_seqno = $request->document;
-        $migration->company_id = Auth::guard('admins')->user()->id;
-        $migration->ep_passport_num = $request->passport_number;
+        $migration = EmployeePassport::findOrFail($id);
+        $migration->eq_seqno = $request->document;
+        $migration->eq_passport_num = $request->passport_number;
         $migration->ep_passportissueddate = carbon::parse($request->issued_date);
         $migration->ep_passportexpiredate = carbon::parse($request->expiry_date);
-        $migration->ep_comment = $request->comments;
+        $migration->ep_comments = $request->comments;
         $migration->ep_passport_type_flg = $request->Issued_By;
         $migration->ep_i9_status = $request->status;
         $migration->ep_i9_review_date = carbon::parse($request->review_date);

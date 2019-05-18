@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="{{ app()->getLocale()}}">
 	<head>
-        <title> SmartAdmin </title>
+        <title> Kh-works </title>
 
 		<meta charset="utf-8">
 		<meta name="description" content="">

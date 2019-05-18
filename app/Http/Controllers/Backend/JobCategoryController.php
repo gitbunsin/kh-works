@@ -40,12 +40,14 @@ class JobCategoryController extends BackendController
     public function store(Request $request)
     {
         //dd($request->all());
+        //dd(Auth::guard('employee')->user()->id);
         if(Auth::guard('admins')->user()){
 
                 $company_id =Auth::guard('admins')->user()->id;
         }else{
             $company_id =Auth::guard('employee')->user()->company_id;
         }
+
         $job_category = new JobCategory();
         $job_category->company_id = $company_id;
         $job_category->name = $request->name;

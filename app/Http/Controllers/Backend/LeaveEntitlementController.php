@@ -12,6 +12,8 @@ use App\Model\LeavePeriodHistory;
 use App\Model\Location;
 use App\Model\SubUnit;
 use FontLib\Table\Type\loca;
+use const http\Client\Curl\AUTH_ANY;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,14 +33,9 @@ class LeaveEntitlementController extends BackendController
         $country = Country::with('Location')->get();
         $categories = SubUnit::where('parent_id', '=', 0)->get();
         $allCategories = SubUnit::pluck('title','id')->all();
-      //  dd($categories);
-        //dd($country);
-        //$country->Country;
-        //dd($country->Country);
-//        $categories = Subunit::where('parent_id', '=', 0)->get();
-//        $allCategories = Subunit::pluck('title','id')->all();
-        return view('backend.HRIS.Leave.Entitlement.index',compact('country','categories','allCategories'));
-
+//        dd($categories);
+        $data ="";
+        return view('backend.HRIS.Leave.Entitlement.index',compact('country','categories','allCategories','data'));
 
     }
 
@@ -66,8 +63,17 @@ class LeaveEntitlementController extends BackendController
         return view('backend.HRIS.Leave.Entitlement.my_entitlement', compact('leave_entitlement'));
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * Step to apply leave
+     * 1 . Add Entitlement for leave
+     */
+     public function searchEmployeeMatch($id)
+     {
 
 
+         return response()->json(["ok"=>"Successfully"]);
+     }
     /**
      * @return \Illuminate\Http\JsonResponse
      * Step to apply leave
@@ -75,9 +81,6 @@ class LeaveEntitlementController extends BackendController
      */
     public function addEmployeeLeaveEntitlment(){
 
-
-//        $AllEmp =  DB::table('employees')->count();
-//        $AllEmp = Employee::count();
         $total = DB::table('employees')
             ->select('*', DB::raw('COUNT(*) as review_count'))
             ->groupBy('emp_number')
@@ -105,57 +108,82 @@ class LeaveEntitlementController extends BackendController
      */
     public function store(Request $request)
     {
+       // dd($request->all());
+//        dd($request->);
 
+        $employee_id= $request->emp_number;
+        $data = LeaveEntitlement::where('emp_number',$employee_id)->get();
+//        dd($data);
+        if($data->isEmpty()){
 
-        $isCheck = $request->CheckEmployee;
-       if($isCheck == "1"){
-           $TotalEmp = $request->EmpNumber;
-//        dd($TotalEmp)
-           if(is_array($TotalEmp)) {
-               foreach ($TotalEmp as $item) {
-//            echo  $item;
-                   if (Auth::guard('admins')->user()) {
-                       $company_id = Auth::guard('admins')->user()->id;
-                   } else {
-                       $company_id = Auth::guard('admins')->user()->company_id;
-                   }
-                   $LeaveEntitlement = New LeaveEntitlement();
-                   $LeaveEntitlement->emp_number = $item;
-                   $LeaveEntitlement->company_id = $company_id;
-                   $LeaveEntitlement->created_by_name = Auth::guard('admins')->user()->name;
-                   $LeaveEntitlement->leave_type_id = $request->leave_type;
-                   $LeaveEntitlement->entitlement_type = 1;
-                   $LeaveEntitlement->no_of_day = $request->entitlements_day;
-                   //check Leave period History
-                   $LeavePeriod = LeavePeriodHistory::where('id', $request->leave_period)->first();
-                   $LeaveEntitlement->from_date = $LeavePeriod->leave_period_start_month;
-                   $LeaveEntitlement->to_date = $LeavePeriod->leave_period_start_day;
+            $entitlement = new LeaveEntitlement();
+            $entitlement->company()->associate(Auth::guard('admins')->user()->id);
+            $employee = Employee::find($request->emp_number);
+            $entitlement->employee()->associate($employee);
+            $entitlement->leavetype()->associate($request->leave_type_id);
+            $entitlement->entitlementType()->associate(1);
+            $entitlement->no_of_day = $request->entitlements_day;
+            $LeavePeriod = LeavePeriodHistory::where('id', $request->leave_type_id)->first();
+            $entitlement->from_date = $LeavePeriod->leave_period_start_month;
+            $entitlement->to_date = $LeavePeriod->leave_period_start_day;
+            $entitlement->save();
 
-                   $LeaveEntitlement->save();
-               }
-           }
-       }else{
+        }else{
+//            dd($data);
 
-           if (Auth::guard('admins')->user()) {
-               $company_id = Auth::guard('admins')->user()->id;
-           } else {
-               $company_id = Auth::guard('admins')->user()->company_id;
-           }
-           $LeaveEntitlement = New LeaveEntitlement();
-           $LeaveEntitlement->emp_number = $request->EmployeeEntitlement;
-           $LeaveEntitlement->company_id = $company_id;
-           $LeaveEntitlement->created_by_name = Auth::guard('admins')->user()->name;
-           $LeaveEntitlement->leave_type_id = $request->leave_type;
-           $LeaveEntitlement->entitlement_type = 1;
-           $LeaveEntitlement->no_of_day = $request->entitlements_day;
-           //check Leave period History
-           $LeavePeriod = LeavePeriodHistory::where('id', $request->leave_period)->first();
-           $LeaveEntitlement->from_date = $LeavePeriod->leave_period_start_month;
-           $LeaveEntitlement->to_date = $LeavePeriod->leave_period_start_day;
+            return redirect('/administration/add-leave-entitlement')->with('error','Existing Entitlement value will be updated!');
+        }
 
-           $LeaveEntitlement->save();
-
-       }
+        //dd('hello');
+       // $leaveEntitlement = new LeaveEntitlement();
+//        $isCheck = $request->CheckEmployee;
+//       if($isCheck == "1"){
+//           $TotalEmp = $request->emp_number;
+////        dd($TotalEmp)
+//           if(is_array($TotalEmp)) {
+//               foreach ($TotalEmp as $item) {
+////            echo  $item;
+//                   if (Auth::guard('admins')->user()) {
+//                       $company_id = Auth::guard('admins')->user()->id;
+//                   } else {
+//                       $company_id = Auth::guard('admins')->user()->company_id;
+//                   }
+//                   $LeaveEntitlement = New LeaveEntitlement();
+//                   $LeaveEntitlement->emp_number = $item;
+//                   $LeaveEntitlement->company_id = $company_id;
+//                   $LeaveEntitlement->created_by_name = Auth::guard('admins')->user()->name;
+//                   $LeaveEntitlement->leave_type_id = $request->leave_type_id;
+//                   $LeaveEntitlement->entitlement_type = 1;
+//                   $LeaveEntitlement->no_of_day = $request->entitlements_day;
+//                   //check Leave period History
+//                   $LeavePeriod = LeavePeriodHistory::where('id', $request->leave_period)->first();
+//                   $LeaveEntitlement->from_date = $LeavePeriod->leave_period_start_month;
+//                   $LeaveEntitlement->to_date = $LeavePeriod->leave_period_start_day;
+//                   $LeaveEntitlement->save();
+//               }
+//           }
+//       }else{
+//
+//           if (Auth::guard('admins')->user()) {
+//               $company_id = Auth::guard('admins')->user()->id;
+//           } else {
+//               $company_id = Auth::guard('admins')->user()->company_id;
+//           }
+//           $LeaveEntitlement = New LeaveEntitlement();
+//           $LeaveEntitlement->emp_number = $request->EmployeeEntitlement;
+//           $LeaveEntitlement->company_id = $company_id;
+//           $LeaveEntitlement->created_by_name = Auth::guard('admins')->user()->name;
+//           $LeaveEntitlement->leave_type_id = $request->leave_type_id;
+//           $LeaveEntitlement->entitlement_type = 1;
+//           $LeaveEntitlement->no_of_day = $request->entitlements_day;
+//           //check Leave period History
+//           $LeavePeriod = LeavePeriodHistory::where('id', $request->leave_period)->first();
+//           $LeaveEntitlement->from_date = $LeavePeriod->leave_period_start_month;
+//           $LeaveEntitlement->to_date = $LeavePeriod->leave_period_start_day;
+//
+//           $LeaveEntitlement->save();
+//
+//       }
 //        dd($request->all());
 //        dd(input::get('EmpNumber'));
 

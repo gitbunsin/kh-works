@@ -5,6 +5,7 @@ use App\Helper\AppHelper;
 use App\Helper\MenuHelper;
 use App\Http\Controllers\Controller;
 use App\Model\LeavePeriodHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -62,12 +63,15 @@ class LeavePeriodController extends BackendController
      */
     public function store(Request $request)
     {
-        //
-        //dd('hello');
+//        dd($request->all());
         $this->shareMenu();
         $LeavePeriod = new LeavePeriodHistory();
-        $LeavePeriod->leave_period_start_month = input::get('StartDate');
-        $LeavePeriod->leave_period_start_day = input::get('EndDate');
+//        dd($request->EndDate);
+        $Split = $request->EndDate;
+        $result = explode('-',$Split,2);
+//        dd($result[0]);
+        $LeavePeriod->leave_period_start_month = Carbon::parse($result[0])->format('Y-m-d');
+        $LeavePeriod->leave_period_start_day = Carbon::parse($result[1])->format('Y-m-d');
         $LeavePeriod->company_id = Auth::guard('admins')->user()->id;
 
         $LeavePeriod->save();

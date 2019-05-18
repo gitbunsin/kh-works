@@ -52,17 +52,6 @@
                                     </div>
                                 </div>
                                 <br/>
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-lg-12 margin-tb">--}}
-                                        {{--<div class="pull-right">--}}
-                                            {{--<button id="show" type="button" class="btn btn-info">--}}
-                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                {{--</div>--}}
-                                {{--<br/>--}}
                                 <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                     <tr>
@@ -82,7 +71,7 @@
                                                     {{$EmployeeWorkExperiences->eexp_employer}}
                                                 </a>
                                             </td>
-                                            <td>{{$EmployeeWorkExperiences->eexp_jobtite}}</td>
+                                            <td>{{$EmployeeWorkExperiences->eexp_jobtitle}}</td>
                                             <td>{{$EmployeeWorkExperiences->eexp_from_date}}</td>
                                             <td>{{$EmployeeWorkExperiences->eexp_to_date}}</td>
                                             <td>{{$EmployeeWorkExperiences->eexp_comments}}</td>
@@ -115,13 +104,12 @@
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                        <h2> Educations 1</h2>
+                        <h2> Educations</h2>
 
                     </header>
 
                     <!-- widget div-->
                     <div>
-
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <!-- This area used as dropdown edit box -->
@@ -132,7 +120,6 @@
                         <br/>
                         <!-- widget div-->
                         <div>
-
                             <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
                                 <!-- This area used as dropdown edit box -->
@@ -141,17 +128,6 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-lg-12 margin-tb">--}}
-                                        {{--<div class="pull-right">--}}
-                                            {{--<button id="btn_education" type="button" class="btn btn-info">--}}
-                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<br/>--}}
-
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
@@ -178,7 +154,7 @@
                                         <tr id="education_id{{$EmployeeEducations->id}}">
                                             <td>
                                                 <a href="{{url('/administration/employee-education/'.$EmployeeEducations->id.'/edit')}}" style="text-decoration:none;" class="">
-                                                    {{$EmployeeEducations->name}}
+                                                    {{$EmployeeEducations->institute}}
                                                 </a>
                                             </td>
                                             <td>{{$EmployeeEducations->year}}</td>
@@ -226,7 +202,6 @@
                         <br/>
                         <!-- widget div-->
                         <div>
-
                             <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
                                 <!-- This area used as dropdown edit box -->
@@ -235,18 +210,6 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-lg-12 margin-tb">--}}
-                                        {{--<div class="pull-right">--}}
-                                            {{--<button id="show_skill"  type="button" class="btn btn-info">--}}
-                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                {{--</div>--}}
-                                {{--<br/>--}}
-
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
@@ -331,16 +294,6 @@
 
                             <!-- widget content -->
                             <div class="widget-body">
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-lg-12 margin-tb">--}}
-                                        {{--<div class="pull-right">--}}
-                                            {{--<button id="btn_language" type="button" class="btn btn-info">--}}
-                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<br/>--}}
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
@@ -368,7 +321,7 @@
                                         <tr id="language_id{{$EmployeeLanguages->id}}">
                                             <td>
                                                 <a href="{{url('administration/employee-language/'.$EmployeeLanguages->id.'/edit')}}" class="btn-detail">
-                                                    {{$EmployeeLanguages->name}}
+                                                    {{$EmployeeLanguages->language->name}}
                                                 </a>
                                             </td>
                                             <td>{{$EmployeeLanguages->fluency}}</td>
@@ -422,17 +375,6 @@
                                 <!-- This area used as dropdown edit box -->
                             </div>
                             <div class="widget-body">
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-lg-12 margin-tb">--}}
-                                        {{--<div class="pull-right">--}}
-                                            {{--<button id="btn_license"  type="button" class="btn btn-info">--}}
-                                                {{--<i class="glyphicon glyphicon-plus-sign "></i> Add--}}
-                                            {{--</button>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-
-                                {{--</div>--}}
-                                {{--<br/>--}}
                                 <div class="row">
                                     <div class="col-lg-12 margin-tb">
                                         <div class="pull-right">
@@ -452,22 +394,22 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-license" name="list-license">
-                                    {{--@foreach($license as $licenses)--}}
-                                        {{--<tr id="license_id{{$licenses->id}}">--}}
-                                            {{--<td>--}}
-                                                {{--<a href="{{url('/administration/employee-license/'.$licenses->id.'/edit')}}" class="btn-detail">--}}
-                                                    {{--{{$licenses->license_number}}--}}
-                                                {{--</a>--}}
-                                            {{--</td>--}}
-                                            {{--<td>{{$licenses->issued_date}}</td>--}}
-                                            {{--<td>{{$licenses->expiry_date}}</td>--}}
-                                            {{--<td>--}}
-                                                {{--<a data-id="" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                    {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                                {{--</a>--}}
-                                            {{--</td>--}}
-                                        {{--</tr>--}}
-                                    {{--@endforeach--}}
+                                    @foreach($license as $licenses)
+                                        <tr id="license_id{{$licenses->id}}">
+                                            <td>
+                                                <a href="{{url('/administration/employee-license/'.$licenses->id.'/edit')}}" class="btn-detail">
+                                                    {{$licenses->license->name}}
+                                                </a>
+                                            </td>
+                                            <td>{{$licenses->license_issued_date}}</td>
+                                            <td>{{$licenses->license_expiry_date}}</td>
+                                            <td>
+                                                <a data-id="" href="#" style="text-decoration:none;" class="delete-item">
+                                                    <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

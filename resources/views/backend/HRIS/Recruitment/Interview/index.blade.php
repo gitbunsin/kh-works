@@ -26,6 +26,25 @@
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
                                 <tr>
+                                    <th class="hasinput" style="width:18%">
+                                        <input type="text" class="form-control" placeholder="Filter Interview Name" />
+                                    </th>
+                                    <th class="hasinput" style="width:18%">
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Filter Position" type="text">
+                                        </div>
+                                    </th>
+                                    <th class="hasinput" style="width:16%">
+                                        <input type="text" class="form-control" placeholder="Filter Office" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Number" />
+                                    </th>
+                                    <th class="hasinput" style="width:17%">
+                                        <input type="text" class="form-control" placeholder="Filter Age" />
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th>Interview Name</th>
                                     <th>Date</th>
                                     <th>Time</th>
@@ -35,67 +54,110 @@
                                 </thead>
                                 <tbody>
                                 @foreach($Interview as $Interviews)
-                                    <tr id="candidate_id{{$Interviews->candidate_id}}">
-                                        <td>{{$Interviews->name}}</td>
+                                    <tr>
                                         <td>
-                                            <a href="#" id="combodate1"
-                                               class="update" data-name="interview_date"
-                                               data-type="combodate"
-                                               data-roundTime=false
-                                               data-pk=""
-                                               data-title="Select date">
-                                                {{--{{$Interviews->interview_date}}--}}
+                                            <a href="#">
+                                                {{$Interviews->candidate->first_name}}{{$Interviews->candidate->last_name}}
                                             </a>
                                         </td>
+                                        @if($Interviews->CandidateVacancy->status =="HIRED")
                                         <td>
-                                            <a href="#" id="combodate2"
-                                               class="update" data-name="interview_time"
-                                               data-type="combodate"
-                                               data-roundTime=false
-                                               data-pk=""
-                                               data-title="Select date">
-                                              {{--{{date('h:i A', strtotime($Interviews->interview_time))}}--}}
+                                            {{$Interviews->interview_date}}
+                                        </td>
+                                        @else
+                                            <td>
+                                                <a href="#" id="combodate1"
+                                                   class="update" data-name="interview_date"
+                                                   data-type="combodate"
+                                                   data-roundTime=false
+                                                   data-pk="{{$Interviews->id}}"
+                                                   data-id="{{$Interviews->id}}"
+                                                   data-title="Select date">{{$Interviews->interview_date}}</a>
+                                            </td>
+                                        @endif
+                                        @if($Interviews->CandidateVacancy->status =="HIRED")
+                                        <td>
+                                            {{date('h:i A', strtotime($Interviews->interview_time))}}
+                                        </td>
+                                        @else
+                                            <td>
+                                                <a href="#" id="combodate2"
+                                                   class="update" data-name="interview_time"
+                                                   data-type="combodate"
+                                                   data-roundTime=false
+                                                   data-pk=""
+                                                   data-title="Select date">{{date('h:i A', strtotime($Interviews->interview_time))}}</a>
+                                            </td>
+                                        @endif
+                                        @if($Interviews->CandidateVacancy->status =="HIRED")
+                                        <td>
+                                           {{$Interviews->note}}
+                                        </td>
+                                        @else
+                                            <td>
+                                                <a href="#"
+                                                   id="comments"
+                                                   data-type="textarea"
+                                                   data-pk="1"
+                                                   data-placeholder="Your note here..."
+                                                   data-original-title="Enter notes"
+                                                   class="editable update editable-pre-wrapped editable-click">{{$Interviews->note}}</a>
+                                            </td>
+                                        @endif
+                                        @if($Interviews->CandidateVacancy->status =="INTERVIEW PASS")
+                                        <td class="">
+                                            <a  href="{{url('administration/Candidate-Offer-Job/'.$Interviews->id)}}" style="text-decoration:none;" class="">
+                                                JOB OFFER
+                                            </a>/
+                                            <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                REJECT
                                             </a>
                                         </td>
-                                        <td>
-                                            <a href="" class="update"
-                                               data-name="note"
-                                               data-type="text"
-                                               data-pk=""
-                                               data-title="Enter note">
-                                            </a>
-                                        </td>
-                                        <td class="text-center sorting_1">
-                                            <div class="dropdown">
-                                                <a href="#" class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px; ">
-                                                    Action
-                                                    <span class="caret"></span>
+                                            @elseif($Interviews->CandidateVacancy->status =="SCHEDULE INTERVIEW")
+                                            <td>
+                                                <a  href="{{url('administration/Candidate-Interview-Pass/'.$Interviews->id)}}" style="text-decoration:none;" class="">
+                                                    PASS
+                                                </a>/
+                                                <a  href="{{url('administration/Candidate-Interview-Fail/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                    FAIL
+                                                </a>/
+                                                <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                    REJECT
                                                 </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li>
-                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/profile">
-                                                            <input type="hidden" name="id" value="8818">
-                                                            <button type="submit" class="btn-link"> <i class="fa fa-mail-forward "></i> Pass </button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/edit">
-                                                            <input type="hidden" name="id" value="8818">
-                                                            <button type="submit" class="btn-link"> <i class="fa  fa-file "></i> Fail </button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form method="post" action="http://hrmsa.herokuapp.com/employee/destroy" class="delete-form" data-name="Employee">
-                                                            <input type="hidden" name="_token" value="6WkaKcu4nuyc2GHJ5HbWOEWT2zAvNCvr3lCNNRdK">
-                                                            <input type="hidden" name="id" value="111">
-                                                            <input type="hidden" name="_method" value="delete">
-                                                            <button type="submit" class="btn-link"> <i class="fa fa-trash"></i> Delete </button>
-                                                        </form>
-                                                    </li>
+                                            </td>
+                                            @elseif($Interviews->CandidateVacancy->status == "OFFER  JOB")
+                                            <td>
+                                                <a  href="{{url('administration/Candidate-decline-Job/'.$Interviews->id)}}" style="text-decoration:none;" class="">
+                                                   DECLINE OFFER
+                                                </a>/
+                                                <a  href="{{url('administration/Candidate-hire-Job/'.$Interviews->id)}}" style="color:brown;text-decoration:none;" class="">
+                                                    HIRE
+                                                </a>/
+                                                <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                    REJECT
+                                                </a>
+                                            </td>
+                                            @elseif($Interviews->CandidateVacancy->status == "OFFER  DECLINED")
+                                            <td>
+                                                <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                    REJECT
+                                                </a>
+                                            </td>
+                                            @elseif($Interviews->CandidateVacancy->status=="Hired")
+                                            <td>
 
-                                                </ul>
-                                            </div>
-                                        </td>
+                                            </td>
+                                            @elseif($Interviews->CandidateVacancy->status =="REJECT")
+                                            <td>
+
+                                            </td>
+                                            @elseif($Interviews->CandidateVacancy->status == "INTERVIEW FAIL")
+                                            <td>
+                                                <a  href="{{url('administration/candidate-reject/'.$Interviews->id)}}" style="color:red;text-decoration:none;" class="">
+                                                    REJECT
+                                                </a>
+                                            </td>
+                                            @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -106,69 +168,13 @@
             </article>
         </div>
     </section>
-    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://www.appelsiini.net/download/jquery.jeditable.mini.js"></script>
+@endsection
+@section('script')
     <script type="text/javascript">
-        //delete product and remove it from TABLE list ***************************
-        $(document).on('click','.pass',function(){
-            var confirmation = confirm("are you agrees this candidate ?");
-            if(confirmation) {
-                var candidate_id = $(this).attr('data-id');
-                alert(candidate_id);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    cache: false,
-                    url: '/administration/pass-interview/' + candidate_id,
-                    dataType: "Json",
-                    success: function (data) {
-                        // alert(JSON.stringify(data));
-                        var concatId = 'candidate_id'+candidate_id;
-                        concatId = concatId.replace(/\s/g, '');
-                        document.getElementById(concatId).remove();
-                        $("tbody>tr>td.dataTables_empty").show();
-
-                    },
-                    error: function (data) {
-                        alert(JSON.stringify(data));
-                    }
-                });
-            }
-        });
         // =================if fail=======================
-        $(document).on('click','.fail',function(){
-            var confirmation = confirm("are you reject this candidate ?");
-            if(confirmation) {
-                var candidate_id = $(this).attr('data-id');
-                // alert(candidate_id);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    cache: false,
-                    url: '/administration/fail-interview/' + candidate_id,
-                    dataType: "Json",
-                    success: function (data) {
-                        alert(JSON.stringify(data));
-                        var concatId = 'candidate_id'+candidate_id;
-                        concatId = concatId.replace(/\s/g, '');
-                        document.getElementById(concatId).remove();
-                        $("tbody>tr>td.dataTables_empty").show();
-                    },
-                    error: function (data) {
-                        alert(JSON.stringify(data));
-                    }
-                });
-            }
-        });
+
+        $.fn.combodate.defaults.minYear = 2010;
+        $.fn.combodate.defaults.maxYear = 2531;
         $(document).ready(function(){
             // $('.edit').editable('/meh.php');
             $.ajaxSetup({
@@ -177,49 +183,64 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             })
-            $("#combodate1").editable({
-                // template: 'MM / DD / YYYY ',
-                // format: 'MM/DD/YYYY',
-                // viewformat: 'MM/DD/YYYY',
-                // mode: 'inline',
-                // combodate:{
-                //     showbuttons: true,
-                //     roundTime: false,
-                //     smartDays: true
-                // },
-                url: '/administration/update-user',
-                type: 'text',
-                pk: 1,
+
+            var interview_id = $('#combodate1').attr('data-id');
+            // alert($interview_id);
+            $('#combodate1').editable({
+                pk : interview_id,
+                url: '/administration/update-interview-date/'+ interview_id ,
+                type: 'Json',
                 interview_date: 'interview_date',
-                title: 'Enter note'
+                title: 'Enter note',
+                ajaxOptions:{
+                    type:'post'
+                } ,
+                 success: function(data) {
+                  console.log(data);
+                },
+                error:function () {
+
+                }
             });
             $("#combodate2").editable({
                 template: 'hh : mm A',
                 format: 'hh:mm A',
                 viewformat: 'hh:mm A',
-                // mode: 'inline',
-                // combodate:{
-                //     showbuttons: true,
-                //     roundTime: false,
-                //     smartDays: true,
-                //     minuteStep: 1
-                // },
-                url: '/administration/update-user',
-                type: 'text',
-                pk: 1,
+                pk: interview_id,
+                url: '/administration/update-interview-time/'+interview_id,
+                type: 'Json',
                 name: 'interview_time',
-                title: 'Enter note'
+                title: 'Enter note',
+                ajaxOptions:{
+                    type:'post'
+                } ,
+                success: function(data) {
+
+                    console.log(data);
+                },
+                error:function () {
+
+                }
+
             });
             $('.update').editable({
-                url: '/administration/update-user',
+                pk: interview_id,
+                url: '/administration/update-interview-note/'+interview_id,
                 type: 'text',
-                pk: 1,
                 name: 'name',
-                title: 'Enter note'
+                title: 'Enter note',
+                ajaxOptions:{
+                    type:'post'
+                } ,
+                success: function(data) {
+
+                    console.log(data);
+                },
+                error:function () {
+
+                }
 
             });
         });
-
-
     </script>
 @endsection

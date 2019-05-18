@@ -25,28 +25,30 @@ class PayGradeController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        $pay_grade = PayGrade::where(['company_id' => Auth::guard('admins')->user()->id])->get();
-//        dd($pay_grade);
-        $data = [];
-        foreach ($pay_grade as $item) {
-            $result = $this->getCurrencyNameByPaygrade($item["id"]);
-            $item["currency_name"] = $result;
-            array_push($data, $item);
-        }
-        return view('backend.HRIS.admin.PayGrade.index', compact('data'));
+        $payGrade = PayGrade::with('currencies')->get();
+//        dd($payGrade);
+//        $pay_grade = PayGrade::where(['company_id' => Auth::guard('admins')->user()->id])->get();
+////        dd($pay_grade);
+//        $data = [];
+//        foreach ($pay_grade as $item) {
+//            $result = $this->getCurrencyNameByPaygrade($item["id"]);
+//            $item["currency_name"] = $result;
+//            array_push($data, $item);
+//        }
+        return view('backend.HRIS.admin.PayGrade.index', compact('payGrade'));
     }
 
     public function getCurrencyNameByPaygrade($payGradeId)
     {
-
-        $pay_grade = DB::table('currency_pay_grade as pc')
-            ->select('ct.name')
-            ->leftJoin('currencies as ct', 'pc.currency_id', "=", 'ct.id')
-            ->where('pc.pay_grade_id', $payGradeId)
-            ->get()
-            ->toArray();
-//        dd($pay_grade);
-        return $pay_grade;
+//
+//        $pay_grade = DB::table('currency_pay_grade as pc')
+//            ->select('ct.name')
+//            ->leftJoin('currencies as ct', 'pc.currency_id', "=", 'ct.id')
+//            ->where('pc.pay_grade_id', $payGradeId)
+//            ->get()
+//            ->toArray();
+////        dd($pay_grade);
+//        return $pay_grade;
     }
     /**
      * Show the form for creating a new resource.

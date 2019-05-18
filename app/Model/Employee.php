@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\OrganizationGenInfo;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
@@ -16,6 +17,7 @@ class Employee extends Model
         'employee_id',
         'emp_lastname',
         'emp_middle_name',
+        'emp_firstname',
         'emp_nick_name',
         'emp_smoker',
         'ethnic_race_code',
@@ -58,15 +60,51 @@ class Employee extends Model
         'custom9',
         'custom10',
     ];
+    public function employeeAttachments(){
+
+        return $this->belongsToMany(EmployeeAttachment::class);
+
+    }
+
+    public function company(){
+
+        return $this->belongsTo(OrganizationGenInfo::class,'company_id','id');
+    }
+
+    public function Interviews(){
+
+        return $this->belongsToMany(interview::class);
+    }
+
+    public function WorkShifts(){
+
+        return $this->belongsToMany(WorkShift::class);
+    }
 
     public function JobTitle()
     {
-        return $this->belongsTo(JobTitle::class);
+        return $this->belongsTo(JobTitle::class,'job_titles_code','id');
     }
     public function location()
     {
-
         return $this->belongsToMany(Location::class);
+    }
+    public function EmploymentStatus(){
+
+        return $this->belongsTo(EmploymentStatus::class,'emp_status','id');
+    }
+    public function WorkStation(){
+        return $this->belongsTo(SubUnit::class,'work_station','id');
+
+    }
+    public function ReportingMethods(){
+
+        return $this->belongsToMany(ReportingMethod::class);
+    }
+
+    public function vacancies()
+    {
+        return $this->belongsToMany(JobVacancy::class);
     }
 
 

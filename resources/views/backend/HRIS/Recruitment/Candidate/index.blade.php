@@ -17,21 +17,7 @@
                     </div>
                 </div>
                 <br/>
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-                    <!-- widget options:
-                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-                    data-widget-colorbutton="false"
-                    data-widget-editbutton="false"
-                    data-widget-togglebutton="false"
-                    data-widget-deletebutton="false"
-                    data-widget-fullscreenbutton="false"
-                    data-widget-custombutton="false"
-                    data-widget-collapsed="true"
-                    data-widget-sortable="false"
-
-                    -->
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>List all Candidate</h2>
@@ -45,9 +31,6 @@
                             <!-- This area used as dropdown edit box -->
 
                         </div>
-                        <!-- end widget edit box -->
-
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
 
                             <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
@@ -83,88 +66,55 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                 @foreach($JobCandidate as $JobCandidates)
+                                @foreach($JobCandidate as $JobCandidates)
                                     <tr>
-                                        <td>{{$JobCandidates->name}}</td>
                                         <td>
-                                            <a href="{{url('/administration/candidate/'.$JobCandidates->Candidate_id.'/edit')}}">
+                                            @foreach($JobCandidates->vacancies as $vacancy)
+                                                {{$vacancy->name}}
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a href="{{url('/administration/candidate/'.$JobCandidates->id.'/edit')}}">
                                                 {{$JobCandidates->first_name}}{{$JobCandidates->middle_name}} {{$JobCandidates->last_name}}
                                             </a>
                                         </td>
-                                        <td>{{$JobCandidates->email}}</td>
-                                        <td> <span class="label label-success">{{$JobCandidates->CandidateStatus}}</span></td>
-                                        <td>{{$JobCandidates->date_of_application}}</td>
-                                        <td class="text-center sorting_1">
-                                            {{--<div class="dropdown">--}}
-                                                {{--<button style="padding:3px 7px;border-radius:5px;" class="btn btn-danger dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Action--}}
-                                                    {{--<span class="caret"></span></button>--}}
-                                                {{--<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">--}}
-                                                    {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>--}}
-                                                    {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>--}}
-                                                    {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>--}}
-                                                    {{--<li role="presentation" class="divider"></li>--}}
-                                                    {{--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>--}}
-                                                {{--</ul>--}}
-                                            {{--</div>--}}
-                                            <div class="dropdown">
-                                                <a href="#" class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px;">
-                                                    Action
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                    <li>
-                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/profile">
-                                                            <input type="hidden" name="id" value="8818">
-                                                            <button type="submit" class="btn-link"> <i class="fa fa-user"></i> Profile </button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form method="get" action="http://hrmsa.herokuapp.com/employee/edit">
-                                                            <input type="hidden" name="id" value="8818">
-                                                            <button type="submit" class="btn-link"> <i class="fa fa-edit"></i> Edit </button>
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        <form method="post" action="http://hrmsa.herokuapp.com/employee/destroy" class="delete-form" data-name="Employee">
-                                                            <input type="hidden" name="_token" value="6WkaKcu4nuyc2GHJ5HbWOEWT2zAvNCvr3lCNNRdK">
-                                                            <input type="hidden" name="id" value="111">
-                                                            <input type="hidden" name="_method" value="delete">
-                                                            <button type="submit" class="btn-link"> <i class="fa fa-trash"></i> Delete </button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <td>
+                                            @php $employee = \App\Model\Employee::where('emp_number',$JobCandidate[0]->vacancies[0]->hiring_manager_id)->first(); @endphp
+                                            {{$employee->emp_lastname}}{{$employee->emp_firstname}}
                                         </td>
-                                        {{--<td>--}}
-                                            {{--<a data-id="" id="approved" href="#" style="text-decoration:none;" class="btn-detail approved">--}}
-                                                {{--<i class="glyphicon glyphicon-check "></i>--}}
-                                            {{--</a>--}}
-                                            {{--<a data-id="" id="declined" href="#" style="text-decoration:none;" class="btn-detail reject">--}}
-                                                {{--<i class="glyphicon glyphicon-remove-sign"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
-                                            {{--<ul>--}}
-                                                {{--<li>--}}
-                                                    {{--<form  action="{{url('administration/candidate-approved/'.$JobCandidates->id)}}" method="POST" >--}}
-                                                            {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-                                                            {{--<input type="hidden" value="{{$JobCandidates->id}}" name="candidate_id"/>--}}
-                                                            {{--<a href="#" onclick="$(this).closest('form').submit()" class="btn btn-labeled btn-success"> <i class="glyphicon glyphicon-ok"></i></a>--}}
-                                                            {{--<a href="javascript:void(0);" class="btn btn-labeled btn-danger"> <i class="glyphicon glyphicon-remove"></i></a>--}}
-                                                    {{--</form>--}}
-                                                {{--</li>--}}
-                                            {{--<div class="dropdown show">--}}
-                                                {{--<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                                                    {{--Dropdown link--}}
-                                                {{--</a>--}}
+                                        <td>
+                                            @foreach($JobCandidates->vacancies as $vacancy)
+                                                <span class="label label-success">{{$vacancy->pivot->status}}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>{{$JobCandidates->date_of_application}}</td>
 
-                                                {{--<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">--}}
-                                                    {{--<a class="dropdown-item" href="#">Action</a>--}}
-                                                    {{--<a class="dropdown-item" href="#">Another action</a>--}}
-                                                    {{--<a class="dropdown-item" href="#">Something else here</a>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</td>--}}
-                                            {{--</ul>--}}
-                                        {{--</td>--}}
+
+                                        @foreach($JobCandidates->vacancies as $vacancy)
+                                            @if($vacancy->pivot->status =="APPLICATION INITIATED")
+                                                <td class="sorting_1">
+                                                    <a  href="{{url('administration/candidate-shortlist/'.$JobCandidates->id)}}" style="text-decoration:none;" class="">
+                                                        SHORT LIST
+                                                    </a>/
+                                                    <a  href="{{url('administration/CandidateRejectList/'.$JobCandidates->id)}}" style="color:red;text-decoration:none;" class="">
+                                                        REJECT
+                                                    </a>
+                                                </td>
+                                            @elseif($vacancy->pivot->status =="SHORT LIST")
+                                                <td class="sorting_1">
+                                                    <a  href="{{url('administration/candidate-Schedule-Interview/'.$JobCandidates->id)}}" style="text-decoration:none;" class="">
+                                                        SCHEDULE
+                                                    </a>/
+                                                    <a  href="{{url('administration/CandidateRejectList/'.$JobCandidates->id)}}" style="color:red;text-decoration:none;" class="">
+                                                        REJECT
+                                                    </a>
+                                                </td>
+                                            @else
+                                                <td>
+
+                                                </td>
+                                            @endif
+                                        @endforeach
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -187,7 +137,7 @@
                 var confirmation = confirm("are you sure you want to approve ?");
                 if (confirmation) {
                     var candidate_id = $(this).attr('data-id');
-                   // alert(candidate_id);
+                    // alert(candidate_id);
                     $.ajax({
                         type: "POST",
                         cache: false,

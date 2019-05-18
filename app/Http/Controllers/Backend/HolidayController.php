@@ -54,6 +54,7 @@ class HolidayController extends BackendController
         $Holiday->name = $request->name;
         $Holiday->company_id = $company_id;
         $Holiday->operational_country_id = 1;
+        $Holiday->operational_country_id = 1;
         //$l->employee_id = Auth::guard('employee')->user()->id;
         $Holiday->date = Carbon::parse($request->date);
         $check = $request->check;
@@ -130,6 +131,9 @@ class HolidayController extends BackendController
      */
     public function destroy($id)
     {
+        $holiday = Holiday::findorFail($id);
+        $holiday->delete();
+        return redirect('/administration/define-holiday')->with('success','Holiday has been deleted');
         //
     }
 }

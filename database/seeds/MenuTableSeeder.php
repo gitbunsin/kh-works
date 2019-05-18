@@ -374,7 +374,7 @@ class MenuTableSeeder extends Seeder
         $menu1 = new Menu();
         //$menu1->id = 47;
         $menu1->name = "Report";
-        $menu1->link="";
+        $menu1->link="administration/view-leave-balance-report";
         $menu1->parent_id = 42;
         $menu1->save();
 
@@ -383,7 +383,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 48;
         $menu1->name = "Leave Entitlement and Usage reports";
         $menu1->link="administration/view-leave-balance-report";
-        $menu1->parent_id = 46;
+        $menu1->parent_id = 49;
         $menu1->save();
 
         $menu1 = new Menu();
@@ -404,7 +404,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 51;
         $menu1->name = "Leave Period";
         $menu1->link="administration/define-leave-period";
-        $menu1->parent_id = 53;
+        $menu1->parent_id = 52;
         $menu1->save();
 
 
@@ -412,7 +412,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 52;
         $menu1->name = "Leave Type";
         $menu1->link="administration/leave-type";
-        $menu1->parent_id = 53;
+        $menu1->parent_id = 52;
         $menu1->save();
 
 
@@ -420,14 +420,14 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 53;
         $menu1->name = "Work Week";
         $menu1->link="administration/define-workweek";
-        $menu1->parent_id = 53;
+        $menu1->parent_id = 52;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 54;
         $menu1->name = "Holidays";
         $menu1->link="administration/define-holiday";
-        $menu1->parent_id = 53;
+        $menu1->parent_id = 52;
         $menu1->save();
 
 
@@ -455,15 +455,15 @@ class MenuTableSeeder extends Seeder
 
         $menu1 = new Menu();
         //$menu1->id = 58;
-        $menu1->name = "My TimeSheet";
-        $menu1->link="";
-        $menu1->parent_id = 60;
+        $menu1->name = "TimeSheet";
+        $menu1->link="administration/employee-time-sheets";
+        $menu1->parent_id = 59;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 59;
         $menu1->name = "Employee TimeSheet";
-        $menu1->link="";
+        $menu1->link="administration/employee-time-sheets";
         $menu1->parent_id = 60;
         $menu1->save();
 
@@ -472,35 +472,35 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 60;
         $menu1->name = "Attendance";
         $menu1->link="administration/attendance-configure";
-        $menu1->parent_id = 60;
+        $menu1->parent_id = 59;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 61;
         $menu1->name = "Employee Record";
         $menu1->link="administration/view-attendance-record";
-        $menu1->parent_id = 63;
+        $menu1->parent_id = 62;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 62;
         $menu1->name = "Configuration";
         $menu1->link="administration/attendance-configure";
-        $menu1->parent_id = 63;
+        $menu1->parent_id = 62;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 63;
         $menu1->name = "Reports";
         $menu1->link="administration/display-project-report";
-        $menu1->parent_id = 56;
+        $menu1->parent_id = 59;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 64;
         $menu1->name = "Project Reports";
         $menu1->link="administration/display-project-report";
-        $menu1->parent_id = 66;
+        $menu1->parent_id = 65;
         $menu1->save();
 
 
@@ -508,7 +508,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 65;
         $menu1->name = "Employee Report";
         $menu1->link="administration/display-employee-report";
-        $menu1->parent_id = 66;
+        $menu1->parent_id = 65;
         $menu1->save();
 
 
@@ -516,21 +516,21 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 66;
         $menu1->name = "Attendance Summary";
         $menu1->link="administration/display-attendance-summary-report";
-        $menu1->parent_id = 66;
+        $menu1->parent_id = 65;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 67;
         $menu1->name = "Project Info";
-        $menu1->link="administration/customer-project";
-        $menu1->parent_id = 60;
+        $menu1->link="administration/defined-project";
+        $menu1->parent_id = 59;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 68;
         $menu1->name = "Customer Project ";
         $menu1->link="administration/customer-project";
-        $menu1->parent_id = 70;
+        $menu1->parent_id = 69;
         $menu1->save();
 
 
@@ -538,7 +538,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 69;
         $menu1->name = "Projects";
         $menu1->link="administration/defined-project";
-        $menu1->parent_id = 70;
+        $menu1->parent_id = 69;
         $menu1->save();
 
         $menu1 = new Menu();
@@ -552,21 +552,21 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 71;
         $menu1->name = "Configure";
         $menu1->link="administration/employee-kpi";
-        $menu1->parent_id = 73;
+        $menu1->parent_id = 72;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 72;
         $menu1->name = "KPI";
         $menu1->link="administration/employee-kpi";
-        $menu1->parent_id = 74;
+        $menu1->parent_id = 73;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 73;
         $menu1->name = "Tracker";
         $menu1->link="administration/employee-performance-trackers";
-        $menu1->parent_id = 74;
+        $menu1->parent_id = 73;
         $menu1->save();
 
 
@@ -574,15 +574,15 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 74;
         $menu1->name = "Manage Review";
         $menu1->link="administration/employee-performance-review";
-        $menu1->parent_id = 73;
+        $menu1->parent_id = 72;
         $menu1->save();
 
 
         $menu1 = new Menu();
         //$menu1->id = 75;
         $menu1->name = "Manage Reviewer";
-        $menu1->link="administration/my-review";
-        $menu1->parent_id = 77;
+        $menu1->link="administration/employee-performance-review";
+        $menu1->parent_id = 76;
         $menu1->save();
 
 
@@ -590,7 +590,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 76;
         $menu1->name = "My Review ";
         $menu1->link="administration/my-review";
-        $menu1->parent_id = 77;
+        $menu1->parent_id = 76;
         $menu1->save();
 
 
@@ -600,15 +600,15 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 77;
         $menu1->name = "Review List";
         $menu1->link="administration/evaluate-performance-review";
-        $menu1->parent_id = 77;
+        $menu1->parent_id = 76;
         $menu1->save();
 
 
         $menu1 = new Menu();
         //$menu1->id = 78;
         $menu1->name = "My Tracker";
-        $menu1->link="administration/my-performance-tracker-lis";
-        $menu1->parent_id = 73;
+        $menu1->link="administration/my-performance-tracker-list";
+        $menu1->parent_id = 72;
         $menu1->save();
 
 
@@ -616,7 +616,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 79;
         $menu1->name = "Employee Tracker";
         $menu1->link="administration/employee-trackers";
-        $menu1->parent_id = 73;
+        $menu1->parent_id = 72;
         $menu1->save();
 
 
@@ -639,7 +639,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 82;
         $menu1->name = "Personal Details";
         $menu1->link="administration/employee-personal-details";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
 
@@ -647,35 +647,35 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 83;
         $menu1->name = "Contact Details";
         $menu1->link="administration/employee-contact-details";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 84;
         $menu1->name = "Emergency Contact";
         $menu1->link="administration/employee-emergency-contact";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 85;
         $menu1->name = "Dependents";
         $menu1->link="administration/view-dependents";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 86;
         $menu1->name = "Immigration";
         $menu1->link="administration/view-immigration";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 87;
         $menu1->name = "Job ";
         $menu1->link="administration/employee-job";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
 
@@ -683,7 +683,7 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 88;
         $menu1->name = "Salary ";
         $menu1->link="administration/employee-salary";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
 
@@ -691,22 +691,66 @@ class MenuTableSeeder extends Seeder
         //$menu1->id = 89;
         $menu1->name = "Report To";
         $menu1->link="administration/view-ReportTo-details";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 90;
         $menu1->name = "Qualification";
         $menu1->link="administration/employee-qualification";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
 
         $menu1 = new Menu();
         //$menu1->id = 91;
         $menu1->name = "Membership";
         $menu1->link="administration/view-membership";
-        $menu1->parent_id = 84;
+        $menu1->parent_id = 83;
         $menu1->save();
+
+        $menu1 = new Menu();
+        $menu1->name ="PayRoll";
+        $menu1->link = "view-payroll";
+        $menu1->parent_id = 0;
+        $menu1->save();
+
+        $menu1 = new Menu();
+        $menu1->name ="staff-payroll";
+        $menu1->link = "administration/list-all-staff-payroll";
+        $menu1->parent_id = 94;
+        $menu1->save();
+
+
+        $menu1 = new Menu();
+        $menu1->name ="staff-directory";
+        $menu1->link = "administration/list-all-staff-directory";
+        $menu1->parent_id = 82;
+        $menu1->save();
+
+
+        $menu1 = new Menu();
+        $menu1->name ="Expense";
+        $menu1->link = "administration/expense";
+        $menu1->parent_id = 0;
+        $menu1->save();
+
+        $menu1 = new Menu();
+        $menu1->name ="Employee Travel Request";
+        $menu1->link = "administration/employee-travel-request";
+        $menu1->parent_id = 97;
+        $menu1->save();
+
+
+        $menu1 = new Menu();
+        $menu1->name ="My Travel Request";
+        $menu1->link = "administration/my-travel-request";
+        $menu1->parent_id = 97;
+        $menu1->save();
+
+
+
+
+
 
     }
 }

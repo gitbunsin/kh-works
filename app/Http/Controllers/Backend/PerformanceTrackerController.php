@@ -168,8 +168,6 @@ class PerformanceTrackerController extends BackendController
     public function getEmployeeNoTrakerEmp($id) {
 
         $employee = Employee::where('emp_number', '!=', $id)->get();
-
-
         return Response()->json(["success" => true, "data" => $employee]);
 
     }

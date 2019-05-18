@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Model\EmployeeBasicSalary;
+use const http\Client\Curl\AUTH_ANY;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +20,8 @@ class EmployeeBasicSalaryController extends BackendController
     {
         //
         $this->shareMenu();
-        $BasicSalary = DB::table('employee_basic_salaries as b')
-                        ->join('Paygrades as p','b.sal_grd_code','=','p.id')
-                        ->join('currencies as c' ,'b.currency_id','=','c.id')
-                        ->join('payperiods as  pc','b.payperiod_code','=','pc.id')
-                        ->select('p.*','p.name as PayGrades_Name','c.*','c.name as Currency_Name','pc.name as PayPeriod_Name','b.*','b.id as basicSalary_id')
-                        ->get();
-        //dd($BasicSalary);
+        $BasicSalary = EmployeeBasicSalary::with(['employee','paygrade','payPeriod','currency'])->get();
+//        dd($BasicSalary);
         return view('backend.HRIS.PIM.Employee.Salary.index',compact('BasicSalary'));
     }
 
@@ -50,21 +46,15 @@ class EmployeeBasicSalaryController extends BackendController
      */
     public function store(Request $request)
     {
-        //
-        //dd('hello');
-        if(Auth::guard('admins')->user()){
-            $OrganizationCode = Auth::guard('admins')->user()->id;
-        }else{
-            $OrganizationCode = Auth::guard('employee')->user()->company_id;
-        }
+
         $BasicSalary = new EmployeeBasicSalary();
-        $BasicSalary->organization_code =  $OrganizationCode;
-        $BasicSalary->emp_number = $OrganizationCode;
-        $BasicSalary->sal_grd_code = $request->pay_grade;
-        $BasicSalary->currency_id = $request->currency;
-        $BasicSalary->payperiod_code = $request->Payperiod;
-        $BasicSalary->ebsal_basic_salary = $request->ebsal_basic_salary;
+        $BasicSalary->company()->associate(Auth::guard('admins')->user()->id);
+        $BasicSalary->employee()->associate(Auth::guard('admins')->user()->id);
+        $BasicSalary->paygrade()->associate($request->pay_grade);
+        $BasicSalary->payPeriod()->associate($request->Payperiod);
+        $BasicSalary->currency()->associate($request->currency);
         $BasicSalary->salary_component = $request->SalaryComponent;
+        $BasicSalary->ebsal_basic_salary = $request->ebsal_basic_salary;
         $BasicSalary->comments = $request->comment;
 
         $BasicSalary->save();

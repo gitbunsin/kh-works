@@ -38,16 +38,18 @@
                                                 {{--<i></i>--}}
                                             {{--</label>--}}
                                         {{--</section>--}}
-                                        <section class="col col-6">
-                                            <label class="label"> From Date</label>
-                                            <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" value="{{$ListLeavePeriod->leave_period_start_month}}" name="StartDate" id="StartDate" placeholder="" class="Datepicker form-control">
-                                            </label>
-                                        </section>
+                                        {{--<section class="col col-6">--}}
+                                            {{--<label class="label"> From Date</label>--}}
+                                                {{--<div  class="dataFrom" id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">--}}
+                                                    {{--<i class="fa fa-calendar"></i>&nbsp;--}}
+                                                    {{--<span></span> <i class="fa fa-caret-down dateForm"></i>--}}
+                                                {{--</div>--}}
+                                            {{--</label>--}}
+                                        {{--</section>--}}
                                         <section class="col col-6">
                                             <label class="label"> To Date</label>
                                             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                                                <input  type="text" value="{{$ListLeavePeriod->leave_period_start_day}}" name="EndDate" id="EndDate" placeholder="" class="Datepicker form-control">
+                                                <input id="reportrange"  type="text" value="" name="EndDate" id="EndDate" placeholder="" class="Datepicker form-control">
                                             </label>
                                         </section>
                                     </div>
@@ -64,13 +66,13 @@
                                         <section class="col col-6">
                                             <label class="label"> EndDAte</label>
                                             <label class="input">
-                                                <input type="text" value="{{$ListLeavePeriod->leave_period_start_day}}" disabled name="endDateLeave" id="endDateLeave" placeholder="" class="form-control">
+                                                <input type="text" value="{{$ListLeavePeriod ? date('d-M-y', strtotime($ListLeavePeriod->leave_period_start_day)) :"" }}" disabled name="endDateLeave" id="endDateLeave" placeholder="" class="form-control">
                                             </label>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> Current Leave period</label>
                                             <label class="input">
-                                                <input  type="text" value="{{$ListLeavePeriod->leave_period_start_month. 'to'. $ListLeavePeriod->leave_period_start_day }}" disabled name="currentLeavePeriod" id="currentLeavePeriod" placeholder="" class="form-control">
+                                                <input  type="text" value="{{$ListLeavePeriod ? $ListLeavePeriod->leave_period_start_month : "" }} {{'to'}} {{ $ListLeavePeriod ? $ListLeavePeriod->leave_period_start_day : "" }}" disabled name="currentLeavePeriod" id="currentLeavePeriod" placeholder="" class="form-control">
                                             </label>
                                         </section>
                                     </div>
@@ -94,18 +96,53 @@
 
 @endsection
 @section('script')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript">
+        $(function() {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                // $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+        });
+    </script>
     <script>
         $('#BtnSaveLeavePeriod').val('Edit');
         DisabledLeavePeriod();
-
         function DisabledLeavePeriod(){
 
+
+
+            $('#reportrange').prop('disabled',true);
             $('#StartDate').prop('disabled',true);
             $('#EndDate').prop('disabled',true);
+
         }
 
         function EnableLeavePeriod(){
 
+            $('#reportrange').prop('disabled',false);
             $('#StartDate').prop('disabled',false);
             $('#EndDate').prop('disabled',false);
         }

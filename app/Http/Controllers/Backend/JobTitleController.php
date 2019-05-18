@@ -25,7 +25,7 @@ class JobTitleController extends BackendController
     public function index()
     {
         $this->shareMenu();
-        $JobTitle = JobTitle::all();
+        $JobTitle = JobTitle::orderBy('id', 'DESC')->get();
         //$menus = MenuHelper::getInstance()->getSidebarMenu(AppHelper::getInstance()->getRoleID(), AppHelper::getInstance()->getCompanyId());
         return view('backend.HRIS.admin.JobTitle.index',compact('JobTitle'));
     }

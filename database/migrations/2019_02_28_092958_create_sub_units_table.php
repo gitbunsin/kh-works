@@ -19,6 +19,8 @@ class CreateSubUnitsTable extends Migration
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
             $table->string('name')->nullable();
+            $table->string('title')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->string('unit_id')->nullable();
             $table->string('description')->nullable();
             $table->smallInteger('lft')->nullable();

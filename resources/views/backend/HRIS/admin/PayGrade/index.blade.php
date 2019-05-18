@@ -23,7 +23,6 @@
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2> List All Pay Grade</h2>
                     </header>
-
                     <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
@@ -32,7 +31,6 @@
 
                         </div>
                         <!-- end widget edit box -->
-
                         <!-- widget content -->
                         <div class="widget-body no-padding">
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
@@ -44,23 +42,21 @@
                                 </tr>
                                 </thead>
                                 <tbody id="products-list" name="products-list">
-                                @foreach($data  as  $pay_grades )
+                                @foreach($payGrade  as  $payGrades )
                                     <tr>
-                                        <td>{{$pay_grades["name"]}}</td>
+                                        <td>{{$payGrades->name}}</td>
                                         <td>
-                                             @foreach($pay_grades["currency_name"] as $currency_names)
-
-                                                    {{$currency_names->name}},
-
+                                             @foreach($payGrades->currencies as $currency)
+                                                    {{$currency->name}},
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a data-id="{{$pay_grades["id"]}}" href="{{url('administration/pay-grade/'.$pay_grades["id"].'/edit')}}" style="text-decoration:none;" class="btn-detail">
+                                            <a data-id="{{$payGrades->id}}" href="{{url('administration/pay-grade/'.$payGrades->id.'/edit')}}" style="text-decoration:none;" class="btn-detail">
                                                 <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            {{--<a data-id="{{$pay_grades->id}}" href="#" style="text-decoration:none;" class="delete-item">--}}
-                                                {{--<i class="glyphicon glyphicon-trash"  style="color:red;"></i>--}}
-                                            {{--</a>--}}
+                                            <a data-id="{{$payGrades->id}}" href="#" style="text-decoration:none;" class="delete-item">
+                                                <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

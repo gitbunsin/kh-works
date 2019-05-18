@@ -46,18 +46,14 @@ class CustomerController extends BackendController
      */
     public function store(Request $request)
     {
-        //
-        if(Auth::guard('admins')->user()){
-            $Organization_Code = Auth::guard('admins')->user()->id;
-        }else{
-            $Organization_Code = Auth::guard('employees')->user()->company_id;
-        }
+
         $c = new Customer();
         $c->name = $request->name;
         $c->description = $request->description;
-        $c->Organization_Code = $Organization_Code ;
+        $c->company_id = Auth::guard('admins')->user()->id;
         $c->save();
         return redirect('/administration/customer-project')->with('success','Item added Successfully');
+
     }
 
     /**
@@ -86,7 +82,6 @@ class CustomerController extends BackendController
         return view('backend.HRIS.Time.Customer.edit',compact('c'));
 
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -96,17 +91,11 @@ class CustomerController extends BackendController
      */
     public function update(Request $request, $id)
     {
-        //
-        //
-        if(Auth::guard('admins')->user()){
-            $Organization_Code = Auth::guard('admins')->user()->id;
-        }else{
-            $Organization_Code = Auth::guard('employees')->user()->company_id;
-        }
+
         $c = Customer::findOrFail($id);
         $c->name = $request->name;
         $c->description = $request->description;
-        $c->Organization_Code = $Organization_Code ;
+        $c->company_id = Auth::guard('admins')->user()->id;
         $c->save();
         return redirect('/administration/customer-project')->with('success','Item Edited Successfully');
     }

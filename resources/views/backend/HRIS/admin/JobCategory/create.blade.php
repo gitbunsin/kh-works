@@ -23,15 +23,10 @@
                             <form id="frmCategory" action="{{url('/administration/jobs-category')}}" method="post"  class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <fieldset>
-                                    {{--<section>--}}
-                                        {{--<label class="label">Job Category</label>--}}
-                                        {{--<label class="input">--}}
-                                            {{--<input type="text" class="form-control has-error" id="name" name="name" placeholder="Job Category" value="">--}}
-                                        {{--</label>--}}
-                                    {{--</section>--}}
                                     <section>
                                         <label class="label">Job Title</label>
-                                        <label class="input"> <i class="icon-append fa fa-joomla"></i>
+                                        <label class="input">
+                                            <i class="icon-append fa fa-joomla"></i>
                                             <input type="text" name="name" placeholder="Job Category">
                                             <b class="tooltip tooltip-bottom-right">Needed to enter available Job name</b> </label>
                                     </section>

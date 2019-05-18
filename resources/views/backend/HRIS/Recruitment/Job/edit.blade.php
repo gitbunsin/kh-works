@@ -1,7 +1,8 @@
 
 @extends('backend.HRIS.layouts.cms-layouts')
 @section('content')
-    <form id="frmJob" method="POST" enctype="multipart/form-data" action="{{url('administration/post-jobs')}}">
+    <form id="frmJob" method="POST" enctype="multipart/form-data" action="{{url('administration/post-jobs/'.$jobVacancy->id)}}">
+        <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <section id="widget-grid" class="">
             <div class="row">
@@ -22,13 +23,12 @@
                                             <label class="label"> Job Title</label>
                                             <label class="select">
                                                 @php
-                                                    //  $company_id = Auth::guard('admins')->user()->id;use App\Model\Backend\JobTitle;use Illuminate\Support\Facades\Auth;$Job_Title= JobTitle::where('company_id',$company_id)->get();
-                                                                                          $JobTitle = \App\Model\JobTitle::all();
+                                                  $JobTitle = \App\Model\JobTitle::all();
                                                 @endphp
-                                                <select name="job_titles_code" id="job_titles_code" class="required">
-                                                    <option value="">Choose Manager</option>
+                                                <select name="job_title_code" id="job_title_code" class="required">
+                                                    <option value=""> Choose Manager</option>
                                                     @foreach($JobTitle as $JobTitles)
-                                                        <option value="{{$JobTitles->id}}">{{$JobTitles->name}}</option>
+                                                        <option value="{{$JobTitles->id}}"{{$JobTitles->id == $jobVacancy->job_titles_code ? "selected='selected'":""}}>{{$JobTitles->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -38,27 +38,24 @@
                                             <section class="col col-6">
                                                 <label class="label"> Vacancy Name</label>
                                                 <label class="input">
-                                                    <input type="text" id="vacancy_name" name="vacancy_name">
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input value="{{$jobVacancy->name}}" type="text" id="name" name="name">
+                                                    <b class="tooltip tooltip-bottom-right">Vacancy Name</b>
                                                 </label>
                                             </section>
                                             <section class="col col-6">
                                                 <label class="label"> Hiring Manager </label>
                                                 <div class="form-group">
-                                                    <select name="hiring_manager"
-                                                            id="hiring_manager"
+                                                    <select name="hiring_manager_id"
+                                                            id="hiring_manager_id"
                                                             style="width:100%" class="select2 select2-hidden-accessible"
                                                             tabindex="-1" aria-hidden="true">
-                                                        <optgroup label="Performance Employee Trackers">
                                                             <option value="">--  select  --</option>
-                                                            @php $tracker = \App\Model\Employee::all(); @endphp
-                                                            @foreach($tracker as $trackers)
-                                                                <option value="{{$trackers->emp_number}}">{{$trackers->emp_lastname}}{{$trackers->emp_firstname}}</option>
+                                                            @php $employee = \App\Model\Employee::all(); @endphp
+                                                            @foreach($employee as $employees)
+                                                                <option value="{{$employees->emp_number}}" {{$employees->emp_number == $jobVacancy->hiring_manager_id ? "selected='selected'":""}}>{{$employees->emp_lastname}}{{$employees->emp_firstname}}</option>
                                                             @endforeach
-                                                        </optgroup>
                                                     </select>
-                                                    {{--<div class="note">--}}
-                                                    {{--<strong>Usage:</strong> Employee performance tracker--}}
-                                                    {{--</div>--}}
                                                 </div>
                                             </section>
 
@@ -68,7 +65,9 @@
                                             <section class="col col-6">
                                                 <label class="label"> Number of Positions</label>
                                                 <label class="input">
-                                                    <input type="text" id="number_of_position" name="number_of_position">
+                                                    <i class="icon-append fa fa-joomla"></i>
+                                                    <input value="{{$jobVacancy->no_of_position}}" type="number" id="number_of_position" name="number_of_position">
+                                                    <b class="tooltip tooltip-bottom-right">Number of Position</b>
                                                 </label>
                                             </section>
                                             <section class="col col-6">
@@ -99,7 +98,7 @@
                                                 <label class="label"> Closing Date </label>
                                                 <label class="input">
                                                     <i class="icon-append fa fa-calendar"></i>
-                                                    <input type="text" id="closing_date" name="closing_date" class="datepicker">
+                                                    <input value="{{$jobVacancy->closingDate}}" type="text" id="closingDate" name="closingDate" class="datepicker">
                                                 </label>
                                             </section>
                                             <span id="lblErrorresume" style="color: red;"></span>
@@ -130,7 +129,7 @@
                             <div class="jarviswidget-editbox">
                             </div>
                             <div class="widget-body no-padding">
-                                <textarea name="job_description" class="job_description"></textarea>
+                                <textarea name="job_description" class="job_description">{{$jobVacancy->job_description}}</textarea>
                             </div>
                         </div>
 
@@ -156,7 +155,7 @@
                             <div class="jarviswidget-editbox">
                             </div>
                             <div class="widget-body no-padding">
-                                <textarea name="job_requirements" class="job_requirements"></textarea>
+                                <textarea name="job_requirements" class="job_requirements">{{$jobVacancy->job_requirements}}</textarea>
                             </div>
                         </div>
 
@@ -170,7 +169,6 @@
 
             <!-- row -->
             <div class="row">
-                <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!-- Widget ID (each widget will need unique ID)-->
                     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
@@ -178,14 +176,9 @@
                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                             <h2>Company Profiles</h2>
                         </header>
-                        <!-- widget div-->
                         <div>
-                            <!-- widget edit box -->
                             <div class="jarviswidget-editbox">
-                                <!-- This area used as dropdown edit box -->
                             </div>
-                            <!-- end widget edit box -->
-                            <!-- widget content -->
                             <div class="widget-body no-padding">
                                 <div class="smart-form">
                                     <fieldset>
@@ -195,13 +188,18 @@
                                                     <label class="label">Company Name*</label>
                                                     <input name="company_id" type="hidden" value="{{Auth::guard('admins')->user()->id}}" />
                                                     <label class="input">
-                                                        <input disabled  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">
+                                                        <i class="icon-append fa fa-joomla"></i>
+                                                        <input class="form-control" disabled  value="{{Auth::guard('admins')->user()->name}}" type="text" name="CompanyName" id="name">
+                                                        <b class="tooltip tooltip-bottom-right"></b> </label>
+
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
                                                     <label class="label">Contact Name * </label>
                                                     <label class="input">
-                                                        <input disabled type="text" name="ContactName" id="ContactName">
+                                                        <i class="icon-append fa fa-joomla"></i>
+                                                        <input class="form-control" disabled type="text" name="ContactName" id="ContactName">
+                                                        <b class="tooltip tooltip-bottom-right"></b>
                                                     </label>
                                                 </section>
                                             </div>
@@ -209,20 +207,24 @@
                                                 <section class="col col-6">
                                                     <label class="label">Email ID *</label>
                                                     <label class="input">
-                                                        <input disabled  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
+                                                        <i class="icon-append fa fa-joomla"></i>
+                                                        <input class="form-control" disabled  value="{{Auth::guard('admins')->user()->email}}" type="text" name="email" id="email">
+                                                        <b class="tooltip tooltip-bottom-right"></b> </label>
                                                     </label>
                                                 </section>
                                                 <section class="col col-6">
                                                     <label class="label">Mobile Number *</label>
                                                     <label class="input">
-                                                        <input disabled value="{{Auth::guard('admins')->user()->phone}}" id="mobile" type="text" name="mobile">
+                                                        <i class="icon-append fa fa-joomla"></i>
+                                                        <input class="form-control" disabled value="{{Auth::guard('admins')->user()->phone}}" id="mobile" type="text" name="mobile">
+                                                        <b class="tooltip tooltip-bottom-right"></b> </label>
                                                     </label>
                                                 </section>
                                             </div>
                                             <section>
                                                 <label class="label"> Address *</label>
                                                 <label class="textarea">
-                                                    <textarea disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                                    <textarea class="form-control" disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                                 </label>
                                             </section>
 
@@ -316,18 +318,18 @@
                 }
             });
         });
-        var allowedFiles = [".doc", ".docx", ".pdf"];
-        $('#btnUploadJob').click(function () {
-            var allowedFiles = [".pdf"];
-            var fileUpload = $("#resume");
-            var lblError = $("#lblErrorresume");
-            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-            if (!regex.test(fileUpload.val().toLowerCase())) {
-                lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
-                return false;
-            }
-            lblError.html('');
-            return true;
-        });
+        // var allowedFiles = [".doc", ".docx", ".pdf"];
+        // $('#btnUploadJob').click(function () {
+        //     var allowedFiles = [".pdf"];
+        //     var fileUpload = $("#resume");
+        //     var lblError = $("#lblErrorresume");
+        //     var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+        //     if (!regex.test(fileUpload.val().toLowerCase())) {
+        //         lblError.html("Please upload files having extensions: <b>" + allowedFiles.join(', ') + "</b> only.");
+        //         return false;
+        //     }
+        //     lblError.html('');
+        //     return true;
+        // });
     </script>
 @endsection

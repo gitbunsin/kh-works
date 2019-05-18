@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <th data-class="expand"> CVs ID</th>
-                                    <th data-class="expand"> Seekers Name</th>
+                                    <th data-class="expand"> Candidate Name</th>
                                     <th data-class="expand"> Candidate CV</th>
                                     <th data-class="expand" style="text-align: center;"> Download </th>
                                 </tr>

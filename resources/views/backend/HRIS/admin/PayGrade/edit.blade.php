@@ -217,7 +217,6 @@
                     '<td class="sorting_1">' + data.pivot.max_salary + '</td>';
                 table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '
                     + data.id +' " href="#" style="text-decoration:none;" onclick="deletedPayCurrency('+data.id+','+paygradeID+')"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
-
                 $('#products-list').append(table);
                 $('#frmProducts').trigger("reset");
                 $('#myModal').modal('hide')

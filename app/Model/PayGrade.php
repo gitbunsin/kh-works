@@ -14,11 +14,12 @@ class PayGrade extends Model
         'id',
         'name',
     ];
-    public function currencies(){
+    public function currencies()
+    {
         return $this->belongsToMany(currency::class)->withPivot('min_salary','max_salary');
     }
-    public function companies(){
 
+    public function company(){
         return $this->belongsTo(OrganizationGenInfo::class,'company_id');
     }
     //

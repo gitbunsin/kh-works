@@ -27,7 +27,10 @@
                                     <label class="label">Name</label>
                                     <section>
                                         <label class="input">
+                                            <i class="icon-append fa fa-joomla"></i>
                                             <input value="{{$skills->name}}" type="text" name="name" id="name">
+                                            <b class="tooltip tooltip-bottom-right">Needed to enter available skill name</b>
+
                                         </label>
                                     </section>
                                     <section>

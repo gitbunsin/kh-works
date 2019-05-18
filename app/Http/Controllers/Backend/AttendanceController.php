@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
+use App\Model\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class AttendanceController extends BackendController
 {
@@ -14,9 +17,12 @@ class AttendanceController extends BackendController
      */
     public function index()
     {
+//        dd('hello');
         // $use = Role::apll();
+        $id = input::get('employee_attendance');
+        $employee = Employee::where('emp_number',$id)->first();
         $this->shareMenu();
-        return view('backend.HRIS.Time.Attendance.index');
+        return view('backend.HRIS.Time.Attendance.index',compact('employee'));
     }
     public function AttendanceConfigure(){
 
@@ -33,6 +39,8 @@ class AttendanceController extends BackendController
     public function create()
     {
         //
+        $this->shareMenu();
+        return view('backend.HRIS.Time.Attendance.pin');
     }
 
     /**
@@ -43,6 +51,9 @@ class AttendanceController extends BackendController
      */
     public function store(Request $request)
     {
+        $id = input::get('employee_attendance');
+        $employee = Employee::where('emp_number',$id)->first();
+        return $this->index();
         //
     }
 

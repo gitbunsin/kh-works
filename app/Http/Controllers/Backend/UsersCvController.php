@@ -3,6 +3,7 @@
 namespace  App\Http\Controllers\Backend;
 use App\CandidateAttachment;
 use App\Http\Controllers\Controller;
+use App\Model\candidate_attachment;
 use App\Model\JobCandidateAttchment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -29,8 +30,8 @@ class UsersCvController extends BackendController
         }else{
             $CompanyID = Auth::guard('employee')->user()->company_id;
         }
-        $CandidateAttachment= DB::table('job_candidates as JC')
-            ->join('job_candidate_attchments as JCA','JCA.candidate_id','=','JC.id')
+        $CandidateAttachment= DB::table('candidates as JC')
+            ->join('candidate_attachments as JCA','JCA.candidate_id','=','JC.id')
             ->get();
         //dd($CandidateAttachment);
 //        $user_cv = DB::table('tbl_job_candidate as c')
@@ -50,9 +51,9 @@ class UsersCvController extends BackendController
     public function getDownload($user_id)
     {
 //        dd('hello');
-        $entry = JobCandidateAttchment::where('id',$user_id)->firstOrFail();
+        $entry = candidate_attachment::where('id',$user_id)->firstOrFail();
 //        dd($entry);
-        $pathToFile = public_path()."/uploaded/UserCv/".$entry->name;
+        $pathToFile = public_path()."/uploaded/UserCv/".$entry->file_name;
         return response()->download($pathToFile);
     }
 

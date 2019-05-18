@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Theme Region">
     <meta name="description" content="">
-
-    <title>Jobs | Job Portal / Job Board HTML Template</title>
-
+    <title>kh-works</title>
     <!-- CSS -->
     <!-- icons -->
 @include('frontend.Kh-Works.partials.ui-styles')
@@ -46,45 +44,25 @@
                         <span style="font-size: 20px;" class="title"></span>
                         <span style="font-size: 20px;" class="title">{{$jobVacancy->name}}</span>
 
-                        {{--<a id="btn{{$JobDetail->id}}"  href="{{$id}}"  data-id="{{$JobDetail->id}}" class="btn btn-primary">Apply Now</a>--}}
+                        {{--<a id="btn{$JobDetail->id}}"  href="{{$id}}"  data-id="{{$JobDetail->id}}" class="btn btn-primary">Apply Now</a>--}}
                         {{--{{ Form::close() }}--}}
                         <div class="ad-meta">
-
                             <ul>
                                 <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>full time</a></li>
                                 <li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>$500 - $600</a></li>
                                 <li><a href="#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>
 
-                                {{--<li><a href="https://demo.themeregion.com/jobs-updated/job-details.html#"><i class="fa fa-tags" aria-hidden="true"></i>HR/Org. Development</a></li>--}}
-                                <li><i class="fa fa-dashcube " aria-hidden="true"></i>Application Deadline :</li>
+                                <li><i class="fa fa-dashcube " aria-hidden="true"></i>Application Deadline : {{$jobVacancy->closingDate}}</li>
                                 <li>
-                                    {{Form::open(array("url"=>"administration/apply-job/".$jobVacancy->VacancyID.'/'.$jobVacancy->OrganizationCode,"class"=>"smart-form"))}}
+                                    {{Form::open(array("url"=>"administration/apply-job/".$jobVacancy->id.'/'.$jobVacancy->company->id,"class"=>"smart-form"))}}
                                             <meta name="csrf-token" content="{{ csrf_token() }}">
-                                            {{--<input type="hidden" name="company_id" value="{{$company->id}}"/>--}}
-                                            {{--<input id="url" type="hidden" value="{{ \Request::url() }}">--}}
-                                            {{--<input type="hidden" value="{{$job_titles->job_id}}" name="job_id"/>--}}
-                                            {{--<input type="hidden" value="{{$job_titles->job_titles_code}}" name="job_titles_code"/>--}}
-                                    {{--{{dd($isApply)}}--}}
-                                    {{--@if(Auth::check())--}}
-                                    {{--@if($isApply->isEmpty())--}}
-                                            {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
-                                        {{--@else--}}
-                                            {{--<button disabled style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Applied</button>--}}
-                                    {{--@endif--}}
-                                    {{--{{ Form::close() }}--}}
-                                        {{--@else--}}
-                                        {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
-                                    {{--@endif--}}
-                                    {{--@if(Auth::check())--}}
-                                    {{--@if($isApply->isEmpty())--}}
-                                            <button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>
-                                        {{--@else--}}
-                                    {{--@endif--}}
+                                    @if($isApply)
+                                            <button disabled  style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" ><i class="fa fa-paper-plane"></i> Applied</button>
+                                        @else
+                                            <button  style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" ><i class="fa fa-paper-plane"></i> Apply Now</button>
+                                    @endif
                                     {{ Form::close() }}
-                                        {{--@else--}}
-                                        {{--<button   style="margin-top: -14px;" class="btn btn-primary" type="submit" value="apply" >Apply now</button>--}}
-                                    {{--@endif--}}
                                 </li>
                                 {{--{{date('d-m-Y', strtotime())}}--}}
                             </ul>
@@ -126,12 +104,12 @@
                                         <strong>
                                             {{$jobVacancy->name}}
                                         </strong></a></li>
-                                <li>Address: {{$jobVacancy->postal_address}}</li>
+                                <li>Address: {{$jobVacancy->company->postal_address}}</li>
                                 <li>company SIze:  2k Employee</li>
                                 <li>Industry: <a href="#">Technology</a></li>
-                                <li>Phone: {{$jobVacancy->phone}}</li>
-                                <li>Email: <a href="#">{{$jobVacancy->email}}</a></li>
-                                <li>Website: <a href=""><strong>{{$jobVacancy->website}}</strong></a></li>
+                                <li>Phone: {{$jobVacancy->company->phone}}</li>
+                                <li>Email: <a href="#">{{$jobVacancy->company->email}}</a></li>
+                                <li>Website: <a href=""><strong>{{$jobVacancy->company->website}}</strong></a></li>
 
                             </ul>
                             <ul class="share-social">

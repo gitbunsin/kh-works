@@ -4,6 +4,8 @@
  * Remove 'use Illuminate\Database\Eloquent\Model;'
  */
 namespace App;
+use App\Model\JobTitle;
+use App\Model\WorkShift;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -52,6 +54,17 @@ class OrganizationGenInfo extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function WorkShifts(){
+
+        return $this->hasMany(WorkShift::class);
+    }
+
+    public function jobtitles(){
+
+        return $this->hasMany(JobTitle::class);
+    }
+
 
     /**
      * Add a mutator to ensure hashed passwords

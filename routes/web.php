@@ -21,6 +21,11 @@
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
 Route::get('/', function () {
     return redirect('kh-works');
 });
@@ -50,8 +55,8 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('user', 'UserController');
         //Route::resource('userRole', 'UserRoleController');
         Route::resource('candidate', 'CandidateController');
-        Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
-        Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
+//        Route::post('/candidate-approved/{candidate_id}','CandidateController@approved');
+//        Route::post('/candidate-reject/{candidate_id}','CandidateController@reject');
         Route::resource('pay-grade', 'PayGradeController');
         Route::get('/paygrade/{id}', 'PayGradeController@getRelationPayGradeCurrency');
         Route::post('/remove-currency-pay', 'PayGradeController@destroyPaygradeCurrency');
@@ -60,17 +65,56 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::resource('employment-status', 'EmploymentStatusController');
         Route::resource('companyProfile', 'CompanyController');
         Route::resource('user_cv','UsersCvController');
-        Route::resource('vacancy', 'VacanciesController');
+//        Route::resource('vacancy', 'VacanciesController');
 
+
+       Route::get('candidate-shortlist/{id}','CandidateController@CandidateShortlist');
+       Route::post('Update-Candidate-Shortlist/{candidate_id}/{vacancy_id}','CandidateController@UpdateCandidateShortlist');
+
+
+       Route::get('candidate-Schedule-Interview/{id}','CandidateController@CandidateScheduleInterview');
+       Route::post('update-Schedule-Interview/{candidate_id}/{vacancy_id}','CandidateController@UpdateCandidateScheduleInterview');
 
         //
-    Route::resource('Dashboard','DashboardController');
+      Route::resource('Dashboard','DashboardController');
 
 
-    Route::get('staff-directory','EmployeeController@ListAllStaffDirectory');
+      Route::resource('list-all-staff-directory','DirectoryController');
+
+
+      //Interview Pass
+        Route::get('Candidate-Interview-Pass/{id}','InterviewController@CandidateInterviewPass');
+        Route::post('Update-Candidate-Interview-Pass/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateInterviewPass');
+
+
+        //Job Offer
+        Route::get('Candidate-Offer-Job/{id}','InterviewController@CandidateOfferJob');
+        Route::post('Candidate-Offer-Job/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateOfferJob');
+
+
+
+        Route::get('Candidate-decline-Job/{id}','InterviewController@CandidateDeclineJob');
+        Route::post('Candidate-decline-Job/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateDeclineJob');
+
+
+        Route::get('Candidate-hire-Job/{id}','InterviewController@CandidateHireJob');
+        Route::post('Candidate-hire-Job/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateHireJob');
+
+
+       Route::get('candidate-reject/{id}','InterviewController@CandidateReject');
+       Route::post('candidate-reject/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateReject');
+
+
+
+       Route::get('CandidateRejectList/{id}','CandidateController@CandidateRejectList');
+       Route::post('CandidateRejectList/{candidate_id}/{vacancy_id}','CandidateController@UpdateCandidateRejectList');
+
+
+
+
+        Route::get('Candidate-Interview-Fail/{id}','InterviewController@CandidateInterviewFail');
+        Route::post('Update-Candidate-Interview-Fail/{candidate_id}/{vacancy_id}','InterviewController@UpdateCandidateInterviewFail');
 //        Route::post('Apply-Vacancy',)
-
-
 
 
     Route::resource('jobs-title','JobTitleController');
@@ -79,6 +123,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('/display-job-details/{job_id}/{company_id}','JobController@DisplayVacancy');
         Route::resource('employee','EmployeeController');
         Route::get('/employee-job','EmployeeController@GetJob');
+        Route::post('/update-employee-job/{id}','EmployeeController@UpdateEmployeeJob');
+        Route::post('/employee-terminate','EmployeeController@EmployeeTerminate');
+        Route::get('/employee-terminate/{id}','EmployeeController@EmployeeTerminateEdit');
+        Route::post('/employee-terminate/{id}','EmployeeController@EmployeeTerminateReason');
+//        Route::post('/employee-terminate/{id}','EmployeeController@EmployeeTerminateReasonDelete');
+        Route::post('/employee-terminate-delete/{id}','EmployeeController@EmployeeTerminateReasonDelete');
 
 
     Route::post('/apply-job/{VacancyID}/{OrganizationCode}', 'JobController@ApplyVacancy');
@@ -136,6 +186,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('get-applyLeave','LeaveController@applyLeave');
         Route::post('leave-request','LeaveController@leaveRequest');
 
+        Route::get('getAllEmployeeMatch/{id}','LeaveEntitlementController@searchEmployeeMatch');
 
         Route::get('assign-leave','LeaveController@AssignLeave');
         Route::get('request-leave-balance/{id}','LeaveController@requestLeaveBalance');
@@ -148,6 +199,13 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
 
 
         Route::get('view-my-leave-list','LeaveController@viewMyLeaveList');
+
+        Route::get('leave-comment/{id}','LeaveController@leaveComment');
+        Route::post('leave-comment/{id}','LeaveController@EmployeeLeaveComment');
+        Route::post('leave-approve/{id}','LeaveController@EmployeeLeaveApprove');
+        Route::get('leave-approve/{id}','LeaveController@leaveApprove');
+        Route::get('leave-reject/{id}','LeaveController@leaveReject');
+
         Route::resource('add-leave-entitlement','LeaveEntitlementController');
 
 
@@ -173,11 +231,11 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         Route::get('employee/report/{report_id}/{method_id}/{employee_id}','EmployeeReportController@ShowEmployeeReport');
         Route::resource('view-immigration','ImmigrationController');
         Route::resource('view-membership','EmployeeMembershipController');
+
+        Route::resource('employee-time-sheets','EmployeeTimeSheetController');
        // Route::get('viewMatchEmployee','LeaveAdjustmentController@viewMatchEmployee');
 
         Route::resource('view-Directory','DirectoryController');
-
-
         //Time
         Route::resource('customer-project','CustomerController');
 
@@ -200,16 +258,19 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'administration'], function 
         //PIM
         Route::resource('view-reporting-methods','ReportingMethodsController');
 
-
-
         //PayRoll
          Route::resource('view-payroll','PayrollController');
+//         Route::get('search-payroll-employee','PayrollController@SearchEmpPayroll');
+         Route::get('transaction/pdf/{id}','PayrollController@getPdf');
+         Route::resource('list-all-staff-payroll','PayrollController');
 
 
 //        Route::resource('employee-skills',)
 //        Route::get('/employee-emergency/{emergency_id}','EmployeeController@EditEmergencyContact');
 //        Route::post('/employee-emergency-update/{emergency_id}','EmployeeController@UpdateEmergencyContact');
-        Route::post('/update-user', 'InterviewController@updateUser');
+        Route::post('/update-interview-date/{id}', 'InterviewController@UpdateCandidateInterviewDate');
+        Route::post('/update-interview-time/{id}', 'InterviewController@UpdateCandidateInterviewTime');
+        Route::post('/update-interview-note/{id}', 'InterviewController@UpdateCandidateInterviewNote');
         Route::resource('employee-emergency-contact','EmployeeEmergencyContactController');
         Route::resource('interview','InterviewController');
         Route::post('/pass-interview/{candidate_id}','InterviewController@passInterview');

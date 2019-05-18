@@ -16,7 +16,7 @@ class CreateLeaveStatusesTable extends Migration
         Schema::create('leave_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->smallInteger('status')->nullable();
+            $table->string('status')->nullable();
 
             $table->timestamps();
         });

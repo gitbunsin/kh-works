@@ -42,20 +42,25 @@ class EmployeeLicenseController extends BackendController
     public function store(Request $request)
     {
 
-        if(Auth::guard('admins')->user()){
-            $company_id = Auth::guard('admins')->user()->id;
-        }else{
-            $company_id = Auth::guard('employee')->user()->company_id;
-        }
-        $l = new EmployeeLicense();
-        $l->company_id = $company_id;
-        $l->employee_id = $company_id;
-        $l->licenseType_id = $request->license_type_id;
-        $l->license_number = $request->license_number;
-        $l->issued_date = \Carbon\Carbon::parse($request->issued_date);
-        $l->expiry_date = \Carbon\Carbon::parse($request->expiry_date);
+        $employeeLicense = EmployeeLicense::create($request->all());
+        $employeeLicense->license()->associate($request->licenses_id);
+        $employeeLicense->employee()->associate(Auth::guard('admins')->user()->id);
+        $employeeLicense->save();
 
-        $l->save();
+
+//        if(Auth::guard('admins')->user()){
+//            $company_id = Auth::guard('admins')->user()->id;
+//        }else{
+//            $company_id = Auth::guard('employee')->user()->company_id;
+//        }
+//        $l = new EmployeeLicense();
+//        $l->employee_id = $company_id;
+//        $l->licenseType_id = $request->license_type_id;
+//        $l->license_number = $request->license_number;
+//        $l->issued_date = \Carbon\Carbon::parse($request->issued_date);
+//        $l->expiry_date = \Carbon\Carbon::parse($request->expiry_date);
+
+//        $l->save();
 //        $l = DB::table('tbl_hr_license as es')
 //            ->join('tbl_licenseType as s','es.licenseType_id','=','s.id')
 //            ->where('s.id',$request->licenseType_id)

@@ -20,7 +20,7 @@ class CreateLeaveEntitlementTypesTable extends Migration
             $table->foreign('company_id')->references('id')->on('organization_gen_infos')->onDelete('cascade');
 
             $table->string('name')->nullable();
-            $table->integer('	is_editable')->default(0)->nullable();
+            $table->integer('is_editable')->default(0)->nullable();
             $table->timestamps();
         });
     }

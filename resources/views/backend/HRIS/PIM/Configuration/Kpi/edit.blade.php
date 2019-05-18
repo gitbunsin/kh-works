@@ -32,7 +32,7 @@
                                                     @php $c = \App\Model\JobTitle::all(); {{$k->job_titles_code;}}@endphp
                                                     <option value="">-- select --</option>
                                                     @foreach($c as $cs)
-                                                        <option value="{{$cs->id}}" {{$k->job_title_code == $cs->id ? 'selected="selected"' : ''}} >{{$cs->name}}</option>
+                                                        <option value="{{$cs->id}}" {{$k->job_titles_code == $cs->id ? 'selected="selected"' : ''}} >{{$cs->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <i></i>
@@ -41,31 +41,28 @@
                                         <section class="col col-6">
                                             <label class="label"> Key Performance Indicator</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input value="{{$k->kpi_indicators}}" type="text" name="performance" id="performance"/>
+                                                <b class="tooltip tooltip-bottom-right">Key Performance Indicator</b>
                                             </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                            </div>
                                         </section>
                                     </div>
                                     <div class="row">
                                         <section class="col col-6">
                                             <label class="label"> Minimum Rating</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="number" value="{{$k->min_rating}}" name="min_id" id="min_id"/>
+                                                <b class="tooltip tooltip-bottom-right">Minimum Rating</b>
                                             </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                            </div>
                                         </section>
                                         <section class="col col-6">
                                             <label class="label"> Maximum Rating</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="number" value="{{$k->max_rating}}" name="max_id" id="max_id"/>
+                                                <b class="tooltip tooltip-bottom-right">Maximum Rating</b>
                                             </label>
-                                            <div class="note">
-                                                <strong>Note:</strong> height of the textarea depends on the rows attribute.
-                                            </div>
                                         </section>
                                     </div>
                                     <section>
@@ -93,7 +90,6 @@
                             </form>
                         </div>
                         <!-- end widget content -->
-
                     </div>
                 </div>
             </article>

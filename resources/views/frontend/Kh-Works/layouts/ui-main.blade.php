@@ -24,19 +24,6 @@
             <form method="GET" action="{{url('kh-works')}}">
                 {{--<input name="_token" type="hidden" value="{{ csrf_token() }}"/>--}}
                 <input name="searchTerm" id="search" type="text" class="form-control" placeholder="Type your key word">
-                    {{--<a data-toggle="dropdown" href="#" aria-expanded="false">--}}
-                        {{--<span id="job_filter" class="change-text job_filter">Job Category</span>--}}
-                        {{--<i class="fa fa-angle-down"></i>--}}
-                    {{--</a>--}}
-                    {{--<ul class="dropdown-menu category-change">--}}
-                        {{--@php  use App\JobCategory;--}}
-                          {{--$jobCategories = JobCategory::all();--}}
-                        {{--@endphp--}}
-                        {{--@foreach($jobCategories as $jobCategory)--}}
-                            {{--<li><a href="#">{{$jobCategory->name}}</a></li>--}}
-                        {{--@endforeach--}}
-                    {{--</ul>--}}
-                {{--</div><!-- category-change -->--}}
                 <div class="dropdown category-dropdown" >
                 <select name="" id=""  class="" style="width:160px; " title="">
                     <option value="">-- Job Categories --</option>
@@ -81,7 +68,7 @@
                 <h4>Latest Jobs</h4>
             </div>
             {{--{{dd($Job)}}--}}
-            @foreach($JobVacancy as $JobVacancys)
+            @foreach($JobVacancy as $JobVacancies)
                 <div role="tabpanel" class="tab-pane fade in active" id="popular-jobs">
                     <div class="job-ad-item">
                         <div class="item-info">
@@ -97,7 +84,7 @@
                                 </div><!-- item-image -->
                             </div>
                             <div class="ad-info">
-                                <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$JobVacancys->id.'/'.$JobVacancys->company_id)}}" class="title">{{$JobVacancys->name}}</a></span>
+                                <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/'.$JobVacancies->id.'/'.$JobVacancies->company->id)}}" class="title">{{$JobVacancies->name}}</a></span>
                                 <span><a style="font-size: 16px;" href="{{url('administration/display-job-details/')}}" class="title"></a></span>
                                 <div class="ad-meta">
                                     <ul>
@@ -112,14 +99,9 @@
                     </div><!-- ad-item -->
                 </div><!-- tab-pane -->
             @endforeach
-
         <div class="col-md-12">
-            {{--<div class="showing pull-left">--}}
-                {{--<br/><br/>--}}
-                {{--<a href="#">Showing <span>6-10</span> Of 24 Jobs</a>--}}
-            {{--</div>--}}
             <ul class="pull-right">
-                 {{ $JobVacancy->appends(request()->query())->links() }}
+                 {{--{{ $JobVacancy->appends(request()->query())->links() }}--}}
             </ul>
         </div>
     </div><!-- job-ad-item -->

@@ -7,22 +7,15 @@
 
             <!-- NEW WIDGET START -->
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <!-- Widget ID (each widget will need unique ID)-->
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
 
                     <header>
                         <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                         <h2>Add New Employee</h2>
                     </header>
-
-                    <!-- widget div-->
                     <div>
-                        <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
                         </div>
-                        <!-- end widget edit box -->
-                        <!-- widget content -->
                         <div class="widget-body no-padding">
                             <form method="POST" action="{{url('/administration/employee-salary')}}" id="frmBasicSalary"  class="smart-form">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -44,7 +37,10 @@
                                         <section class="col col-6">
                                             <label class="label"> Salary Component *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="text" name="SalaryComponent" id="SalaryComponent">
+                                                <b class="tooltip tooltip-bottom-right"> Salary Component</b> </label>
+
                                             </label>
                                         </section>
                                     </div>
@@ -80,7 +76,10 @@
                                         <section class="col col-6">
                                             <label class="label"> amount *</label>
                                             <label class="input">
+                                                <i class="icon-append fa fa-joomla"></i>
                                                 <input type="number" maxlength="100" name="ebsal_basic_salary" id="ebsal_basic_salary">
+                                                <b class="tooltip tooltip-bottom-right">amount</b> </label>
+
                                             </label>
                                         </section>
                                         <section class="col col-6">
@@ -136,8 +135,6 @@
                     },Payperiod: {
                         required : true
                     }
-
-
                 },
                 // Do not change code below
                 errorPlacement : function(error, element) {

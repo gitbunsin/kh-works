@@ -21,20 +21,7 @@ class EmployeeMembershipController extends BackendController
     {
         //
         $this->shareMenu();
-        if(Auth::guard('admins')->user()){
-            $employee_log = Auth::guard('admins')->user()->id;
-        }else{
-            $employee_log = Auth::guard('employee')->user()->id;
-        }
-        $m = DB::table('employee_member_details as m')
-                        ->join('memberships as c','m.membership_code','=','c.id')
-                        ->select('m.*','c.*','m.id as member_id')
-                        ->get();
-//                        ->join('tbl_currency_type as t','m.ememb_subs_crrency','=','t.currency_id')
-//                        ->where('m.id',$employee_log)
-//                        ->get();
-//        dd($m);
-
+        $m = EmployeeMemberDetail::with(['currency','member'])->get();
         return view('backend.HRIS.PIM.Employee.Membership.index',compact('m'));
 
     }
