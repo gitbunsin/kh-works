@@ -22,8 +22,10 @@ class CreateOrganizationGenInfosTable extends Migration
             $table->string('tax_id')->nullable();
             $table->string('registration_number')->nullable();
             $table->string('phone')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('fax')->nullable();
             $table->string('country')->nullable();
+            $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('zip_code')->nullable();
             $table->string('stree1')->nullable();
@@ -36,6 +38,7 @@ class CreateOrganizationGenInfosTable extends Migration
             $table->string('email_verified_at')->nullable();
             $table->string('verified')->default('0')->nullable();
             $table->text('postal_address')->nullable();
+            $table->text('company_profile')->nullable();
             $table->string('website')->nullable();
             $table->string('company_logo')->nullable();
             $table->timestamps();

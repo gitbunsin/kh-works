@@ -87,6 +87,8 @@ class PayGradeController extends BackendController
 
         $currency = Currency::findOrFail($request->currency_id);
         $pay_grade = Paygrade::findOrFail($request->pay_grade_id);
+        $currency = \App\Model\Backend\Currency::findOrFail($request->currency_id);
+        $paygrade = Paygrade::findOrFail($request->pay_grade_id);
         $arrPovit = [
             'min_salary' => $request->min_salary,
             'max_salary' => $request->max_salary
@@ -97,13 +99,26 @@ class PayGradeController extends BackendController
         $p = Paygrade::findOrFail($pay_grade->id);
         $data = $p->currencies()->wherePivot('currency_id', $currency->id)->first();
 
+
         return response()->json($data);
     }
+
+//    function destroyPaygradeCurrency(Request $request) {
+//        $currency_id = $request->currency_id;
+//        $paygrade_id = $request->paygrade_id;
+//        $currency = Currency::findOrFail($currency_id);
+//=======
+//        //retrive paygrade back
+//        $p = Paygrade::findOrFail($paygrade->id);
+//        $data = $p->currencies()->wherePivot('currency_id', $currency->id)->first();
+//
+//        return response()->json($data);
+//    }
 
     function destroyPaygradeCurrency(Request $request) {
         $currency_id = $request->currency_id;
         $paygrade_id = $request->paygrade_id;
-        $currency = Currency::findOrFail($currency_id);
+        $currency = \App\Model\Backend\Currency::findOrFail($currency_id);
         $currency->paygrades()->detach([$paygrade_id]);
 
         return response()->json($currency);

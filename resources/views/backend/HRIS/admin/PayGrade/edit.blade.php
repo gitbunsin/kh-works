@@ -44,6 +44,7 @@
                                 <span style="color:white;">
                                     <i class="glyphicon glyphicon-plus-sign "></i> ASSIGN CURRENCY </span></button>
                             </div>
+<<<<<<< HEAD
                             <br/>
                             <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
                                 <thead>
@@ -75,6 +76,39 @@
                         </div>
                     </div>
                 </div>
+=======
+                        <br/>
+                                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th> Currency</th>
+                                                <th data-class="expand">Minimum Salary</th>
+                                                <th data-class="expand">Maximum Salary</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="products-list" name="products-list">
+                                            @foreach( $pay_grade->currencies  as $pay_grade_currencies )
+                                                <tr id="currency_id{{$pay_grade_currencies->id}}">
+                                                    <td>{{$pay_grade_currencies->name}}</td>
+                                                    <td>{{$pay_grade_currencies->pivot->min_salary}}</td>
+                                                    <td>{{$pay_grade_currencies->pivot->max_salary}}</td>
+                                                    <td>
+                                                        <a data-id="{{$pay_grade_currencies->id}}" href="#" style="text-decoration:none;" class="btn-detail open_modal">
+                                                            <i class="glyphicon glyphicon-edit"></i>
+                                                        </a>
+                                                        <a data-id="{{$pay_grade_currencies->id}}" href="#" style="text-decoration:none;" onclick="deletedPayCurrency('{{$pay_grade_currencies->id}}', '{{$pay_grade->id}}')">
+                                                            <i class="glyphicon glyphicon-trash"  style="color:red;"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+>>>>>>> d23c3673f6c1401f8a1cbb6b9208ff68f46e6b76
             </article>
         </div>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -199,6 +233,7 @@
                         dataType: "json",
                         success: function(respond) {
                             console.log("Success", respond);
+                            // console.log("Success", respond);
                             bindDataToTable(respond);
                         },
                         error: function(error) {
@@ -217,6 +252,8 @@
                     '<td class="sorting_1">' + data.pivot.max_salary + '</td>';
                 table += '<td><a data-id=" '+ data.id +' " href="#" style="text-decoration:none;" class="btn-detail open_modal"> <i class="glyphicon glyphicon-edit"></i></a><a data-id=" '
                     + data.id +' " href="#" style="text-decoration:none;" onclick="deletedPayCurrency('+data.id+','+paygradeID+')"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+                + data.id +' " href="#" style="text-decoration:none;" onclick="deletedPayCurrency('+data.id+','+paygradeID+')"> <i class="glyphicon glyphicon-trash" style="color:red;"></i></a></td></tr>';
+
                 $('#products-list').append(table);
                 $('#frmProducts').trigger("reset");
                 $('#myModal').modal('hide')

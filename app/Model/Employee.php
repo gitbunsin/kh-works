@@ -49,6 +49,7 @@ class Employee extends Model
         'joined_date',
         'emp_oth_email',
         'termination_id',
+        'profile_id',
         'custom1',
         'custom2',
         'custom3',
@@ -62,7 +63,7 @@ class Employee extends Model
     ];
     public function employeeAttachments(){
 
-        return $this->belongsToMany(EmployeeAttachment::class);
+        return $this->belongsTo(EmployeeAttachment::class,'profile_id','id');
 
     }
 

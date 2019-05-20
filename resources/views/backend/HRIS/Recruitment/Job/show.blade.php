@@ -32,11 +32,12 @@
                 <div class="item-info">
                     <div class="item-image-box">
                         <div class="item-image">
-                            {{--@if($company->company_logo)--}}
-                            {{--<img src="{{asset('/uploaded/companyLogo/'.$company->company_logo)}}" alt="Image" class="img-responsive">--}}
-                                {{--@else--}}
+                            {{--@php dd($jobVacancy) @endphp--}}
+                            @if($jobVacancy->company->company_logo)
+                            <img src="{{asset('/uploaded/companyLogo/'.$jobVacancy->company->company_logo)}}" alt="Image" class="img-responsive">
+                                @else
                                 <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">
-                            {{--@endif--}}
+                            @endif
                         </div><!-- item-image -->
                     </div>
 

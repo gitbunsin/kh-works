@@ -60,9 +60,10 @@
                                             <a href="{{url('/administration/post-jobs/'.$jobVacancies->id.'/edit')}}">{{$jobVacancies->name}}</a>
 
                                         </td>
-
-                                        <td>{{$jobVacancies->employee->emp_lastname}}{{$jobVacancies->employee->emp_firstname}}</td>
-                                        <td>{{$jobVacancies->jobtitle->name}}</td>
+                                        {{--<td>{{$jobVacancies->employee->emp_lastname}}{{$jobVacancies->employee->emp_firstname}}</td>--}}
+                                        <td></td>
+                                        {{--<td>{{$jobVacancies->jobtitle->name}}</td>--}}
+                                        <td></td>
                                         <td><span class="label label-success">Active</span></td>
                                         <td>{{$jobVacancies->closingDate}}</td>
                                     </tr>

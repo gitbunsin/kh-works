@@ -223,7 +223,7 @@
                                             <section>
                                                 <label class="label"> Address *</label>
                                                 <label class="textarea">
-                                                    <textarea disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                                    <textarea class="form-control" disabled name="address" cols="40" rows="6">{{Auth::guard('admins')->user()->postal_address}}</textarea>
                                                 </label>
                                             </section>
                                             <section>

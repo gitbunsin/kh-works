@@ -33,7 +33,7 @@
                             <fieldset>
                                 <div class="row">
                                     <section class="col col-6">
-                                        <label class="label">Company Profiles </label>
+                                        <label class="label">Company Name </label>
                                         <div class="input-group">
                                             <input class="form-control" value="{{(Auth::guard('admins')->user()) ? Auth::guard('admins')->user()->name : Auth::guard('employee')->user()->company_id}}" type="text" name="name" id="name">
                                             <span class="input-group-addon"><i class="fa fa-book "></i></span>
@@ -129,7 +129,7 @@
                                 <section>
                                     <label class="label">Company Profiles *</label>
                                     <label class="input">
-                                        <textarea class="form-control" id="company_profile" name="ckeditor" rows="10" cols="163">{{Auth::guard('admins')->user()->postal_address}}</textarea>
+                                        <textarea class="form-control" id="company_profile" name="company_profile" rows="10" cols="163">{{Auth::guard('admins')->user()->company_profile}}</textarea>
                                     </label>
                                     <div class="note">
                                         <strong>Note:</strong> height of the textarea depends on the rows attribute.
@@ -179,9 +179,7 @@
                                     </div>
                                 </section>
                                 <section>
-                                    <div id="forumPost">
-
-                                    </div>
+                                    <img class="img-circle" src="{{asset('/uploaded/companyLogo/'.Auth::guard('admins')->user()->company_logo)}}" width="100px" height="100px" alt="">
                                 </section>
                             </fieldset>
 
@@ -201,6 +199,22 @@
     </section>
 @endsection
 @section('script')
-<script src=""></script>
       <script src="{{ asset('/js/hr/company.js') }}"></script>
+      <script>
+          $(document).ready(function () {
+              $('.job_description').summernote({
+                  height : 180,
+                  focus : false,
+                  tabsize : 2
+              });
+              $('.alert-success').fadeOut(5000);
+              $('[data-toggle=confirmation]').confirmation({
+                  rootSelector: '[data-toggle=confirmation]',
+                  onConfirm: function (event, element) {
+                      element.closest('form').submit();
+
+                  }
+              });
+          });
+      </script>
 @endsection

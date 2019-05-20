@@ -70,16 +70,18 @@ class CompanyController extends BackendController
         $company->tax_id = $request->tax_id;
         $company->registration_number = $request->registration_number;
         $company->phone = $request->phone;
+        $company->mobile = $request->mobile;
         $company->fax = $request->fax;
         $company->email = $request->email;
         $company->country= $request->country;
-//        $company->province = $request->province;
+        $company->province = $request->province;
         $company->city = $request->city;
         $company->zip_code = $request->zip_code;
         $company->stree1 = $request->street1;
         $company->street2 = $request->street2;
         $company->note = $request->note;
         $company->postal_address = $request->postal_address;
+        $company->company_profile = $request->company_profile;
         $company->website = $request->website;
         //$company->mobile = $request->mobile;
         //$company->status = $request->status;
@@ -95,9 +97,7 @@ class CompanyController extends BackendController
             $company->company_logo = $name;
         }
         $company->save();
-//        return response()->json($company);
-
-        return redirect('/administration/companyProfile')->with('success','Item has been added successfully');
+        return redirect('/administration/companyProfile')->with('success','Item has been update successfully');
 
     }
 

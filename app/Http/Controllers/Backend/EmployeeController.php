@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Backend;
 use App\Model\contract;
 use App\Model\Employee;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use function Sodium\compare;
 
 /**
  * Class EmployeeController
@@ -43,18 +41,6 @@ class EmployeeController extends BackendController
             $company_id = Auth::guard('employee')->user()->company_id;
 
         }
-//        $employee = DB::table('employees as e')
-//            ->select('e.*')
-////            ->join('job_titles as j','e.job_title_code','=','j.id')
-//            ->orderBy('e.emp_number','DESC')
-//            ->get();
-//        dd($employee);
-//        $JobTitle = JobTitle::with('Employee')->get();
-
-        //dd($employee->Employee->emp_lastname);
-//        foreach ($employee->Employee as $e){
-//           echo $e->company_id;
-//        }
         $employee = Employee::with(['JobTitle','EmploymentStatus','WorkStation'])->get();
 //        dd($employee[0]->JobTitle->name);
         return view('backend.HRIS.PIM.Employee.index',compact('employee'));
@@ -68,32 +54,8 @@ class EmployeeController extends BackendController
         }else{
             $employeeId = Auth::guard('employee')->user()->id;
         }
-        $EmployeeDetailsInfo = Employee::where('emp_number', $employeeId)->first();
-        //dd($employeeDetails);
-
-//        dd($id);
-//        $employee_experience = EmployeeWorkExperience::all();
-//        $employee_skill = DB::table('employee_skills as es')
-//            ->join('skills as s','es.skill_id','=','s.id')
-//            ->get();
-
-//        if(Auth::guard('employee')->user())
-//        {
-//            $EmployeeID = Auth::guard('employee')->user()->id;
-//        }else{
-//
-//            $listCompanyEmployee = Employee::where('emp_number',Auth::guard('admins')->user()->id)->first();
-//            $EmployeeID = $listCompanyEmployee->emp_number;
-//        }
-//        $EmployeeDetailsInfo = Employee::where('emp_number',$EmployeeID)->first();
-//        dd($EmployeeDetailsInfo);
-//        dd($EmployeeID);
-//        return view('backend.HRIS.PIM.Employee.Details.index',
-//            compact('employee_experience',
-//                'employee_skill',
-//                'EmployeeDetailsInfo'));
-
-//        $EmployeeDetailsInfo = Employee::al
+        $EmployeeDetailsInfo = Employee::with('employeeAttachments')->where('emp_number', $employeeId)->first();
+      //  dd($EmployeeDetailsInfo);
 
         return view('backend.HRIS.PIM.Employee.Details.index',compact('EmployeeDetailsInfo'));
 
@@ -128,7 +90,7 @@ class EmployeeController extends BackendController
     {
         $employee = Employee::create($request->all());
         $employee->company()->associate(Auth::guard('admins')->user()->id);
-        $employee->save();
+
         $employee_attachments = new EmployeeAttachment();
 
         if ($request->hasFile('photo'))
@@ -145,7 +107,12 @@ class EmployeeController extends BackendController
              $employee_attachments->eattach_size = $size;
              $employee_attachments->eattach_type = $type;
              $employee_attachments->save();
+
+             $profile_id = $employee_attachments->id;
          }
+
+        $employee->employeeAttachments()->associate($profile_id);
+        $employee->save();
 
         //dd($request->all());
         //dd('hello');

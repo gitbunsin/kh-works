@@ -5,8 +5,6 @@
         background: #eee !important;
     }
 </style>
-
-    {{--@php use App\Model\Employee;$employee = Employee::where('company_id',Auth::guard('admins')->user()->id)->first(); @endphp--}}
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
@@ -52,6 +50,18 @@
                                 <form  name="EmployeeInfo" id="validate_employee" method="POST"  action="{{url('administration/employee/'.$employeeID)}}" class="smart-form form-horizontal" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input name="_method" type="hidden" value="PATCH">
+                                    {{--<div class="row">--}}
+                                        {{--<section class="col col-4">--}}
+                                            {{--<label class="label">Profiles</label>--}}
+                                            {{--<label class="input">--}}
+                                                {{--<i class="icon-append fa fa-joomla"></i>--}}
+                                                {{--<input type="file" name="profile_id"  class="form-control"/>--}}
+                                            {{--</label>--}}
+                                        {{--</section>--}}
+                                        {{--<section class="col col-4">--}}
+                                            {{--<img class="img-circle" width="100px;" height="100px;" src="{{asset('/uploaded/EmpPhoto/'.$EmployeeDetailsInfo->employeeAttachments->eattach_filename)}}">--}}
+                                        {{--</section>--}}
+                                    {{--</div>--}}
                                     <div class="row">
                                         <section class="col col-4">
                                             <label class="label">First Name</label>

@@ -73,7 +73,7 @@ class CreateEmployeesTable extends Migration
             $table->foreign('termination_id')->references('id')->on('termination_reasons')->onDelete('cascade');
 
 
-            $table->string('custom1')->nullable();
+            $table->string('profile_id')->nullable();
             $table->string('custom2')->nullable();
             $table->string('custom3')->nullable();
             $table->string('custom4')->nullable();

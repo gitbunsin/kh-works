@@ -69,17 +69,18 @@
             </div>
             {{--{{dd($Job)}}--}}
             @foreach($JobVacancy as $JobVacancies)
+               {{--@php dd($JobVacancies->company->company_logo) @endphp--}}
                 <div role="tabpanel" class="tab-pane fade in active" id="popular-jobs">
                     <div class="job-ad-item">
                         <div class="item-info">
                             <div class="item-image-box">
                                 <div class="item-image">
                                     <a href="#">
-                                        {{--@if($Jobs->company_logo)--}}
-                                            {{--<img src="{{asset('/uploaded/companyLogo/'.$JobVacancys->company_logo)}}" alt="Image" class="img-responsive">--}}
-                                        {{--@else--}}
+                                        @if($JobVacancies->company->company_logo)
+                                            <img src="{{asset('/uploaded/companyLogo/'.$JobVacancies->company->company_logo)}}" alt="Image" class="img-responsive">
+                                        @else
                                             <img src="{{asset('img/noimage.jpg')}}" alt="Image" class="img-responsive">
-                                        {{--@endif--}}
+                                        @endif
                                     </a>
                                 </div><!-- item-image -->
                             </div>

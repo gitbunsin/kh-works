@@ -166,7 +166,6 @@ class MenuTableSeeder extends Seeder
         $menu1->save();
 
         $menu1 = new Menu();
-        //$menu1->id = 22;
         $menu1->name = "Email Configuration";
         $menu1->link ="administration/list-Mail-Configuration";
         $menu1->parent_id = 21;
